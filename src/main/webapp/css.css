@@ -1,0 +1,184 @@
+body, html
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.background1
+{
+    background-image: url(images/foggang.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+.background2
+{
+    background-color: rgb(244, 248, 249);
+}
+.image
+{
+    height: 64px;
+    width: auto;
+}
+#nav
+{
+    z-index: 1;
+    background-color: rgb(15, 12, 40);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    box-shadow: 0 0 10px -5px black; 
+}
+#nav a
+{
+    padding: 20px;
+    color: rgb(219, 222, 255);
+    text-decoration: none;
+    display: block;
+}
+
+#nav a:hover
+{
+    background-color: rgb(219, 222, 255);
+    color: rgb(15, 12, 40);
+}
+
+.left
+{
+    float: left;
+}
+.right
+{
+    float: right;
+}
+.btn
+{
+    margin: 10px;
+    border: 1px solid silver;
+    height: 50px;
+    width: 170px;
+    color: white;
+}
+.btn:hover
+{
+    background-color: rgb(219, 222, 255);
+    border: 1px solid rgb(219, 222, 255);
+    color: rgb(15, 12, 40);
+}
+h1
+{
+    margin: 20px;  
+    font-family: 'PT Sans', sans-serif;
+    margin: 0;
+}
+p
+{
+    margin: 10px;
+    color: white;
+}
+.logindiv
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    background-color: rgba(15, 12, 40, 0.8);
+    margin-top: 10%;
+    margin-bottom: 10%;
+    box-shadow: 0 0 10px -5px black; 
+}
+@media (max-width: 725px) {
+    .logindiv
+    {
+        width: 90%;
+    }
+}
+
+select 
+{ 
+    width: 420px; 
+    text-align-last:center; 
+}
+.inputsmalll
+{
+    margin: 20px;
+    text-align: center;
+    height: 50px;
+    width: 62.5%;
+    margin-right: 2.5%;
+}
+.inputsmallr
+{
+    margin: 20px;
+    text-align: center;
+    height: 50px;
+    width: 62.5%;
+    margin-left: 2.5%;
+}
+.inputbig
+{
+    text-align: center;
+    height: 50px;
+    margin: 20px;
+    width: 65%;
+}
+.col-sm-6
+{
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+.col-sm-6-l
+{
+    justify-content: flex-end;
+}
+.col-sm-6-r
+{
+    justify-content: flex-start;
+}
+@media (max-width: 575px) {
+    .col-sm-6-l
+    {
+        justify-content: center;
+    }
+    .col-sm-6-r
+    {
+        justify-content: center;
+    }
+    .inputsmalll
+    {
+        width: 65%;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+    .inputsmallr
+    {
+        width: 65%;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+.col-sm-12
+{
+    padding: 0;
+    margin: 0;
+}
+.newform
+{
+    margin-top: 128px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    color: white;
+    text-align: center;
+    background-color: rgba(15, 12, 40, 0.8);
+    box-shadow: 0 0 10px -5px black; 
+}
+.newform2
+{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-bottom: 64px;
+    color: white;
+    text-align: center;
+    background-color: rgba(219, 222, 255, 0.5);
+    box-shadow: 0 0 10px -5px black; 
+}

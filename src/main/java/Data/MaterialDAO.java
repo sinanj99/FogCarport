@@ -34,11 +34,11 @@ public class MaterialDAO
             Connection connection = DB.getConnection();
             Statement stmt = connection.createStatement();
             ResultSet rs = null;
-            rs = stmt.executeQuery("SELECT * FROM material WHERE name = '" + materialName);
+            rs = stmt.executeQuery("SELECT * FROM material WHERE name = '" + materialName + "'");
             
             while(rs.next())
             {
-                id=rs.getInt("material_name");
+                id=rs.getInt("material_id");
                 name = rs.getString("name");
                 length = rs.getInt("length");
                 unit = rs.getString("unit");

@@ -31,7 +31,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public Material getMaterial(int id) throws NoSuchMaterialException {
+    public Material getMaterial(String name) throws NoSuchMaterialException {
         int material_id = 0;
         String name_ = "";
         int length = 0;
@@ -39,9 +39,9 @@ class MaterialMapper extends IMaterialMapper {
         String desc = "";
         int price = 0;
         try {
-            String sql = "SELECT * FROM `material` WHERE material_id = ?;";
+            String sql = "SELECT * FROM `material` WHERE name = ?;";
             PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, id);
+            pstmt.setString(1, name);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 material_id = rs.getInt("material_id");

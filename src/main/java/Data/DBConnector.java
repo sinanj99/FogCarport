@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class DBConnector {
 
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://157.230.97.70:3306/CarportDB";
     private static final String USER = "root";
     private static final String PASSWORD = "prespa01";

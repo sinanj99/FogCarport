@@ -17,7 +17,7 @@ public abstract class IMaterialMapper {
     public static IMaterialMapper instance() {
         return MaterialMapper.getInstance();
     }
-    public abstract Material getMaterial(int id) throws NoSuchMaterialException;
+    public abstract Material getMaterial(String name) throws NoSuchMaterialException;
     
     public abstract List<Material> getMaterials();
     

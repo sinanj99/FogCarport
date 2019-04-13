@@ -1,6 +1,10 @@
-/Users/sinanjasar/NetBeansProjects/FogCarport/src/main/java/Data/Material.java
-/Users/sinanjasar/NetBeansProjects/FogCarport/src/main/java/Data/Seller.java
-/Users/sinanjasar/NetBeansProjects/FogCarport/src/main/java/Data/BOM.java
-/Users/sinanjasar/NetBeansProjects/FogCarport/src/main/java/Presentation/FrontController.java
-/Users/sinanjasar/NetBeansProjects/FogCarport/src/main/java/Data/Client.java
-/Users/sinanjasar/NetBeansProjects/FogCarport/src/main/java/Data/LineItem.java
+C:\temp\FogCarport\src\main\java\Data\BOM.java
+C:\temp\FogCarport\src\main\java\Presentation\FrontController.java
+C:\temp\FogCarport\src\main\java\Logic\CalculateBOM.java
+C:\temp\FogCarport\src\main\java\Data\DB.java
+C:\temp\FogCarport\src\main\java\Data\Seller.java
+C:\temp\FogCarport\src\main\java\Data\MaterialDAO.java
+C:\temp\FogCarport\src\main\java\Data\LineItem.java
+C:\temp\FogCarport\src\main\java\Data\Material.java
+C:\temp\FogCarport\src\main\java\Logic\TestCalculateBOMMethods.java
+C:\temp\FogCarport\src\main\java\Data\Client.java

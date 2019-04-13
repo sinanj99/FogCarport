@@ -1,5 +1,10 @@
-Data/BOM.class
-Data/Client.class
-Data/Material.class
-Data/Seller.class
-Data/LineItem.class
+Data\Material.class
+Data\DB.class
+Data\Seller.class
+Logic\CalculateBOM.class
+Logic\TestCalculateBOMMethods.class
+Data\Client.class
+Presentation\FrontController.class
+Data\BOM.class
+Data\LineItem.class
+Data\MaterialDAO.class

@@ -58,6 +58,4 @@ public class Material {
     public String toString() {
         return "Material{" + "materialId=" + materialId + ", name=" + name + ", length=" + length + ", unit=" + unit + ", desc=" + desc + ", price=" + price + '}';
     }
-    
-    
 }

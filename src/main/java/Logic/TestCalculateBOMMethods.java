@@ -5,6 +5,7 @@
  */
 package Logic;
 
+import Data.LineItem;
 import Data.Material;
 import Data.MaterialDAO;
 
@@ -20,6 +21,15 @@ public class TestCalculateBOMMethods
         int quan = c.calculateQuantityOfSpær(7);
         
         System.out.println(quan);
+
+        LineItem l = c.spær(7, 2);
+        
+        System.out.println(l.getMaterialName());
+        System.out.println(l.getLength());
+        System.out.println(l.getUnit());
+        System.out.println(l.getDescription());
+        System.out.println(l.getQuantity());
+        
         
         
         

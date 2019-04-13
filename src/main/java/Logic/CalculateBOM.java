@@ -6,6 +6,8 @@
 package Logic;
 
 import Data.LineItem;
+import Data.Material;
+import Data.MaterialDAO;
 
 /**
  *
@@ -45,35 +47,36 @@ public class CalculateBOM
         return quantity;
     }
     
-    //Metoden kan bruges når der er lavet facade til Material og LineItem klasserne, og MaterialDAO
-//    public LineItem spær(int quantity, int width)
-//    {
-//        //LineItem l
-//        
-//        //width of the carport less than 2, get the material with length less than 2
-//        if(width <= 2)
-//        {
-//            //Material m = MaterialDAO.getMaterial(name, width);
-//            //l = new LineItem(m.getMaterialName, m.getLength, m.getUnit(), m.getDescription, calculateQuantityOfSpær);
-//        }
-//        //width of the carport less than 4, get the material with length less than 4
-//        if(width > 2 && width <= 4)
-//        {
-//            //Material m = MaterialDAO.getMaterial(name, width);
-//            //l = new LineItem(m.getMaterialName, m.getLength, m.getUnit(), m.getDescription, calculateQuantityOfSpær);
-//        }
-//         //width of the carport less than 6, get the material with length less than 6
-//        if(width > 4 && width <=6)
-//        {
-//            //Material m = MaterialDAO.getMaterial(name, width);
-//            //l = new LineItem(m.getMaterialName, m.getLength, m.getUnit(), m.getDescription, calculateQuantityOfSpær);
-//        }
-//        //width of the carport less than 8, get the material with length less than 8
-//        if(width > 6 && width <=8)
-//        {
-//            //Material m = MaterialDAO.getMaterial(name, width);
-//            //l = new LineItem(m.getMaterialName, m.getLength, m.getUnit(), m.getDescription, calculateQuantityOfSpær);
-//        }
-//        //return l;
-//    }
+    
+    public LineItem spær(int length, int width)
+    {
+        LineItem l = null;
+        Material m;
+        
+        //width of the carport less than 2, get the material with length 2
+        if(width <= 2)
+        {
+             m = MaterialDAO.getMaterial("45x195mm spærtræ. ubh. 2m");
+            l = new LineItem(m.getMaterialName(), m.getLength(), m.getUnit(), m.getDescription(), calculateQuantityOfSpær(length));
+        }
+        //width of the carport less than 4, get the material with length 4
+        if(width > 2 && width <= 4)
+        {
+            m = MaterialDAO.getMaterial("45x195mm spærtræ. ubh. 4m");
+            l = new LineItem(m.getMaterialName(), m.getLength(), m.getUnit(), m.getDescription(), calculateQuantityOfSpær(length));
+        }
+         //width of the carport less than 6, get the material with length 6
+        if(width > 4 && width <=6)
+        {
+            m = MaterialDAO.getMaterial("45x195mm spærtræ. ubh. 6m");
+            l = new LineItem(m.getMaterialName(), m.getLength(), m.getUnit(), m.getDescription(), calculateQuantityOfSpær(length));
+        }
+        //width of the carport less than 8, get the material with length 8
+        if(width > 6 && width <=8)
+        {
+            m = MaterialDAO.getMaterial("45x195mm spærtræ. ubh. 8m");
+            l = new LineItem(m.getMaterialName(), m.getLength(), m.getUnit(), m.getDescription(), calculateQuantityOfSpær(length));
+        }
+        return l;
+    }
 }

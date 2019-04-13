@@ -5,6 +5,9 @@
  */
 package Logic;
 
+import Data.Material;
+import Data.MaterialDAO;
+
 /**
  *
  * @author Kasper Jeppesen
@@ -14,9 +17,12 @@ public class TestCalculateBOMMethods
     public static void main(String[] args) throws Exception
     {
         CalculateBOM c = new CalculateBOM();
-        int quan = c.calculateSpær(7);
+        int quan = c.calculateQuantityOfSpær(7);
         
         System.out.println(quan);
+        
+        
+        
         
     }
 }

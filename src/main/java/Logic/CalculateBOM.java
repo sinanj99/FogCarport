@@ -13,6 +13,8 @@ import Data.LineItem;
  */
 public class CalculateBOM
 {
+    
+    
     public int calculateQuantityOfSpær(int length)
     {
         //Convert the input containingen meter as the unit to centimeter
@@ -44,10 +46,34 @@ public class CalculateBOM
     }
     
     //Metoden kan bruges når der er lavet facade til Material og LineItem klasserne, og MaterialDAO
-//    public LineItem spær(int quantity)
+//    public LineItem spær(int quantity, int width)
 //    {
-//        //Material m = MaterialDAO.getMaterial();
-//        //LineItem l = new LineItem(m.getMaterialName, m.getLength, m.getUnit(), m.getDescription, calculateQuantityOfSpær);
+//        //LineItem l
+//        
+//        //width of the carport less than 2, get the material with length less than 2
+//        if(width <= 2)
+//        {
+//            //Material m = MaterialDAO.getMaterial(name, width);
+//            //l = new LineItem(m.getMaterialName, m.getLength, m.getUnit(), m.getDescription, calculateQuantityOfSpær);
+//        }
+//        //width of the carport less than 4, get the material with length less than 4
+//        if(width > 2 && width <= 4)
+//        {
+//            //Material m = MaterialDAO.getMaterial(name, width);
+//            //l = new LineItem(m.getMaterialName, m.getLength, m.getUnit(), m.getDescription, calculateQuantityOfSpær);
+//        }
+//         //width of the carport less than 6, get the material with length less than 6
+//        if(width > 4 && width <=6)
+//        {
+//            //Material m = MaterialDAO.getMaterial(name, width);
+//            //l = new LineItem(m.getMaterialName, m.getLength, m.getUnit(), m.getDescription, calculateQuantityOfSpær);
+//        }
+//        //width of the carport less than 8, get the material with length less than 8
+//        if(width > 6 && width <=8)
+//        {
+//            //Material m = MaterialDAO.getMaterial(name, width);
+//            //l = new LineItem(m.getMaterialName, m.getLength, m.getUnit(), m.getDescription, calculateQuantityOfSpær);
+//        }
 //        //return l;
 //    }
 }

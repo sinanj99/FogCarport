@@ -5,18 +5,19 @@
  */
 package Data;
 
+import Logic.NoSuchMaterialException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 /**
  *
  * @author sinanjasar
  */
-public class DB {
+public class DBConnector {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String URL = "jdbc:mysql://157.230.97.70:3306/CarportDB";
@@ -47,19 +48,18 @@ public class DB {
         }
     }
     
-     public static void main(String[] args) {
-        //Test connection
-        try {
-            Connection con = DB.getConnection();
-            String sql = "SELECT * FROM user where username = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, "sne");
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                System.out.println(rs.getString("username"));
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+     public static void main(String[] args) throws NoSuchMaterialException {
+//        Test connection
+//        try {
+//            Connection con = DBConnector.getConnection();
+//            Statement stmt = con.createStatement();
+//            ResultSet rs = stmt.executeQuery("SELECT * FROM material;");
+//            while (rs.next()) {
+//                System.out.println(rs.getString("name"));
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
     }
+
 }

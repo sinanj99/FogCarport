@@ -12,7 +12,7 @@ import java.util.List;
  * @author sinanjasar
  */
 public class BOM {
-    private List<LineItem> lineitems;
+    private final List<LineItem> lineitems;
 
     public BOM(List<LineItem> lineitems) {
         this.lineitems = lineitems;

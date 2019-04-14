@@ -59,25 +59,19 @@ class MaterialMapper extends IMaterialMapper {
 
     @Override
     public List<Material> getMaterials() {
-
-        int material_id = 0;
-        String name_ = "";
-        int length = 0;
-        String unit = "";
-        String desc = "";
-        int price = 0;
+        
         List<Material> materials = new ArrayList();
 
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM material;");
             while (rs.next()) {
-                material_id = rs.getInt("material_id");
-                name_ = rs.getString("name");
-                length = rs.getInt("length");
-                unit = rs.getString("unit");
-                desc = rs.getString("description");
-                price = rs.getInt("price");
+                int material_id = rs.getInt("material_id");
+                String name_ = rs.getString("name");
+                int length = rs.getInt("length");
+                String unit = rs.getString("unit");
+                String desc = rs.getString("description");
+                int price = rs.getInt("price");
 
                 materials.add(new Material(material_id, name_, length, unit, desc, price));
             }

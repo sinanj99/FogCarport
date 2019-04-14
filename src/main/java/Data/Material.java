@@ -10,7 +10,7 @@ package Data;
  * @author sinanjasar
  */
 public class Material {
-    private int materialId;
+    private int id;
     private String name;
     private int length;
     private String unit;
@@ -18,7 +18,7 @@ public class Material {
     private int price;
 
     public Material(int materialId, String name, int length, String unit, String desc, int price) {
-        this.materialId = materialId;
+        this.id = materialId;
         this.name = name;
         this.length = length;
         this.unit = unit;
@@ -26,8 +26,8 @@ public class Material {
         this.price = price;
     }
 
-    public int getMaterialId() {
-        return materialId;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -56,6 +56,6 @@ public class Material {
     
     @Override
     public String toString() {
-        return "Material{" + "materialId=" + materialId + ", name=" + name + ", length=" + length + ", unit=" + unit + ", desc=" + desc + ", price=" + price + '}';
+        return "Material{" + "materialId=" + id + ", name=" + name + ", length=" + length + ", unit=" + unit + ", desc=" + desc + ", price=" + price + '}';
     }
 }

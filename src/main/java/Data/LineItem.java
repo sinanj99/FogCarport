@@ -11,11 +11,11 @@ package Data;
  */
 public class LineItem {
     
-    private String name;
-    private int length;
-    private String unit;
-    private String description;
-    private int quantity;
+    private final String name;
+    private final int length;
+    private final String unit;
+    private final String description;
+    private final int quantity;
 
     public LineItem(String materialName, int length, String unit, String description, int quantity)
     {

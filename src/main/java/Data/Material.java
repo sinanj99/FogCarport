@@ -14,15 +14,13 @@ public class Material {
     private String name;
     private int length;
     private String unit;
-    private String desc;
     private int price;
 
-    public Material(int materialId, String name, int length, String unit, String desc, int price) {
+    public Material(int materialId, String name, int length, String unit, int price) {
         this.id = materialId;
         this.name = name;
         this.length = length;
         this.unit = unit;
-        this.desc = desc;
         this.price = price;
     }
 
@@ -42,10 +40,6 @@ public class Material {
         return unit;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
     public int getPrice() {
         return price;
     }
@@ -53,9 +47,11 @@ public class Material {
     public void setPrice(int price) {
         this.price = price;
     }
-    
+
     @Override
     public String toString() {
-        return "Material{" + "materialId=" + id + ", name=" + name + ", length=" + length + ", unit=" + unit + ", desc=" + desc + ", price=" + price + '}';
+        return "Material{" + "id=" + id + ", name=" + name + ", length=" + length + ", unit=" + unit + ", price=" + price + '}';
     }
+    
+    
 }

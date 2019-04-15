@@ -11,43 +11,33 @@ package Data;
  */
 public class LineItem {
     
-    private final String name;
-    private final int length;
-    private final String unit;
-    private final String description;
-    private final int quantity;
+    private final Material material;
+    private final int qty;
+    private final String desc;
+    private final int price;
 
-    public LineItem(String materialName, int length, String unit, String description, int quantity)
+    public LineItem(Material material, int qty, String desc, int price)
     {
-        this.name = materialName;
-        this.length = length;
-        this.unit = unit;
-        this.description = description;
-        this.quantity = quantity;
+        this.material = material;
+        this.qty = qty;
+        this.desc = desc;
+        this.price = material.getPrice() * qty;
     }
 
-    public String getName()
-    {
-        return name;
+    public Material getMaterial() {
+        return material;
     }
 
-    public int getLength()
-    {
-        return length;
+    public int getQty() {
+        return qty;
     }
 
-    public String getUnit()
-    {
-        return unit;
+    public String getDesc() {
+        return desc;
     }
 
-    public String getDescription()
-    {
-        return description;
+    public int getPrice() {
+        return price;
     }
-
-    public int getQuantity()
-    {
-        return quantity;
-    }
+    
 }

@@ -7,8 +7,6 @@ package Presentation;
 
 import Logic.Manager;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "FrontController", urlPatterns = {"/FrontController/*"})
 public class FrontController extends HttpServlet {
 
-    private Manager manager = new Manager();
+    private final Manager manager = new Manager();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) {

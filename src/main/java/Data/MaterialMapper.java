@@ -54,7 +54,7 @@ class MaterialMapper extends IMaterialMapper {
         } catch (SQLException ex) {
             throw new NoSuchMaterialException();
         }
-        return new Material(material_id, name_, length, unit, desc, price);
+        return new Material(material_id, name_, length, unit, price);
     }
 
     @Override
@@ -73,7 +73,7 @@ class MaterialMapper extends IMaterialMapper {
                 String desc = rs.getString("description");
                 int price = rs.getInt("price");
 
-                materials.add(new Material(material_id, name_, length, unit, desc, price));
+                materials.add(new Material(material_id, name_, length, unit, price));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

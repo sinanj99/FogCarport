@@ -14,13 +14,15 @@ public class Material {
     private String name;
     private int length;
     private String unit;
+    private String description;
     private int price;
 
-    public Material(int materialId, String name, int length, String unit, int price) {
+    public Material(int materialId, String name, int length, String unit, String description, int price) {
         this.id = materialId;
         this.name = name;
         this.length = length;
         this.unit = unit;
+        this.description = description;
         this.price = price;
     }
 

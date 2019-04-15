@@ -16,11 +16,12 @@ public class TestCalculateBOMMethods
     public static void main(String[] args) throws NoSuchMaterialException
     {
         CalculateBOM c = new CalculateBOM();
-        int quan = c.calculateQuantityOfSpær(7);
         
-        System.out.println(quan);
+//        int quan = c.calculateQuantityOfBrædderbolt(7.7f);
+//        System.out.println(quan);
+        
 
-        LineItem l = c.spær(7, 2);
+        LineItem l = c.venstrebeslag(2.0f);
         
         System.out.println(l.getMaterial());
         System.out.println(l.getQty());

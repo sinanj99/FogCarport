@@ -56,26 +56,26 @@ public class CalculateBOM
         //width of the carport less than 2, get the material with length 2
         if(width <= 2)
         {
-             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 2m");
-            l = new LineItem(m.getName(), m.getLength(), m.getUnit(), m.getDesc(), calculateQuantityOfSpær(length));
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 2m");
+            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
         }
         //width of the carport less than 4, get the material with length 4
         if(width > 2 && width <= 4)
         {
             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 4m");
-            l = new LineItem(m.getName(), m.getLength(), m.getUnit(), m.getDesc(), calculateQuantityOfSpær(length));
+            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
         }
          //width of the carport less than 6, get the material with length 6
         if(width > 4 && width <=6)
         {
             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 6m");
-            l = new LineItem(m.getName(), m.getLength(), m.getUnit(), m.getDesc(), calculateQuantityOfSpær(length));
+            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
         }
         //width of the carport less than 8, get the material with length 8
         if(width > 6 && width <=8)
         {
             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m");
-            l = new LineItem(m.getName(), m.getLength(), m.getUnit(), m.getDesc(), calculateQuantityOfSpær(length));
+            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
         }
         return l;
     }

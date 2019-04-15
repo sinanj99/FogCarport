@@ -22,11 +22,9 @@ public class TestCalculateBOMMethods
 
         LineItem l = c.spær(7, 2);
         
-        System.out.println(l.getName());
-        System.out.println(l.getLength());
-        System.out.println(l.getUnit());
-        System.out.println(l.getDescription());
-        System.out.println(l.getQuantity());
+        System.out.println(l.getMaterial());
+        System.out.println(l.getQty());
+        System.out.println(l.getPrice());
         
         
         

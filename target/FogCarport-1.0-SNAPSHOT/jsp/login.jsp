@@ -6,12 +6,12 @@
                 <h1>Kontooplysninger</h1>
                 <div class="row">
                     <div class="col-sm-12 d-flex justify-content-center">
-                        <input class="inputbig" type="text" placeholder="Email" required>
+                        <input style="width: 50%;" class="inputbig" type="text" placeholder="Email..." required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <input class="inputbig" type="password" placeholder="Adgangskode" required>
+                        <input style="width: 50%;" class="inputbig" type="password" placeholder="Adgangskode..." required>
                     </div>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-center">

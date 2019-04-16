@@ -66,42 +66,21 @@ body, html
 }
 h1
 {
+    font-size: 35px;
     margin: 20px;  
     font-family: 'PT Sans', sans-serif;
     margin: 0;
 }
 p
 {
-    margin: 10px;
-    color: white;
-}
-.logindiv
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 70%;
-    background-color: rgba(15, 12, 40, 0.8);
-    margin-top: 10%;
-    margin-bottom: 10%;
-    box-shadow: 0 0 10px -5px black; 
-}
-@media (max-width: 725px) {
-    .logindiv
-    {
-        width: 90%;
-    }
-}
-
-select 
-{ 
-    width: 420px; 
-    text-align-last:center; 
+    padding-left: 2%; padding-right: 2%;
+    text-align: center;
+    color: black;
 }
 .inputsmalll
 {
     margin: 20px;
-    text-align: center;
+    padding-left: 10px;
     height: 50px;
     width: 62.5%;
     margin-right: 2.5%;
@@ -109,14 +88,14 @@ select
 .inputsmallr
 {
     margin: 20px;
-    text-align: center;
     height: 50px;
+    padding-left: 10px;
     width: 62.5%;
     margin-left: 2.5%;
 }
 .inputbig
 {
-    text-align: center;
+    padding-left: 10px;
     height: 50px;
     margin: 20px;
     width: 65%;
@@ -124,8 +103,6 @@ select
 .col-sm-6
 {
     display: flex;
-    padding: 0;
-    margin: 0;
 }
 .col-sm-6-l
 {
@@ -181,4 +158,15 @@ select
     text-align: center;
     background-color: rgba(219, 222, 255, 0.5);
     box-shadow: 0 0 10px -5px black; 
+}
+.newform2 p
+{
+    color: white;
+}
+.standarddiv
+{
+    margin-top: 128px; margin-bottom: 64px;
+    background-color: white; 
+    box-shadow: 0 0 10px -5px black; 
+    padding: 20px;
 }

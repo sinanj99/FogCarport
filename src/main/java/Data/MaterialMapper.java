@@ -36,7 +36,6 @@ class MaterialMapper extends IMaterialMapper {
         String name_ = "";
         //int length = 0;
         String unit = "";
-        String desc = "";
         int price = 0;
         try {
             String sql = "SELECT * FROM `material` WHERE name = ? and length = ?;";
@@ -49,13 +48,12 @@ class MaterialMapper extends IMaterialMapper {
                 name_ = rs.getString("name");
                 length = rs.getInt("length");
                 unit = rs.getString("unit");
-                desc = rs.getString("description");
                 price = rs.getInt("price");
             }
         } catch (SQLException ex) {
             throw new NoSuchMaterialException();
         }
-        return new Material(material_id, name, length, unit, desc, price);
+        return new Material(material_id, name, length, unit, price);
     }
 
     @Override
@@ -71,10 +69,9 @@ class MaterialMapper extends IMaterialMapper {
                 String name_ = rs.getString("name");
                 int length = rs.getInt("length");
                 String unit = rs.getString("unit");
-                String desc = rs.getString("description");
                 int price = rs.getInt("price");
 
-                materials.add(new Material(material_id, name_, length, unit, desc, price));
+                materials.add(new Material(material_id, name_, length, unit, price));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

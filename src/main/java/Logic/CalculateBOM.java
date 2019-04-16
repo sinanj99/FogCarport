@@ -123,37 +123,107 @@ public class CalculateBOM
 //        
 //    }
     
-//    public LineItem spær(float length, float width) throws NoSuchMaterialException
-//    {
-//        LineItem l = null;
-//        Material m;
-//        
-//        //width of the carport less than 2, get the material with length 2
-//        if(width <= 2)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 2m");
-//            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
-//        }
-//        //width of the carport less than 4, get the material with length 4
-//        if(width > 2 && width <= 4)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 4m");
-//            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
-//        }
-//         //width of the carport less than 6, get the material with length 6
-//        if(width > 4 && width <=6)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 6m");
-//            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
-//        }
-//        //width of the carport less than 8, get the material with length 8
-//        if(width > 6 && width <=8)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m");
-//            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
-//        }
-//        return l;
-//    }
+    public LineItem spær(float length, float width) throws NoSuchMaterialException
+    {
+        LineItem l = null;
+        Material m;
+        
+        String desc = "Spær, monteres på rem";
+        
+         if(width == 240)
+        {
+             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 240);
+             l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 270)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 270);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 300)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 300);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 330)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 330);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 360)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 360);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 390)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 390);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 420)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 420);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 450)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 450);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 480)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 480);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 510)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 510);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 540)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 540);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 570)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 570);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 600)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh.", 600);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 630)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 630);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 660)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 660);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 690)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh.", 690);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 720)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 720);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        if(width == 750)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 750);
+            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        
+      
+        return l;
+    }
     public LineItem spærForRemmen(float length) throws NoSuchMaterialException
     {
         LineItem l = null;
@@ -161,29 +231,97 @@ public class CalculateBOM
         
         String desc = "Remme i sider, sadles ned i stolper";
         
-        if(length > 6)
+        if(length == 240)
         {
-             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m", 800);
+             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 240);
              l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
         }
-//        if(length > 4 && length <= 6)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 6m");
-//            m.setDescription(desc);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length > 2 && length <= 4)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 4m");
-//            m.setDescription(desc);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 2)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 2m");
-//            m.setDescription(desc);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
+        if(length == 270)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 270);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 300)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 300);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 330)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 330);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 360)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 360);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 390)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 390);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 420)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 420);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 450)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 450);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 480)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 480);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 510)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 510);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 540)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 540);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 570)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 570);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 600)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 600);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 630)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 630);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 660)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 660);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 690)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 690);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 720)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 720);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 750)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 750);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+
         return l;
     }
 }

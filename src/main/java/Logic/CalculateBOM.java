@@ -164,7 +164,7 @@ public class CalculateBOM
         if(length > 6)
         {
              m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m", 800);
-             l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
+             l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
         }
 //        if(length > 4 && length <= 6)
 //        {

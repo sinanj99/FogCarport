@@ -25,6 +25,7 @@ public class TestCalculateBOMMethods
         
         System.out.println(l.getMaterial());
         System.out.println(l.getQty());
+        System.out.println(l.getDescription());
         System.out.println(l.getPrice());
         
         

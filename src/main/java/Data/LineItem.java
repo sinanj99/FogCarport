@@ -14,12 +14,13 @@ public class LineItem {
     private final Material material;
     private final int qty;
     private final int price;
-    
+    private final String description;
 
-    public LineItem(Material material, int qty, int price)
+    public LineItem(Material material, int qty, String description, int price)
     {
         this.material = material;
         this.qty = qty;
+        this.description = description;
         this.price = material.getPrice() * qty;
     }
 
@@ -35,4 +36,8 @@ public class LineItem {
         return price;
     }
     
+    public String getDescription()
+    {
+        return description;
+    }
 }

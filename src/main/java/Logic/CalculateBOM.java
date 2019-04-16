@@ -98,62 +98,62 @@ public class CalculateBOM
         return 2;
     }
     
-    public LineItem brædderbolt(float length) throws NoSuchMaterialException
-    {
-        Material m = IMaterialMapper.instance().getMaterial("10x120mm brædderbolt");
-        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
-    }
+//    public LineItem brædderbolt(float length) throws NoSuchMaterialException
+//    {
+//        Material m = IMaterialMapper.instance().getMaterial("10x120mm brædderbolt");
+//        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
+//    }
+//    
+//    public LineItem højrebeslag(float length) throws NoSuchMaterialException
+//    {
+//        Material m = IMaterialMapper.instance().getMaterial("universal 190mm højre");
+//        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
+//    }
+//    
+//    public LineItem venstrebeslag(float length) throws NoSuchMaterialException
+//    {
+//        Material m = IMaterialMapper.instance().getMaterial("universal 190mm venstre");
+//        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
+//    }
+//    
+//    public LineItem stolpe(float length) throws NoSuchMaterialException
+//    {
+//        Material m = IMaterialMapper.instance().getMaterial("97x97mm trykimp. Stolpe");
+//        return new LineItem(m, calculateQuantityOfStolper(length), m.getPrice()*calculateQuantityOfStolper(length));
+//        
+//    }
     
-    public LineItem højrebeslag(float length) throws NoSuchMaterialException
-    {
-        Material m = IMaterialMapper.instance().getMaterial("universal 190mm højre");
-        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
-    }
-    
-    public LineItem venstrebeslag(float length) throws NoSuchMaterialException
-    {
-        Material m = IMaterialMapper.instance().getMaterial("universal 190mm venstre");
-        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
-    }
-    
-    public LineItem stolpe(float length) throws NoSuchMaterialException
-    {
-        Material m = IMaterialMapper.instance().getMaterial("97x97mm trykimp. Stolpe");
-        return new LineItem(m, calculateQuantityOfStolper(length), m.getPrice()*calculateQuantityOfStolper(length));
-        
-    }
-    
-    public LineItem spær(float length, float width) throws NoSuchMaterialException
-    {
-        LineItem l = null;
-        Material m;
-        
-        //width of the carport less than 2, get the material with length 2
-        if(width <= 2)
-        {
-            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 2m");
-            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
-        }
-        //width of the carport less than 4, get the material with length 4
-        if(width > 2 && width <= 4)
-        {
-            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 4m");
-            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
-        }
-         //width of the carport less than 6, get the material with length 6
-        if(width > 4 && width <=6)
-        {
-            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 6m");
-            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
-        }
-        //width of the carport less than 8, get the material with length 8
-        if(width > 6 && width <=8)
-        {
-            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m");
-            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
-        }
-        return l;
-    }
+//    public LineItem spær(float length, float width) throws NoSuchMaterialException
+//    {
+//        LineItem l = null;
+//        Material m;
+//        
+//        //width of the carport less than 2, get the material with length 2
+//        if(width <= 2)
+//        {
+//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 2m");
+//            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
+//        }
+//        //width of the carport less than 4, get the material with length 4
+//        if(width > 2 && width <= 4)
+//        {
+//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 4m");
+//            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
+//        }
+//         //width of the carport less than 6, get the material with length 6
+//        if(width > 4 && width <=6)
+//        {
+//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 6m");
+//            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
+//        }
+//        //width of the carport less than 8, get the material with length 8
+//        if(width > 6 && width <=8)
+//        {
+//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m");
+//            l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
+//        }
+//        return l;
+//    }
     public LineItem spærForRemmen(float length) throws NoSuchMaterialException
     {
         LineItem l = null;
@@ -163,28 +163,28 @@ public class CalculateBOM
         
         if(length > 6)
         {
-             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m");
+             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m", 800);
              m.setDescription(desc);
              l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
         }
-        if(length > 4 && length <= 6)
-        {
-            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 6m");
-            m.setDescription(desc);
-            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
-        }
-        if(length > 2 && length <= 4)
-        {
-            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 4m");
-            m.setDescription(desc);
-            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
-        }
-        if(length == 2)
-        {
-            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 2m");
-            m.setDescription(desc);
-            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
-        }
+//        if(length > 4 && length <= 6)
+//        {
+//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 6m");
+//            m.setDescription(desc);
+//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
+//        }
+//        if(length > 2 && length <= 4)
+//        {
+//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 4m");
+//            m.setDescription(desc);
+//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
+//        }
+//        if(length == 2)
+//        {
+//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 2m");
+//            m.setDescription(desc);
+//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
+//        }
         return l;
     }
 }

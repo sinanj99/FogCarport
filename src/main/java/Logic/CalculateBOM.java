@@ -92,17 +92,24 @@ public class CalculateBOM
         }
         return quantity;
     }
+    public int calculateQuantityOfSpærForRemmen()
+    {
+        //1 spær is used for each side of the carport
+        return 2;
+    }
     
     public LineItem brædderbolt(float length) throws NoSuchMaterialException
     {
         Material m = IMaterialMapper.instance().getMaterial("10x120mm brædderbolt");
         return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
     }
+    
     public LineItem højrebeslag(float length) throws NoSuchMaterialException
     {
         Material m = IMaterialMapper.instance().getMaterial("universal 190mm højre");
         return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
     }
+    
     public LineItem venstrebeslag(float length) throws NoSuchMaterialException
     {
         Material m = IMaterialMapper.instance().getMaterial("universal 190mm venstre");
@@ -144,6 +151,39 @@ public class CalculateBOM
         {
             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m");
             l = new LineItem(m, calculateQuantityOfSpær(length), m.getPrice()*calculateQuantityOfSpær(length));
+        }
+        return l;
+    }
+    public LineItem spærForRemmen(float length) throws NoSuchMaterialException
+    {
+        LineItem l = null;
+        Material m;
+        
+        String desc = "Remme i sider, sadles ned i stolper";
+        
+        if(length > 6)
+        {
+             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 8m");
+             m.setDescription(desc);
+             l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length > 4 && length <= 6)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 6m");
+            m.setDescription(desc);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length > 2 && length <= 4)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 4m");
+            m.setDescription(desc);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
+        }
+        if(length == 2)
+        {
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. 2m");
+            m.setDescription(desc);
+            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), m.getPrice()*calculateQuantityOfSpærForRemmen());
         }
         return l;
     }

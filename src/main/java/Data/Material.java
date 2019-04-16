@@ -41,6 +41,10 @@ public class Material {
     public String getUnit() {
         return unit;
     }
+    public String getDescription()
+    {
+        return description;
+    }
 
     public int getPrice() {
         return price;
@@ -49,10 +53,15 @@ public class Material {
     public void setPrice(int price) {
         this.price = price;
     }
+    
+    public void setDescription(String desc)
+    {
+        this.description = desc;
+    }
 
     @Override
     public String toString() {
-        return "Material{" + "id=" + id + ", name=" + name + ", length=" + length + ", unit=" + unit + ", price=" + price + '}';
+        return "Material{" + "id=" + id + ", name=" + name + ", length=" + length + ", unit=" + unit +  ", description=" + description + ", price=" + price + '}';
     }
     
     

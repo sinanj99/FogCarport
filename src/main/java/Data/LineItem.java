@@ -14,6 +14,7 @@ public class LineItem {
     private final Material material;
     private final int qty;
     private final int price;
+    
 
     public LineItem(Material material, int qty, int price)
     {

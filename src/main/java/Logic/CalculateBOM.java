@@ -15,7 +15,7 @@ import Data.IMaterialMapper;
  */
 public class CalculateBOM
 {
-    public int calculateQuantityOfBrædderbolt(float length)
+    public int calculateQuantityOfBrædderbolt(int length)
     {
         //two brædderbolte per stolpe
         return calculateQuantityOfStolper(length)*2;
@@ -31,15 +31,73 @@ public class CalculateBOM
         return calculateQuantityOfSpær(length);
     }
    
-    
-    //carport must be of atleast length 2m and max 8m
-    public int calculateQuantityOfStolper(float length)
+    public int calculateQuantityOfUndersternbrædderForFrontAndBack(int width)
     {
-        //Convert the input containingen meter as the unit to centimeter
-        float lengthInCM = length * 100;
+        int quantity = 0;
         
+        if(width < 250)
+        {
+            // 1 is enough for each side
+            quantity = 2;
+        }
+        if(width >= 250 && width <= 500)
+        {
+            // 2 is needed for each side
+            quantity =4;
+        }
+        if(width > 500 && width < 750)
+        {
+            quantity = 6;
+        }
+        return quantity;
+    }
+    public int calculateQuantityOfUndersternbrædderForSides(int length)
+    {
+        int quantity = 0;
+        
+        if(length < 250)
+        {
+            // 1 is enough for each side
+            quantity = 2;
+        }
+        if(length >= 250 && length <= 500)
+        {
+            // 2 is needed for each side
+            quantity =4;
+        }
+        if(length > 500 && length < 750)
+        {
+            // 3 is needed for each side
+            quantity = 6;
+        }
+        return quantity;
+    }
+    public int calculateQuantityOfOversternbrædderForFront(int width)
+    {
+        //divided by 2 because only the front is needed, not the back
+        return calculateQuantityOfUndersternbrædderForFrontAndBack(width) / 2;
+    }
+    public int calculateQuantityOfOversternbrædderForSides(int length)
+    {
+        //amount of oversternbrædder is eqaul to the amount of understernbrædder
+        return calculateQuantityOfUndersternbrædderForSides(length);
+    }
+    public int calculateQuantityOfVandbrætForFront(int width)
+    {
+        //divided by 2 because only the front is needed, not the back
+        return calculateQuantityOfUndersternbrædderForFrontAndBack(width) / 2;
+    }
+    public int calculateQuantityOfVandbrædtForSides(int length)
+    {
+        //amount of oversternbrædder is eqaul to the amount of understernbrædder
+        return calculateQuantityOfUndersternbrædderForSides(length);
+    }
+    
+    
+    public int calculateQuantityOfStolper(int length)
+    {
         //check if carport is to small to have other stolper than the corner stolpe
-        if(lengthInCM <= 250)
+        if(length <= 250)
         {
             //the amount of cornerStolper
             return 4;
@@ -51,7 +109,7 @@ public class CalculateBOM
         int numberOfSpacesBewteenStolpe = 1;
         
         //get the space bewteen stolpe at one of the side
-        float SpaceBetweenStolpe = lengthInCM - (widthOfStolpe * (quantity/2));
+        float SpaceBetweenStolpe = length - (widthOfStolpe * (quantity/2));
         //250 is the limit og how much space must be between stolper
         while(SpaceBetweenStolpe > 250)
         {
@@ -59,7 +117,7 @@ public class CalculateBOM
             quantity = quantity + 2;
             numberOfSpacesBewteenStolpe = numberOfSpacesBewteenStolpe * 2;
             
-            SpaceBetweenStolpe = (lengthInCM - (widthOfStolpe * (quantity/2))) / numberOfSpacesBewteenStolpe;
+            SpaceBetweenStolpe = (length - (widthOfStolpe * (quantity/2))) / numberOfSpacesBewteenStolpe;
         }
         return quantity;
     }
@@ -67,8 +125,6 @@ public class CalculateBOM
     //A carport should be minimun 2m length max 8m
     public int calculateQuantityOfSpær(int length)
     {
-        
-        
         //the fronst and back spær
         int quantity = 2;
         float widthOfSpær = 4.5f;
@@ -98,30 +154,31 @@ public class CalculateBOM
         return 2;
     }
     
-//    public LineItem brædderbolt(float length) throws NoSuchMaterialException
-//    {
-//        Material m = IMaterialMapper.instance().getMaterial("10x120mm brædderbolt");
-//        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
-//    }
+    public LineItem brædderbolt(int length) throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("10x120mm brædderbolt");
+        return new LineItem(m, calculateQuantityOfBrædderbolt(length), "Til montering af rem på stolper", m.getPrice()*calculateQuantityOfBrædderbolt(length));
+    }
+ 
+    public LineItem højrebeslag(int length) throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("universal 190mm højre");
+        return new LineItem(m, calculateQuantityOfHøjreBeslag(length), "Til montering af spær på rem", m.getPrice()*calculateQuantityOfHøjreBeslag(length));
+    }
 //    
-//    public LineItem højrebeslag(float length) throws NoSuchMaterialException
-//    {
-//        Material m = IMaterialMapper.instance().getMaterial("universal 190mm højre");
-//        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
-//    }
+    public LineItem venstrebeslag(int length) throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("universal 190mm venstre");
+        return new LineItem(m, calculateQuantityOfVenstrebeslag(length), "Til montering af spær på rem", m.getPrice()*calculateQuantityOfVenstrebeslag(length));
+    }
 //    
-//    public LineItem venstrebeslag(float length) throws NoSuchMaterialException
-//    {
-//        Material m = IMaterialMapper.instance().getMaterial("universal 190mm venstre");
-//        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
-//    }
-//    
-//    public LineItem stolpe(int length) throws NoSuchMaterialException
-//    {
-//        Material m = IMaterialMapper.instance().getMaterial("97x97mm trykimp. Stolpe",null);
-//        return new LineItem(m, calculateQuantityOfStolper(length), m.getPrice()*calculateQuantityOfStolper(length));
-//        
-//    }
+    public LineItem stolpe(int length) throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("97x97mm trykimp. Stolpe");
+        return new LineItem(m, calculateQuantityOfStolper(length), "Stolper, nedgraves 90cm i jord", m.getPrice()*calculateQuantityOfStolper(length));
+        
+    }
+    
     
     public LineItem spær(int length, int width) throws NoSuchMaterialException
     {
@@ -323,5 +380,35 @@ public class CalculateBOM
         }
 
         return l;
+    }
+    public LineItem understernbrædderForFrontAndBack(int width) throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("25x200mm trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfUndersternbrædderForFrontAndBack(width), "understernbrædder til forende og bagende", m.getPrice()*calculateQuantityOfUndersternbrædderForFrontAndBack(width));
+    }
+    public LineItem understernBrædderForSides(int length) throws NoSuchMaterialException
+    {
+         Material m = IMaterialMapper.instance().getMaterial_("25x200mm trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfUndersternbrædderForSides(length), "understernbrædder til siderne", m.getPrice()*calculateQuantityOfUndersternbrædderForSides(length));
+    }
+    public LineItem oversternbrædderForFront(int width) throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("25x125m trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfOversternbrædderForFront(width), "oversternbrædder for siderne", m.getPrice()*calculateQuantityOfOversternbrædderForFront(width));
+    }
+    public LineItem oversternbrædderForSides(int length) throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("25x125m trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfOversternbrædderForSides(length), "oversternbrædder for siderne", m.getPrice()*calculateQuantityOfOversternbrædderForSides(length));
+    }
+    public LineItem vandbrætForFront(int width) throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("19x100mm trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfVandbrætForFront(width), "vandbrædt på stern i forenden", m.getPrice()*calculateQuantityOfVandbrætForFront(width));
+    }
+    public LineItem vandbrætForSides(int length) throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("19x100mm trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfVandbrædtForSides(length), "vandbrædt på stern i siderne", m.getPrice()*calculateQuantityOfVandbrædtForSides(length));
     }
 }

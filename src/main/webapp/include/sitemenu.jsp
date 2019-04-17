@@ -4,7 +4,7 @@
     <a class="right d-none d-md-block" href="register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a>
     <a class="right d-none d-md-block" href="login.jsp"> <i class="fas fa-sign-in-alt"></i>    Log ind</a>
 </div>
-<div id="smallnav" class="d-none d-md-none smallnav justify-content-center">
+<div id="smallnav" class="d-none d-md-none smallnav">
     <div class="smallnavrow">
         <a class="" href="register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a><br>
         <hr style="background-color: #dbdeff;">
@@ -14,8 +14,8 @@
 <script type="text/javascript">
     var a = 0;
     function displayNav() {
+        var smallnav = document.getElementById("smallnav");
         if (a === 0) {
-            var smallnav = document.getElementById("smallnav");
             smallnav.classList.remove("d-none");
             a = 1;
         } else if (a === 1) {

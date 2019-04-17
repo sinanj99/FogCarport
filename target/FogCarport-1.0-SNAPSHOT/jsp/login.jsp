@@ -15,14 +15,14 @@
                     </div>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-center">
-                    <input class="btn" type="submit" value="Log ind">
+                    <input class="btn nicebtn" type="submit" value="Log ind">
                 </div>
             </form>
             <form class="newform2" action="register.jsp">
-                <p>Ikke allerede medlem?</p>
+                <p style="color: #0f0c28">Ikke allerede medlem?</p>
                 <div class="row">
                     <div class="col-sm-12 d-flex justify-content-center">
-                        <input class="btn" type="submit" value="Registrer">
+                        <input class="btn notmemberbtn" type="submit" value="Registrer">
                     </div>
                 </div>
             </form>

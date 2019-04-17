@@ -12,7 +12,7 @@ body, html
 }
 .background2
 {
-    background-color: rgb(244, 248, 249);
+    background-color: #f4f8f9;
 }
 .image
 {
@@ -22,24 +22,24 @@ body, html
 #nav
 {
     z-index: 1;
-    background-color: rgb(15, 12, 40);
+    background-color: #0f0c28;
     position: fixed;
     width: 100%;
     top: 0;
-    box-shadow: 0 0 10px -5px black; 
+    box-shadow: 0 0 10px -5px #000; 
 }
 #nav a
 {
     padding: 20px;
-    color: rgb(219, 222, 255);
+    color: #dbdeff;
     text-decoration: none;
     display: block;
 }
 
 #nav a:hover
 {
-    background-color: rgb(219, 222, 255);
-    color: rgb(15, 12, 40);
+    background-color: #dbdeff;
+    color: #0f0c28;
 }
 
 .left
@@ -50,7 +50,8 @@ body, html
 {
     float: right;
 }
-.btn
+
+.nicebtn
 {
     margin: 10px;
     border: 1px solid silver;
@@ -58,12 +59,30 @@ body, html
     width: 170px;
     color: white;
 }
-.btn:hover
+
+.nicebtn:hover
 {
-    background-color: rgb(219, 222, 255);
-    border: 1px solid rgb(219, 222, 255);
-    color: rgb(15, 12, 40);
+    background-color: #dbdeff;
+    border: 1px solid #dbdeff;
+    color: #0f0c28;
 }
+
+.notmemberbtn
+{
+    margin: 10px;
+    border: 1px solid #0f0c28;
+    height: 50px;
+    width: 170px;
+    color: #0f0c28;
+}
+
+.notmemberbtn:hover
+{
+    background-color: #0f0c28;
+    border: 1px solid #0f0c28;
+    color: #fff;
+}
+
 h1
 {
     font-size: 35px;

@@ -21,7 +21,7 @@ public class TestCalculateBOMMethods
 //        System.out.println(quan);
         
 
-        LineItem l = c.spærForRemmen(8.0f);
+        LineItem l = c.vandbrætForSides(510);
         
         System.out.println(l.getMaterial());
         System.out.println(l.getQty());

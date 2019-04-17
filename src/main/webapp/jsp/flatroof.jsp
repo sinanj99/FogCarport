@@ -17,7 +17,7 @@
                     <% b = 210;
                         for (int i = 0; i < 18; i += 1) {
                             b += 30;%>
-                    <option id="widthOption<%=i%>"><%=b%></option>
+                    <option><%=b%></option>
                     <%}%>
                 </select>
                 Carport længde
@@ -26,7 +26,7 @@
                     <% b = 210;
                         for (int i = 0; i < 18; i += 1) {
                             b += 30;%>
-                    <option id="lengthOption<%=i%>"><%=b%></option>
+                    <option><%=b%></option>
                     <%}%>
                 </select>
                 Tagtype
@@ -47,7 +47,7 @@
                     <% a=180;
                         for (int i = 0; i < 18; i += 1) {
                             a += 30;%>
-                    <option> <%= a%> </option>
+                    <option id="widthOption<%=i%>"> <%= a%> </option>
                     <% }%>
                 </select>
 
@@ -56,7 +56,7 @@
                     <% a=180;
                         for (int i = 0; i < 18; i += 1) {
                             a += 30;%>
-                    <option> <%= a%> </option>
+                    <option id="lengthOption<%=i%>"> <%= a%> </option>
                     <% }%>
                 </select>
             </form>

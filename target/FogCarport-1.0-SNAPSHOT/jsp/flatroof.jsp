@@ -42,8 +42,8 @@
                     <option value="2">Nej</option>
                 </select>
                 
-                Skur bredde
-                <select id="shedWidth" class="inputbig d-none">
+                <label id="shedWidthLabel" style="margin-bottom: 0px;" class="d-none">Skur bredde</label>
+                <select id="shedWidth" class="inputbig d-none" class="d-none">
                     <option value="n/a">Vælg</option>
                     <% a=180;
                         for (int i = 0; i < 18; i += 1) {
@@ -52,7 +52,7 @@
                     <% }%>
                 </select>
 
-                Skur længde
+                <label id="shedLengthLabel" style="margin-bottom: 0px;" class="d-none">Skur længde</label>
                 <select id="shedLength" class="inputbig d-none">
                     <option value="n/a">Vælg</option>
                     <% a=180;
@@ -72,9 +72,13 @@
             if (shedChoice == 1) {
                 shedWidth.classList.remove("d-none");
                 shedLength.classList.remove("d-none");
+                document.getElementById("shedWidthLabel").classList.remove("d-none");
+                document.getElementById("shedLengthLabel").classList.remove("d-none");
             } else if (shedChoice == 2) {
                 shedWidth.classList.add("d-none");
                 shedLength.classList.add("d-none");
+                document.getElementById("shedWidthLabel").classList.add("d-none");
+                document.getElementById("shedLengthLabel").classList.add("d-none");
             }
         }
         function widthSubtract30()

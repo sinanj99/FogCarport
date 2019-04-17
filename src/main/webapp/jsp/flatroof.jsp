@@ -17,7 +17,7 @@
                     <% b = 210;
                         for (int i = 0; i < 18; i += 1) {
                             b += 30;%>
-                    <option value="<%=i%>"><%=b%></option>
+                    <option value="<%=i+1%>"><%=b%></option>
                     <%}%>
                 </select>
                 Carport længde
@@ -26,7 +26,7 @@
                     <% b = 210;
                         for (int i = 0; i < 18; i += 1) {
                             b += 30;%>
-                    <option value="<%=i%>"><%=b%></option>
+                    <option value="<%=i+1%>"><%=b%></option>
                     <%}%>
                 </select>
                 Tagtype
@@ -79,6 +79,11 @@
         }
         function widthSubtract30()
         {
+            var shedLengthOptions = document.querySelectorAll("#shedWidth option");
+            shedLengthOptions.forEach(shedOption => {
+                shedOption.disabled = false;
+            });
+            
             var chosenWidth = document.getElementById("carportWidth").value;
             for (i = chosenWidth; i <= 18; i++)
             {
@@ -88,8 +93,12 @@
         }
         function lengthSubtract30()
         {
+            var shedLengthOptions = document.querySelectorAll("#shedLength option");
+            shedLengthOptions.forEach(shedOption => {
+                shedOption.disabled = false;
+            });
+            
             var chosenLength = document.getElementById("carportLength").value;
-            console.log(chosenLength);
             for (i = chosenLength; i <= 18; i++)
             {
                 document.getElementById("lengthOption" + i).disabled = true;

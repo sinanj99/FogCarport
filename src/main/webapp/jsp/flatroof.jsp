@@ -12,21 +12,21 @@
                 <p> <b>Udfyld nedenstående omhyggeligt og klik på "Bestil tilbud"</b><br>
                     Felter markeret * SKAL udfyldes! </p>
                 Carport bredde
-                <select class="inputbig" id="carportWidth" onchange="widthSubtract30">
+                <select class="inputbig" id="carportWidth" onchange="widthSubtract30()">
                     <option value="n/a">Vælg</option>
                     <% b = 210;
                         for (int i = 0; i < 18; i += 1) {
                             b += 30;%>
-                    <option><%=b%></option>
+                    <option value="<%=i+1%>"><%=b%></option>
                     <%}%>
                 </select>
                 Carport længde
-                <select class="inputbig" id="carportWidth" onchange="lengthSubtract30">
+                <select class="inputbig" id="carportLength" onchange="lengthSubtract30()">
                     <option value="n/a">Vælg</option>
                     <% b = 210;
                         for (int i = 0; i < 18; i += 1) {
                             b += 30;%>
-                    <option><%=b%></option>
+                    <option value="<%=i+1%>"><%=b%></option>
                     <%}%>
                 </select>
                 Tagtype
@@ -77,19 +77,27 @@
         }
         function widthSubtract30()
         {
+            var shedWidthOptions = document.querySelectorAll("#shedDimensions option");
+            shedWidthOptions.forEach(shedOption => {
+                shedOption.disabled = false;
+            });
             var chosenWidth = document.getElementById("carportWidth").value;
-            for (i = chosenWidth - 1; i <= 18; i++)
+            for (var i = chosenWidth; i <= 18; i++)
             {
-                document.getElementById("widthOption" + i).classList.add("d-none");
+                document.getElementById("widthOption" + i).disabled = true;
             }
 
         }
         function lengthSubtract30()
         {
+            var shedLengthOptions = document.querySelectorAll("#shedDimensions2 option");
+            shedLengthOptions.forEach(shedOption => {
+                shedOption.disabled = false;
+            });
             var chosenLength = document.getElementById("carportLength").value;
-            for (i = chosenLength - 1; i <= 18; i++)
+            for (var i = chosenLength; i <= 18; i++)
             {
-                document.getElementById("lengthOption" + i).classList.add("d-none");
+                document.getElementById("lengthOption" + i).disabled = true;
             }
 
         }

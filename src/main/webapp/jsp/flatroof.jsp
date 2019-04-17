@@ -12,21 +12,21 @@
                 <p> <b>Udfyld nedenstående omhyggeligt og klik på "Bestil tilbud"</b><br>
                     Felter markeret * SKAL udfyldes! </p>
                 Carport bredde
-                <select class="inputbig" id="carportWidth" onchange="widthSubtract30">
+                <select class="inputbig" id="carportWidth" onchange="widthSubtract30()">
                     <option value="n/a">Vælg</option>
                     <% b = 210;
                         for (int i = 0; i < 18; i += 1) {
                             b += 30;%>
-                    <option><%=b%></option>
+                    <option value="<%=i%>"><%=b%></option>
                     <%}%>
                 </select>
                 Carport længde
-                <select class="inputbig" id="carportWidth" onchange="lengthSubtract30">
+                <select class="inputbig" id="carportLength" onchange="lengthSubtract30()">
                     <option value="n/a">Vælg</option>
                     <% b = 210;
                         for (int i = 0; i < 18; i += 1) {
                             b += 30;%>
-                    <option><%=b%></option>
+                    <option value="<%=i%>"><%=b%></option>
                     <%}%>
                 </select>
                 Tagtype
@@ -41,8 +41,9 @@
                     <option value="1">Ja</option>
                     <option value="2">Nej</option>
                 </select>
-
-                <select id="shedDimensions" class="inputbig d-none">
+                
+                Skur bredde
+                <select id="shedWidth" class="inputbig d-none">
                     <option value="n/a">Vælg</option>
                     <% a=180;
                         for (int i = 0; i < 18; i += 1) {
@@ -51,7 +52,8 @@
                     <% }%>
                 </select>
 
-                <select id="shedDimensions2" class="inputbig d-none">
+                Skur længde
+                <select id="shedLength" class="inputbig d-none">
                     <option value="n/a">Vælg</option>
                     <% a=180;
                         for (int i = 0; i < 18; i += 1) {
@@ -62,34 +64,35 @@
             </form>
         </div>
     </div>
-    <script>
+    <script type="text/javascript">
         function wantShed() {
             var shedChoice = document.getElementById("shedChoice").value;
-            var shedDimensions = document.getElementById("shedDimensions");
-            var shedDimensions2 = document.getElementById("shedDimensions2");
+            var shedWidth = document.getElementById("shedWidth");
+            var shedLength = document.getElementById("shedLength");
             if (shedChoice == 1) {
-                shedDimensions.classList.remove("d-none");
-                shedDimensions2.classList.remove("d-none");
+                shedWidth.classList.remove("d-none");
+                shedLength.classList.remove("d-none");
             } else if (shedChoice == 2) {
-                shedDimensions.classList.add("d-none");
-                shedDimensions2.classList.add("d-none");
+                shedWidth.classList.add("d-none");
+                shedLength.classList.add("d-none");
             }
         }
         function widthSubtract30()
         {
             var chosenWidth = document.getElementById("carportWidth").value;
-            for (i = chosenWidth - 1; i <= 18; i++)
+            for (i = chosenWidth; i <= 18; i++)
             {
-                document.getElementById("widthOption" + i).classList.add("d-none");
+                document.getElementById("widthOption" + i).disabled = true;
             }
 
         }
         function lengthSubtract30()
         {
             var chosenLength = document.getElementById("carportLength").value;
-            for (i = chosenLength - 1; i <= 18; i++)
+            console.log(chosenLength);
+            for (i = chosenLength; i <= 18; i++)
             {
-                document.getElementById("lengthOption" + i).classList.add("d-none");
+                document.getElementById("lengthOption" + i).disabled = true;
             }
 
         }

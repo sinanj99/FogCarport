@@ -41,8 +41,9 @@
                     <option value="1">Ja</option>
                     <option value="2">Nej</option>
                 </select>
-
-                <select id="shedDimensions" class="inputbig d-none">
+                
+                <label id="shedWidthLabel" style="margin-bottom: 0px;" class="d-none">Skur bredde</label>
+                <select id="shedWidth" class="inputbig d-none" class="d-none">
                     <option value="n/a">Vælg</option>
                     <% a=180;
                         for (int i = 0; i < 18; i += 1) {
@@ -51,7 +52,8 @@
                     <% }%>
                 </select>
 
-                <select id="shedDimensions2" class="inputbig d-none">
+                <label id="shedLengthLabel" style="margin-bottom: 0px;" class="d-none">Skur længde</label>
+                <select id="shedLength" class="inputbig d-none">
                     <option value="n/a">Vælg</option>
                     <% a=180;
                         for (int i = 0; i < 18; i += 1) {
@@ -62,27 +64,33 @@
             </form>
         </div>
     </div>
-    <script>
+    <script type="text/javascript">
         function wantShed() {
             var shedChoice = document.getElementById("shedChoice").value;
-            var shedDimensions = document.getElementById("shedDimensions");
-            var shedDimensions2 = document.getElementById("shedDimensions2");
+            var shedWidth = document.getElementById("shedWidth");
+            var shedLength = document.getElementById("shedLength");
             if (shedChoice == 1) {
-                shedDimensions.classList.remove("d-none");
-                shedDimensions2.classList.remove("d-none");
+                shedWidth.classList.remove("d-none");
+                shedLength.classList.remove("d-none");
+                document.getElementById("shedWidthLabel").classList.remove("d-none");
+                document.getElementById("shedLengthLabel").classList.remove("d-none");
             } else if (shedChoice == 2) {
-                shedDimensions.classList.add("d-none");
-                shedDimensions2.classList.add("d-none");
+                shedWidth.classList.add("d-none");
+                shedLength.classList.add("d-none");
+                document.getElementById("shedWidthLabel").classList.add("d-none");
+                document.getElementById("shedLengthLabel").classList.add("d-none");
             }
         }
         function widthSubtract30()
         {
-            var shedWidthOptions = document.querySelectorAll("#shedDimensions option");
-            shedWidthOptions.forEach(shedOption => {
+
+            var shedLengthOptions = document.querySelectorAll("#shedWidth option");
+            shedLengthOptions.forEach(shedOption => {
                 shedOption.disabled = false;
             });
+            
             var chosenWidth = document.getElementById("carportWidth").value;
-            for (var i = chosenWidth; i <= 18; i++)
+            for (i = chosenWidth; i <= 18; i++)
             {
                 document.getElementById("widthOption" + i).disabled = true;
             }
@@ -90,12 +98,14 @@
         }
         function lengthSubtract30()
         {
-            var shedLengthOptions = document.querySelectorAll("#shedDimensions2 option");
+
+            var shedLengthOptions = document.querySelectorAll("#shedLength option");
             shedLengthOptions.forEach(shedOption => {
                 shedOption.disabled = false;
             });
+            
             var chosenLength = document.getElementById("carportLength").value;
-            for (var i = chosenLength; i <= 18; i++)
+            for (i = chosenLength; i <= 18; i++)
             {
                 document.getElementById("lengthOption" + i).disabled = true;
             }

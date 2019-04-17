@@ -27,9 +27,11 @@
                     <%}%>
                 </select>
                 Redskabsrum?
-                <select onclick="myFuntion()" id="shedChoice" class="inputbig">
-                    <option onclick="myFuntion()" value="1">Ja</option>
-                    <option onclick="myFuntion()" value="2">Nej</option>
+                <!--Opdaterede til onchange, så hver gang der bliver valgt en ny option vil wantShed blive kørt-->
+                <select onchange="wantShed()" id="shedChoice" class="inputbig">
+                    <option value="n/a">Vælg</option>
+                    <option value="1">Ja</option>
+                    <option value="2">Nej</option>
                 </select>
                 <select id="shedDimensions" class="inputbig">
                     <option>nigga</option>
@@ -38,12 +40,17 @@
         </div>
     </div>
     <script>
-        function myFunction(){
-            var shedChoice = document.getElementById("shedChoice");
-            var isShed = shedChoice.options[shedChoice.selectedIndex].value;
-            if (isShed === 2)
-            {
-                document.getElementById("shedDimensions").style.display = "none";
+        function wantShed(){
+            var shedChoice = document.getElementById("shedChoice").value;
+            var shedDimensions =  document.getElementById("shedDimensions");
+            // Returner en liste med alle de elementer som indeholder classen d-none. 
+            //Vi bruger den til at sikre at vi kun kan tilføje d-none én gang på klasse shedDimension
+            var isDisabled = document.getElementsByClassName('d-none');
+
+            if (shedChoice == 2 && isDisabled.length == 0){
+               shedDimensions.classList.add("d-none");
+            }else if(shedChoice == 1 && isDisabled.length > 0){
+                shedDimensions.classList.remove("d-none");
             }
         }
     </script>

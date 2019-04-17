@@ -22,6 +22,10 @@
                 <option><%/*=r*/%></option>
                 <%}%>
             </select>
+            <select class="inputbig">
+                <option>Ja</option>
+                <option>Nej</option>
+            </select>
         </form>
     </div>
 </div>

@@ -19,6 +19,8 @@ public abstract class IMaterialMapper {
     }
     public abstract Material getMaterial(String name, int length) throws NoSuchMaterialException;
     
+    public abstract Material getMaterial_(String name) throws NoSuchMaterialException;
+    
     public abstract List<Material> getMaterials();
     
     public abstract void updatePrice(int price, int id) throws NoSuchMaterialException;

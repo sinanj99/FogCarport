@@ -20,12 +20,12 @@ public class CalculateBOM
         //two brædderbolte per stolpe
         return calculateQuantityOfStolper(length)*2;
     }
-     public int calculateQuantityOfHøjreBeslag(float length)
+     public int calculateQuantityOfHøjreBeslag(int length)
     {
         //one venstrebeslag per spær
         return calculateQuantityOfSpær(length);
     }
-    public int calculateQuantityOfVenstrebeslag(float length)
+    public int calculateQuantityOfVenstrebeslag(int length)
     {
         //one venstrebeslag per spær
         return calculateQuantityOfSpær(length);
@@ -65,10 +65,10 @@ public class CalculateBOM
     }
     
     //A carport should be minimun 2m length max 8m
-    public int calculateQuantityOfSpær(float length)
+    public int calculateQuantityOfSpær(int length)
     {
-        //Convert the input containingen meter as the unit to centimeter
-        float lengthInCM = length * 100;
+        
+        
         //the fronst and back spær
         int quantity = 2;
         float widthOfSpær = 4.5f;
@@ -78,7 +78,7 @@ public class CalculateBOM
         quantity = quantity + lastAddedSpær;
         // 2 = There is a space between the middle spær to the front spær, and a space between the middle spær and back spær
         int numberOfSpacesBetweenSpær = 2;
-        float spaceBetweenSpær = (lengthInCM - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+        float spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
         
         // 75 is the limit of how much space must be between spærene
         while(spaceBetweenSpær > 75)
@@ -88,7 +88,7 @@ public class CalculateBOM
             quantity = quantity + lastAddedSpær;
             // as a result the amount of spaces between spær also gets doubled every time
             numberOfSpacesBetweenSpær = numberOfSpacesBetweenSpær*2;
-            spaceBetweenSpær = (lengthInCM - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+            spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
         }
         return quantity;
     }
@@ -116,14 +116,14 @@ public class CalculateBOM
 //        return new LineItem(m, calculateQuantityOfBrædderbolt(length), m.getPrice()*calculateQuantityOfBrædderbolt(length));
 //    }
 //    
-//    public LineItem stolpe(float length) throws NoSuchMaterialException
+//    public LineItem stolpe(int length) throws NoSuchMaterialException
 //    {
-//        Material m = IMaterialMapper.instance().getMaterial("97x97mm trykimp. Stolpe");
+//        Material m = IMaterialMapper.instance().getMaterial("97x97mm trykimp. Stolpe",null);
 //        return new LineItem(m, calculateQuantityOfStolper(length), m.getPrice()*calculateQuantityOfStolper(length));
 //        
 //    }
     
-    public LineItem spær(float length, float width) throws NoSuchMaterialException
+    public LineItem spær(int length, int width) throws NoSuchMaterialException
     {
         LineItem l = null;
         Material m;
@@ -192,7 +192,7 @@ public class CalculateBOM
         }
         if(width == 600)
         {
-            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh.", 600);
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 600);
             l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
         }
         if(width == 630)
@@ -207,7 +207,7 @@ public class CalculateBOM
         }
         if(width == 690)
         {
-            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh.", 690);
+            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 690);
             l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice()*calculateQuantityOfSpær(length));
         }
         if(width == 720)
@@ -224,7 +224,7 @@ public class CalculateBOM
       
         return l;
     }
-    public LineItem spærForRemmen(float length) throws NoSuchMaterialException
+    public LineItem spærForRemmen(int length) throws NoSuchMaterialException
     {
         LineItem l = null;
         Material m;

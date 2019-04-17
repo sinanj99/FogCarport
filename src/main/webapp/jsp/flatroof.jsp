@@ -27,7 +27,6 @@
                     <%}%>
                 </select>
                 Redskabsrum?
-                <!--Opdaterede til onchange, så hver gang der bliver valgt en ny option vil wantShed blive kørt-->
                 <select onchange="wantShed()" id="shedChoice" class="inputbig">
                     <option value="n/a">Vælg</option>
                     <option value="1">Ja</option>
@@ -43,13 +42,9 @@
         function wantShed(){
             var shedChoice = document.getElementById("shedChoice").value;
             var shedDimensions =  document.getElementById("shedDimensions");
-            // Returner en liste med alle de elementer som indeholder classen d-none. 
-            //Vi bruger den til at sikre at vi kun kan tilføje d-none én gang på klasse shedDimension
-            var isDisabled = document.getElementsByClassName('d-none');
-
-            if (shedChoice == 2 && isDisabled.length == 0){
+            if (shedChoice == 2){
                shedDimensions.classList.add("d-none");
-            }else if(shedChoice == 1 && isDisabled.length > 0){
+            }else if(shedChoice == 1){
                 shedDimensions.classList.remove("d-none");
             }
         }

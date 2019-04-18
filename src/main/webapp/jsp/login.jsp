@@ -5,12 +5,14 @@
             <form class="newform">
                 <h1>Kontooplysninger</h1>
                 <div class="row">
-                    <div class="col-sm-12 d-flex justify-content-center">
+                    <div class="col-sm-12 d-flex flex-column align-items-center">
+                        <p class="p-0" style="width: 50%; color: white">Email</p>
                         <input style="width: 50%;" class="inputbig" type="text" placeholder="Email..." required>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 d-flex flex-column align-items-center">
+                        <p class="p-0" style="width: 50%; color: white">Adgangskode</p>
                         <input style="width: 50%;" class="inputbig" type="password" placeholder="Adgangskode..." required>
                     </div>
                 </div>
@@ -19,7 +21,7 @@
                 </div>
             </form>
             <form class="newform2" action="register.jsp">
-                <p style="color: #0f0c28">Ikke allerede medlem?</p>
+                <p style="color: #0f0c28; text-align: center;">Ikke allerede medlem?</p>
                 <div class="row">
                     <div class="col-sm-12 d-flex justify-content-center">
                         <input class="btn notmemberbtn" type="submit" value="Registrer">

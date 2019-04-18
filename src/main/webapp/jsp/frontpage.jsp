@@ -16,7 +16,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-6 d-flex flex-column align-items-center"><b>Fladt tag</b>
-                        <a class="d-flex justify-content-center align-items-center" href="#"><img src="/project/images/fladt.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
+                        <a class="d-flex justify-content-center align-items-center" href="flatroof.jsp"><img src="/project/images/fladt.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
                     </div>
 
                     <div class="col-sm-6 d-flex flex-column align-items-center"><b>Tag med rejsning</b>

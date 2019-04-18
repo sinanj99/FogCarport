@@ -114,13 +114,19 @@ h1
     text-align: center;
     margin: 20px;  
     font-family: 'PT Sans', sans-serif;
-    margin: 0;
+}
+h3
+{
+    margin: 30px;
+    text-align: center;
+    font-family: 'PT Sans', sans-serif;
 }
 p
 {
     padding-left: 2%; padding-right: 2%;
-    text-align: center;
+    text-align: left;
     color: black;
+    margin: 0;
 }
 .inputsmalll
 {
@@ -130,11 +136,25 @@ p
     width: 62.5%;
     margin-right: 2.5%;
 }
+.textsmall
+{
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 62.5%;
+    margin-right: 2.5%;
+}
 .inputsmallr
 {
     margin: 20px;
     height: 50px;
     padding-left: 10px;
+    width: 62.5%;
+    margin-left: 2.5%;
+}
+.textsmallr
+{
+    margin-top: 0;
+    margin-bottom: 0;
     width: 62.5%;
     margin-left: 2.5%;
 }
@@ -178,6 +198,10 @@ p
         margin-left: 10px;
         margin-right: 10px;
     }
+    .textsmallr
+    {
+        display: none;
+    }
 }
 .col-sm-12
 {
@@ -190,7 +214,6 @@ p
     padding-top: 50px;
     padding-bottom: 50px;
     color: white;
-    text-align: center;
     background-color: rgba(15, 12, 40, 0.8);
     box-shadow: 0 0 10px -5px black; 
 }

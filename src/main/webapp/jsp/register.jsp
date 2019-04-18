@@ -6,20 +6,39 @@
                 <h1 class="text-align-start">Adresseoplysninger</h1>
                 <div class="row">
                     <div class="col-sm-6 p-0 col-sm-6-l">
+                        <div class="textsmall">Fornavn</div>
+                    </div>
+                    <div class="col-sm-6 p-0 col-sm-6-r">
+                        <div class="textsmallr">Efternavn</div>
+                    </div>
+                    <div class="col-sm-6 p-0 col-sm-6-l">
                         <input class="inputsmalll" type="text" placeholder="Fornavn..." required>
+                    </div>
+                    <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
+                        <div class="textsmall">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
                         <input class="inputsmallr" type="text" placeholder="Efternavn..." required>
                     </div>
-                </div>
+                </div> 
                 <div class="row">
-                    <div class="col-sm-12 d-flex justify-content-center">
+                    <div class="col-sm-12 d-flex flex-column align-items-center">
+                        <p class="p-0" style="width: 65%; color: white">Adresse</p>
                         <input class="inputbig" type="text" placeholder="Adresse..." required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6 p-0 col-sm-6-l">
+                        <div class="textsmall">Postnummer</div>
+                    </div>
+                    <div class="col-sm-6 p-0 col-sm-6-r">
+                        <div class="textsmallr">By</div>
+                    </div>
+                    <div class="col-sm-6 p-0 col-sm-6-l">
                         <input class="inputsmalll" type="text" placeholder="Postnummer..." required>
+                    </div>
+                    <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
+                        <div class="textsmall">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
                         <input class="inputsmallr" type="text" placeholder="By..." required>
@@ -27,20 +46,31 @@
                 </div>    
                 <h1>Kontooplysninger</h1>
                 <div class="row">
-                    <div class="col-sm-12 d-flex justify-content-center">
+                    <div class="col-sm-12 d-flex flex-column align-items-center">
+                        <p class="p-0" style="width: 65%; color: white">Email</p>
                         <input class="inputbig" type="text" placeholder="Email..." required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" type="password" placeholder="Adgangskode..." required>
+                        <div class="textsmall">Adgangskode</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input class="inputsmallr" type="password" placeholder="Adgangskode igen..." required>
+                        <div class="textsmallr">Adgangskode igen</div>
                     </div>
-                </div>
+                    <div class="col-sm-6 p-0 col-sm-6-l">
+                        <input class="inputsmalll" type="password" placeholder="Adgangskode..." required>
+                    </div>
+                    <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
+                        <div class="textsmall">Adgangskode igen</div>
+                    </div>
+                    <div class="col-sm-6 p-0 col-sm-6-r">
+                        <input class="inputsmallr" type="text" placeholder="Adgandskode igen..." required>
+                    </div>
+                </div> 
                 <div class="row">
-                    <div class="col-sm-12 d-flex justify-content-center">
+                    <div class="col-sm-12 d-flex flex-column align-items-center">
+                        <p class="p-0" style="width: 65%; color: white">Email</p>
                         <select class="inputbig" required>
                             <option value="n/a">Vælg køn</option>
                             <option value="man">Mand</option>
@@ -53,7 +83,7 @@
                 </div>
             </form>
             <form class="newform2" action="login.jsp">
-                <p style="color: #0f0c28">Allerede medlem?</p>
+                <p style="color: #0f0c28; text-align: center;">Allerede medlem?</p>
                 <div class="row">
                     <div class="col-sm-12 d-flex justify-content-center">
                         <input class="btn notmemberbtn" type="submit" value="Log ind">

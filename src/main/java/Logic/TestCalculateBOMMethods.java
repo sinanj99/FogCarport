@@ -15,18 +15,31 @@ public class TestCalculateBOMMethods
 {
     public static void main(String[] args) throws NoSuchMaterialException
     {
-        CalculateBOM c = new CalculateBOM();
+        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         
-//        int quan = c.calculateQuantityOfBrædderbolt(7.7f);
+//        int quan = f.calculateQuantityOfBeslagskruer(450);
+//        System.out.println(c.calculateQuantityOfSpær(450));
 //        System.out.println(quan);
         
 
-        LineItem l = c.vandbrætForSides(510);
-        
-        System.out.println(l.getMaterial());
-        System.out.println(l.getQty());
-        System.out.println(l.getDescription());
-        System.out.println(l.getPrice());
+//        LineItem l = f.beslagskruer(720);
+//        
+//        System.out.println(l.getMaterial());
+//        System.out.println(l.getQty());
+//        System.out.println(l.getDescription());
+//        System.out.println(l.getPrice());
+
+          CalculateBOM c = new CalculateBOM();
+          
+          
+
+
+            for(int i = 0; i < c.generateFlatRoofCarportBOM(720, 690).size(); ++i)
+            {
+                System.out.println(c.generateFlatRoofCarportBOM(720, 690).get(i));
+            }
+
+            
         
         
         

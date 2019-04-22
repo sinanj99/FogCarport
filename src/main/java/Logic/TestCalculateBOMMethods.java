@@ -29,15 +29,19 @@ public class TestCalculateBOMMethods
 //        System.out.println(l.getDescription());
 //        System.out.println(l.getPrice());
 
-          CalculateBOM c = new CalculateBOM();
-          
-          
+//          CalculateBOM c = new CalculateBOM();
+//
+//            for(int i = 0; i < c.generateFlatRoofCarportBOM(720, 690).size(); ++i)
+//            {
+//                System.out.println(c.generateFlatRoofCarportBOM(720, 690).get(i));
+//            }
 
-
-            for(int i = 0; i < c.generateFlatRoofCarportBOM(720, 690).size(); ++i)
-            {
-                System.out.println(c.generateFlatRoofCarportBOM(720, 690).get(i));
-            }
+            ToolShedBOM t = new ToolShedBOM();
+            LineItem li = t.løsholterGalve(720);
+            System.out.println(li.getMaterial());
+            System.out.println(li.getQty());
+            System.out.println(li.getDescription());
+            System.out.println(li.getPrice());
 
             
         

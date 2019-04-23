@@ -16,6 +16,7 @@ public class TestCalculateBOMMethods
     public static void main(String[] args) throws NoSuchMaterialException
     {
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
+       
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);
 //        System.out.println(c.calculateQuantityOfSpær(450));
@@ -36,12 +37,14 @@ public class TestCalculateBOMMethods
 //                System.out.println(c.generateFlatRoofCarportBOM(720, 690).get(i));
 //            }
 
-            ToolShedBOM t = new ToolShedBOM();
-            LineItem li = t.løsholterGalve(720);
-            System.out.println(li.getMaterial());
-            System.out.println(li.getQty());
-            System.out.println(li.getDescription());
-            System.out.println(li.getPrice());
+//            ToolShedBOM t = new ToolShedBOM();
+//            LineItem li = t.løsholterGalve(720);
+//            System.out.println(li.getMaterial());
+//            System.out.println(li.getQty());
+//            System.out.println(li.getDescription());
+//            System.out.println(li.getPrice());
+
+        System.out.println(Math.ceil(10/Math.sqrt(4.5*4.5+5.1*5.1))*2);
 
             
         

@@ -13,7 +13,7 @@ import java.util.List;
  * @author sinanjasar
  */
 public abstract class IMaterialMapper {
-    //teknika
+    //teknika 2
     public static IMaterialMapper instance() {
         return MaterialMapper.getInstance();
     }

@@ -43,8 +43,8 @@ public class TestCalculateBOMMethods
 //            System.out.println(li.getQty());
 //            System.out.println(li.getDescription());
 //            System.out.println(li.getPrice());
-
-        System.out.println(FlatRoofCarportBOM.hulbåndAntal(450, 510));
+        double i = FlatRoofCarportBOM.hulbåndAntal(630, 720);
+        System.out.println(i);
 
             
         

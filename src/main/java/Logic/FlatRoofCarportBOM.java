@@ -160,14 +160,14 @@ public class FlatRoofCarportBOM {
      * @param width
      * @return the amount of peforated bands needed for the carport.
      */
-    static double hulbåndAntal(int length, int width) {
+    static double hulbåndAntal(double length, double width) {
         //length in meters
         double lengthM = length / 100; //4.5
         // width in meters
         double widthM = width / 100; // 5.1
         //Math.ceil = round up to nearest integer
         //Math.sqrt = square root
-        return Math.ceil(10 / Math.sqrt(lengthM * lengthM + widthM * widthM) * 2);
+        return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2) / 10);
     }
 
     public int calculateQuantityOfSpær(int length) {
@@ -232,7 +232,7 @@ public class FlatRoofCarportBOM {
         Material m;
 
         String desc = "Spær, monteres på rem";
-        
+
         for (int i = 240; i <= 750; i += 20) {
             if (length == i) {
                 m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", i);
@@ -312,7 +312,6 @@ public class FlatRoofCarportBOM {
 //            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 750);
 //            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
 //        }
-
         return l;
     }
 
@@ -451,8 +450,9 @@ public class FlatRoofCarportBOM {
         Material m = IMaterialMapper.instance().getMaterial_("19x100mm trykimp. brædt");
         return new LineItem(m, calculateQuantityOfVandbrædtForSides(length), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfVandbrædtForSides(length));
     }
+
     public LineItem hulbånd(int length) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("hulbånd 1x20 mm. 10 mtr.");
-        return new LineItem(m, calculateQuantityOfVandbrædtForSides(length), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfVandbrædtForSides(length)); 
+        return new LineItem(m, calculateQuantityOfVandbrædtForSides(length), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfVandbrædtForSides(length));
     }
 }

@@ -160,11 +160,11 @@ public class FlatRoofCarportBOM {
      * @param width
      * @return the amount of peforated bands needed for the carport.
      */
-    double hulbåndAntal(int length, int width) {
+    static double hulbåndAntal(int length, int width) {
         //length in meters
-        double lengthM = length / 10; //4.5
+        double lengthM = length / 100; //4.5
         // width in meters
-        double widthM = width / 10; // 5.1
+        double widthM = width / 100; // 5.1
         //Math.ceil = round up to nearest integer
         //Math.sqrt = square root
         return Math.ceil(10 / Math.sqrt(lengthM * lengthM + widthM * widthM) * 2);

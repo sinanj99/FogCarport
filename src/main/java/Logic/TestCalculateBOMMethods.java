@@ -44,7 +44,7 @@ public class TestCalculateBOMMethods
 //            System.out.println(li.getDescription());
 //            System.out.println(li.getPrice());
 
-        System.out.println(Math.ceil(10/Math.sqrt(4.5*4.5+5.1*5.1))*2);
+        System.out.println(FlatRoofCarportBOM.hulbåndAntal(450, 510));
 
             
         

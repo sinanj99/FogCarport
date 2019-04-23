@@ -40,4 +40,9 @@ public class LineItem {
     {
         return description;
     }
+    
+    @Override
+    public String toString() {
+        return "LineItem{" + "material=" + material + "qty=" + qty + "description=" + description + "price=" + price + '}';
+    }
 }

@@ -15,21 +15,29 @@ import Data.Material;
  */
 public class FlatRoofCarportBOM
 {
+    /**
+     * 
+     * @param length
+     * @return the amount of packages of bracket screws needed for the carport. 
+     */
     public int calculateQuantityOfBeslagskruer(int length)
     {
+        //Der skal som minimum bruges 1 pakke. 
         int packsNeeded = 1;
         int quantity = 0;
         
-        // three sides per beslag
+        // Tre sider per beslag. 
         int sidesOfVenstreBeslag = calculateQuantityOfVenstrebeslag(length)*3;
         int sidesOfHøjreBeslag = calculateQuantityOfHøjreBeslag(length)*3;
         
-        //There beslagskruer for each side
+        //Tre beslagsskruer per side.
         quantity = (sidesOfHøjreBeslag + sidesOfVenstreBeslag)*3;
         
         //2 beslagskruer for each spær the hulbånd crosses and the hulbånd does not croos front or back spær, therefor minus 2
         int quantityOfSpær = calculateQuantityOfSpær(length)-2;
-        quantity = quantity + quantityOfSpær*2 * 2;
+        
+        //*2 fordi der er to hulbånd og *2 fordi der er to skruer per beslag. 
+        quantity += quantityOfSpær*2 * 2;
         
         //250 is the amount of beslagskruer in a pack
         while(quantity > 250)
@@ -76,6 +84,11 @@ public class FlatRoofCarportBOM
         }
         return quantity;
     }
+    /**
+     * 
+     * @param length
+     * @return 
+     */
     public int calculateQuantityOfUndersternbrædderForSides(int length)
     {
         int quantity = 0;
@@ -118,7 +131,11 @@ public class FlatRoofCarportBOM
         return calculateQuantityOfUndersternbrædderForSides(length);
     }
     
-    
+    /**
+     * 
+     * @param length
+     * @return 
+     */
     public int calculateQuantityOfStolper(int length)
     {
         //check if carport is to small to have other stolper than the corner stolpe
@@ -133,9 +150,9 @@ public class FlatRoofCarportBOM
         float widthOfStolpe = 9.7f;
         int numberOfSpacesBewteenStolpe = 1;
         
-        //get the space bewteen stolpe at one of the side
-        float SpaceBetweenStolpe = length - (widthOfStolpe * (quantity/2));
-        //250 is the limit og how much space must be between stolper
+        //get the space between stolpe at one of the sides (in cm)
+        float SpaceBetweenStolpe = length - (widthOfStolpe * (quantity/2)); 
+        //250 is the limit of how much space must be between stolper
         while(SpaceBetweenStolpe > 250)
         {
             // add a stolpe for each side
@@ -150,13 +167,13 @@ public class FlatRoofCarportBOM
     
     public int calculateQuantityOfSpær(int length)
     {
-        //the fronst and back spær
+        //the front and back spær
         int quantity = 2;
         float widthOfSpær = 4.5f;
         
         // This is the first spær which get added between the front spær and back spær
         int lastAddedSpær = 1;
-        quantity = quantity + lastAddedSpær;
+        quantity += lastAddedSpær;
         // 2 = There is a space between the middle spær to the front spær, and a space between the middle spær and back spær
         int numberOfSpacesBetweenSpær = 2;
         float spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
@@ -165,8 +182,8 @@ public class FlatRoofCarportBOM
         while(spaceBetweenSpær > 75)
         {
             //number of added spær gets doubled everty time
-            lastAddedSpær = lastAddedSpær * 2;
-            quantity = quantity + lastAddedSpær;
+            lastAddedSpær *= 2;
+            quantity += lastAddedSpær;
             // as a result the amount of spaces between spær also gets doubled every time
             numberOfSpacesBetweenSpær = numberOfSpacesBetweenSpær*2;
             spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;

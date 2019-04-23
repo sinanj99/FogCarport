@@ -70,7 +70,7 @@
                 </div> 
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
-                        <p class="p-0" style="width: 65%; color: white">Email</p>
+                        <p class="p-0" style="width: 65%; color: white">Køn</p>
                         <select class="inputbig" required>
                             <option value="n/a">Vælg køn</option>
                             <option value="man">Mand</option>

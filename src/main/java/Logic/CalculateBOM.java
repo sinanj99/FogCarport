@@ -16,6 +16,9 @@ import java.util.ArrayList;
  */
 public class CalculateBOM
 {
+    //Dette er en test
+    //dette er en test mere
+    //en trejde test
     public ArrayList<LineItem> generateFlatRoofCarportBOM(int length, int width) throws NoSuchMaterialException
     {
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();

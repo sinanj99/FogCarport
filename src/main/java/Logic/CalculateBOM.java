@@ -42,10 +42,40 @@ public class CalculateBOM
         
         return listOfLineItems;
     }
-//    public ArrayList<LineItem> generateFlatRoofWihtToolShedBOM()
-//    {
-//        
-//    }
+    public ArrayList<LineItem> generateFlatRoofWihtToolShedBOM(int widthOfCarport, int lengthOfCarport, int widthOfToolShed, int lengthOfToolShed) throws NoSuchMaterialException
+    {
+        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
+        ToolShedBOM b = new ToolShedBOM();
+        
+        ArrayList listOfLineItems = new ArrayList();
+        
+        //Adds material related to the carport
+        listOfLineItems.add(f.beslagskruer(lengthOfCarport));
+        listOfLineItems.add(f.brædderbolt(lengthOfCarport));
+        listOfLineItems.add(f.højrebeslag(lengthOfCarport));
+        listOfLineItems.add(f.venstrebeslag(lengthOfCarport));
+        listOfLineItems.add(f.oversternbrædderForFront(widthOfCarport));
+        listOfLineItems.add(f.oversternbrædderForSides(lengthOfCarport));
+        listOfLineItems.add(f.spær(lengthOfCarport, widthOfCarport));
+        listOfLineItems.add(f.spærForRemmen(lengthOfCarport));
+        listOfLineItems.add(f.stolpe(lengthOfCarport));
+        listOfLineItems.add(f.understernBrædderForSides(lengthOfCarport));
+        listOfLineItems.add(f.understernbrædderForFrontAndBack(widthOfCarport));
+        listOfLineItems.add(f.vandbrætForFront(widthOfCarport));
+        listOfLineItems.add(f.vandbrætForSides(lengthOfCarport));
+        //mangler hulbånd, lægter, gajler, tagpplader
+        
+        //Adds materials related to tool shed
+        listOfLineItems.add(b.beklædning(widthOfToolShed, lengthOfToolShed));
+        listOfLineItems.add(b.lægteForDoor());
+        listOfLineItems.add(b.løsholterForSides(lengthOfToolShed));
+        listOfLineItems.add(b.løsholterGalve(widthOfToolShed));
+        listOfLineItems.add(b.stalddørsgreb());
+        listOfLineItems.add(b.tHængsel());
+        listOfLineItems.add(b.vinkelbeslag());
+        
+        return listOfLineItems;
+    }
 //    public ArrayList<LineItem> generateInclinedRoorBOM()
 //    {
 //        

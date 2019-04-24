@@ -351,9 +351,6 @@ values ("45x195mm spærtræ. ubh. ",240,"stk", 20),
 ("45x95mm reglar. ub.",690,"stk", 65),
 ("45x95mm reglar. ub.",720,"stk", 68);
 
-
-
-
 insert into CarportDB.material (name,  unit, price)
 values ("10x120mm brædderbolt","stk",  4),
 ("universal 190mm venstre","stk",  5),
@@ -363,3 +360,57 @@ values ("10x120mm brædderbolt","stk",  4),
 ("390mm t-hængsel","stk",  168),
 ("vinkelbeslag 35","stk",  4),
 ("hulbånd 1x20 mm. 10 mtr.", "rulle", 10);
+
+DROP TABLE IF EXISTS CarportDB.users;
+CREATE TABLE CarportDB.users (
+	user_id INT(50) NOT NULL AUTO_INCREMENT,
+	email VARCHAR(320) NOT NULL UNIQUE,
+	password VARCHAR(50) NOT NULL,
+	PRIMARY KEY (user_id),
+);
+
+DROP TABLE IF EXISTS CarportDB.users_personalinfo;
+CREATE TABLE CarportDB.users_address (
+	user_id INT(50) NOT NULL,
+	firstname VARCHAR(50) NOT NULL,
+	lastname VARCHAR(50) NOT NULL,
+	address VARCHAR(50) NOT NULL,
+  	zipcode INT(4) NOT NULL,
+	city VARCHAR(50) NOT NULL,
+	gender VARCHAR(1) NOT NULL, /* M/Y */
+	CONSTRAINT `users_address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
+);
+
+DROP TABLE IF EXISTS CarportDB.requests;
+CREATE TABLE CarportDB.requests (
+	request_id INT(50) NOT NULL AUTO_INCREMENT,
+	user_id int(50) NOT NULL,
+	dateplaced DATETIME NOT NULL,
+	dateaccepted DATETIME NOT NULL,
+  	price INT(10) NOT NULL,
+	PRIMARY KEY (request_id),
+	CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
+);
+
+DROP TABLE IF EXISTS CarportDB.sheds;
+CREATE TABLE CarportDB.sheds (
+	shed_id INT(50) NOT NULL AUTO_INCREMENT,
+	request_id INT(50) NOT NULL,
+  	width INT(50) NOT NULL,
+  	length INT(50) NOT NULL,
+	PRIMARY KEY (shed_id),
+	CONSTRAINT `sheds_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`)
+);
+
+DROP TABLE IF EXISTS CarportDB.carports;
+CREATE TABLE CarportDB.carports (
+	carport_id INT(50) NOT NULL AUTO_INCREMENT,
+	request_id INT(50) NOT NULL,
+	roof_id int(50) NOT NULL,
+	inclined int(1) NOT NULL,
+  	width INT(50) NOT NULL,
+  	length INT(50) NOT NULL,
+  	shed int(1) NOT NULL,
+	PRIMARY KEY (carport_id),
+	CONSTRAINT `carports_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`),
+);

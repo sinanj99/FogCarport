@@ -1,22 +1,23 @@
+<%@page import="Data.Roof"%>
+<%@page import="Data.IRoofMapper"%>
 <%@page import="java.util.List"%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
-<%List<String> roofs = (List<String>) session.getAttribute("rooflist");
-    int b;
+<%List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
 %>
-<body class="background2">
+<body onload="spaceForShed();" class="background2">
     <div class="container">
         <form class="standarddiv pl-0 pr-0 d-flex flex-column justify-content-center">
             <h3>Tilpas din carport</h3>
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Carportens bredde</p>
-                    <select required class="inputbig" id="carportWidth" onchange="widthSubtract30()">
+                    <select required class="inputbig" id="carportWidth" onchange="spaceForShed(); widthSubtract30();">
                         <option value="n/a">Vælg</option>
-                        <% b = 210;
-                            for (int i = 0; i < 18; i += 1) {
-                                b += 30;%>
-                        <option value="<%=i + 1%>"><%=b%> cm</option>
+                        <%
+                            for (int i = 240; i <= 750; i += 30) {
+                         %>
+                        <option value="<%=i%>" ><%=i%> cm</option>
                         <%}%>
                     </select>
                 </div>
@@ -24,12 +25,12 @@
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Carportens længde</p>
-                    <select required class="inputbig" id="carportLength" onchange="lengthSubtract30()">
+                    <select required class="inputbig" id="carportLength" onchange="spaceForShed(); lengthSubtract30();">
                         <option value="n/a">Vælg</option>
-                        <% b = 210;
-                            for (int i = 0; i < 18; i += 1) {
-                                b += 30;%>
-                        <option value="<%=i + 1%>"><%=b%> cm</option>
+                        <%
+                            for (int i = 240; i <= 750; i += 30) {
+                        %>
+                        <option value="<%=i%>" ><%=i%> cm</option>
                         <%}%>
                     </select>
                 </div>
@@ -38,18 +39,18 @@
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Tagtype</p>
                     <select required class="inputbig">
-                        <% /* for (String r : roofs) */ {%>
-                        <option><%/*=r*/%></option>
-                        <%}%>
+                        <% for (Roof r : roofs) {%>
+                        <option value="<%= r.getName() %>"><%= r.getName() %></option>
+                        <% } %>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
-                    <p class="p-0" style="width: 65%;">Redskabsrum?</p>
+                    <p class="p-0" style="width: 65%;"><label id="shedLabel">Redskabsrum?</label></p>
                     <select required onchange="wantShed()" id="shedChoice" class="inputbig">
                         <option value="n/a">Vælg</option>
-                        <option value="1">Ja</option>
+                        <option id="yes" value="1">Ja</option>
                         <option value="2">Nej</option>
                     </select>
                 </div>
@@ -59,10 +60,10 @@
                     <p class="p-0" style="width: 65%;" ><label id="shedWidthLabel" style="margin-bottom: 0px;" class="d-none">Redskabsrummets bredde</label></p>
                     <select required id="shedWidth" class="inputbig d-none" class="d-none">
                         <option value="n/a">Vælg</option>
-                        <% b = 180;
-                            for (int i = 0; i < 18; i += 1) {
-                                b += 30;%>
-                        <option id="widthOption<%=i%>"> <%= b%> cm </option>
+                        <%
+                            for (int i = 210; i <= 720; i += 30) {
+                        %>
+                        <option value="<%=i%>" id="widthOption<%=i%>" > <%=i%> cm</option>
                         <% }%>
                     </select>
                 </div>
@@ -72,10 +73,10 @@
                     <p class="p-0" style="width: 65%;" ><label id="shedLengthLabel" style="margin-bottom: 0px;" class="d-none">Redskabsrummets Længde</label></p>
                     <select required id="shedLength" class="inputbig d-none" class="d-none">
                         <option value="n/a">Vælg</option>
-                        <% b = 120;
-                            for (int i = 0; i <= 18; i += 1) {
-                                b += 30;%>
-                        <option id="lengthOption<%=i%>"> <%= b%> cm </option>
+                        <%
+                            for (int i = 150; i <= 690; i += 30) {
+                        %>
+                        <option value="<%=i%>" id="lengthOption<%=i%>" > <%=i%> cm</option>
                         <% }%>
                     </select>
                 </div>
@@ -86,7 +87,7 @@
                     <p class="p-0" style="width: 65%;">Brug gemte oplysninger?</p>
                     <select required onchange="wantAdress()" id="adressChoice" class="inputbig">
                         <option value="n/a">Vælg</option>
-                        <option value="1">Ja</option>
+                        <option id="yes" value="1">Ja</option>
                         <option value="2">Nej</option>
                     </select>
                 </div>
@@ -165,6 +166,10 @@
     </div>
     <script type="text/javascript">
         function wantAdress() {
+            if(document.getElementById("adressChoice").value == "n/a")
+            {
+                document.getElementById("adress").classList.add("d-none");
+            }
             var shedChoice = document.getElementById("adressChoice").value;
             var adress = document.getElementById("adress");
             if (shedChoice == 1) {
@@ -173,7 +178,33 @@
                 adress.classList.remove("d-none");
             }
         }
+        function spaceForShed() {
+
+            if (document.getElementById("carportLength").value == "n/a"
+                    || document.getElementById("carportWidth").value == "n/a")
+            //explanation:
+            //you shouldn't be able to choose a toolshed, if a length or width is not specified. 
+            {
+                document.getElementById("shedChoice").classList.add("d-none");
+                document.getElementById("shedLabel").classList.add("d-none");
+
+            } else if (document.getElementById("carportLength").value < 390) 
+            // explanation:
+            // minimum length for toolshed is 150cm
+            // minimum length for full carport is 240cm (excluding toolshed) for there to be space for a car. 
+            // therefore the carport must be at least 390 long (240+150) for there to be space for a tool shed. 
+            {
+                document.getElementById("shedLabel").classList.add("d-none");
+                document.getElementById("shedChoice").classList.add("d-none");
+
+            } else
+            {
+                document.getElementById("shedLabel").classList.remove("d-none");
+                document.getElementById("shedChoice").classList.remove("d-none");
+            }
+        }
         function wantShed() {
+
             var shedChoice = document.getElementById("shedChoice").value;
             var shedWidth = document.getElementById("shedWidth");
             var shedLength = document.getElementById("shedLength");
@@ -187,33 +218,41 @@
                 shedLength.classList.add("d-none");
                 document.getElementById("shedWidthLabel").classList.add("d-none");
                 document.getElementById("shedLengthLabel").classList.add("d-none");
+            } else if (shedChoice == "n/a") {
+                shedWidth.classList.add("d-none");
+                shedLength.classList.add("d-none");
+                document.getElementById("shedWidthLabel").classList.add("d-none");
+                document.getElementById("shedLengthLabel").classList.add("d-none");
             }
         }
         function widthSubtract30()
         {
-
             var shedLengthOptions = document.querySelectorAll("#shedWidth option");
             shedLengthOptions.forEach(shedOption => {
                 shedOption.disabled = false;
             });
 
             var chosenWidth = document.getElementById("carportWidth").value;
-            for (i = chosenWidth; i <= 18; i++)
+            var shedWidth = document.getElementById("shedWidth");
+            shedWidth.selectedIndex = 0;
+            for (i = chosenWidth; i <= 720; i+= 30)
             {
-                document.getElementById("widthOption" + i).disabled = true;
+                document.getElementById("widthOption"+ i).disabled = true;
             }
-
         }
         function lengthSubtract30()
         {
-
+            
             var shedLengthOptions = document.querySelectorAll("#shedLength option");
             shedLengthOptions.forEach(shedOption => {
                 shedOption.disabled = false;
             });
-
+            var shedLength = document.getElementById("shedLength");
+            shedLength.selectedIndex = 0;
+            
             var chosenLength = document.getElementById("carportLength").value;
-            for (i = chosenLength; i <= 18; i++)
+            var maxLength = chosenLength-210;
+            for (i = maxLength; i <= 750; i+= 30)
             {
                 document.getElementById("lengthOption" + i).disabled = true;
             }

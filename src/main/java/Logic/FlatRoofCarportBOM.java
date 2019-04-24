@@ -158,8 +158,7 @@ public class FlatRoofCarportBOM {
      * with the square root of length^2 + width^2 (hypothesis) and multiplying
      * this with 2 as 2 bands are needed.
      *
-     * @param length
-     * @param width
+     * @param req
      * @return the amount of peforated bands needed for the carport.
      */
     public double hulbåndAntal(Request req) {

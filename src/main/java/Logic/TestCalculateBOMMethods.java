@@ -43,8 +43,8 @@ public class TestCalculateBOMMethods
 //            System.out.println(li.getQty());
 //            System.out.println(li.getDescription());
 //            System.out.println(li.getPrice());
-        double i = f.hulbåndAntal(630, 720);
-        System.out.println(i);
+//        double i = f.hulbåndAntal(630, 720);
+//        System.out.println(i);
 
             
 

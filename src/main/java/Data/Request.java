@@ -27,6 +27,34 @@ public class Request {
         this.shedWidth = shedWidth;
         this.shedLength = shedLength;
     }
+
+    public boolean isInclined() {
+        return inclined;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public Roof getRoofType() {
+        return roofType;
+    }
+
+    public boolean isShed() {
+        return shed;
+    }
+
+    public int getShedWidth() {
+        return shedWidth;
+    }
+
+    public int getShedLength() {
+        return shedLength;
+    }
     
     
 }

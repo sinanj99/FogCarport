@@ -14,9 +14,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LoginCommand implements Command {
 
-    public LoginCommand() {
-    }
-
     @Override
     public String execute(HttpServletRequest request, Manager manager) {
         return "login.jsp";

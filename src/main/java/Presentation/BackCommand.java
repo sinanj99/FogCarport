@@ -6,6 +6,7 @@
 package Presentation;
 
 import Logic.Manager;
+import Logic.NoSuchRoofException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -18,7 +19,7 @@ public class BackCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, Manager manager) {
+    public String execute(HttpServletRequest request, Manager manager) throws NoSuchRoofException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

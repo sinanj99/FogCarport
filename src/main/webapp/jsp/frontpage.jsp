@@ -16,11 +16,17 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-6 d-flex flex-column align-items-center"><b>Fladt tag</b>
-                        <a class="d-flex justify-content-center align-items-center" href="flatroof.jsp"><img src="/project/images/fladt.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
+                        <form class="d-flex flex-column align-items-center" method="get" action="FrontController">
+                        <input type="submit" value="vælg"> <img src="/project/images/fladt.jpg" style="width: 60%; height: auto; margin-top: 20px;">
+                        <input type="hidden" name="command" value="flatroof">
+                        </form>
                     </div>
 
                     <div class="col-sm-6 d-flex flex-column align-items-center"><b>Tag med rejsning</b>
-                        <a class="d-flex justify-content-center align-items-center" href="#"><img src="/project/images/rejsning.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
+                        <form class="d-flex flex-column align-items-center" method="get" action="FrontController">
+                        <input type="submit" value="vælg"> <img src="/project/images/fladt.jpg" style="width: 60%; height: auto; margin-top: 20px;">
+                        <input type="hidden" name="command" value="inclineroof">
+                        </form>
                     </div>
                 </div>
                 <hr>

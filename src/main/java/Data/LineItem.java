@@ -11,7 +11,8 @@ package Data;
  */
 public class LineItem {
     
-    private final Material material;
+    private Material material = null;
+    private Roof roof = null;
     private final int qty;
     private final int price;
     private final String description;
@@ -22,6 +23,13 @@ public class LineItem {
         this.qty = qty;
         this.description = description;
         this.price = material.getPrice() * qty;
+    }
+
+    public LineItem(Roof roof, int qty, String description, int price) {
+        this.roof = roof;
+        this.qty = qty;
+        this.price = price;
+        this.description = description;
     }
 
     public Material getMaterial() {

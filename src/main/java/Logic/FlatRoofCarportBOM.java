@@ -8,6 +8,8 @@ package Logic;
 import Data.IMaterialMapper;
 import Data.LineItem;
 import Data.Material;
+import Data.Request;
+import Data.Roof;
 
 /**
  *
@@ -160,14 +162,24 @@ public class FlatRoofCarportBOM {
      * @param width
      * @return the amount of peforated bands needed for the carport.
      */
-    static double hulbåndAntal(double length, double width) {
-        //length in meters
-        double lengthM = length / 100; //4.5
+    public double hulbåndAntal(Request req) {
+        double lengthM = 0;
+        // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
+        if (req.isShed()) {
+            lengthM = req.getLength() - req.getShedLength() - spaceBetweenSpær(req.getLength()) / 100;
+        } else {
+            //length in meters
+            lengthM = (req.getLength() - spaceBetweenSpær(req.getLength())) / 100; //4.5
+        }
         // width in meters
-        double widthM = width / 100; // 5.1
+        double widthM = req.getWidth() / 100; // 5.1
         //Math.ceil = round up to nearest integer
         //Math.sqrt = square root
         return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2) / 10);
+    }
+
+    static int tagpladeAntal(int length) {
+        return length / 30; //?
     }
 
     public int calculateQuantityOfSpær(int length) {
@@ -192,6 +204,30 @@ public class FlatRoofCarportBOM {
             spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
         }
         return quantity;
+    }
+
+    public float spaceBetweenSpær(int length) {
+        //the front and back spær
+        int quantity = 2;
+        float widthOfSpær = 4.5f;
+
+        // This is the first spær which get added between the front spær and back spær
+        int lastAddedSpær = 1;
+        quantity += lastAddedSpær;
+        // 2 = There is a space between the middle spær to the front spær, and a space between the middle spær and back spær
+        int numberOfSpacesBetweenSpær = 2;
+        float spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+
+        // 75 is the limit of how much space must be between spærene
+        while (spaceBetweenSpær > 75) {
+            //number of added spær gets doubled everty time
+            lastAddedSpær *= 2;
+            quantity += lastAddedSpær;
+            // as a result the amount of spaces between spær also gets doubled every time
+            numberOfSpacesBetweenSpær *= 2;
+            spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+        }
+        return spaceBetweenSpær;
     }
 
     public int calculateQuantityOfSpærForRemmen() {
@@ -239,79 +275,17 @@ public class FlatRoofCarportBOM {
                 l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen());
             }
         }
+        return l;
+    }
 
-//        if (width == 240) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 240);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 270) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 270);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 300) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 300);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 330) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 330);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 360) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 360);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 390) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 390);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 420) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 420);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 450) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 450);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 480) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 480);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 510) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 510);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 540) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 540);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 570) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 570);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 600) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 600);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 630) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 630);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 660) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 660);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 690) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 690);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 720) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 720);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
-//        if (width == 750) {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 750);
-//            l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
-//        }
+    public LineItem roof(int length, Roof roof) {
+        LineItem l = null;
+        String desc = "Tagplader monteres på spær";
+        for (int i = 260; i <= 770; i += 30) {
+            if (length + 20 == i) {
+                l = new LineItem(roof, tagpladeAntal(length), desc, roof.getPrice() * tagpladeAntal(length));
+            }
+        }
         return l;
     }
 
@@ -327,97 +301,6 @@ public class FlatRoofCarportBOM {
                 l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen());
             }
         }
-//        if(length == 240)
-//        {
-//             m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 240);
-//             l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 270)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 270);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 300)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 300);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 330)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 330);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 360)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 360);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 390)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 390);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 420)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 420);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 450)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 450);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 480)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 480);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 510)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 510);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 540)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 540);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 570)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 570);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 600)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 600);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 630)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 630);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 660)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 660);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 690)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 690);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 720)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 720);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-//        if(length == 750)
-//        {
-//            m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", 750);
-//            l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice()*calculateQuantityOfSpærForRemmen());
-//        }
-
         return l;
     }
 
@@ -451,8 +334,8 @@ public class FlatRoofCarportBOM {
         return new LineItem(m, calculateQuantityOfVandbrædtForSides(length), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfVandbrædtForSides(length));
     }
 
-    public LineItem hulbånd(int length) throws NoSuchMaterialException {
+    public LineItem hulbånd(Request req) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("hulbånd 1x20 mm. 10 mtr.");
-        return new LineItem(m, calculateQuantityOfVandbrædtForSides(length), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfVandbrædtForSides(length));
+        return new LineItem(m, (int) hulbåndAntal(req), "Til vindkryds på spær", m.getPrice() * (int) hulbåndAntal(req));
     }
 }

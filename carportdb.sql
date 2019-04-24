@@ -292,3 +292,74 @@ insert into CarportDB.rooftype (name,  price, inclined) values
 ("Eternittag B7 - Rødflammet - 690", 0,  1),
 ("Eternittag B7 - Rødflammet - 720", 0,  1),
 ("Eternittag B7 - Rødflammet - 750", 0,  1);
+
+DROP TABLE IF EXISTS material;
+
+CREATE TABLE CarportDB.material (
+  material_id INT(50) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  length INT(10),
+  unit VARCHAR(10)  NOT NULL,
+  price INT(10) NOT NULL,
+  PRIMARY KEY (material_id));
+
+
+
+insert into CarportDB.material (name, length, unit,  price)
+values ("45x195mm spærtræ. ubh. ",240,"stk", 20),
+("45x195mm spærtræ. ubh. ",270,"stk",  23),
+("45x195mm spærtræ. ubh. ",300,"stk",  26),
+("45x195mm spærtræ. ubh. ",330,"stk",  29),
+("45x195mm spærtræ. ubh. ",360,"stk",  32),
+("45x195mm spærtræ. ubh. ",390,"stk",  35),
+("45x195mm spærtræ. ubh. ",420,"stk",  38),
+("45x195mm spærtræ. ubh. ",450,"stk",  41),
+("45x195mm spærtræ. ubh. ",480,"stk",  44),
+("45x195mm spærtræ. ubh. ",510,"stk",  47),
+("45x195mm spærtræ. ubh. ",540,"stk",  50),
+("45x195mm spærtræ. ubh. ",570,"stk",  53),
+("45x195mm spærtræ. ubh. ",600,"stk",  56),
+("45x195mm spærtræ. ubh. ",630,"stk",  59),
+("45x195mm spærtræ. ubh. ",660,"stk",  62),
+("45x195mm spærtræ. ubh. ",690,"stk",  65),
+("45x195mm spærtræ. ubh. ",720,"stk",  68),
+("45x195mm spærtræ. ubh. ",750,"stk",  71),
+("97x97mm trykimp. Stolpe",300,"stk",  35),
+("25x200mm trykimp. brædt",250,"stk", 22),
+("25x125m trykimp. brædt",250,"stk", 22),
+("19x100mm trykimp. brædt",250,"stk", 22),
+("19x100mm trykimp. brædt",210,"stk", 2),
+("38x73mm lægte. ubh.",420,"stk", 45),
+("45x95mm reglar. ub.",150,"stk", 11),
+("45x95mm reglar. ub.",180,"stk", 14),
+("45x95mm reglar. ub.",210,"stk", 17),
+("45x95mm reglar. ub.",240,"stk", 20),
+("45x95mm reglar. ub.",270,"stk", 23),
+("45x95mm reglar. ub.",300,"stk", 26),
+("45x95mm reglar. ub.",330,"stk", 29),
+("45x95mm reglar. ub.",360,"stk", 32),
+("45x95mm reglar. ub.",390,"stk", 35),
+("45x95mm reglar. ub.",420,"stk", 38),
+("45x95mm reglar. ub.",450,"stk", 41),
+("45x95mm reglar. ub.",480,"stk", 44),
+("45x95mm reglar. ub.",510,"stk", 47),
+("45x95mm reglar. ub.",540,"stk", 50),
+("45x95mm reglar. ub.",570,"stk", 53),
+("45x95mm reglar. ub.",600,"stk", 56),
+("45x95mm reglar. ub.",630,"stk", 59),
+("45x95mm reglar. ub.",660,"stk", 62),
+("45x95mm reglar. ub.",690,"stk", 65),
+("45x95mm reglar. ub.",720,"stk", 68);
+
+
+
+
+insert into CarportDB.material (name,  unit, price)
+values ("10x120mm brædderbolt","stk",  4),
+("universal 190mm venstre","stk",  5),
+("universal 190mm højre","stk",  5),
+("4.0x50mm beslagskruer 250 stk","pakke",  30),
+("50x75mm stalddørsgreb","sæt",  135),
+("390mm t-hængsel","stk",  168),
+("vinkelbeslag 35","stk",  4),
+("hulbånd 1x20 mm. 10 mtr.", "rulle", 10);

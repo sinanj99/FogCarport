@@ -21,11 +21,11 @@ public class CalculateBOM
     //Dette er en test
     //dette er en test mere
     //en trejde test
-    public ArrayList<LineItem> generateFlatRoofCarportBOM(boolean inclined, int width, int length, Roof rooftype, boolean shed, int shedWidth, int shedLength) throws NoSuchMaterialException
+    public ArrayList<LineItem> generateFlatRoofCarportBOM(int user_id, boolean inclined, int width, int length, Roof rooftype, boolean shed, int shedWidth, int shedLength) throws NoSuchMaterialException
     {
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         ArrayList listOfLineItems = new ArrayList();
-        Request r = new Request(inclined, width, length, rooftype, shed, shedWidth, shedLength);
+        Request r = new Request(user_id, inclined, width, length, rooftype, shed, shedWidth, shedLength);
         listOfLineItems.add(f.beslagskruer(length));
         listOfLineItems.add(f.brædderbolt(length));
         listOfLineItems.add(f.højrebeslag(length));

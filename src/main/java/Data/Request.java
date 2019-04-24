@@ -10,6 +10,7 @@ package Data;
  * @author Obaydah Mohamad
  */
 public class Request {
+    private int user_id;
     private boolean inclined;
     private int width;
     private int length;
@@ -18,7 +19,8 @@ public class Request {
     private int shedWidth;
     private int shedLength;
 
-    public Request(boolean isInclined, int width, int length, Roof roofType, boolean shed, int shedWidth, int shedLength) {
+    public Request(int user_id, boolean isInclined, int width, int length, Roof roofType, boolean shed, int shedWidth, int shedLength) {
+        this.user_id = user_id;
         this.inclined = isInclined;
         this.width = width;
         this.length = length;
@@ -54,6 +56,11 @@ public class Request {
 
     public int getShedLength() {
         return shedLength;
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" + "user_id=" + user_id + ", inclined=" + inclined + ", width=" + width + ", length=" + length + ", roofType=" + roofType + ", shed=" + shed + ", shedWidth=" + shedWidth + ", shedLength=" + shedLength + '}';
     }
     
     

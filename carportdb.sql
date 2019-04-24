@@ -394,7 +394,7 @@ CREATE TABLE CarportDB.requests (
 	request_id INT(50) NOT NULL AUTO_INCREMENT,
 	user_id int(50) NOT NULL,
 	dateplaced DATETIME NOT NULL,
-	dateaccepted DATETIME NOT NULL,
+	dateaccepted DATETIME DEFAULT NULL,
   	price INT(10) NOT NULL,
 	PRIMARY KEY (request_id),
 	CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)

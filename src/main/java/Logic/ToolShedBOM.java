@@ -15,6 +15,42 @@ import Data.Material;
  */
 public class ToolShedBOM
 {
+    public int calculateQuantityForBeklædning(int widthOfShed, int lengthOfShed)
+    {
+        int widthOfBrædt = 10;
+        int spaceBetweenBrædt = 5;
+        
+        // --- calculate amount of brædt needed for beklædning of first lag --- 
+        
+        // one brædt for every 15cm for each side.
+        int brædtNeededForWidth = (widthOfShed / (widthOfBrædt + spaceBetweenBrædt)) * 2;
+        int brædtNeededForLength = (lengthOfShed / (widthOfBrædt + spaceBetweenBrædt)) * 2;
+        
+        int quantityOfBrædtNeededForFirstLag = brædtNeededForWidth + brædtNeededForLength;
+        
+        // --- calculate amount of brædt needed for beklædning of second lag ---
+        
+        //The starting point for the first brædt for this lag is widthOfBrædt - spaceBetweenbrædt / 2.
+        int widthOfSecondLag = widthOfShed - (widthOfBrædt - spaceBetweenBrædt / 2); // widthOfShed - 7,50 
+        int lengthOfSecondLag = lengthOfShed - (widthOfBrædt - spaceBetweenBrædt / 2); // lenghtOfShed - 7,50
+        
+        int brædtNeededForSecondLagWidth = (widthOfSecondLag / (widthOfBrædt + spaceBetweenBrædt)) * 2;
+        int brædtNeededForSecondLagLength = (lengthOfSecondLag / (widthOfBrædt + spaceBetweenBrædt)) * 2;
+                
+        int quantityOfBrædtNeededForSecondLag = brædtNeededForSecondLagWidth + brædtNeededForSecondLagLength;
+        
+        // ------------
+        
+        int totalQuantity = quantityOfBrædtNeededForFirstLag + quantityOfBrædtNeededForSecondLag;
+        return totalQuantity;
+        
+    }
+    public LineItem beklædning(int widthOfShed, int lengthOfShed) throws NoSuchMaterialException
+    {
+         Material m = IMaterialMapper.instance().getMaterial("19x100mm trykimp. brædt", 210);
+         return new LineItem(m, calculateQuantityForBeklædning(widthOfShed, lengthOfShed), "Til beklædning af skur 1 på 2", m.getPrice()*calculateQuantityForBeklædning(widthOfShed, lengthOfShed));
+    }
+    
     public LineItem løsholterGalve(int widthOfToolShed) throws NoSuchMaterialException
     {
         LineItem l = null;
@@ -156,10 +192,9 @@ public class ToolShedBOM
          Material m = IMaterialMapper.instance().getMaterial_("390mm t-hængsel");
          return new LineItem(m, 2, "Til dør i skur", m.getPrice()*2);
     }
-//    public LineItem vinkelbeslag() throws NoSuchMaterialException
-//    {
-//        //Materialet er ikke sat ind i databasen endnu.
-//        Material m = IMaterialMapper.instance().getMaterial_("vinkelbeslag 35");
-//        return new LineItem(m, 32, "Til montering af løsholter til skur", m.getPrice()*32);
-//    }
+    public LineItem vinkelbeslag() throws NoSuchMaterialException
+    {
+        Material m = IMaterialMapper.instance().getMaterial_("vinkelbeslag 35");
+        return new LineItem(m, 32, "Til montering af løsholter til skur", m.getPrice()*32);
+    }
   }

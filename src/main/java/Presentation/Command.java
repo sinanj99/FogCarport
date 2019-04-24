@@ -6,6 +6,7 @@
 package Presentation;
 
 import Logic.Manager;
+import Logic.NoSuchRoofException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -14,5 +15,5 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Command {
     
-    String execute(HttpServletRequest request, Manager manager);
+    String execute(HttpServletRequest request, Manager manager) throws NoSuchRoofException;
 }

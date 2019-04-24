@@ -6,6 +6,7 @@
 package Presentation;
 
 import Logic.Manager;
+import Logic.NoSuchRoofException;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author sinanjasar
  */
-@WebServlet(name = "FrontController", urlPatterns = {"/FrontController/*"})
+@WebServlet(name = "FrontController", urlPatterns = {"/jsp/FrontController/*"})
 public class FrontController extends HttpServlet {
 
     private final Manager manager = new Manager();
@@ -26,11 +27,10 @@ public class FrontController extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) {
         String key = request.getParameter("command");
         Command command = CommandFactory.from(key);
-        String target = command.execute(request, manager);
-
         try {
+            String target = command.execute(request, manager);
             request.getRequestDispatcher(target).forward(request, response);
-        } catch (ServletException | IOException ex) {
+        } catch (NoSuchRoofException | ServletException | IOException ex) {
             System.out.println(ex.getMessage());
         }
     }

@@ -6,7 +6,7 @@
 package Logic;
 
 import Data.IMaterialMapper;
-import Data.IRoofMapper;
+import Data.IRequestMapper;
 import Data.Roof;
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class Manager {
     private final IMaterialMapper mapper = IMaterialMapper.instance();
-    private final IRoofMapper mapper2 = IRoofMapper.instance();
+    private final IRequestMapper mapper2 = IRequestMapper.instance();
     
     public List<Roof> allFlatRoofs() throws NoSuchRoofException {
         return mapper2.getRoofs();

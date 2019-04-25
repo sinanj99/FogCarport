@@ -281,7 +281,7 @@ public class FlatRoofCarportBOM {
 
         String desc = "Spær, monteres på rem";
 
-        for (int i = 240; i <= 750; i += 20) {
+        for (int i = 240; i <= 750; i += 30) {
             if (length == i) {
                 m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", i);
                 l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen());
@@ -307,7 +307,7 @@ public class FlatRoofCarportBOM {
 
         String desc = "Remme i sider, sadles ned i stolper";
 
-        for (int i = 240; i <= 750; i += 20) {
+        for (int i = 240; i <= 750; i += 30) {
             if (length == i) {
                 m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", i);
                 l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen());

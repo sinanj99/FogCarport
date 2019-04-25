@@ -231,7 +231,8 @@
             shedLengthOptions.forEach(shedOption => {
                 shedOption.disabled = false;
             });
-
+            var shedWidth = document.getElementById("shedWidth");
+            shedWidth.selectedIndex = 0;
             var chosenWidth = document.getElementById("carportWidth").value;
             chosenWidth = chosenWidth - 0; // doesnt work if you do not do this. 
             for (i = chosenWidth; i <= 720; i+= 30)

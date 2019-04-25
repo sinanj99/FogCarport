@@ -38,7 +38,7 @@ public class TestCalculateBOMMethods
 //            }
 
             ToolShedBOM t = new ToolShedBOM();
-            LineItem li = t.løsholterGalve(720);
+            LineItem li = t.løsholterGalve(510);
             System.out.println(li.getMaterial());
             System.out.println(li.getQty());
             System.out.println(li.getDescription());

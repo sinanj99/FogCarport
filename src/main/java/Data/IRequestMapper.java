@@ -31,5 +31,5 @@ public abstract class IRequestMapper {
     public abstract List<Roof> getRoofs() throws NoSuchRoofException;
     public abstract void updateRoofPrice(int roof_id, int price) throws NoSuchRoofException;
     public abstract void insertRoof(String name, int price, boolean inclined);
-   
+    public abstract void insertDimensions(int id, int length);
 }

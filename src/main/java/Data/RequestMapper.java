@@ -270,4 +270,17 @@ class RequestMapper extends IRequestMapper{
             e.printStackTrace();
         }
     }
+    @Override
+    public void insertDimensions(int id, int length)
+    {
+        try{
+            String query = "INSERT INTO rooflength (roof_id, roof_length) VALUES (?, ?);";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, id);
+            pstmt.setInt(2, length);
+            pstmt.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

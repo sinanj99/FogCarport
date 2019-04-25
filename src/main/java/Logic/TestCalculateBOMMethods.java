@@ -6,6 +6,7 @@
 package Logic;
 
 import Data.LineItem;
+import Data.Request;
 
 /**
  *
@@ -37,15 +38,15 @@ public class TestCalculateBOMMethods
 //                System.out.println(c.generateFlatRoofCarportBOM(720, 690).get(i));
 //            }
 
-            ToolShedBOM t = new ToolShedBOM();
-            LineItem li = t.løsholterGalve(510);
-            System.out.println(li.getMaterial());
-            System.out.println(li.getQty());
-            System.out.println(li.getDescription());
-            System.out.println(li.getPrice());
-//        double i = f.hulbåndAntal(630, 720);
-//        System.out.println(i);
+//            ToolShedBOM t = new ToolShedBOM();
+//            LineItem li = t.løsholterGalve(510);
+//            System.out.println(li.getMaterial());
+//            System.out.println(li.getQty());
+//            System.out.println(li.getDescription());
+//            System.out.println(li.getPrice()); 
+//        System.out.println(i); 
 
+        System.out.println(Math.ceil((Math.sqrt((3.9 * 3.9) + (2.4 * 2.4)) * 2) / 10));
             
 
 

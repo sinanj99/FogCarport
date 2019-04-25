@@ -7,7 +7,10 @@ package Presentation;
 
 import Logic.Manager;
 import Logic.NoSuchRoofException;
+import Logic.UserNotFoundException;
+import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -19,8 +22,9 @@ public class BackCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, Manager manager) throws NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws NoSuchRoofException, SQLException, UserNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     
 }

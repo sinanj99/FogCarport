@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data;
+package Logic;
 
 /**
  *
  * @author sinanjasar
  */
-public class Seller extends User {
-    
-    public Seller(String email, String password) {
-        super(email, password);
-    }
+public class UserNotFoundException extends Exception{
     
 }

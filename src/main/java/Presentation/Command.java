@@ -7,7 +7,12 @@ package Presentation;
 
 import Logic.Manager;
 import Logic.NoSuchRoofException;
+import Logic.UserNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -15,5 +20,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Command {
     
-    String execute(HttpServletRequest request, Manager manager) throws NoSuchRoofException;
+    String execute(HttpServletRequest request) throws ServletException,
+            NoSuchRoofException, SQLException, UserNotFoundException, IOException;
 }

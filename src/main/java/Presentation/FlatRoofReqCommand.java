@@ -10,6 +10,7 @@ import Logic.Manager;
 import Logic.NoSuchRoofException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -21,8 +22,8 @@ public class FlatRoofReqCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, Manager manager) throws NoSuchRoofException {
-        request.setAttribute("roofs", manager.allFlatRoofs());
+    public String execute(HttpServletRequest request) throws NoSuchRoofException {
+        request.setAttribute("roofs", Manager.allFlatRoofs());
         return "flatroof.jsp";
     }
     

@@ -7,7 +7,9 @@ package Presentation;
 
 import Logic.Manager;
 import Logic.NoSuchRoofException;
+import Logic.UserNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,16 +23,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "FrontController", urlPatterns = {"/jsp/FrontController/*"})
 public class FrontController extends HttpServlet {
 
-    private final Manager manager = new Manager();
-
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) {
         String key = request.getParameter("command");
         Command command = CommandFactory.from(key);
         try {
-            String target = command.execute(request, manager);
+            String target = command.execute(request);
             request.getRequestDispatcher(target).forward(request, response);
-        } catch (NoSuchRoofException | ServletException | IOException ex) {
+        } catch (NoSuchRoofException | ServletException | IOException | UserNotFoundException | SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }

@@ -99,8 +99,8 @@ class RequestMapper extends IRequestMapper{
                 if(rs.getInt("inclined") == 1) inclined = true;
                 if(rs.getInt("shed") == 1) shed = true;
                 try {
-                    cp = new Carport(roof_id, inclined, width, length, shed, getRequestShed(rs.getInt("request_id")));
-                } catch (NoSuchShedException e) {
+                    cp = new Carport(getRoof(roof_id), inclined, width, length, shed, getRequestShed(rs.getInt("request_id")));
+                } catch (NoSuchShedException | NoSuchRoofException e) {
                     
                 }
             }

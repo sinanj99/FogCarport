@@ -7,6 +7,8 @@ package Data;
 
 /**
  * Mirrors material-table in DB
+ * Vi burde have lavet Material som en superklasse, da det kun er træ- og tagplader,
+ * der har en længde. Men fuck det der er for meget der skal ændres så. 
  * @author sinanjasar
  */
 public class Material {

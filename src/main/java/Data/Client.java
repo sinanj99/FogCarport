@@ -9,6 +9,17 @@ package Data;
  *
  * @author sinanjasar
  */
-public class Client {
+public class Client extends User {
     
+    private PersonalInfo info;
+
+    public Client(PersonalInfo info, String email, String password) {
+        super(email, password);
+        this.info = info;
+    }
+
+    public PersonalInfo getInfo() {
+        return info;
+    }
+   
 }

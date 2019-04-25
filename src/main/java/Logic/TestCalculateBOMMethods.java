@@ -39,11 +39,13 @@ public class TestCalculateBOMMethods
 //            System.out.println(li.getMaterial());
 //            System.out.println(li.getQty());
 //            System.out.println(li.getDescription());
-Request req = new Request(1, "", "", 10, new Carport(1, false, 500, 600, false, null));
-            System.out.println(f.hulbånd(req));
+//Request req = new Request(1, "", "", 10, new Carport(1, false, 500, 600, false, null));
+//
+//            System.out.println(f.venstrebeslag(req.getCarport().getLength()));
             
             
-
+String str = "/jsp/flatroof.jsp";
+        System.out.println(str.substring(1).split("/")[1]);
 
 
             

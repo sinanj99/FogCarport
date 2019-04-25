@@ -5,9 +5,13 @@
  */
 package Logic;
 
+import Data.Client;
 import Data.IMaterialMapper;
 import Data.IRequestMapper;
+import Data.IUserMapper;
 import Data.Roof;
+import Data.User;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -15,11 +19,14 @@ import java.util.List;
  * @author sinanjasar
  */
 public class Manager {
-
-    private final IMaterialMapper materials = IMaterialMapper.instance();
-    private final IRequestMapper roofs = IRequestMapper.instance();
     
-    public List<Roof> allFlatRoofs() throws NoSuchRoofException {
-        return roofs.getRoofs();
+    public static List<Roof> allFlatRoofs() throws NoSuchRoofException {
+        return IRequestMapper.instance().getRoofs();
+    }
+    public static void insertClient(Client client) throws SQLException {
+        IUserMapper.instance().insertClient(client);
+    }
+    public static User getUser(String email) throws UserNotFoundException{
+        return IUserMapper.instance().getUser(email);
     }
 }

@@ -2,22 +2,23 @@
     <body class="background1">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
         <div class="container d-flex flex-column justify-content-center">
-            <form class="newform">
+            <form class="newform" method="post" action="FrontController">
                 <h1>Kontooplysninger</h1>
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 50%; color: white">Email</p>
-                        <input style="width: 50%;" class="inputbig" type="text" placeholder="Email..." required>
+                        <input style="width: 50%;" class="inputbig" name="email" type="text" placeholder="Email..." required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 50%; color: white">Adgangskode</p>
-                        <input style="width: 50%;" class="inputbig" type="password" placeholder="Adgangskode..." required>
+                        <input style="width: 50%;" class="inputbig" name="pword" type="password" placeholder="Adgangskode..." required>
                     </div>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-center">
                     <input class="btn nicebtn" type="submit" value="Log ind">
+                    <input type="hidden" name="command" value="login">
                 </div>
             </form>
             <form class="newform2" action="register.jsp">

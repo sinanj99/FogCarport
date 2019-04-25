@@ -56,7 +56,7 @@ public class ToolShedBOM
         LineItem l = null;
         Material m;
         
-        for(int i = 150; i < 540; i += 20)
+        for(int i = 150; i <= 510; i += 30)
         {
             if(widthOfToolShed == i)
             {

@@ -26,19 +26,19 @@ public class CalculateBOM
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         ArrayList listOfLineItems = new ArrayList();
         
-        listOfLineItems.add(f.beslagskruer(r.getLength()));
-        listOfLineItems.add(f.brædderbolt(r.getLength(), r.isShed(), r.getShedLength()));
-        listOfLineItems.add(f.højrebeslag(r.getLength()));
-        listOfLineItems.add(f.venstrebeslag(r.getLength()));
-        listOfLineItems.add(f.oversternbrædderForFront(r.getWidth()));
-        listOfLineItems.add(f.oversternbrædderForSides(r.getLength()));
-        listOfLineItems.add(f.spær(r.getLength(), r.getWidth()));
-        listOfLineItems.add(f.spærForRemmen(r.getLength()));
-        listOfLineItems.add(f.stolpe(r.getLength(), r.isShed(), r.getShedLength()));
-        listOfLineItems.add(f.understernBrædderForSides(r.getLength()));
-        listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getWidth()));
-        listOfLineItems.add(f.vandbrætForFront(r.getWidth()));
-        listOfLineItems.add(f.vandbrætForSides(r.getLength()));
+        listOfLineItems.add(f.beslagskruer(r.getCarport().getLength()));
+        listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().isShed(), r.getCarport().getShed_().getLength()));
+        listOfLineItems.add(f.højrebeslag(r.getCarport().getLength()));
+        listOfLineItems.add(f.venstrebeslag(r.getCarport().getLength()));
+        listOfLineItems.add(f.oversternbrædderForFront(r.getCarport().getWidth()));
+        listOfLineItems.add(f.oversternbrædderForSides(r.getCarport().getLength()));
+        listOfLineItems.add(f.spær(r.getCarport().getLength(), r.getCarport().getWidth()));
+        listOfLineItems.add(f.spærForRemmen(r.getCarport().getLength()));
+        listOfLineItems.add(f.stolpe(r.getCarport().getLength(), r.getCarport().isShed(), r.getCarport().getShed_().getLength()));
+        listOfLineItems.add(f.understernBrædderForSides(r.getCarport().getLength()));
+        listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
+        listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
+        listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
         listOfLineItems.add(f.hulbåndAntal(r));
         
         //mangler lægter, galjer, tagpplader
@@ -53,26 +53,27 @@ public class CalculateBOM
         ArrayList listOfLineItems = new ArrayList();
         
         //Adds material related to the carport
-        listOfLineItems.add(f.beslagskruer(r.getLength()));
-        listOfLineItems.add(f.brædderbolt(r.getLength(), r.isShed(), r.getShedLength()));
-        listOfLineItems.add(f.højrebeslag(r.getLength()));
-        listOfLineItems.add(f.venstrebeslag(r.getLength()));
-        listOfLineItems.add(f.oversternbrædderForFront(r.getWidth()));
-        listOfLineItems.add(f.oversternbrædderForSides(r.getLength()));
-        listOfLineItems.add(f.spær(r.getLength(), r.getWidth()));
-        listOfLineItems.add(f.spærForRemmen(r.getLength()));
-        listOfLineItems.add(f.stolpe(r.getLength(), r.isShed(), r.getShedLength()));
-        listOfLineItems.add(f.understernBrædderForSides(r.getLength()));
-        listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getWidth()));
-        listOfLineItems.add(f.vandbrætForFront(r.getWidth()));
-        listOfLineItems.add(f.vandbrætForSides(r.getLength()));
+        listOfLineItems.add(f.beslagskruer(r.getCarport().getLength()));
+        listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().isShed(), r.getCarport().getShed_().getLength()));
+        listOfLineItems.add(f.højrebeslag(r.getCarport().getLength()));
+        listOfLineItems.add(f.venstrebeslag(r.getCarport().getLength()));
+        listOfLineItems.add(f.oversternbrædderForFront(r.getCarport().getWidth()));
+        listOfLineItems.add(f.oversternbrædderForSides(r.getCarport().getLength()));
+        listOfLineItems.add(f.spær(r.getCarport().getLength(), r.getCarport().getWidth()));
+        listOfLineItems.add(f.spærForRemmen(r.getCarport().getLength()));
+        listOfLineItems.add(f.stolpe(r.getCarport().getLength(), r.getCarport().isShed(), r.getCarport().getShed_().getLength()));
+        listOfLineItems.add(f.understernBrædderForSides(r.getCarport().getLength()));
+        listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
+        listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
+        listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
+        listOfLineItems.add(f.hulbåndAntal(r));
         //mangler hulbånd, lægter, gajler, tagpplader
         
         //Adds materials related to tool shed
-        listOfLineItems.add(b.beklædning(r.getShedWidth(), r.getShedLength()));
+        listOfLineItems.add(b.beklædning(r.getCarport().getShed_().getWidth(), r.getCarport().getShed_().getLength()));
         listOfLineItems.add(b.lægteForDoor());
-        listOfLineItems.add(b.løsholterForSides(r.getShedLength()));
-        listOfLineItems.add(b.løsholterGalve(r.getShedWidth()));
+        listOfLineItems.add(b.løsholterForSides(r.getCarport().getShed_().getLength()));
+        listOfLineItems.add(b.løsholterGalve(r.getCarport().getShed_().getWidth()));
         listOfLineItems.add(b.stalddørsgreb());
         listOfLineItems.add(b.tHængsel());
         listOfLineItems.add(b.vinkelbeslag());

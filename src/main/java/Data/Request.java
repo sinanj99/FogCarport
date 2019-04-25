@@ -5,62 +5,38 @@
  */
 package Data;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Obaydah Mohamad
  */
 public class Request {
     private int user_id;
-    private boolean inclined;
-    private int width;
-    private int length;
-    private Roof roofType;
-    private boolean shed;
-    private int shedWidth;
-    private int shedLength;
+    private String datePlaced;
+    private String dateAccepted;
+    private int price;
+    private Carport carport;
 
-    public Request(int user_id, boolean isInclined, int width, int length, Roof roofType, boolean shed, int shedWidth, int shedLength) {
+    public Request(int user_id, String datePlaced, String dateAccepted, int price, Carport carport) {
         this.user_id = user_id;
-        this.inclined = isInclined;
-        this.width = width;
-        this.length = length;
-        this.roofType = roofType;
-        this.shed = shed;
-        this.shedWidth = shedWidth;
-        this.shedLength = shedLength;
+        this.carport = carport;
+        this.dateAccepted = dateAccepted;
+        this.datePlaced = datePlaced;
+        this.price = price;
     }
 
-    public boolean isInclined() {
-        return inclined;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public Roof getRoofType() {
-        return roofType;
-    }
-
-    public boolean isShed() {
-        return shed;
-    }
-
-    public int getShedWidth() {
-        return shedWidth;
-    }
-
-    public int getShedLength() {
-        return shedLength;
+    public Carport getCarport() {
+        return carport;
     }
 
     @Override
     public String toString() {
-        return "Request{" + "user_id=" + user_id + ", inclined=" + inclined + ", width=" + width + ", length=" + length + ", roofType=" + roofType + ", shed=" + shed + ", shedWidth=" + shedWidth + ", shedLength=" + shedLength + '}';
+        return "Request{" + "user_id=" + user_id + ", datePlaced=" + datePlaced + ", dateAccepted=" + dateAccepted + ", price=" + price + ", carport=" + carport + '}';
     }
     
     

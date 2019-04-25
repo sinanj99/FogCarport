@@ -233,8 +233,7 @@
             });
 
             var chosenWidth = document.getElementById("carportWidth").value;
-            var shedWidth = document.getElementById("shedWidth");
-            shedWidth.selectedIndex = 0;
+            chosenWidth = chosenWidth - 0; // doesnt work if you do not do this. 
             for (i = chosenWidth; i <= 720; i+= 30)
             {
                 document.getElementById("widthOption"+ i).disabled = true;
@@ -251,7 +250,7 @@
             shedLength.selectedIndex = 0;
             
             var chosenLength = document.getElementById("carportLength").value;
-            var maxLength = chosenLength-210;
+            var maxLength = chosenLength-210; // 210 and not 240, as the first index is removed. 
             for (i = maxLength; i <= 750; i+= 30)
             {
                 document.getElementById("lengthOption" + i).disabled = true;

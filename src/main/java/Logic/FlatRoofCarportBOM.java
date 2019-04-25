@@ -128,27 +128,39 @@ public class FlatRoofCarportBOM {
      * @param length
      * @return
      */
-    public int calculateQuantityOfStolper(int length) {
-        //check if carport is to small to have other stolper than the corner stolpe
-        if (length <= 250) {
+    public int calculateQuantityOfStolper(Request req) {
+
+        //Substraicing spaceBetweenSpær times 2 because stolper cant appear at the front spear and back spear
+        float lengthAvaiableForStolper = req.getLength() - spaceBetweenSpær(req.getLength()) * 2;
+        // four corner stolper
+        int quantity = 4;
+        
+        if(req.isShed())
+        {
+            lengthAvaiableForStolper -= req.getShedLength();
+            //A shed consists of 6 stolper, the 2 back corner stolper and 4 other.
+            quantity += 4;
+        }
+        
+        //check if carport is to small to have other stolper than the corner stolpe and eventuel stolper added for the carport
+        if (lengthAvaiableForStolper <= 250) {
             //the amount of cornerStolper
-            return 4;
+            return quantity;
         }
 
-        // foure cornerStolper
-        int quantity = 4;
+        
         float widthOfStolpe = 9.7f;
         int numberOfSpacesBewteenStolpe = 1;
 
         //get the space between stolpe at one of the sides (in cm)
-        float SpaceBetweenStolpe = length - (widthOfStolpe * (quantity / 2));
+        float SpaceBetweenStolpe = lengthAvaiableForStolper - (widthOfStolpe * (quantity / 2));
         //250 is the limit of how much space must be between stolper
         while (SpaceBetweenStolpe > 250) {
             // add a stolpe for each side
             quantity = quantity + 2;
             numberOfSpacesBewteenStolpe = numberOfSpacesBewteenStolpe * 2;
 
-            SpaceBetweenStolpe = (length - (widthOfStolpe * (quantity / 2))) / numberOfSpacesBewteenStolpe;
+            SpaceBetweenStolpe = (lengthAvaiableForStolper - (widthOfStolpe * (quantity / 2))) / numberOfSpacesBewteenStolpe;
         }
         return quantity;
     }

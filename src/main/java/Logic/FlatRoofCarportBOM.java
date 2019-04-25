@@ -50,7 +50,7 @@ public class FlatRoofCarportBOM {
 
     public int calculateQuantityOfBrædderbolt(int length, boolean isShed, int shedLengt) {
         //two brædderbolte per stolpe
-        return calculateQuantityOfStolper(length, isShed, shedLengt);
+        return calculateQuantityOfStolper(length, isShed, shedLengt) * 2;
     }
 
     public int calculateQuantityOfHøjreBeslag(int length) {
@@ -177,14 +177,14 @@ public class FlatRoofCarportBOM {
     public double hulbåndAntal(Request req) {
         double lengthM = 0;
         // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
-        if (req.isShed()) {
-            lengthM = req.getLength() - req.getShedLength() - spaceBetweenSpær(req.getLength()) / 100;
+        if (req.getCarport().isShed()) {
+            lengthM = req.getCarport().getLength() - req.getCarport().getShed_().getLength() - spaceBetweenSpær(req.getCarport().getLength()) / 100;
         } else {
             //length in meters
-            lengthM = (req.getLength() - spaceBetweenSpær(req.getLength())) / 100; //4.5
+            lengthM = (req.getCarport().getLength() - spaceBetweenSpær(req.getCarport().getLength())) / 100; //4.5
         }
         // width in meters
-        double widthM = req.getWidth() / 100; // 5.1
+        double widthM = req.getCarport().getWidth() / 100; // 5.1
         //Math.ceil = round up to nearest integer
         //Math.sqrt = square root
         return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2) / 10);
@@ -281,7 +281,7 @@ public class FlatRoofCarportBOM {
 
         String desc = "Spær, monteres på rem";
 
-        for (int i = 240; i <= 750; i += 20) {
+        for (int i = 240; i <= 750; i += 30) {
             if (length == i) {
                 m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", i);
                 l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen());
@@ -307,7 +307,7 @@ public class FlatRoofCarportBOM {
 
         String desc = "Remme i sider, sadles ned i stolper";
 
-        for (int i = 240; i <= 750; i += 20) {
+        for (int i = 240; i <= 750; i += 30) {
             if (length == i) {
                 m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", i);
                 l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen());

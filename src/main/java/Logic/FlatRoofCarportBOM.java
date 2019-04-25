@@ -175,7 +175,7 @@ public class FlatRoofCarportBOM {
      * @return the amount of peforated bands needed for the carport.
      */
     public double hulbåndAntal(Request req) {
-        double lengthM = 0;
+        double lengthM;
         // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
         if (req.getCarport().isShed()) {
             lengthM = req.getCarport().getLength() - req.getCarport().getShed_().getLength() - spaceBetweenSpær(req.getCarport().getLength()) / 100;

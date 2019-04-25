@@ -48,9 +48,9 @@ public class FlatRoofCarportBOM {
         return packsNeeded;
     }
 
-    public int calculateQuantityOfBrædderbolt(int length) {
+    public int calculateQuantityOfBrædderbolt(Request req) {
         //two brædderbolte per stolpe
-        return calculateQuantityOfStolper(length) * 2;
+        return calculateQuantityOfStolper(req) * 2;
     }
 
     public int calculateQuantityOfHøjreBeslag(int length) {
@@ -125,6 +125,7 @@ public class FlatRoofCarportBOM {
 
     /**
      *
+     * @param req
      * @param length
      * @return
      */
@@ -251,9 +252,9 @@ public class FlatRoofCarportBOM {
         return new LineItem(m, calculateQuantityOfBeslagskruer(length), "Til montering af universalbeslag + hulbånd", m.getPrice() * calculateQuantityOfBeslagskruer(length));
     }
 
-    public LineItem brædderbolt(int length) throws NoSuchMaterialException {
+    public LineItem brædderbolt(Request req) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("10x120mm brædderbolt");
-        return new LineItem(m, calculateQuantityOfBrædderbolt(length), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length));
+        return new LineItem(m, calculateQuantityOfBrædderbolt(req), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(req));
     }
 
     public LineItem højrebeslag(int length) throws NoSuchMaterialException {
@@ -268,9 +269,9 @@ public class FlatRoofCarportBOM {
     }
 //    
 
-    public LineItem stolpe(int length) throws NoSuchMaterialException {
+    public LineItem stolpe(Request req) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("97x97mm trykimp. Stolpe");
-        return new LineItem(m, calculateQuantityOfStolper(length), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length));
+        return new LineItem(m, calculateQuantityOfStolper(req), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(req));
 
     }
 

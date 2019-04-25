@@ -39,7 +39,7 @@ public class CalculateBOM
         listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
-        //listOfLineItems.add(f.hulbåndAntal(r));
+        //listOfLineItems.add(f.hulbånd(r));
         
         //mangler lægter, galjer, tagpplader
         
@@ -66,7 +66,7 @@ public class CalculateBOM
         listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
-        //listOfLineItems.add(f.hulbåndAntal(r));
+        //listOfLineItems.add(f.hulbånd(r));
         //mangler hulbånd, lægter, gajler, tagpplader
         
         //Adds materials related to tool shed

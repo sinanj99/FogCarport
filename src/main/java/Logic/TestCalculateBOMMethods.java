@@ -43,13 +43,15 @@ public class TestCalculateBOMMethods
 //            System.out.println(li.getPrice());
 //        double i = f.hulbåndAntal(630, 720);
 //        System.out.println(i);
-            CalculateBOM b = new CalculateBOM();
+//            CalculateBOM b = new CalculateBOM();
             Request r = new Request(1, "", "", 0, new Carport(2, true, 300, 270, true, new Shed(240, 150)));
-            
-            for(LineItem l : b.generateFlatRoofWihtToolShedBOM(r))
-            {
-                System.out.println(l);
-            }
+//            
+//            for(LineItem l : b.generateFlatRoofCarportBOM(r))
+//            {
+//                System.out.println(l);
+//            }
+
+            System.out.println(f.hulbåndAntal(r));
             
             
             

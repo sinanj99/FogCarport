@@ -52,7 +52,8 @@ class RequestMapper extends IRequestMapper{
     public Request getRequest(int id) throws NoSuchRequestException {
         Request r = null;
         int user_id = 0;
-        String date = "";
+        String datePlaced = "";
+        String dateAccepted = "";
         int price = 0;
         try{
             String query = "SELECT * FROM requests WHERE request_id = ?;";
@@ -62,13 +63,14 @@ class RequestMapper extends IRequestMapper{
             
             if(rs.next()){
                 Carport cp = getRequestCarport(rs.getInt("request_id"));
-                Shed shed = getRequestShed(rs.getInt("request_id"));
                 user_id = rs.getInt("user_id");
                 price = rs.getInt("price");
-                date = rs.getString("dateplaced");
-                r = new Request(user_id, cp.isInclined(), cp.getWidth(), cp.getLength(), getRoof(cp.getRoof_id()), cp.isShed(), shed.getWidth(), shed.getLength());
+                datePlaced = rs.getString("dateplaced");
+                dateAccepted = rs.getString("dateaccepted");
+
+                r = new Request(user_id, datePlaced, dateAccepted, price, cp);
             }
-        }catch(SQLException | NoSuchCarportException | NoSuchShedException | NoSuchRoofException e){
+        }catch(SQLException | NoSuchCarportException e){
             throw new NoSuchRequestException();
         }
         

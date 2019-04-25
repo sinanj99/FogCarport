@@ -15,10 +15,11 @@ import java.util.List;
  * @author sinanjasar
  */
 public class Manager {
-    private final IMaterialMapper mapper = IMaterialMapper.instance();
-    private final IRequestMapper mapper2 = IRequestMapper.instance();
+
+    private final IMaterialMapper materials = IMaterialMapper.instance();
+    private final IRequestMapper roofs = IRequestMapper.instance();
     
     public List<Roof> allFlatRoofs() throws NoSuchRoofException {
-        return mapper2.getRoofs();
+        return roofs.getRoofs();
     }
 }

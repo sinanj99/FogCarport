@@ -63,9 +63,14 @@ public class UserMapper extends IUserMapper {
 
     @Override
     public User getUser(String email) throws SQLException, UserNotFoundException {
-        int user_id = 0;
+        int user_id, zip = 0;
         String email_ = "";
         String password = "";
+        String fname = ""; 
+        String lname = "";
+        String adress ="";
+        String city = "";
+        String gender = "";
         
         String sql = "SELECT * FROM `users` WHERE email = ?;";
         PreparedStatement pstmt = con.prepareStatement(sql);
@@ -78,8 +83,21 @@ public class UserMapper extends IUserMapper {
         } else {
             throw new UserNotFoundException("Bruger findes ikke!");
         }
-
-        return new User(user_id, email, password);
+        sql = "SELECT * FROM `users_personalinfo` WHERE user_id = (SELECT user_id FROM `users` WHERE email = '" + email + "' ORDER BY user_id DESC LIMIT 1);";
+        
+        pstmt = con.prepareStatement(sql);
+        
+        rs = pstmt.executeQuery();
+        
+        if(rs.next()) {
+            fname = rs.getString("firstname");
+            lname = rs.getString("lastname");
+            adress = rs.getString("address");
+            zip = rs.getInt("zipcode");
+            city = rs.getString("city");
+            gender = rs.getString("gender");
+        }
+        return new User(new PersonalInfo(fname, lname, adress, zip, city, gender), user_id, email_, password);
     }
     
     /**
@@ -131,7 +149,7 @@ public class UserMapper extends IUserMapper {
     public static void main(String[] args) throws UserNotFoundException, SQLException {
 
         try {
-            System.out.println(IUserMapper.instance().getUser("john@gmail.com"));
+            System.out.println(IUserMapper.instance().getUser("test@test.dk").getInfo());
             System.out.println(IUserMapper.instance().getUser(2).getInfo().getFirstname());
         } catch (UserNotFoundException ex) {
             System.out.println(ex.getMessage());

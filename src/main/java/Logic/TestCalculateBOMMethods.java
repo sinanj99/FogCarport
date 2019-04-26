@@ -44,8 +44,13 @@ public class TestCalculateBOMMethods
 //            System.out.println(f.venstrebeslag(req.getCarport().getLength()));
             
             
-String str = "/jsp/flatroof.jsp";
-        System.out.println(str.substring(1).split("/")[1]);
+//String str = "/jsp/flatroof.jsp";
+//        System.out.println(str.substring(1).split("/")[1]);
+
+            
+        
+        
+        
 
 
             

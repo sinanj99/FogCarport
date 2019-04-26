@@ -15,7 +15,10 @@ CREATE TABLE CarportDB.rooftype (
 );
 
 insert into CarportDB.rooftype (`name`,  price, inclined) values 
-("Plasttrapezplader", 0,  0),
+("Plasttrapezplader - Blåtonet", 0,  0),
+("Plasttrapezplader - Gråtonet", 0,  0),
+("Plasttrapezplader - Rødbrun", 0,  0),
+("Plasttrapezplader - Mocca", 0,  0),
 ("Betonstagsten - Rød", 0,  1),
 ("Betonstagsten - Teglrød", 0,  1),
 ("Betonstagsten - Brun", 0,  1),

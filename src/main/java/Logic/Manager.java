@@ -5,7 +5,6 @@
  */
 package Logic;
 
-import Data.Client;
 import Data.IMaterialMapper;
 import Data.IRequestMapper;
 import Data.IUserMapper;
@@ -23,8 +22,8 @@ public class Manager {
     public static List<Roof> getRoofs(int rooftype) throws NoSuchRoofException {
         return IRequestMapper.instance().getRoofs(rooftype);
     }
-    public static void insertClient(Client client) throws DuplicateException, SQLException {
-        IUserMapper.instance().insertClient(client);
+    public static void insertUser(User user) throws DuplicateException, SQLException {
+        IUserMapper.instance().insertUser(user);
     }
     public static User getUser(String email) throws SQLException, UserNotFoundException{
         return IUserMapper.instance().getUser(email);

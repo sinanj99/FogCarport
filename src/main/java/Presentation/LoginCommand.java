@@ -6,7 +6,6 @@
 package Presentation;
 
 import Data.User;
-import Logic.DuplicateException;
 import Logic.LoginController;
 import Logic.Manager;
 import Logic.NoMatchException;

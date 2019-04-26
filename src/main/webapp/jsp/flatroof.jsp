@@ -1,10 +1,13 @@
+<%@page import="Data.Client"%>
+<%@page import="Data.User"%>
 <%@page import="Data.Roof"%>
 <%@page import="java.util.List"%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
 <%List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
-%>
-<body onload="spaceForShed();" class="background2">
+Client client = (Client) session.getAttribute("user"); %>
+
+<body onload="spaceForShed(); wantAdress();" class="background2">
     <div class="container">
         <form class="standarddiv pl-0 pr-0 d-flex flex-column justify-content-center">
             <h3>Tilpas din carport</h3>
@@ -38,6 +41,7 @@
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Tagtype</p>
                     <select required class="inputbig">
+                        <option value="n/a">Vælg</option>
                         <% for (Roof r : roofs) {%>
                         <option value="<%= r.getName() %>"><%= r.getName() %></option>
                         <% } %>
@@ -73,7 +77,7 @@
                     <select required id="shedLength" class="inputbig d-none" class="d-none">
                         <option value="n/a">Vælg</option>
                         <%
-                            for (int i = 150; i <= 690; i += 30) {
+                            for (int i = 150; i <= 510; i += 30) {
                         %>
                         <option value="<%=i%>" id="lengthOption<%=i%>" > <%=i%> cm</option>
                         <% }%>
@@ -85,13 +89,12 @@
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Brug gemte oplysninger?</p>
                     <select required onchange="wantAdress()" id="adressChoice" class="inputbig">
-                        <option value="n/a">Vælg</option>
                         <option id="yes" value="1">Ja</option>
                         <option value="2">Nej</option>
                     </select>
                 </div>
             </div>
-            <div id="adress" class="d-none">
+            <div id="adress">
                 <div class="row">
                     <div class="col-sm-6 p-0 col-sm-6-l">
                         <div class="textsmall">Fornavn</div>
@@ -100,19 +103,19 @@
                         <div class="textsmallr">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" type="text" placeholder="Fornavn..." required>
+                        <input id="fname" class="inputsmalll" type="text" placeholder="Fornavn..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input class="inputsmallr" type="text" placeholder="Efternavn..." required>
+                        <input id="lname" class="inputsmallr" type="text" placeholder="Efternavn..." required>
                     </div>
                 </div>  
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Adresse</p>
-                        <input class="inputbig" type="text" placeholder="Adresse..." required>
+                        <input class="inputbig" id="adresss" type="text" placeholder="Adresse..." required>
                     </div>
                 </div>
                 <div class="row">
@@ -123,19 +126,13 @@
                         <div class="textsmallr">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" type="text" placeholder="Fornavn..." required>
+                        <input class="inputsmalll" id="zip" type="text" placeholder="Postnummer..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input class="inputsmallr" type="text" placeholder="Efternavn..." required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 d-flex flex-column align-items-center">
-                        <p class="p-0" style="width: 65%;">Adresse</p>
-                        <input class="inputbig" type="text" placeholder="Adresse..." required>
+                        <input class="inputsmallr" id="city" type="text" placeholder="By..." required>
                     </div>
                 </div>
                 <div class="row">
@@ -146,13 +143,13 @@
                         <div class="textsmallr">Email</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" type="text" placeholder="Fornavn..." required>
+                        <input class="inputsmalll" id="number" type="text" placeholder="Telefonnr..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">Email</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input class="inputsmallr" type="text" placeholder="Efternavn..." required>
+                        <input class="inputsmallr" id="email" type="text" placeholder="Email..." required>
                     </div>
                 </div>
             </div>
@@ -165,14 +162,11 @@
     </div>
     <script type="text/javascript">
         function wantAdress() {
-            if(document.getElementById("adressChoice").value == "n/a")
-            {
-                document.getElementById("adress").classList.add("d-none");
-            }
+            <%=session.getAttribute("user") %>
             var shedChoice = document.getElementById("adressChoice").value;
             var adress = document.getElementById("adress");
             if (shedChoice == 1) {
-                adress.classList.add("d-none");
+                document.getElementById("fname").value=
             } else if (shedChoice == 2) {
                 adress.classList.remove("d-none");
             }

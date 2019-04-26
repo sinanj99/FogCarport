@@ -19,7 +19,7 @@ public abstract class IUserMapper {
         return UserMapper.getInstance();
     }
 
-    public abstract void insertClient(Client client) throws DuplicateException, SQLException;
+    public abstract void insertUser(User user) throws DuplicateException, SQLException;
 
     public abstract User getUser(String email) throws UserNotFoundException, SQLException;
 

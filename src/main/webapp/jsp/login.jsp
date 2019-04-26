@@ -3,7 +3,7 @@
     <body class="background1">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
         <div class="container d-flex flex-column justify-content-center">
-            <form class="newform" method="get" action="FrontController">
+            <form class="newform" method="post" action="FrontController">
                 <h1>Kontooplysninger</h1>
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">

@@ -5,45 +5,41 @@
  */
 package Presentation;
 
-import Data.Client;
 import Data.PersonalInfo;
+import Data.User;
 import Logic.DuplicateException;
 import Logic.Manager;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author sinanjasar
  */
 public class RegisterCommand implements Command {
-    
+
     public RegisterCommand() {
     }
 
     @Override
     public String execute(HttpServletRequest request) throws SQLException {
-        
+
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         String adress = request.getParameter("adress");
-        String zip = request.getParameter("zip");
+        int zip = Integer.parseInt(request.getParameter("zip"));
         String city = request.getParameter("city");
         String email = request.getParameter("email");
         String pword = request.getParameter("pword");
         String pword2 = request.getParameter("pword2");
         String gender = request.getParameter("gender");
-        boolean gender_ = false; // hvordan gør vi med gender? 
-        if(gender.equals("man")) gender_ = true;
-        
         try {
-        Manager.insertClient(new Client(new PersonalInfo(fname, lname, adress, Integer.parseInt(zip), city, gender_), email, pword));
+            Manager.insertUser(new User(new PersonalInfo(fname, lname, adress, zip, city, gender), email, pword));
         } catch (DuplicateException e) {
             request.setAttribute("registerResult", e.getMessage());
             return "register.jsp";
         }
         return "frontpage.jsp";
     }
-    
+
 }

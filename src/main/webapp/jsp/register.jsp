@@ -73,8 +73,8 @@
                         <p class="p-0" style="width: 65%; color: white">Køn</p>
                         <select class="inputbig" name="gender" required>
                             <option value="n/a">Vælg køn</option>
-                            <option value="man">Mand</option>
-                            <option value="woman">Kvinde</option>
+                            <option value="m">Mand</option>
+                            <option value="w">Kvinde</option>
                         </select>
                     </div>
                 </div>

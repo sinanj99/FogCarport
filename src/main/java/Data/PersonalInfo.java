@@ -16,9 +16,9 @@ public class PersonalInfo {
     String address;
     int zipcode;
     String city;
-    boolean gender;
+    String gender;
 
-    public PersonalInfo(String firstname, String lastname, String address, int zipcode, String city, boolean gender) {
+    public PersonalInfo(String firstname, String lastname, String address, int zipcode, String city, String gender) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -51,9 +51,15 @@ public class PersonalInfo {
         return city;
     }
 
-    public boolean isGender() {
+    public String getGender() {
         return gender;
     }
+
+    @Override
+    public String toString() {
+        return "PersonalInfo{" + "user_id=" + user_id + ", firstname=" + firstname + ", lastname=" + lastname + ", address=" + address + ", zipcode=" + zipcode + ", city=" + city + ", gender=" + gender + '}';
+    }
+    
     
     
     

@@ -125,7 +125,8 @@ public class FlatRoofCarportBOM {
 
     /**
      *
-     * @param req
+     * @param isShed
+     * @param shedLength
      * @param length
      * @return
      */
@@ -135,21 +136,19 @@ public class FlatRoofCarportBOM {
         float lengthAvaiableForStolper = length - spaceBetweenSpær(length) * 2;
         // four corner stolper
         int quantity = 4;
-        
-        if(isShed == true)
-        {
+
+        if (isShed == true) {
             lengthAvaiableForStolper -= shedLength;
             //A shed consists of 6 stolper, the 2 back corner stolper and 4 other.
             quantity += 4;
         }
-        
-        //check if carport is to small to have other stolper than the corner stolpe and eventuel stolper added for the carport
+
+        //check if carport is to small to have other stolper than the corner stolpe and eventual stolper added for the shed
         if (lengthAvaiableForStolper <= 250) {
-            //the amount of cornerStolper
+            //the amount of cornerStolper( & shedstolper)
             return quantity;
         }
 
-        
         float widthOfStolpe = 9.7f;
         int numberOfSpacesBewteenStolpe = 1;
 
@@ -181,17 +180,18 @@ public class FlatRoofCarportBOM {
             lengthM = req.getCarport().getLength() - req.getCarport().getShed_().getLength() - spaceBetweenSpær(req.getCarport().getLength()) / 100;
         } else {
             //length in meters
-            lengthM = (req.getCarport().getLength() - spaceBetweenSpær(req.getCarport().getLength())) / 100; //4.5
+            lengthM = (req.getCarport().getLength() - spaceBetweenSpær(req.getCarport().getLength())) / 100;
         }
         // width in meters
-        double widthM = req.getCarport().getWidth() / 100; // 5.1
+        double widthM = req.getCarport().getWidth() / 100;
         //Math.ceil = round up to nearest integer
         //Math.sqrt = square root
         return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2) / 10);
     }
 
     static int tagpladeAntal(int length) {
-        return length / 30; //?
+        return length / 30; // widt of a single roof tile is 30 cm. 
+        
     }
 
     public int calculateQuantityOfSpær(int length) {

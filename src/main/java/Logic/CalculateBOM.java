@@ -39,9 +39,10 @@ public class CalculateBOM
         listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
-        //listOfLineItems.add(f.hulbånd(r));
+        listOfLineItems.add(f.hulbånd(r));
+        listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));        
         
-        //mangler lægter, galjer, tagpplader
+        //mangler lægter, galjer
         
         return listOfLineItems;
     }
@@ -66,8 +67,9 @@ public class CalculateBOM
         listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
-        //listOfLineItems.add(f.hulbånd(r));
-        //mangler hulbånd, lægter, gajler, tagpplader
+        listOfLineItems.add(f.hulbånd(r));
+        listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));
+        //mangler lægter, gajler, tagpplader
         
         //Adds materials related to tool shed
         listOfLineItems.add(b.beklædning(r.getCarport().getShed_().getWidth(), r.getCarport().getShed_().getLength()));

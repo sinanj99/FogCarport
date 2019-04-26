@@ -22,6 +22,7 @@ public class CommandFactory {
         commands.put("register", new RegisterCommand());
         commands.put("flatroof", new FlatRoofReqCommand());
         commands.put("register", new RegisterCommand());
+        commands.put("logout", new LogoutCommand());
     }
 
     static Command from(String key) {

@@ -3,13 +3,13 @@
     <body class="background1">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
         <div class="container d-flex flex-column justify-content-center">
-            <form class="newform" method="post" action="FrontController">
+            <form class="newform" method="get" action="FrontController">
                 <h1>Kontooplysninger</h1>
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 50%; color: white">Email</p>
                     <%if (res != null && res.equals("Bruger findes ikke!")) {%>
-                    <input style="width: 50%;" class="inputbig" name="email" type="text" placeholder="Bruger findes ikke!" required>
+                    <input style="width: 50%; border: 1px solid red;" class="inputbig" name="email" type="text" placeholder="Bruger findes ikke!" required>
                     <% } else { %>
                     <input style="width: 50%;" class="inputbig" name="email" type="text" placeholder="Email..." required>
                     <% } %>
@@ -39,5 +39,4 @@
             </div>
         </form>
     </div>
-
     <jsp:include page='/include/sitefoot.jsp'></jsp:include>

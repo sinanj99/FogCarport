@@ -38,13 +38,27 @@ class RequestMapper extends IRequestMapper{
         return instance;
     }
     
-    public static void main(String[] args) throws NoSuchCarportException, NoSuchRequestException {
+    public static void main(String[] args) throws NoSuchCarportException, NoSuchRequestException, NoSuchRoofException {
         
         //IRequestMapper.instance().insertRequest(1, 101, 20000, false, 400, 600, true, 100, 200);
         //IRequestMapper.instance().insertRequestCarport(5, 109, false, 420, 620, false);
         //IRequestMapper.instance().insertRequestShed(4, 25, 26);
         //System.out.println(IRequestMapper.instance().getRequestCarport(7));
-        System.out.println(IRequestMapper.instance().getRequest(7));
+        //System.out.println(IRequestMapper.instance().getRequest(7));
+        
+        System.out.println("////////////////////FLADT TAG////////////////////");
+        for(Roof r : IRequestMapper.instance().getRoofs(0)){
+            System.out.println(r);
+        }
+        System.out.println("////////////////////INCLINED TAG////////////////////");
+        for(Roof r : IRequestMapper.instance().getRoofs(1)){
+            System.out.println(r);
+        }
+        System.out.println("////////////////////ALLE TAG////////////////////");
+        for(Roof r : IRequestMapper.instance().getRoofs(2)){
+            System.out.println(r);
+        }
+
     }
     
     
@@ -216,16 +230,20 @@ class RequestMapper extends IRequestMapper{
     }
 
     @Override
-    public List<Roof> getRoofs() throws NoSuchRoofException {
+    public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException {
         List<Roof> roofs = new ArrayList<Roof>();
         int roof_id = 0;
         String name = "";
         int price = 0;
         boolean inclined = false;
         
+        String query = "SELECT * FROM rooftype";
+        if(rooftype == 0) query = "SELECT * FROM rooftype WHERE inclined = 0";
+        if(rooftype == 1) query = "SELECT * FROM rooftype WHERE inclined = 1";
+      
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM rooftype");
+            ResultSet rs = stmt.executeQuery(query);
             
             while(rs.next()){
                 roof_id = rs.getInt("roof_id");

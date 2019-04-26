@@ -5,9 +5,12 @@
  */
 package Logic;
 
+import Data.BOM;
 import Data.Carport;
 import Data.LineItem;
 import Data.Request;
+import Data.Roof;
+import Data.Shed;
 
 /**
  *
@@ -44,8 +47,20 @@ public class TestCalculateBOMMethods
 //            System.out.println(f.venstrebeslag(req.getCarport().getLength()));
             
             
-String str = "/jsp/flatroof.jsp";
-        System.out.println(str.substring(1).split("/")[1]);
+//String str = "/jsp/flatroof.jsp";
+//        System.out.println(str.substring(1).split("/")[1]);
+
+            
+        CalculateBOM c = new CalculateBOM();
+        BOM b = c.generateFlatRoofCarportBOM(new Request(0, "", "", 10, new Carport(null, true, 240, 450, true, new Shed(210, 150))));
+        
+        for(LineItem l : b.getLineitems())
+        {
+            System.out.println(l);
+        }
+        
+        
+        
 
 
             

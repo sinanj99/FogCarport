@@ -20,8 +20,8 @@ import java.util.List;
  */
 public class Manager {
     
-    public static List<Roof> allFlatRoofs() throws NoSuchRoofException {
-        return IRequestMapper.instance().getRoofs();
+    public static List<Roof> getRoofs(int rooftype) throws NoSuchRoofException {
+        return IRequestMapper.instance().getRoofs(rooftype);
     }
     public static void insertClient(Client client) throws DuplicateException, SQLException {
         IUserMapper.instance().insertClient(client);

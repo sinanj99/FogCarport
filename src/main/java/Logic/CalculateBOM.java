@@ -5,6 +5,7 @@
  */
 package Logic;
 
+import Data.BOM;
 import Data.LineItem;
 import Data.Material;
 import Data.IMaterialMapper;
@@ -21,7 +22,7 @@ public class CalculateBOM
     //Dette er en test
     //dette er en test mere
     //en trejde test
-    public ArrayList<LineItem> generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException
+    public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException
     {
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         ArrayList listOfLineItems = new ArrayList();
@@ -40,13 +41,15 @@ public class CalculateBOM
         listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
         listOfLineItems.add(f.hulbånd(r));
-        listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));        
+        //listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));        
         
         //mangler lægter, galjer
         
-        return listOfLineItems;
+        BOM b = new BOM(listOfLineItems);
+        
+        return b;
     }
-    public ArrayList<LineItem> generateFlatRoofWihtToolShedBOM(Request r) throws NoSuchMaterialException
+    public BOM generateFlatRoofWihtToolShedBOM(Request r) throws NoSuchMaterialException
     {
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         ToolShedBOM b = new ToolShedBOM();
@@ -68,7 +71,7 @@ public class CalculateBOM
         listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
         listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
         listOfLineItems.add(f.hulbånd(r));
-        listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));
+        //listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));
         //mangler lægter, gajler, tagpplader
         
         //Adds materials related to tool shed
@@ -80,7 +83,9 @@ public class CalculateBOM
         listOfLineItems.add(b.tHængsel());
         listOfLineItems.add(b.vinkelbeslag());
         
-        return listOfLineItems;
+        BOM bo = new BOM(listOfLineItems);
+        
+        return bo;
     }
 //    public ArrayList<LineItem> generateInclinedRoorBOM()
 //    {

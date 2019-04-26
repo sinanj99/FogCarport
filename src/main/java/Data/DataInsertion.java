@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class DataInsertion {
     public static void main(String[] args) throws NoSuchRoofException {
-        List<Roof> roofs = IRequestMapper.instance().getRoofs();
+        List<Roof> roofs = IRequestMapper.instance().getRoofs(0);
         
         for(Roof r : roofs)
         {

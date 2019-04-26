@@ -1,3 +1,4 @@
+<%String res = (String) request.getAttribute("loginResult");%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
     <body class="background1">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
@@ -7,28 +8,36 @@
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 50%; color: white">Email</p>
-                        <input style="width: 50%;" class="inputbig" name="email" type="text" placeholder="Email..." required>
-                    </div>
+                    <%if (res != null && res.equals("Bruger findes ikke!")) {%>
+                    <input style="width: 50%;" class="inputbig" name="email" type="text" placeholder="Bruger findes ikke!" required>
+                    <% } else { %>
+                    <input style="width: 50%;" class="inputbig" name="email" type="text" placeholder="Email..." required>
+                    <% } %>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12 d-flex flex-column align-items-center">
-                        <p class="p-0" style="width: 50%; color: white">Adgangskode</p>
-                        <input style="width: 50%;" class="inputbig" name="pword" type="password" placeholder="Adgangskode..." required>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 d-flex flex-column align-items-center">
+                    <p class="p-0" style="width: 50%; color: white">Adgangskode</p>
+                    <% if (res != null && res.equals("Adgangskode passer ikke!")) { %>
+                    <input style="width: 50%; border: 1px solid red;" class="inputbig" name="pword" type="password" placeholder="Adgangskode forkert!" required>
+                    <% } else { %>
+                    <input style="width: 50%;" class="inputbig" name="pword" type="password" placeholder="Adgangskode..." required>
+                    <% }%>
                 </div>
+            </div>
+            <div class="col-sm-12 d-flex justify-content-center">
+                <input class="btn nicebtn" type="submit" value="Log ind">
+                <input type="hidden" name="command" value="login">
+            </div>
+        </form>
+        <form class="newform2" action="register.jsp">
+            <p style="color: #0f0c28; text-align: center;">Ikke allerede medlem?</p>
+            <div class="row">
                 <div class="col-sm-12 d-flex justify-content-center">
-                    <input class="btn nicebtn" type="submit" value="Log ind">
-                    <input type="hidden" name="command" value="login">
+                    <input class="btn notmemberbtn" type="submit" value="Registrer">
                 </div>
-            </form>
-            <form class="newform2" action="register.jsp">
-                <p style="color: #0f0c28; text-align: center;">Ikke allerede medlem?</p>
-                <div class="row">
-                    <div class="col-sm-12 d-flex justify-content-center">
-                        <input class="btn notmemberbtn" type="submit" value="Registrer">
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
 
     <jsp:include page='/include/sitefoot.jsp'></jsp:include>

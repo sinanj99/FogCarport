@@ -6,14 +6,15 @@
 package Presentation;
 
 import Data.User;
+import Logic.DuplicateException;
 import Logic.LoginController;
 import Logic.Manager;
+import Logic.NoMatchException;
 import Logic.UserNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,31 +23,23 @@ import javax.servlet.http.HttpSession;
 public class LoginCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, IOException, UserNotFoundException {
-        String target = "frontpage.jsp";
+    public String execute(HttpServletRequest request) throws ServletException, IOException, SQLException {
         User user;
         String email = request.getParameter("email");
         String password = request.getParameter("pword");
         
+        try {
+            user = Manager.getUser(email);
+            LoginController.doesMatch(email, password);
+            request.setAttribute("user", user);
+        } catch (UserNotFoundException | NoMatchException e) {
             //if the user doesn't exist in the database. 
-            if(Manager.getUser(email).getEmail()== null
-               || Manager.getUser(email).getEmail().isEmpty())
-            {
-                request.setAttribute("loginResult", "noUser");
-                target = "login.jsp";
-            }
-            //if the inserted password does match the password of the user with the inserted email. 
-            else if (LoginController.doesMatch(email, password)) {
-                user = Manager.getUser(email);
-                request.getSession().setAttribute("user", user);
-                
-            //if the inserted password does match the password of the user with the inserted email. 
-            } else if(!LoginController.doesMatch(email, password)){
-                request.setAttribute("loginResult", "loginFailed");
-                target = "login.jsp";
-            }
-            
-        return target;
+            //if there is no match
+            request.setAttribute("loginResult", e.getMessage());
+            System.out.println(e.getMessage());
+            return "login.jsp";
+        }
+        return "frontpage.jsp";
     }
-    
+
 }

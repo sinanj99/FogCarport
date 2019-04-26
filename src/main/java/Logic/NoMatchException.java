@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data;
+package Logic;
 
 /**
  *
  * @author sinanjasar
  */
-public class Seller extends User {
-    
-    public Seller(int id, String email, String password) {
-        super(id, email, password);
+public class NoMatchException extends Exception {
+
+    public NoMatchException(String msg) {
+        super(msg);
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package Data;
 
+import Logic.DuplicateException;
 import Logic.UserNotFoundException;
 import java.sql.SQLException;
 
@@ -13,10 +14,14 @@ import java.sql.SQLException;
  * @author sinanjasar
  */
 public abstract class IUserMapper {
-    public static IUserMapper instance(){
+
+    public static IUserMapper instance() {
         return UserMapper.getInstance();
     }
-    public abstract void insertClient(Client client) throws SQLException;
 
-    public abstract User getUser(String email) throws UserNotFoundException;
+    public abstract void insertClient(Client client) throws DuplicateException, SQLException;
+
+    public abstract User getUser(String email) throws UserNotFoundException, SQLException;
+
+    public abstract User getUser(int id) throws UserNotFoundException, SQLException;
 }

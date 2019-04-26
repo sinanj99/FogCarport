@@ -10,8 +10,15 @@ package Data;
  * @author sinanjasar
  */
 public class User {
-    public String email;
-    public String password;
+    private int id;
+    private String email;
+    private String password;
+
+    public User(int id, String email, String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
 
     public User(String email, String password) {
         this.email = email;
@@ -20,6 +27,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getPassword() {

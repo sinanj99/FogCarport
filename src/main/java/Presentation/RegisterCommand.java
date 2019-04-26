@@ -7,6 +7,7 @@ package Presentation;
 
 import Data.Client;
 import Data.PersonalInfo;
+import Logic.DuplicateException;
 import Logic.Manager;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +34,15 @@ public class RegisterCommand implements Command {
         String pword = request.getParameter("pword");
         String pword2 = request.getParameter("pword2");
         String gender = request.getParameter("gender");
-        boolean gender_ = false;
+        boolean gender_ = false; // hvordan gør vi med gender? 
         if(gender.equals("man")) gender_ = true;
+        
+        try {
         Manager.insertClient(new Client(new PersonalInfo(fname, lname, adress, Integer.parseInt(zip), city, gender_), email, pword));
+        } catch (DuplicateException e) {
+            request.setAttribute("registerResult", e.getMessage());
+            return "register.jsp";
+        }
         return "frontpage.jsp";
     }
     

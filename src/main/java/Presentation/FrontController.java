@@ -5,6 +5,7 @@
  */
 package Presentation;
 
+import Logic.DuplicateException;
 import Logic.Manager;
 import Logic.NoSuchRoofException;
 import Logic.UserNotFoundException;
@@ -30,8 +31,8 @@ public class FrontController extends HttpServlet {
         try {
             String target = command.execute(request);
             request.getRequestDispatcher(target).forward(request, response);
-        } catch (NoSuchRoofException | ServletException | IOException | UserNotFoundException | SQLException ex) {
-            System.out.println(ex.getMessage());
+        } catch (NoSuchRoofException | ServletException | IOException | SQLException ex) {
+            System.out.println("EXCEPTION: " + ex.getMessage());
         }
     }
 

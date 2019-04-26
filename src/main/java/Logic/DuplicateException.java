@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data;
+package Logic;
+
+import java.sql.SQLException;
 
 /**
  *
  * @author sinanjasar
  */
-public class Seller extends User {
-    
-    public Seller(int id, String email, String password) {
-        super(id, email, password);
+public class DuplicateException extends Exception{
+    public DuplicateException(String msg) {
+        super(msg);
     }
     
 }

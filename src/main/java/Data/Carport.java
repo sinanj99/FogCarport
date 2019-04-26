@@ -46,6 +46,10 @@ public class Carport {
         return shed_;
     }
 
+    public Roof getRoof() {
+        return roof;
+    }
+
     @Override
     public String toString() {
         return "Carport{" + "roof=" + roof + ", inclined=" + inclined + ", width=" + width + ", length=" + length + ", shed=" + shed + ", shed_=" + shed_ + '}';

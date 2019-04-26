@@ -1,5 +1,4 @@
 <%@page import="Data.Roof"%>
-<%@page import="Data.IRoofMapper"%>
 <%@page import="java.util.List"%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>

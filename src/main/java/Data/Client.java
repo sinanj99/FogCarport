@@ -13,6 +13,11 @@ public class Client extends User {
     
     private PersonalInfo info;
 
+    public Client(PersonalInfo info, int id, String email, String password) {
+        super(id, email, password);
+        this.info = info;
+    }
+
     public Client(PersonalInfo info, String email, String password) {
         super(email, password);
         this.info = info;

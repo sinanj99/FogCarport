@@ -23,10 +23,10 @@ public class Manager {
     public static List<Roof> allFlatRoofs() throws NoSuchRoofException {
         return IRequestMapper.instance().getRoofs();
     }
-    public static void insertClient(Client client) throws SQLException {
+    public static void insertClient(Client client) throws DuplicateException, SQLException {
         IUserMapper.instance().insertClient(client);
     }
-    public static User getUser(String email) throws UserNotFoundException{
+    public static User getUser(String email) throws SQLException, UserNotFoundException{
         return IUserMapper.instance().getUser(email);
     }
 }

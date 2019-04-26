@@ -7,6 +7,7 @@ package Logic;
 
 import Data.IUserMapper;
 import Data.User;
+import java.sql.SQLException;
 
 /**
  *
@@ -20,19 +21,14 @@ public class LoginController {
      *
      * @param email
      * @param password password of the user that needs validation.
-     * @return boolean
      * @throws Logic.UserNotFoundException
+     * @throws java.sql.SQLException
+     * @throws Logic.NoMatchException
      */
-    
-    public static boolean doesMatch(String email, String password) throws UserNotFoundException {
-        if (email == null || email.isEmpty()) {
-            return false;
-        }
-        else if (password == null || password.isEmpty()) {
-            return false;
-        }
-        
+    public static void doesMatch(String email, String password) throws UserNotFoundException, SQLException, NoMatchException {
         User user = Manager.getUser(email);
-        return password.equals(user.getPassword());
+        if (!password.equals(user.getPassword())) {
+            throw new NoMatchException("Adgangskode passer ikke!");
+        }
     }
 }

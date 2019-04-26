@@ -1,14 +1,22 @@
 <div id="nav">
     <a class="left" href="frontpage.jsp">FOG CARPORT</a>
     <a class="right d-md-none" href="#" onclick="displayNav()"><i class="fas fa-bars"></i></a>
+        <% if (session.getAttribute("user") == null) {%>
     <a class="right d-none d-md-block" href="register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a>
     <a class="right d-none d-md-block" href="login.jsp"> <i class="fas fa-sign-in-alt"></i>    Log ind</a>
+    <% } else { %>
+    <a class="right d-none d-md-block" href="FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
+    <% } %> 
 </div>
 <div id="smallnav" class="d-none d-md-none smallnav">
     <div class="smallnavrow">
+        <% if (session.getAttribute("user") == null) {%>
         <a class="" href="register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a><br>
         <hr style="background-color: #dbdeff;">
         <a class="" href="login.jsp"> <i class="fas fa-sign-in-alt"></i>    Log ind</a>
+        <% } else { %>
+        <a class="" href="FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
+        <% }%> 
     </div>
 </div>
 <script type="text/javascript">

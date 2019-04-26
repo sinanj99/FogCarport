@@ -31,12 +31,11 @@ public class LoginCommand implements Command {
         try {
             user = Manager.getUser(email);
             LoginController.doesMatch(email, password);
-            request.setAttribute("user", user);
+            request.getSession().setAttribute("user", user);
         } catch (UserNotFoundException | NoMatchException e) {
             //if the user doesn't exist in the database. 
             //if there is no match
             request.setAttribute("loginResult", e.getMessage());
-            System.out.println(e.getMessage());
             return "login.jsp";
         }
         return "frontpage.jsp";

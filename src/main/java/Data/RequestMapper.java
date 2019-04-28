@@ -62,7 +62,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public Request getRequest(int id) throws NoSuchRequestException {
+    public Request getRequest(int id) throws NoSuchRequestException, NoSuchRoofException, NoSuchShedException {
         Request r = null;
         int user_id = 0;
         String datePlaced = "";
@@ -83,9 +83,9 @@ class RequestMapper extends IRequestMapper {
                 datePlaced = rs.getString("dateplaced");
                 dateAccepted = rs.getString("dateaccepted");
 
-                r = new Request(info, user_id, datePlaced, dateAccepted, price, cp);
+                r = new Request(info, user_id, datePlaced, cp);
             }
-        } catch (SQLException | NoSuchCarportException e) {
+        } catch (SQLException e) {
             throw new NoSuchRequestException();
         }
 
@@ -93,7 +93,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public Carport getRequestCarport(int request_id) throws NoSuchCarportException {
+    public Carport getRequestCarport(int request_id) throws NoSuchRoofException, NoSuchShedException, SQLException {
         Carport cp = null;
         int roof_id = 0;
         boolean inclined = false;
@@ -101,31 +101,23 @@ class RequestMapper extends IRequestMapper {
         int length = 0;
         boolean shed = false;
 
-        try {
-            String query = "SELECT * FROM carports WHERE request_id = ?";
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, request_id);
-            ResultSet rs = pstmt.executeQuery();
+        String query = "SELECT * FROM carports WHERE request_id = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setInt(1, request_id);
+        ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) {
-                roof_id = rs.getInt("roof_id");
-                width = rs.getInt("width");
-                length = rs.getInt("length");
-                if (rs.getInt("inclined") == 1) {
-                    inclined = true;
-                }
-                if (rs.getInt("shed") == 1) {
-                    shed = true;
-                }
-                try {
-                    cp = new Carport(getRoof(roof_id), inclined, width, length, shed, getRequestShed(rs.getInt("request_id")));
-                } catch (NoSuchShedException e) {
-
-                }
+        if (rs.next()) {
+            roof_id = rs.getInt("roof_id");
+            width = rs.getInt("width");
+            length = rs.getInt("length");
+            if (rs.getInt("inclined") == 1) {
+                inclined = true;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new NoSuchCarportException();
+            if (rs.getInt("shed") == 1) {
+                shed = true;
+            }
+
+            cp = new Carport(getRoof(roof_id), inclined, width, length, shed, getRequestShed(request_id));
         }
 
         return cp;
@@ -157,7 +149,10 @@ class RequestMapper extends IRequestMapper {
         Carport cp = req.getCarport();
         Roof roof = cp.getRoof();
         Shed shed = cp.getShed_();
+        int req_id = 0;
+
         try {
+
             String query = "INSERT INTO `requests` (user_id, dateplaced) VALUES (?,?);";
             PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, req.getUser_id());
@@ -165,24 +160,33 @@ class RequestMapper extends IRequestMapper {
             pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
 
-            insertRequestCarport(rs.getInt(1), roof.getRoof_id(),
+            if (rs.next()) {
+                req_id = rs.getInt("request_id");
+            }
+            //req info
+            insertRequestInfo(req, req_id);
+            //carport roof
+            insertRoof(roof.getName(), roof.getPrice(), roof.isInclined());
+            //roof dimensions of carport roof
+            insertDimensions(cp.getRoof().getRoof_id(), cp.getLength());
+            //the carport (carport_id is returned)
+            int cp_id = insertRequestCarport(req_id, roof.getRoof_id(),
                     cp.isInclined(), cp.getWidth(), cp.getLength(), cp.isShed());
-            
-            if(cp.isShed()) insertRequestShed(rs.getInt(1), shed.getWidth(), shed.getLength());
-            
-            insertRequestRoof();
-            
-            insertRequestInfo();
-            
+            //shed, if chosen
+            if (cp.isShed()) {
+                insertRequestShed(cp_id, shed.getWidth(), shed.getLength());
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void insertRequestCarport(int request_id, int roof_id, boolean inclined, int width, int length, boolean shed) {
+    public int insertRequestCarport(int request_id, int roof_id, boolean inclined, int width, int length, boolean shed) {
         int inclined_ = 0;
         int hasShed = 0;
+        int id = 0;
         if (inclined) {
             inclined_ = 1;
         }
@@ -199,9 +203,14 @@ class RequestMapper extends IRequestMapper {
             pstmt.setInt(5, length);
             pstmt.setInt(6, hasShed);
             pstmt.executeUpdate();
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("carport_id");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return id;
     }
 
     @Override
@@ -244,6 +253,34 @@ class RequestMapper extends IRequestMapper {
         }
 
         return new Roof(roof_id, name, price, inclined);
+    }
+
+    @Override
+    public Roof getRoof(int id) throws NoSuchRoofException {
+        int roof_id = 0;
+        String name_ = "";
+        int price = 0;
+        boolean inclined = false;
+
+        try {
+            String query = "SELECT * FROM rooftype WHERE roof_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                roof_id = rs.getInt("roof_id");
+                name_ = rs.getString("name");
+                price = rs.getInt("price");
+                if (rs.getInt("inclined") == 1) {
+                    inclined = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new NoSuchRoofException();
+        }
+
+        return new Roof(roof_id, name_, price, inclined);
     }
 
     @Override
@@ -333,12 +370,20 @@ class RequestMapper extends IRequestMapper {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void insertRequestRoof() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    private void insertRequestInfo(Request req, int req_id) throws SQLException {
 
-    private void insertRequestInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        String query = "INSERT INTO users_personalinfo (request_id, user_id, firstname"
+                + "lastname, address, zipcode, city, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setInt(1, req_id);
+        pstmt.setInt(2, req.getUser_id());
+        pstmt.setString(3, req.getInfo().getFirstname());
+        pstmt.setString(4, req.getInfo().getLastname());
+        pstmt.setString(5, req.getInfo().getAddress());
+        pstmt.setInt(6, req.getInfo().getZipcode());
+        pstmt.setString(7, req.getInfo().getCity());
+        pstmt.setString(8, req.getInfo().getGender());
+        pstmt.executeUpdate();
 
+    }
 }

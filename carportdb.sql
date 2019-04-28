@@ -117,10 +117,12 @@ CREATE TABLE CarportDB.users (
 	PRIMARY KEY (user_id)
 );
 select * from users;
+select * from users_personalinfo;
 insert into CarportDB.users (email,  password)
 values ("test@test.dk","test");
 
 CREATE TABLE CarportDB.users_personalinfo (
+	request_id INT NOT NULL,
 	user_id INT(50) NOT NULL UNIQUE,
 	firstname VARCHAR(50) NOT NULL,
 	lastname VARCHAR(50) NOT NULL,
@@ -128,7 +130,8 @@ CREATE TABLE CarportDB.users_personalinfo (
   	zipcode INT(4) NOT NULL,
 	city VARCHAR(50) NOT NULL,
 	gender VARCHAR(1) NOT NULL, /* M/Y */
-	CONSTRAINT `users_address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
+	CONSTRAINT `users_address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
+    CONSTRAINT `users_address_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`)
 );
 
 insert into CarportDB.users_personalinfo (user_id,  firstname, lastname, address, zipcode, city, gender)
@@ -138,15 +141,13 @@ CREATE TABLE CarportDB.requests (
 	request_id INT(50) NOT NULL AUTO_INCREMENT,
 	user_id int(50) NOT NULL,
 	dateplaced DATETIME NOT NULL,
-	dateaccepted DATETIME DEFAULT NULL,
-  	price INT(10) NOT NULL,
 	PRIMARY KEY (request_id),
 	CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
 );
 
 CREATE TABLE CarportDB.sheds (
 	shed_id INT(50) NOT NULL AUTO_INCREMENT,
-	request_id INT(50) NOT NULL,
+	request_id INT(50) NOT NULL, -- bør shed ikke have carport_id i stedet for request id?
   	width INT(50) NOT NULL,
   	length INT(50) NOT NULL,
 	PRIMARY KEY (shed_id),
@@ -156,7 +157,7 @@ CREATE TABLE CarportDB.sheds (
 CREATE TABLE CarportDB.carports (
 	carport_id INT(50) NOT NULL AUTO_INCREMENT,
 	request_id INT(50) NOT NULL,
-	roof_id int(50) NOT NULL,
+	roof_id int(50) NOT NULL, 
 	inclined int(1) NOT NULL,
   	width INT(50) NOT NULL,
   	length INT(50) NOT NULL,

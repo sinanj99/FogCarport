@@ -12,6 +12,7 @@ import Data.IMaterialMapper;
 import Data.Request;
 import Data.Roof;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -96,4 +97,10 @@ public class CalculateBOM
 //        
 //    }
     
+    public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException {
+        InclineRoofCarportBOM calc = new InclineRoofCarportBOM();
+        List list = new ArrayList();
+        list.add(calc.rafters(r.getCarport().getLength(), r.getCarport().isShed(), r.getCarport().getShed_().getLength()));
+        return new BOM(list);
+    }
 }

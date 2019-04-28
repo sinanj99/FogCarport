@@ -21,6 +21,7 @@ public class TestCalculateBOMMethods
     public static void main(String[] args) throws NoSuchMaterialException
     {
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
+        InclineRoofCarportBOM i = new InclineRoofCarportBOM();
        
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);
@@ -50,16 +51,8 @@ public class TestCalculateBOMMethods
 //String str = "/jsp/flatroof.jsp";
 //        System.out.println(str.substring(1).split("/")[1]);
 
-            
-        CalculateBOM c = new CalculateBOM();
-        BOM b = c.generateFlatRoofCarportBOM(new Request(0, "", "", 10, new Carport(null, true, 240, 450, true, new Shed(210, 150))));
-        
-        for(LineItem l : b.getLineitems())
-        {
-            System.out.println(l);
-        }
-        
-        
+        System.out.println(i.amountOfRafters(500, false, 0));
+//        System.out.println(f.calculateQuantityOfSpær(300));
         
 
 

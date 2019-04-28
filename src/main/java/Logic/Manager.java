@@ -8,6 +8,7 @@ package Logic;
 import Data.IMaterialMapper;
 import Data.IRequestMapper;
 import Data.IUserMapper;
+import Data.Request;
 import Data.Roof;
 import Data.User;
 import java.sql.SQLException;
@@ -31,7 +32,10 @@ public class Manager {
         return IUserMapper.instance().getUser(email);
     }
 
-    public static void insertRequest(int user_id, int roof_id, int price, boolean inclined, int width, int length, boolean shed, int shedWidth, int shedLength, String datePlaced) throws NoSuchRoofException {
-        IRequestMapper.instance().insertRequest(user_id, roof_id, inclined, width, length, shed, shedWidth, shedLength, datePlaced);
+    public static void insertRequest(Request req) throws NoSuchRoofException {
+        IRequestMapper.instance().insertRequest(req);
+    }
+    public static Roof getRoof(String name) throws NoSuchRoofException {
+        return IRequestMapper.instance().getRoof(name);
     }
 }

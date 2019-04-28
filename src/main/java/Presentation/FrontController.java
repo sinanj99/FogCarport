@@ -31,7 +31,7 @@ public class FrontController extends HttpServlet {
         try {
             String target = command.execute(request);
             request.getRequestDispatcher(target).forward(request, response);
-        } catch (NoSuchRoofException | ServletException | IOException | SQLException ex) {
+        } catch (NoSuchRoofException | ServletException | IOException | SQLException | UserNotFoundException ex) {
             System.out.println("EXCEPTION: " + ex.getMessage());
         }
     }

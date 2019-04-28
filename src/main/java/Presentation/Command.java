@@ -20,6 +20,5 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface Command {
     
-    String execute(HttpServletRequest request) throws ServletException,
-            NoSuchRoofException, SQLException, IOException;
+    String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException;
 }

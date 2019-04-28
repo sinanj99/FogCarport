@@ -8,6 +8,7 @@ package Presentation;
 import Data.Carport;
 import Data.IMaterialMapper;
 import Data.IRequestMapper;
+import Data.IUserMapper;
 import Data.PersonalInfo;
 import Data.Request;
 import Data.Roof;
@@ -15,6 +16,7 @@ import Data.Shed;
 import Data.User;
 import Logic.Manager;
 import Logic.NoSuchRoofException;
+import Logic.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -30,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GenerateReqCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, NoSuchRoofException, SQLException, IOException {
+    public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
         
         int cwidth = Integer.parseInt(request.getParameter("cwidth"));
         int clength = Integer.parseInt(request.getParameter("clength"));
@@ -66,8 +68,7 @@ public class GenerateReqCommand implements Command {
         String datePlaced = String.valueOf(date.format(dateFormat));
         
         Request req = new Request(info, user_id, datePlaced, cp);
-        
-        Manager.insertRequest(user_id, user_id, zip, inclined, swidth, slength, bshed, swidth, slength, datePlaced);
+        Manager.insertRequest(req);
         
         return "reqsent.jsp";
     }

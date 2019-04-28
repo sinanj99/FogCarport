@@ -69,6 +69,7 @@ class RequestMapper extends IRequestMapper{
         String datePlaced = "";
         String dateAccepted = "";
         int price = 0;
+        PersonalInfo info;
         try{
             String query = "SELECT * FROM requests WHERE request_id = ?;";
             PreparedStatement pstmt = con.prepareStatement(query);
@@ -76,13 +77,14 @@ class RequestMapper extends IRequestMapper{
             ResultSet rs = pstmt.executeQuery();
             
             if(rs.next()){
+                info = getRequestInfo(rs.getInt("user_id"));
                 Carport cp = getRequestCarport(rs.getInt("request_id"));
                 user_id = rs.getInt("user_id");
                 price = rs.getInt("price");
                 datePlaced = rs.getString("dateplaced");
                 dateAccepted = rs.getString("dateaccepted");
 
-                r = new Request(user_id, datePlaced, dateAccepted, price, cp);
+                r = new Request(info, user_id, datePlaced, dateAccepted, price, cp);
             }
         }catch(SQLException | NoSuchCarportException e){
             throw new NoSuchRequestException();
@@ -148,15 +150,13 @@ class RequestMapper extends IRequestMapper{
     }
     
     @Override
-    public void insertRequest(int user_id, int roof_id, int price, boolean inclined, int width, int length, boolean shed, int shedWidth, int shedLength) {
-        LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    public void insertRequest(int user_id, int roof_id, boolean inclined, int width, int length, boolean shed, int shedWidth, int shedLength, String datePlaced) {
+        
         try{
-            String query = "INSERT INTO `requests` (user_id, dateplaced, price) VALUES (?,?,?);";
+            String query = "INSERT INTO `requests` (user_id, dateplaced) VALUES (?,?);";
             PreparedStatement pstmt = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, user_id);
-            pstmt.setString(2, date.format(dateFormat));
-            pstmt.setInt(3, price);
+            pstmt.setString(2, datePlaced);
             pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
             if(rs.next()){
@@ -302,5 +302,9 @@ class RequestMapper extends IRequestMapper{
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    private PersonalInfo getRequestInfo(int aInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

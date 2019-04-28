@@ -6,6 +6,7 @@
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
 <%List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
     User user = (User) session.getAttribute("user");
+    request.setAttribute("inclined", "false");
     String firstname = user.getInfo().getFirstname(); %>
 
 <body onload="spaceForShed(); wantAdress();" class="background2">
@@ -15,7 +16,7 @@
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Carportens bredde</p>
-                    <select required class="inputbig" id="carportWidth" onchange="spaceForShed(); widthSubtract30();">
+                    <select name="cwidth" required class="inputbig" id="carportWidth" onchange="spaceForShed(); widthSubtract30();">
                         <option value="n/a">Vælg</option>
                         <%
                             for (int i = 240; i <= 750; i += 30) {
@@ -28,7 +29,7 @@
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Carportens længde</p>
-                    <select required class="inputbig" id="carportLength" onchange="spaceForShed(); lengthSubtract30();">
+                    <select required name="clength" class="inputbig" id="carportLength" onchange="spaceForShed(); lengthSubtract30();">
                         <option value="n/a">Vælg</option>
                         <%
                             for (int i = 240; i <= 750; i += 30) {
@@ -41,7 +42,7 @@
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Tagtype</p>
-                    <select required class="inputbig">
+                    <select required name="rchoice" class="inputbig">
                         <option value="n/a">Vælg</option>
                         <% for (Roof r : roofs) {%>
                         <option value="<%= r.getName()%>"><%= r.getName()%></option>
@@ -52,7 +53,7 @@
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;"><label id="shedLabel">Redskabsrum?</label></p>
-                    <select required onchange="wantShed()" id="shedChoice" class="inputbig">
+                    <select required name="schoice" onchange="wantShed()" id="shedChoice" class="inputbig">
                         <option value="n/a">Vælg</option>
                         <option id="yes" value="1">Ja</option>
                         <option value="2">Nej</option>
@@ -62,7 +63,7 @@
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;" ><label id="shedWidthLabel" style="margin-bottom: 0px;" class="d-none">Redskabsrummets bredde</label></p>
-                    <select required id="shedWidth" class="inputbig d-none" class="d-none">
+                    <select required name="swidth" id="shedWidth" class="inputbig d-none" class="d-none">
                         <option value="n/a">Vælg</option>
                         <%
                             for (int i = 210; i <= 720; i += 30) {
@@ -75,7 +76,7 @@
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;" ><label id="shedLengthLabel" style="margin-bottom: 0px;" class="d-none">Redskabsrummets Længde</label></p>
-                    <select required id="shedLength" class="inputbig d-none" class="d-none">
+                    <select required name="slength" id="shedLength" class="inputbig d-none" class="d-none">
                         <option value="n/a">Vælg</option>
                         <%
                             for (int i = 150; i <= 510; i += 30) {
@@ -104,19 +105,19 @@
                         <div class="textsmallr">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input id="fname" class="inputsmalll" type="text" value="<%=firstname%>" placeholder="Fornavn..." required>
+                        <input name="fname" id="fname" class="inputsmalll" type="text" value="<%=firstname%>" placeholder="Fornavn..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input id="lname" class="inputsmallr" type="text" value="<%=user.getInfo().getLastname()%>" placeholder="Efternavn..." required>
+                        <input id="lname" name="lname" class="inputsmallr" type="text" value="<%=user.getInfo().getLastname()%>" placeholder="Efternavn..." required>
                     </div>
                 </div>  
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Adresse</p>
-                        <input class="inputbig" id="adresss" type="text" value="<%=user.getInfo().getAddress()%>" placeholder="Adresse..." required>
+                        <input class="inputbig" name="address" id="adresss" type="text" value="<%=user.getInfo().getAddress()%>" placeholder="Adresse..." required>
                     </div>
                 </div>
                 <div class="row">
@@ -127,25 +128,26 @@
                         <div class="textsmallr">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" id="zip" type="text" value="<%=user.getInfo().getZipcode()%>" placeholder="Postnummer..." required>
+                        <input class="inputsmalll" id="zip" name="zip" type="text" value="<%=user.getInfo().getZipcode()%>" placeholder="Postnummer..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input class="inputsmallr" id="city" type="text" value="<%=user.getInfo().getCity()%>" placeholder="By..." required>
+                        <input class="inputsmallr" id="city" name="city" type="text" value="<%=user.getInfo().getCity()%>" placeholder="By..." required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Email</p>
-                        <input class="inputbig" id="email" type="text" value="<%=user.getEmail()%>" placeholder="Email..." required>
+                        <input class="inputbig" id="email" name="email" type="text" value="<%=user.getEmail()%>" placeholder="Email..." required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-12 d-flex justify-content-center">
                     <input type="submit" class="btn notmemberbtn" value="Send forespørgsel">
+                    <input type="hidden" name="command" value="request">
                 </div>
             </div>
         </form>

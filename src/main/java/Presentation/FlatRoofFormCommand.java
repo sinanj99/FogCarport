@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author sinanjasar
  */
-public class FlatRoofReqCommand implements Command {
+public class FlatRoofFormCommand implements Command {
 
-    public FlatRoofReqCommand() {
+    public FlatRoofFormCommand() {
     }
 
     @Override

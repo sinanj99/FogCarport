@@ -20,9 +20,10 @@ public class CommandFactory {
     private CommandFactory() {
         commands.put("login", new LoginCommand());
         commands.put("register", new RegisterCommand());
-        commands.put("flatroof", new FlatRoofReqCommand());
+        commands.put("flatroof", new FlatRoofFormCommand());
         commands.put("register", new RegisterCommand());
         commands.put("logout", new LogoutCommand());
+        commands.put("request", new GenerateReqCommand());
     }
 
     static Command from(String key) {

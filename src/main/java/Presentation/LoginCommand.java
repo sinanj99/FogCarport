@@ -32,8 +32,8 @@ public class LoginCommand implements Command {
             LoginController.doesMatch(email, password);
             request.getSession().setAttribute("user", user);
         } catch (UserNotFoundException | NoMatchException e) {
-            //if the user doesn't exist in the database. 
-            //if there is no match
+            /*if the user doesn't exist in the database, or  
+            if there is no match */
             request.setAttribute("loginResult", e.getMessage());
             return "login.jsp";
         }

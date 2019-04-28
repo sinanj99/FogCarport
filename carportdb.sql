@@ -147,7 +147,7 @@ CREATE TABLE CarportDB.requests (
 
 CREATE TABLE CarportDB.sheds (
 	shed_id INT(50) NOT NULL AUTO_INCREMENT,
-	request_id INT(50) NOT NULL, -- bør shed ikke have carport_id i stedet for request id?
+	carport_id INT(50) NOT NULL, -- bør shed ikke have carport_id i stedet for request id?
   	width INT(50) NOT NULL,
   	length INT(50) NOT NULL,
 	PRIMARY KEY (shed_id),

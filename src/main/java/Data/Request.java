@@ -31,6 +31,14 @@ public class Request {
         return carport;
     }
 
+    public String getDatePlaced() {
+        return datePlaced;
+    }
+
+    public PersonalInfo getInfo() {
+        return info;
+    }
+
     @Override
     public String toString() {
         return "Request{" + "user_id=" + user_id + ", datePlaced=" + datePlaced + ", carport=" + carport + '}';

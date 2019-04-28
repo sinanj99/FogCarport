@@ -14,16 +14,13 @@ import java.time.LocalDateTime;
 public class Request {
     private int user_id;
     private String datePlaced;
-    private String dateAccepted;
-    private int price;
     private Carport carport;
+    PersonalInfo info;
 
-    public Request(int user_id, String datePlaced, String dateAccepted, int price, Carport carport) {
+    public Request(PersonalInfo info, int user_id, String datePlaced, Carport carport) {
         this.user_id = user_id;
         this.carport = carport;
-        this.dateAccepted = dateAccepted;
         this.datePlaced = datePlaced;
-        this.price = price;
     }
 
     public int getUser_id() {
@@ -36,7 +33,7 @@ public class Request {
 
     @Override
     public String toString() {
-        return "Request{" + "user_id=" + user_id + ", datePlaced=" + datePlaced + ", dateAccepted=" + dateAccepted + ", price=" + price + ", carport=" + carport + '}';
+        return "Request{" + "user_id=" + user_id + ", datePlaced=" + datePlaced + ", carport=" + carport + '}';
     }
     
     

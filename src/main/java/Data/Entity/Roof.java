@@ -12,13 +12,11 @@ package Data.Entity;
 public class Roof {
     private int roof_id;
     private String name;
-    private int price;
     private boolean inclined;
 
-    public Roof(int roof_id, String name, int price, boolean inclined) {
+    public Roof(int roof_id, String name, boolean inclined) {
         this.roof_id = roof_id;
         this.name = name;
-        this.price = price;
         this.inclined = inclined;
     }
 
@@ -30,9 +28,6 @@ public class Roof {
         return name;
     }
 
-    public int getPrice() {
-        return price;
-    }
 
     public boolean isInclined() {
         return inclined;
@@ -41,7 +36,7 @@ public class Roof {
     
     @Override
     public String toString() {
-        return "Roof{" + "roof_id=" + roof_id + ", name=" + name + ", price=" + price + ", inclined=" + inclined + '}';
+        return "Roof{" + "roof_id=" + roof_id + ", name=" + name +  ", inclined=" + inclined + '}';
     }
     
     

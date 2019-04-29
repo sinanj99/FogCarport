@@ -38,8 +38,8 @@ public class Manager {
     public static void insertRequest(Request req) throws NoSuchRoofException {
         IRequestMapper.instance().insertRequest(req);
     }
-    public static Roof getRoof(String name) throws NoSuchRoofException {
-        return IRequestMapper.instance().getRoof(name);
+    public static Roof getRoof(int id) throws NoSuchRoofException {
+        return IRequestMapper.instance().getRoof(id);
     }
     
     public static int getDimensionPrice(int roof_id, int length) {

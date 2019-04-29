@@ -33,7 +33,7 @@ public class GenerateReqCommand implements Command {
         
         int cwidth = Integer.parseInt(request.getParameter("cwidth"));
         int clength = Integer.parseInt(request.getParameter("clength"));
-        String rchoice = request.getParameter("rchoice");
+        int rchoice = Integer.parseInt(request.getParameter("rchoice"));
         Roof roof = Manager.getRoof(rchoice);
         System.out.println("ROOF = " + roof.getRoof_id() + " " + roof.getName());
         String schoice = request.getParameter("schoice");

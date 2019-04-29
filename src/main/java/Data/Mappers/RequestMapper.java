@@ -12,7 +12,6 @@ import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
 import Logic.Exceptions.NoSuchCarportException;
-import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.NoSuchShedException;
@@ -21,12 +20,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -46,24 +41,7 @@ class RequestMapper extends IRequestMapper {
 
     public static void main(String[] args) throws NoSuchCarportException, NoSuchRequestException, NoSuchRoofException {
 
-        //IRequestMapper.instance().insertRequest(1, 101, 20000, false, 400, 600, true, 100, 200);
-        //IRequestMapper.instance().insertRequestCarport(5, 109, false, 420, 620, false);
-        //IRequestMapper.instance().insertRequestShed(4, 25, 26);
-        //System.out.println(IRequestMapper.instance().getRequestCarport(7));
-        //System.out.println(IRequestMapper.instance().getRequest(7));
-//        System.out.println("////////////////////FLADT TAG////////////////////");
-//        for(Roof r : IRequestMapper.instance().getRoofs(0)){
-//            System.out.println(r);
-//        }
-//        System.out.println("////////////////////INCLINED TAG////////////////////");
-//        for(Roof r : IRequestMapper.instance().getRoofs(1)){
-//            System.out.println(r);
-//        }
-//        System.out.println("////////////////////ALLE TAG////////////////////");
-//        for(Roof r : IRequestMapper.instance().getRoofs(2)){
-//            System.out.println(r);
-//        }
-        System.out.println(IRequestMapper.instance().getRoof("Betonstagsten - Rød"));
+        System.out.println(IRequestMapper.instance().getRoofs(0));
 
     }
 
@@ -106,7 +84,7 @@ class RequestMapper extends IRequestMapper {
         int width = 0;
         int length = 0;
         boolean shed = false;
-
+        int rooflength_id;
         String query = "SELECT * FROM carports WHERE request_id = ?";
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setInt(1, request_id);
@@ -164,28 +142,27 @@ class RequestMapper extends IRequestMapper {
             pstmt.setInt(1, req.getUser_id());
             pstmt.setString(2, req.getDatePlaced());
             pstmt.executeUpdate();
+
             ResultSet rs = pstmt.getGeneratedKeys();
 
             if (rs.next()) {
-                req_id = rs.getInt("request_id");
+                req_id = rs.getInt(1);
+                System.out.println("REQ ID  === " + req_id);
             }
             //req info
             insertRequestInfo(pstmt, query, rs, req, req_id);
-            //carport roof
-            insertRoof(pstmt, query, rs, roof);
-            //roof dimensions of carport roof
-            insertDimensions(cp.getRoof().getRoof_id(), cp.getLength());
             //the carport (carport_id is returned)
             int cp_id = insertRequestCarport(pstmt, query, rs,
-            req_id, cp);
-            
+                    req_id, cp);
+
             //shed, if chosen
             if (cp.isShed()) {
-                insertRequestShed(pstmt, query, rs, req_id, shed);
+                insertRequestShed(pstmt, query, rs, cp_id, shed);
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("REQUEST TABLE " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -202,6 +179,7 @@ class RequestMapper extends IRequestMapper {
         }
         try {
             query = "INSERT INTO `carports` (request_id, roof_id, inclined, width, length, shed) VALUES (?,?,?,?,?,?);";
+            pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, request_id);
             pstmt.setInt(2, cp.getRoof().getRoof_id());
             pstmt.setInt(3, inclined_);
@@ -209,26 +187,27 @@ class RequestMapper extends IRequestMapper {
             pstmt.setInt(5, cp.getLength());
             pstmt.setInt(6, hasShed);
             pstmt.executeUpdate();
-            rs = pstmt.executeQuery();
+            rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
-                id = rs.getInt("carport_id");
+                id = rs.getInt(1);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("INSERT REQ CARPORT " + e.getMessage());
         }
         return id;
     }
 
-    public void insertRequestShed(PreparedStatement pstmt, String query, ResultSet rs, 
-            int request_id, Shed shed) {
+    public void insertRequestShed(PreparedStatement pstmt, String query, ResultSet rs,
+            int cp_id, Shed shed) {
         try {
-            query = "INSERT INTO `sheds` (request_id, width, length) VALUES (?,?,?);";
-            pstmt.setInt(1, request_id);
+            query = "INSERT INTO `sheds` (carport_id, width, length) VALUES (?,?,?);";
+            pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, cp_id);
             pstmt.setInt(2, shed.getWidth());
             pstmt.setInt(3, shed.getLength());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("INSERT REQ SHED: " + e.getMessage());
         }
     }
 
@@ -248,7 +227,6 @@ class RequestMapper extends IRequestMapper {
             if (rs.next()) {
                 roof_id = rs.getInt("roof_id");
                 name_ = rs.getString("name");
-                price = rs.getInt("price");
                 if (rs.getInt("inclined") == 1) {
                     inclined = true;
                 }
@@ -258,7 +236,7 @@ class RequestMapper extends IRequestMapper {
             throw new NoSuchRoofException();
         }
 
-        return new Roof(roof_id, name, price, inclined);
+        return new Roof(roof_id, name, inclined);
     }
 
     @Override
@@ -277,7 +255,6 @@ class RequestMapper extends IRequestMapper {
             if (rs.next()) {
                 roof_id = rs.getInt("roof_id");
                 name_ = rs.getString("name");
-                price = rs.getInt("price");
                 if (rs.getInt("inclined") == 1) {
                     inclined = true;
                 }
@@ -287,7 +264,7 @@ class RequestMapper extends IRequestMapper {
             throw new NoSuchRoofException();
         }
 
-        return new Roof(roof_id, name_, price, inclined);
+        return new Roof(roof_id, name_, inclined);
     }
 
     @Override
@@ -313,11 +290,10 @@ class RequestMapper extends IRequestMapper {
             while (rs.next()) {
                 roof_id = rs.getInt("roof_id");
                 name = rs.getString("name");
-                price = rs.getInt("price");
                 if (rs.getInt("inclined") == 1) {
                     inclined = true;
                 }
-                roofs.add(new Roof(roof_id, name, price, inclined));
+                roofs.add(new Roof(roof_id, name, inclined));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -348,25 +324,26 @@ class RequestMapper extends IRequestMapper {
         }
 
         try {
-            query = "INSERT INTO rooftype (name, price, inclined) VALUES (?, ?, ?);";
+            query = "INSERT INTO rooftype (name, inclined) VALUES (?, ?, ?);";
             pstmt.setString(1, roof.getName());
-            pstmt.setInt(2, roof.getPrice());
             pstmt.setInt(3, inclined_);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
     @Override
-    public void insertDimensions(int id, int length) {
+    public void insertDimensions(int id, int length, int price) {
         try {
-            String query = "INSERT INTO rooflength (roof_id, roof_length) VALUES (?, ?);";
+            String query = "INSERT INTO rooflength (roof_id, roof_length, price) VALUES (?, ?, ?);";
             PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);
+            pstmt.setInt(3, price);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("INSERT DIMENSIONS: " + e.getMessage());
         }
     }
 
@@ -376,8 +353,9 @@ class RequestMapper extends IRequestMapper {
 
     private void insertRequestInfo(PreparedStatement pstmt, String query, ResultSet rs, Request req, int req_id) throws SQLException {
 
-        query = "INSERT INTO users_personalinfo (request_id, user_id, firstname"
+        query = "INSERT INTO users_personalinfo (request_id, user_id, firstname, "
                 + "lastname, address, zipcode, city, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         pstmt.setInt(1, req_id);
         pstmt.setInt(2, req.getUser_id());
         pstmt.setString(3, req.getInfo().getFirstname());
@@ -387,6 +365,41 @@ class RequestMapper extends IRequestMapper {
         pstmt.setString(7, req.getInfo().getCity());
         pstmt.setString(8, req.getInfo().getGender());
         pstmt.executeUpdate();
-
     }
+
+    @Override
+    public int getDimensionID(int roof_id, int length) {
+        int rooflength_id = 0;
+        try {
+            String query = "SELECT * FROM rooflength WHERE roof_id = ? AND roof_length = ?";
+            PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, roof_id);
+            pstmt.setInt(2, length);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                rooflength_id = rs.getInt("rooflength_id");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return rooflength_id;
+    }
+    @Override
+    public int getDimensionPrice(int roof_id, int length) {
+        int price = 0;
+        try {
+            String query = "SELECT * FROM rooflength WHERE roof_id = ? AND roof_length = ?";
+            PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, roof_id);
+            pstmt.setInt(2, length);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                price = rs.getInt("rooflength_id");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return price;
+    }
+
 }

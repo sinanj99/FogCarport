@@ -34,7 +34,9 @@ public abstract class IRequestMapper {
     public abstract Carport getRequestCarport(int request_id) throws NoSuchRoofException, SQLException, NoSuchShedException;
     public abstract Shed getRequestShed(int request_id) throws NoSuchShedException;
     public abstract void insertRequest(Request req);
-    public abstract void insertDimensions(int id, int length);
+    public abstract void insertDimensions(int id, int length, int price);
+    public abstract int getDimensionID(int roof_id, int length);
+    public abstract int getDimensionPrice(int roof_id, int length);
     public abstract Roof getRoof(String name) throws NoSuchRoofException;
     public abstract Roof getRoof(int id) throws NoSuchRoofException;
     public abstract List<Roof> getRoofs(int rooftype) throws NoSuchRoofException;

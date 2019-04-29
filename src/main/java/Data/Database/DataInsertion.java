@@ -20,9 +20,12 @@ public class DataInsertion {
         
         for(Roof r : roofs)
         {
+            int price = 50;
+            
             for(int i = 240; i<= 750; i+=30)
             {
-                IRequestMapper.instance().insertDimensions(r.getRoof_id(), i);
+                IRequestMapper.instance().insertDimensions(r.getRoof_id(), i, price);
+                price += 50;
             }
         }
     }

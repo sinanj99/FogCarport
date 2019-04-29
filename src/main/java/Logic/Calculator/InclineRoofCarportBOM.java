@@ -108,7 +108,24 @@ public class InclineRoofCarportBOM {
         /*amount of lath-holders is the same as rafters; 1 lath-holder for each rafter*/
         return amountOfRafters(carportLength, isShed, shedLength);
     }
-            
+    
+    /**
+     * 
+     * @return (sternbrædder)
+     */
+    public static int fasciaBoards() {
+        return 2;
+    }
+    /**
+     * 
+     * @return (sternbrædder - skur)
+     */
+    public static int fasciaBoardsShed() {
+        return 2;
+    }
+           
+    
+    
     public LineItem rafters(int carportLength, boolean isShed, int shedLength) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("fædigskåret (byg-selv spær)");
         return new LineItem(m, amountOfRafters(carportLength, isShed, shedLength), "byg-selv spær (skal samles) 8 stk.", m.getPrice() * amountOfRafters(carportLength, isShed, shedLength));

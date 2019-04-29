@@ -10,6 +10,8 @@ import Data.Entity.LineItem;
 import Data.Entity.Material;
 import Data.Entity.Request;
 import Data.Entity.Roof;
+import Data.Mappers.IRequestMapper;
+import Logic.Controller.Manager;
 import Logic.Exceptions.NoSuchMaterialException;
 
 /**
@@ -296,7 +298,7 @@ public class FlatRoofCarportBOM {
         String desc = "Tagplader monteres på spær";
         for (int i = 260; i <= 770; i += 30) {
             if (length + 20 == i) {
-                l = new LineItem(roof, tagpladeAntal(length), desc, roof.getPrice() * tagpladeAntal(length));
+                l = new LineItem(roof, tagpladeAntal(length), desc, Manager.getDimensionPrice(roof.getRoof_id(), length));
             }
         }
         return l;

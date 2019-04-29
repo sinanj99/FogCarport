@@ -155,7 +155,13 @@ values ("10x120mm brædderbolt","stk",  4),
 ("4,5 x 60 mm. Skruer
 200 stk.","pakke",  4),
 ("hulbånd 1x20 mm. 10 mtr.", "rulle", 10),
-("5,0 x 40 mm. beslagskruer 250 stk.", "pakke", 10);
+("5,0 x 40 mm. beslagskruer 250 stk.", "pakke", 10),
+("5,0 x 100 mm. skruer 100 stk.", "pakke", 10),
+("4,5 x 50 mm. Skruer 350 stk.", "pakke", 10);
+
+
+
+
 
 CREATE TABLE CarportDB.users (
 	user_id INT(50) NOT NULL AUTO_INCREMENT,

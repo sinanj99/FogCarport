@@ -170,66 +170,65 @@ class RequestMapper extends IRequestMapper {
                 req_id = rs.getInt("request_id");
             }
             //req info
-            insertRequestInfo(req, req_id);
+            insertRequestInfo(pstmt, query, rs, req, req_id);
             //carport roof
-            insertRoof(roof.getName(), roof.getPrice(), roof.isInclined());
+            insertRoof(pstmt, query, rs, roof);
             //roof dimensions of carport roof
             insertDimensions(cp.getRoof().getRoof_id(), cp.getLength());
             //the carport (carport_id is returned)
-            int cp_id = insertRequestCarport(req_id, roof.getRoof_id(),
-                    cp.isInclined(), cp.getWidth(), cp.getLength(), cp.isShed());
+            int cp_id = insertRequestCarport(pstmt, query, rs,
+            req_id, cp);
+            
             //shed, if chosen
             if (cp.isShed()) {
-                insertRequestShed(cp_id, shed.getWidth(), shed.getLength());
+                insertRequestShed(pstmt, query, rs, req_id, shed);
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
-    @Override
-    public int insertRequestCarport(int request_id, int roof_id, boolean inclined, int width, int length, boolean shed) {
+    public int insertRequestCarport(PreparedStatement pstmt, String query, ResultSet rs,
+            int request_id, Carport cp) {
         int inclined_ = 0;
         int hasShed = 0;
         int id = 0;
-        if (inclined) {
+        if (cp.isInclined()) {
             inclined_ = 1;
         }
-        if (shed) {
+        if (cp.isShed()) {
             hasShed = 1;
         }
         try {
-            String query = "INSERT INTO `carports` (request_id, roof_id, inclined, width, length, shed) VALUES (?,?,?,?,?,?);";
-            PreparedStatement pstmt = con.prepareStatement(query);
+            query = "INSERT INTO `carports` (request_id, roof_id, inclined, width, length, shed) VALUES (?,?,?,?,?,?);";
             pstmt.setInt(1, request_id);
-            pstmt.setInt(2, roof_id);
+            pstmt.setInt(2, cp.getRoof().getRoof_id());
             pstmt.setInt(3, inclined_);
-            pstmt.setInt(4, width);
-            pstmt.setInt(5, length);
+            pstmt.setInt(4, cp.getWidth());
+            pstmt.setInt(5, cp.getLength());
             pstmt.setInt(6, hasShed);
             pstmt.executeUpdate();
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
             if (rs.next()) {
                 id = rs.getInt("carport_id");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return id;
     }
 
-    @Override
-    public void insertRequestShed(int request_id, int shedWidth, int shedLength) {
+    public void insertRequestShed(PreparedStatement pstmt, String query, ResultSet rs, 
+            int request_id, Shed shed) {
         try {
-            String query = "INSERT INTO `sheds` (request_id, width, length) VALUES (?,?,?);";
-            PreparedStatement pstmt = con.prepareStatement(query);
+            query = "INSERT INTO `sheds` (request_id, width, length) VALUES (?,?,?);";
             pstmt.setInt(1, request_id);
-            pstmt.setInt(2, shedWidth);
-            pstmt.setInt(3, shedLength);
+            pstmt.setInt(2, shed.getWidth());
+            pstmt.setInt(3, shed.getLength());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -255,6 +254,7 @@ class RequestMapper extends IRequestMapper {
                 }
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new NoSuchRoofException();
         }
 
@@ -283,6 +283,7 @@ class RequestMapper extends IRequestMapper {
                 }
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new NoSuchRoofException();
         }
 
@@ -319,7 +320,7 @@ class RequestMapper extends IRequestMapper {
                 roofs.add(new Roof(roof_id, name, price, inclined));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new NoSuchRoofException();
         }
 
@@ -335,40 +336,37 @@ class RequestMapper extends IRequestMapper {
             pstmt.setInt(1, price);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new NoSuchRoofException();
         }
     }
 
-    @Override
-    public void insertRoof(String name, int price, boolean inclined) {
+    public void insertRoof(PreparedStatement pstmt, String query, ResultSet rs, Roof roof) {
         int inclined_ = 0;
-        if (inclined) {
+        if (roof.isInclined()) {
             inclined_ = 1;
         }
 
         try {
-            String query = "INSERT INTO rooftype (name, price, inclined) VALUES (?, ?, ?);";
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setString(1, name);
-            pstmt.setInt(2, price);
+            query = "INSERT INTO rooftype (name, price, inclined) VALUES (?, ?, ?);";
+            pstmt.setString(1, roof.getName());
+            pstmt.setInt(2, roof.getPrice());
             pstmt.setInt(3, inclined_);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
-
     @Override
     public void insertDimensions(int id, int length) {
         try {
             String query = "INSERT INTO rooflength (roof_id, roof_length) VALUES (?, ?);";
-            PreparedStatement pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -376,11 +374,10 @@ class RequestMapper extends IRequestMapper {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void insertRequestInfo(Request req, int req_id) throws SQLException {
+    private void insertRequestInfo(PreparedStatement pstmt, String query, ResultSet rs, Request req, int req_id) throws SQLException {
 
-        String query = "INSERT INTO users_personalinfo (request_id, user_id, firstname"
+        query = "INSERT INTO users_personalinfo (request_id, user_id, firstname"
                 + "lastname, address, zipcode, city, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-        PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setInt(1, req_id);
         pstmt.setInt(2, req.getUser_id());
         pstmt.setString(3, req.getInfo().getFirstname());

@@ -18,6 +18,7 @@ public class Request {
     PersonalInfo info;
 
     public Request(PersonalInfo info, int user_id, String datePlaced, Carport carport) {
+        this.info = info;
         this.user_id = user_id;
         this.carport = carport;
         this.datePlaced = datePlaced;

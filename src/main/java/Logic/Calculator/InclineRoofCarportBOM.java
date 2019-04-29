@@ -35,12 +35,12 @@ public class InclineRoofCarportBOM {
 
         float rafterWidth = 4.5f;
         int rafterQty = 3; // minimum qty of rafters is 3. 
-        int lastAdded = 1; // minimum qty of added rafter is 1. 
+        int lastAdded = 1; 
         int spaceAmount = 2;
 
         float spaceBetweenRafters = (carportLength - rafterWidth*rafterQty) / spaceAmount;
 
-        while (spaceBetweenRafters > 85) {
+        while (spaceBetweenRafters > 89) {
             lastAdded *= 2; //amount of rafters added is doubled each time. 
             rafterQty += lastAdded;
             spaceAmount *= 2; //amount of spaces added is doubled each time as well. 

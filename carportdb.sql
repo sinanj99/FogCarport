@@ -1,43 +1,45 @@
 DROP TABLE IF EXISTS CarportDB.sheds;
 DROP TABLE IF EXISTS CarportDB.carports;
-DROP TABLE IF EXISTS CarportDB.requests;
 DROP TABLE IF EXISTS CarportDB.users_personalinfo;
+DROP TABLE IF EXISTS CarportDB.requests;
 DROP TABLE IF EXISTS CarportDB.users;
 DROP TABLE IF EXISTS `rooflength`;
 DROP TABLE IF EXISTS CarportDB.rooftype;
 
+
 CREATE TABLE CarportDB.rooftype (
 	roof_id INT(50) NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(50) NOT NULL,
-  	price INT(10) NOT NULL,
   	inclined INT(1) NOT NULL,
 	PRIMARY KEY (roof_id)
 );
 
-insert into CarportDB.rooftype (`name`,  price, inclined) values 
-("Plasttrapezplader - Blåtonet", 0,  0),
-("Plasttrapezplader - Gråtonet", 0,  0),
-("Plasttrapezplader - Rødbrun", 0,  0),
-("Plasttrapezplader - Mocca", 0,  0),
-("Betonstagsten - Rød", 0,  1),
-("Betonstagsten - Teglrød", 0,  1),
-("Betonstagsten - Brun", 0,  1),
-("Betonstagsten - Sort", 0,  1),
-("Eternittag B6 - Grå", 0,  1),
-("Eternittag B6 - Sort", 0,  1),
-("Eternittag B6 - Mokka (brun)", 0,  1),
-("Eternittag B6 - Rødbrun", 0,  1),
-("Eternittag B6 - Teglrød", 0,  1),
-("Eternittag B7 - Grå", 0,  1),
-("Eternittag B7 - Sort", 0,  1),
-("Eternittag B7 - Mokka (brun)", 0,  1),
-("Eternittag B7 - Rødbrun", 0,  1),
-("Eternittag B7 - Teglrød", 0,  1),
-("Eternittag B7 - Rødflammet", 0, 1);
+
+insert into CarportDB.rooftype (`name`, inclined) values 
+("Plasttrapezplader - Blåtonet", 0),
+("Plasttrapezplader - Gråtonet", 0),
+("Plasttrapezplader - Rødbrun",  0),
+("Plasttrapezplader - Mocca",  0),
+("Betonstagsten - Rød", 1),
+("Betonstagsten - Teglrød", 1),
+("Betonstagsten - Brun", 1),
+("Betonstagsten - Sort", 1),
+("Eternittag B6 - Grå",  1),
+("Eternittag B6 - Sort", 1),
+("Eternittag B6 - Mokka (brun)", 1),
+("Eternittag B6 - Rødbrun", 1),
+("Eternittag B6 - Teglrød", 1),
+("Eternittag B7 - Grå",  1),
+("Eternittag B7 - Sort", 1),
+("Eternittag B7 - Mokka (brun)",  1),
+("Eternittag B7 - Rødbrun", 1),
+("Eternittag B7 - Teglrød", 1),
+("Eternittag B7 - Rødflammet", 1);
 
 CREATE TABLE `rooflength`(
-	`roof_id` INT NOT NULL AUTO_INCREMENT,
+	`roof_id` INT NOT NULL,
     `roof_length` INT NOT NULL,
+    `price`INT NOT NULL,
     CONSTRAINT `rooflength_ibfk_1` FOREIGN KEY (`roof_id`) REFERENCES rooftype(`roof_id`)
     );
 
@@ -116,14 +118,24 @@ CREATE TABLE CarportDB.users (
 	password VARCHAR(50) NOT NULL,
 	PRIMARY KEY (user_id)
 );
-select * from users;
-select * from users_personalinfo;
+
 insert into CarportDB.users (email,  password)
 values ("test@test.dk","test");
 
+
+CREATE TABLE CarportDB.requests (
+	request_id INT(50) NOT NULL AUTO_INCREMENT,
+	user_id int(50) NOT NULL,
+	dateplaced DATETIME NOT NULL,
+	PRIMARY KEY (request_id),
+	CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
+);
+
+
+
 CREATE TABLE CarportDB.users_personalinfo (
-	request_id INT NOT NULL,
-	user_id INT(50) NOT NULL UNIQUE,
+	request_id INT,
+	user_id INT(50) NOT NULL,
 	firstname VARCHAR(50) NOT NULL,
 	lastname VARCHAR(50) NOT NULL,
 	address VARCHAR(50) NOT NULL,
@@ -134,16 +146,24 @@ CREATE TABLE CarportDB.users_personalinfo (
     CONSTRAINT `users_address_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`)
 );
 
+
 insert into CarportDB.users_personalinfo (user_id,  firstname, lastname, address, zipcode, city, gender)
 values (1, "Peter","Petersen", "Tagensvej 100", 2200, "København N", "m");
 
-CREATE TABLE CarportDB.requests (
-	request_id INT(50) NOT NULL AUTO_INCREMENT,
-	user_id int(50) NOT NULL,
-	dateplaced DATETIME NOT NULL,
-	PRIMARY KEY (request_id),
-	CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
+
+CREATE TABLE CarportDB.carports (
+	carport_id INT(50) NOT NULL AUTO_INCREMENT,
+	request_id INT(50) NOT NULL,
+	roof_id INT(50) NOT NULL, 
+	inclined INT(1) NOT NULL,
+  	width INT(50) NOT NULL,
+  	length INT(50) NOT NULL,
+  	shed int(1) NOT NULL,
+	PRIMARY KEY (carport_id),
+	CONSTRAINT `carports_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`),
+    CONSTRAINT `carports_ibfk_2` FOREIGN KEY (`roof_id`) REFERENCES rooftype(`roof_id`)
 );
+
 
 CREATE TABLE CarportDB.sheds (
 	shed_id INT(50) NOT NULL AUTO_INCREMENT,
@@ -151,17 +171,6 @@ CREATE TABLE CarportDB.sheds (
   	width INT(50) NOT NULL,
   	length INT(50) NOT NULL,
 	PRIMARY KEY (shed_id),
-	CONSTRAINT `sheds_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`)
+	CONSTRAINT `sheds_ibfk_1` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`)
 );
 
-CREATE TABLE CarportDB.carports (
-	carport_id INT(50) NOT NULL AUTO_INCREMENT,
-	request_id INT(50) NOT NULL,
-	roof_id int(50) NOT NULL, 
-	inclined int(1) NOT NULL,
-  	width INT(50) NOT NULL,
-  	length INT(50) NOT NULL,
-  	shed int(1) NOT NULL,
-	PRIMARY KEY (carport_id),
-	CONSTRAINT `carports_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`)
-);

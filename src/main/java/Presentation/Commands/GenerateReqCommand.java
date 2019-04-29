@@ -6,9 +6,7 @@
 package Presentation.Commands;
 
 import Data.Entity.Carport;
-import Data.Mappers.IMaterialMapper;
 import Data.Mappers.IRequestMapper;
-import Data.Mappers.IUserMapper;
 import Data.Entity.PersonalInfo;
 import Data.Entity.Request;
 import Data.Entity.Roof;
@@ -19,7 +17,6 @@ import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
@@ -38,19 +35,25 @@ public class GenerateReqCommand implements Command {
         int clength = Integer.parseInt(request.getParameter("clength"));
         String rchoice = request.getParameter("rchoice");
         Roof roof = Manager.getRoof(rchoice);
-        
-        int schoice = Integer.parseInt(request.getParameter("schoice"));
+        System.out.println("ROOF = " + roof.getRoof_id() + " " + roof.getName());
+        String schoice = request.getParameter("schoice");
         boolean bshed = false;
-        if (schoice == 1) bshed = true;
+        if (schoice.equals("1")) bshed = true;
+        
+        Shed shed = null;
+        
+        if(bshed==true) {
         int slength = Integer.parseInt(request.getParameter("slength"));
         int swidth = Integer.parseInt(request.getParameter("swidth"));
-        boolean inclined = Boolean.valueOf(request.getParameter("inclined"));
+        shed = new Shed(swidth, slength);
+        }
         
-        Shed shed = new Shed(swidth, slength);
+        boolean inclined = Boolean.valueOf(request.getParameter("inclined"));
         Carport cp = new Carport(roof, inclined, cwidth, clength, bshed, shed); //hvorfor har carport boolean shed?
         
         
         String fname = request.getParameter("fname");
+        System.out.println("FNAME = " + fname);
         String lname = request.getParameter("lname");
         String address = request.getParameter("address");
         int zip = Integer.parseInt(request.getParameter("zip"));
@@ -59,15 +62,17 @@ public class GenerateReqCommand implements Command {
         
         
         User user = (User) request.getSession().getAttribute("user");
-        PersonalInfo info = new PersonalInfo(fname, lname, address, zip, city, "m");
         int user_id = user.getId();
-        
+        PersonalInfo info = new PersonalInfo(fname, lname, address, zip, city, "m");
+        System.out.println("PERSONALINFO = " + info);
         
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String datePlaced = String.valueOf(date.format(dateFormat));
         
         Request req = new Request(info, user_id, datePlaced, cp);
+        
+        System.out.println("FIRSTNAME ======" + req.getInfo().getFirstname());
         Manager.insertRequest(req);
         
         return "reqsent.jsp";

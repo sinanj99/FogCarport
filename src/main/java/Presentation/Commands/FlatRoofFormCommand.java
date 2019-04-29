@@ -23,9 +23,11 @@ public class FlatRoofFormCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws NoSuchRoofException {
-        if(request.getSession().getAttribute("user")==null) return "login.jsp";
+        if (request.getSession().getAttribute("user") == null) {
+            return "login.jsp";
+        }
         request.setAttribute("roofs", Manager.getRoofs(0)); // 0 for flat roofs 
         return "flatroof.jsp";
     }
-    
+
 }

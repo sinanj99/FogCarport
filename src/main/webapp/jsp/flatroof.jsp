@@ -1,6 +1,6 @@
 
-<%@page import="Data.User"%>
-<%@page import="Data.Roof"%>
+<%@page import="Data.Entity.User"%>
+<%@page import="Data.Entity.Roof"%>
 <%@page import="java.util.List"%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
@@ -87,15 +87,7 @@
                 </div>
             </div>
             <h3>Kontaktinformationer</h3>
-            <div class="row">
-                <div class="col-sm-12 d-flex flex-column align-items-center">
-                    <p class="p-0" style="width: 65%;">Brug gemte oplysninger?</p>
-                    <select required onchange="wantAdress();" id="adressChoice" class="inputbig">
-                        <option id="yes2" value="1">Ja</option>
-                        <option value="2">Nej</option>
-                    </select>
-                </div>
-            </div>
+           
             <div id="adress">
                 <div class="row">
                     <div class="col-sm-6 p-0 col-sm-6-l">
@@ -105,19 +97,19 @@
                         <div class="textsmallr">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input name="fname" id="fname" class="inputsmalll" type="text" value="<%=firstname%>" placeholder="Fornavn..." required>
+                        <input name="fname" onfocus="this.value=''" id="fname" class="inputsmalll" type="text" value="<%=firstname%>" placeholder="Fornavn..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input id="lname" name="lname" class="inputsmallr" type="text" value="<%=user.getInfo().getLastname()%>" placeholder="Efternavn..." required>
+                        <input id="lname" name="lname" onfocus="this.value=''" class="inputsmallr" type="text" value="<%=user.getInfo().getLastname()%>" placeholder="Efternavn..." required>
                     </div>
                 </div>  
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Adresse</p>
-                        <input class="inputbig" name="address" id="adresss" type="text" value="<%=user.getInfo().getAddress()%>" placeholder="Adresse..." required>
+                        <input class="inputbig" name="address" onfocus="this.value=''" id="adresss" type="text" value="<%=user.getInfo().getAddress()%>" placeholder="Adresse..." required>
                     </div>
                 </div>
                 <div class="row">
@@ -128,19 +120,19 @@
                         <div class="textsmallr">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" id="zip" name="zip" type="text" value="<%=user.getInfo().getZipcode()%>" placeholder="Postnummer..." required>
+                        <input class="inputsmalll" id="zip" name="zip" onfocus="this.value=''" type="text" value="<%=user.getInfo().getZipcode()%>" placeholder="Postnummer..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input class="inputsmallr" id="city" name="city" type="text" value="<%=user.getInfo().getCity()%>" placeholder="By..." required>
+                        <input class="inputsmallr" id="city" name="city" onfocus="this.value=''" type="text" value="<%=user.getInfo().getCity()%>" placeholder="By..." required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Email</p>
-                        <input class="inputbig" id="email" name="email" type="text" value="<%=user.getEmail()%>" placeholder="Email..." required>
+                        <input class="inputbig" id="email" name="email" onfocus="this.value=''" type="text" value="<%=user.getEmail()%>" placeholder="Email..." required>
                     </div>
                 </div>
             </div>
@@ -153,32 +145,7 @@
         </form>
     </div>
     <script type="text/javascript">
-        function wantAdress() {
-            var shedChoice = document.getElementById("adressChoice").value;
-            var adress = document.getElementById("adress");
-            if (shedChoice == 1) {
-                document.getElementById("fname").disabled = true;
-                document.getElementById("lname").disabled = true;
-                document.getElementById("adresss").disabled = true;
-                document.getElementById("zip").disabled = true;
-                document.getElementById("city").disabled = true;
-                document.getElementById("email").disabled = true;
-            } else if (shedChoice == 2) {
-                document.getElementById("yes2").disabled = true;
-                document.getElementById("fname").disabled = false;
-                document.getElementById("fname").value = "";
-                document.getElementById("lname").disabled = false;
-                document.getElementById("lname").value = "";
-                document.getElementById("adresss").disabled = false;
-                document.getElementById("adresss").value = "";
-                document.getElementById("zip").disabled = false;
-                document.getElementById("zip").value = "";
-                document.getElementById("city").disabled = false;
-                document.getElementById("city").value = "";
-                document.getElementById("email").disabled = false;
-                document.getElementById("email").value = "";
-            }
-        }
+        
         function spaceForShed() {
 
             if (document.getElementById("carportLength").value == "n/a"

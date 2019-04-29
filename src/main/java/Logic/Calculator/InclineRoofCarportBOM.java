@@ -31,13 +31,14 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (spær)
      */
-    public int amountOfRafters(int carportLength, boolean isShed, int shedLength) {
+    public static int amountOfRafters(int carportLength, boolean isShed, int shedLength) {
 
         float rafterWidth = 4.5f;
         int rafterQty = 3; // minimum qty of rafters is 3. 
         int lastAdded = 1; 
         int spaceAmount = 2;
-
+        if(isShed == true) carportLength-=shedLength;
+        
         float spaceBetweenRafters = (carportLength - rafterWidth*rafterQty) / spaceAmount;
 
         while (spaceBetweenRafters > 89) {
@@ -59,7 +60,7 @@ public class InclineRoofCarportBOM {
      * @param spaceAmount
      * @return (spær for redskabsskur)
      */
-    public int amountOfRaftersShed(int shedLength, float rafterWidth, int rafterQty,
+    public static int amountOfRaftersShed(int shedLength, float rafterWidth, int rafterQty,
             int lastAdded, int spaceAmount) {
 
         float spaceBetweenRafter = (shedLength - rafterWidth*rafterQty) / spaceAmount;
@@ -103,7 +104,10 @@ public class InclineRoofCarportBOM {
         }
         return lathQty;
     }
-            
+    public static int lathHolder(int carportLength, boolean isShed, int shedLength) {
+        /*amount of lath-holders is the same as rafters; 1 lath-holder for each rafter*/
+        return amountOfRafters(carportLength, isShed, shedLength);
+    }
             
     public LineItem rafters(int carportLength, boolean isShed, int shedLength) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("fædigskåret (byg-selv spær)");

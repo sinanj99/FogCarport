@@ -41,4 +41,8 @@ public class Manager {
     public static Roof getRoof(String name) throws NoSuchRoofException {
         return IRequestMapper.instance().getRoof(name);
     }
+    
+    public static int getDimensionPrice(int roof_id, int length) {
+        return IRequestMapper.instance().getDimensionPrice(roof_id, length);
+    }
 }

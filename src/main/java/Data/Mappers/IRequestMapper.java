@@ -31,8 +31,14 @@ public abstract class IRequestMapper {
     }
     
     public abstract Request getRequest(int id) throws NoSuchRequestException, NoSuchRoofException, NoSuchShedException;
+    /**
+     * 
+     * @return list of all requests in dB 
+     */
+    public abstract List<Request> getRequests();
     public abstract Carport getRequestCarport(int request_id) throws NoSuchRoofException, SQLException, NoSuchShedException;
     public abstract Shed getRequestShed(int request_id) throws NoSuchShedException;
+    
     public abstract void insertRequest(Request req);
     public abstract void insertDimensions(int id, int length, int price);
     public abstract int getDimensionID(int roof_id, int length);

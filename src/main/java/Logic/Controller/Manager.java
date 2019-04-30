@@ -45,4 +45,7 @@ public class Manager {
     public static int getDimensionPrice(int roof_id, int length) {
         return IRequestMapper.instance().getDimensionPrice(roof_id, length);
     }
+    public static List<Request> getRequests() {
+        return IRequestMapper.instance().getRequests();
+    }
 }

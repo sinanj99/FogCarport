@@ -1,12 +1,18 @@
+<%@page import="Data.Entity.User"%>
+<% User user = (User) session.getAttribute("user"); %>
 <div id="nav">
-    <a class="left" href="frontpage.jsp">FOG CARPORT</a>
     <a class="right d-md-none" href="#" onclick="displayNav()"><i class="fas fa-bars"></i></a>
-        <% if (session.getAttribute("user") == null) {%>
+        <% if (user == null) {%>
+    <a class="left" href="frontpage.jsp">FOG CARPORT</a>
     <a class="right d-none d-md-block" href="register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a>
     <a class="right d-none d-md-block" href="login.jsp"> <i class="fas fa-sign-in-alt"></i>    Log ind</a>
-    <% } else { %>
+    <% } else if(user != null && user.isSeller()){ %>
+    <a class="right d-none d-md-block" href="FrontController?command=showrequests"> <i class="fas fa-clipboard-list"></i>    Vis forespørgsler</a>
     <a class="right d-none d-md-block" href="FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
-    <% } %> 
+    <% } else { %>
+    <a class="left" href="frontpage.jsp">FOG CARPORT</a>
+    <a class="right d-none d-md-block" href="FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
+    <% } %>
 </div>
 <div id="smallnav" class="d-none d-md-none smallnav">
     <div class="smallnavrow">

@@ -37,6 +37,7 @@ public class LoginCommand implements Command {
             request.setAttribute("loginResult", e.getMessage());
             return "login.jsp";
         }
+        if(user.isSeller() == true) return "frontpage.jsp";
         return "frontpage.jsp";
     }
 

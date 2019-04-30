@@ -14,7 +14,6 @@ CREATE TABLE CarportDB.rooftype (
 	PRIMARY KEY (roof_id)
 );
 
-
 insert into CarportDB.rooftype (`name`, inclined) values 
 ("Plasttrapezplader - Blåtonet", 0),
 ("Plasttrapezplader - Gråtonet", 0),
@@ -42,7 +41,7 @@ CREATE TABLE `rooflength`(
     `price`INT NOT NULL,
     CONSTRAINT `rooflength_ibfk_1` FOREIGN KEY (`roof_id`) REFERENCES rooftype(`roof_id`)
     );
-
+    
 
 DROP TABLE IF EXISTS material;
 
@@ -53,8 +52,6 @@ CREATE TABLE CarportDB.material (
   unit VARCHAR(10)  NOT NULL,
   price INT(10) NOT NULL,
   PRIMARY KEY (material_id));
-
-
 
 insert into CarportDB.material (name, length, unit,  price)
 values ("45x195mm spærtræ. ubh. ",240,"stk", 20),
@@ -114,13 +111,16 @@ values ("10x120mm brædderbolt","stk",  4),
 
 CREATE TABLE CarportDB.users (
 	user_id INT(50) NOT NULL AUTO_INCREMENT,
+    seller INT(1) NOT NULL DEFAULT 0,
 	email VARCHAR(320) NOT NULL UNIQUE,
 	password VARCHAR(50) NOT NULL,
 	PRIMARY KEY (user_id)
 );
 
-insert into CarportDB.users (email,  password)
-values ("test@test.dk","test");
+insert into CarportDB.users (seller, email,  password)
+values 
+(0,"test@test.dk","test"),
+(1, "seller@fog.dk","seller");
 
 
 CREATE TABLE CarportDB.requests (
@@ -130,7 +130,6 @@ CREATE TABLE CarportDB.requests (
 	PRIMARY KEY (request_id),
 	CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
 );
-
 
 
 CREATE TABLE CarportDB.users_personalinfo (

@@ -52,7 +52,7 @@ public class TestCalculateBOMMethods
 //String str = "/jsp/flatroof.jsp";
 //        System.out.println(str.substring(1).split("/")[1]);
 
-        System.out.println(i.amountOfRafters(500, false, 0));
+        System.out.println(f.calculateQuantityOfSpær(780));
 //        System.out.println(f.calculateQuantityOfSpær(300));
         
 

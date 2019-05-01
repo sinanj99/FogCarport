@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="/project/include/javascriptForShop.js" async></script>
         <title>JSP Page</title>
         
         <style>
@@ -168,7 +169,7 @@
                         <span class="cart-item-title">Carport abc</span>
                     </div>
 
-                    <span class="cart-price cart-column">17.798 abc</span>
+                    <span class="cart-price cart-column">19.798 </span>
 
                     <div class="cart-quantity cart-column">
                         <input class="cart-quantity-input" type="number" value="1">
@@ -188,4 +189,7 @@
             
         </section>
     </body>
+    
+    
+    
 </html>

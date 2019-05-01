@@ -31,17 +31,41 @@ public class DataInsertion {
                 price += 50;
             }
         }
+        /* insertion of materials */
         int price = 40;
-        /* insertion of materialw*/
         for(int i = 270; i <= 780; i+= 30) {
             
             IMaterialMapper.instance().insertMaterialDim(1, i, price, 1000);
             price+=40;
         }
+        IMaterialMapper.instance().insertMaterialDim(2, 300, 40, 1000);
         price = 40;
         for(int i = 210; i <= 750; i+=30) {
             IMaterialMapper.instance().insertMaterialDim(3, i, price, 1000);
             price+=40;
         }
+        price = 20;
+        for(int i = 150; i <= 720; i+=30) {
+            IMaterialMapper.instance().insertMaterialDim(4, i, price, 1000);
+            price+=40;
+        }
+        price = 40;
+        for(int i = 210; i <= 780; i+= 30) {
+            
+            IMaterialMapper.instance().insertMaterialDim(5, i, price, 1000);
+            price+=40;
+        }
+        price = 80;
+        IMaterialMapper.instance().insertMaterialDim(6, 540, price, 1000);
+        price = 40;
+        for(int i = 240; i <= 810; i+= 30) {
+            
+            IMaterialMapper.instance().insertMaterialDim(7, i, price, 1000);
+            price+=40;
+        }
+        
+        
+        
+        
     }
 }

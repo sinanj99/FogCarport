@@ -86,7 +86,11 @@ INSERT INTO `materials_nolength` (`name`, `unit`, `price`, `stock`) VALUES
 ("bræddebolt 10 x 120 mm.", "Stk.", 20,1000),
 ("firkantskiver 40x40x11mm", "Stk.", 20,1000),
 ("4,5 x 70 mm. Skruer 200 stk.", "Pakke", 20,1000),
-("4,5 x 50 mm. Skruer 350 stk.", "Pakke", 20,1000);
+("4,5 x 50 mm. Skruer 350 stk.", "Pakke", 20,1000),
+("Rygsten", "Stk.", 70, 1000),
+("Toplægteholder", "Stk.", 50, 1000),
+("Rygstensbeslag", "Styk", 50, 1000),
+("Tagstensbindere & nakkekroge", "Pakke", 50, 1000);
 
 INSERT INTO `materials_withlength` (`name`, `unit`) VALUES 
 ("25x150 mm. trykimp. Bræt", "Stk."),
@@ -101,6 +105,7 @@ INSERT INTO `materials_withlength` (`name`, `unit`) VALUES
 ("25x150 mm. trykimp. Bræt", "Stk"),
 ("25x150 mm. trykimp. Bræt", "Stk");
 
+select * from material_lengths;
 
 CREATE TABLE `material_lengths` (
 	`material_id` INT NOT NULL,
@@ -110,12 +115,6 @@ CREATE TABLE `material_lengths` (
     CONSTRAINT `material_lengths_ibfk_1` FOREIGN KEY (`material_id`) REFERENCES materials_withlength(`material_id`)
     );
     
-INSERT INTO `material_lengths` (`material_id`, `length`, `price`, `stock`) VALUES
--- materials that only come in one length
-(2,300,40, 1000);
--- carportlength-shedlength+30
-
-Error Code: 1265. Data truncated for column 'material_id' at row 1
 
 insert into CarportDB.material (name, length, unit,  price)
 values ("45x195mm spærtræ. ubh. ",240,"stk", 20),

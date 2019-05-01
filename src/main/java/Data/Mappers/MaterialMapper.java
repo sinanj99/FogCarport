@@ -172,7 +172,7 @@ class MaterialMapper extends IMaterialMapper {
     
     public static void main(String[] args){
         try {
-            System.out.println(IMaterialMapper.instance().getMaterial(1));
+            System.out.println(IMaterialMapper.instance().getMaterial(7));
         } catch (NoSuchMaterialException ex) {
             System.out.println(ex.getMessage());
         }

@@ -13,7 +13,6 @@ CREATE TABLE CarportDB.rooftype (
 	PRIMARY KEY (roof_id)
 );
 
-
 insert into CarportDB.rooftype (`name`, inclined) values 
 ("Plasttrapezplader - Blåtonet", 0),
 ("Plasttrapezplader - Gråtonet", 0),
@@ -41,7 +40,7 @@ CREATE TABLE `rooflength`(
     `price`INT NOT NULL,
     CONSTRAINT `rooflength_ibfk_1` FOREIGN KEY (`roof_id`) REFERENCES rooftype(`roof_id`)
     );
-
+    
 
 DROP TABLE IF EXISTS material;
 
@@ -56,7 +55,8 @@ CREATE TABLE CarportDB.material (
 DROP TABLE IF EXISTS `material_lengths`;
 DROP TABLE IF EXISTS `materials_withlength`;
 DROP TABLE IF EXISTS `materials_nolength`;
-select * from material_lengths;
+
+
 CREATE TABLE `materials_withlength` (
 	`material_id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
@@ -101,10 +101,6 @@ INSERT INTO `materials_withlength` (`name`, `unit`) VALUES
 ("25x150 mm. trykimp. Bræt", "Stk"),
 ("25x150 mm. trykimp. Bræt", "Stk");
 
-INSERT INTO `material_lengths` (`material_id`, `length`, `price`, `stock`) VALUES
--- materials that only come in one length
-("97x97mm trykimp. Stolpe",300,"stk",  35);
--- carportlength-shedlength+30
 
 CREATE TABLE `material_lengths` (
 	`material_id` INT NOT NULL,
@@ -113,6 +109,13 @@ CREATE TABLE `material_lengths` (
     `stock` INT NOT NULL,
     CONSTRAINT `material_lengths_ibfk_1` FOREIGN KEY (`material_id`) REFERENCES materials_withlength(`material_id`)
     );
+    
+INSERT INTO `material_lengths` (`material_id`, `length`, `price`, `stock`) VALUES
+-- materials that only come in one length
+(2,300,40, 1000);
+-- carportlength-shedlength+30
+
+Error Code: 1265. Data truncated for column 'material_id' at row 1
 
 insert into CarportDB.material (name, length, unit,  price)
 values ("45x195mm spærtræ. ubh. ",240,"stk", 20),
@@ -223,13 +226,16 @@ values ("10x120mm brædderbolt","stk",  4),
 
 CREATE TABLE CarportDB.users (
 	user_id INT(50) NOT NULL AUTO_INCREMENT,
+    seller INT(1) NOT NULL DEFAULT 0,
 	email VARCHAR(320) NOT NULL UNIQUE,
 	password VARCHAR(50) NOT NULL,
 	PRIMARY KEY (user_id)
 );
 
-insert into CarportDB.users (email,  password)
-values ("test@test.dk","test");
+insert into CarportDB.users (seller, email,  password)
+values 
+(0,"test@test.dk","test"),
+(1, "seller@fog.dk","seller");
 
 
 CREATE TABLE CarportDB.requests (

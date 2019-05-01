@@ -74,6 +74,8 @@ public class UserMapper extends IUserMapper {
         String adress ="";
         String city = "";
         String gender = "";
+        int seller;
+        boolean seller_ = false;
         
         String sql = "SELECT * FROM `users` WHERE email = ?;";
         PreparedStatement pstmt = con.prepareStatement(sql);
@@ -81,6 +83,7 @@ public class UserMapper extends IUserMapper {
         ResultSet rs = pstmt.executeQuery();
         if (rs.next()) {
             user_id = rs.getInt("user_id");
+            seller = rs.getInt("seller");
             email_ = rs.getString("email");
             password = rs.getString("password");
         } else {
@@ -100,7 +103,8 @@ public class UserMapper extends IUserMapper {
             city = rs.getString("city");
             gender = rs.getString("gender");
         }
-        return new User(new PersonalInfo(fname, lname, adress, zip, city, gender), user_id, email_, password);
+        if(seller == 1) seller_ = true;
+        return new User(new PersonalInfo(fname, lname, adress, zip, city, gender), user_id, seller_, email_, password);
     }
     
     /**
@@ -121,6 +125,8 @@ public class UserMapper extends IUserMapper {
         String adress ="";
         String city = "";
         String gender = "";
+        int seller = 0;
+        boolean seller_ = false;
         
         String sql = "SELECT * FROM `users` WHERE user_id = ?;";
         PreparedStatement pstmt = con.prepareStatement(sql);
@@ -128,6 +134,7 @@ public class UserMapper extends IUserMapper {
         ResultSet rs = pstmt.executeQuery();
         if (rs.next()) {
             user_id = rs.getInt("user_id");
+            seller = rs.getInt("seller");
             email_ = rs.getString("email");
             password = rs.getString("password");
         } else {
@@ -146,7 +153,8 @@ public class UserMapper extends IUserMapper {
             city = rs.getString("city");
             gender = rs.getString("gender");
         }
-        return new User(new PersonalInfo(fname, lname, adress, zip, city, gender), user_id, email_, password);
+        if(seller == 1) seller_ = true;
+        return new User(new PersonalInfo(fname, lname, adress, zip, city, gender), user_id, seller_, email_, password);
     }
 
     public static void main(String[] args) throws UserNotFoundException, SQLException {

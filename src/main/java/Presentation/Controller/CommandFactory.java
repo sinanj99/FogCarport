@@ -12,6 +12,7 @@ import Presentation.Commands.Command;
 import Presentation.Commands.LogoutCommand;
 import Presentation.Commands.RegisterCommand;
 import Presentation.Commands.FlatRoofFormCommand;
+import Presentation.Commands.ShowRequestCommand;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +32,7 @@ public class CommandFactory {
         commands.put("register", new RegisterCommand());
         commands.put("logout", new LogoutCommand());
         commands.put("request", new GenerateReqCommand());
+        commands.put("showrequests", new ShowRequestCommand());
     }
 
     static Command from(String key) {

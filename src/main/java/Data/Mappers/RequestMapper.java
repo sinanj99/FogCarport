@@ -22,6 +22,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -77,34 +79,40 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public Carport getRequestCarport(int request_id) throws NoSuchRoofException, NoSuchShedException, SQLException {
-        Carport cp = null;
+    public Carport getRequestCarport(int request_id) {
+       
+        Roof roof = null;
+        Shed shed_ = null;
         int roof_id = 0;
         boolean inclined = false;
         int width = 0;
         int length = 0;
         boolean shed = false;
-        int rooflength_id;
-        String query = "SELECT * FROM carports WHERE request_id = ?";
-        PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setInt(1, request_id);
-        ResultSet rs = pstmt.executeQuery();
-
-        if (rs.next()) {
-            roof_id = rs.getInt("roof_id");
-            width = rs.getInt("width");
-            length = rs.getInt("length");
-            if (rs.getInt("inclined") == 1) {
-                inclined = true;
+        
+        String query = "SELECT * FROM carports WHERE request_id = ?;";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, request_id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                roof_id = rs.getInt("roof_id");
+                width = rs.getInt("width");
+                length = rs.getInt("length");
+                if (rs.getInt("inclined") == 1) {
+                    inclined = true;
+                }
+                if (rs.getInt("shed") == 1) {
+                    shed = true;
+                }
+                System.out.println("big test");
             }
-            if (rs.getInt("shed") == 1) {
-                shed = true;
-            }
-
-            cp = new Carport(getRoof(roof_id), inclined, width, length, shed, getRequestShed(request_id));
+            System.out.println("test test test");
+            roof = getRoof(roof_id);
+            shed_ = getRequestShed(request_id);
+        } catch (NoSuchRoofException | NoSuchShedException | SQLException e) {
+            System.out.println("carport ex " + e.getMessage());
         }
-
-        return cp;
+        return new Carport(roof, inclined, width, length, shed, shed_);
     }
 
     @Override
@@ -247,7 +255,7 @@ class RequestMapper extends IRequestMapper {
         boolean inclined = false;
 
         try {
-            String query = "SELECT * FROM rooftype WHERE roof_id = ?;";
+            String query = "SELECT * FROM rooftype WHERE roof_id = ?";
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -260,7 +268,7 @@ class RequestMapper extends IRequestMapper {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("ROOFEX " + e.getMessage());
             throw new NoSuchRoofException();
         }
 
@@ -347,8 +355,34 @@ class RequestMapper extends IRequestMapper {
         }
     }
 
-    private PersonalInfo getRequestInfo(int aInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private PersonalInfo getRequestInfo(int id) {
+        int user_id = 0;
+        String firstname = "";
+        String lastname = "";
+        String address = "";
+        int zipcode = 0;
+        String city = "";
+        String gender = "";
+
+        try {
+            String query = "SELECT * FROM users_personalinfo WHERE user_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                firstname = rs.getString("firstname");
+                lastname = rs.getString("lastname");
+                address = rs.getString("address");
+                zipcode = rs.getInt("zipcode");
+                city = rs.getString("city");
+                gender = rs.getString("gender");
+            }
+        } catch (SQLException e) {
+            System.out.println("infoex " + e.getMessage());
+        }
+
+        return new PersonalInfo(firstname, lastname, address, zipcode, city, gender);
     }
 
     private void insertRequestInfo(PreparedStatement pstmt, String query, ResultSet rs, Request req, int req_id) throws SQLException {
@@ -384,6 +418,7 @@ class RequestMapper extends IRequestMapper {
         }
         return rooflength_id;
     }
+
     @Override
     public int getDimensionPrice(int roof_id, int length) {
         int price = 0;
@@ -400,6 +435,34 @@ class RequestMapper extends IRequestMapper {
             System.out.println(ex.getMessage());
         }
         return price;
+    }
+
+    @Override
+    public List<Request> getRequests() {
+        int user_id = 0;
+        int req_id = 0;
+        String datePlaced = "";
+        PersonalInfo info = null;
+        List<Request> requests = new ArrayList();
+        Carport cp = null;
+
+        try {
+            String query = "SELECT * FROM requests;";
+            Statement stmt = con.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                req_id = rs.getInt("request_id");
+                user_id = rs.getInt("user_id");
+                datePlaced = rs.getString("dateplaced");
+                info = getRequestInfo(user_id);
+                cp = getRequestCarport(req_id);
+                requests.add(new Request(info, user_id, datePlaced, cp));
+            }
+        } catch (SQLException e) {
+            System.out.println("REQUESTEX" + e.getMessage());
+        }
+        
+        return requests;
     }
 
 }

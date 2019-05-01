@@ -40,14 +40,20 @@ public class Manager {
     public static void insertRequest(Request req) throws NoSuchRoofException {
         IRequestMapper.instance().insertRequest(req);
     }
-    public static Roof getRoof(String name) throws NoSuchRoofException {
-        return IRequestMapper.instance().getRoof(name);
+    public static Roof getRoof(int id) throws NoSuchRoofException {
+        return IRequestMapper.instance().getRoof(id);
     }
     
     public static int getDimensionPrice(int roof_id, int length) {
         return IRequestMapper.instance().getDimensionPrice(roof_id, length);
     }
+
     public static Material getMaterial(String name) throws NoSuchMaterialException{
         return IMaterialMapper.instance().getMaterial_(name);
     }
+    public static List<Request> getRequests() {
+        return IRequestMapper.instance().getRequests();
+
+    }
 }
+

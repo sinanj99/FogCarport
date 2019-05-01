@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="col-sm-6 d-flex flex-column align-items-center"><b>Tag med rejsning</b>
-                        <a class="d-flex flex-column align-items-center" href="FrontController?command=flatroof"><img src="/project/images/rejsning.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
+                        <a class="d-flex flex-column align-items-center" href="FrontController?command=inclinedroof"><img src="/project/images/rejsning.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
                     </div>
                 </div>
                 <hr>

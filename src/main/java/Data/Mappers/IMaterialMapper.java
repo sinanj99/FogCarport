@@ -18,6 +18,10 @@ public abstract class IMaterialMapper {
     public static IMaterialMapper instance() {
         return MaterialMapper.getInstance();
     }
+    public abstract String getMaterial(int id) throws NoSuchMaterialException;
+    
+    public abstract void insertMaterialDim(int id, int length, int price, int stock);
+    
     public abstract Material getMaterial(String name, int length) throws NoSuchMaterialException;
     
     public abstract Material getMaterial_(String name) throws NoSuchMaterialException;

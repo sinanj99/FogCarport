@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -82,6 +84,22 @@ class MaterialMapper extends IMaterialMapper {
         }
         return new Material(material_id, name, length, unit, price);
     }
+    @Override
+    public String getMaterial(int id) throws NoSuchMaterialException {
+        String name_ = "";
+        try {
+            String sql = "SELECT name FROM `materials_withlength` WHERE material_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                name_ = rs.getString("name");
+            }
+        } catch (SQLException ex) {
+            throw new NoSuchMaterialException();
+        }
+        return name_;
+    }
     
 
     @Override
@@ -91,15 +109,13 @@ class MaterialMapper extends IMaterialMapper {
 
         try {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM material;");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM materials_withlength;");
             while (rs.next()) {
                 int material_id = rs.getInt("material_id");
                 String name_ = rs.getString("name");
-                int length = rs.getInt("length");
                 String unit = rs.getString("unit");
-                int price = rs.getInt("price");
 
-                materials.add(new Material(material_id, name_, length, unit, price));
+                materials.add(new Material(material_id, name_, unit));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -136,7 +152,29 @@ class MaterialMapper extends IMaterialMapper {
             System.out.println(ex.getMessage());
         }
     }
+    @Override
+    public void insertMaterialDim(int id, int length, int price, int stock) {
+        try {
+            String sql = "INSERT INTO `material_lengths`(material_id, length, price, stock) "
+                    + "VALUES(?, ?, ?, ?);";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            pstmt.setInt(2, length);
+            pstmt.setInt(3, price);
+            pstmt.setInt(4, stock);
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     
-
+    public static void main(String[] args){
+        try {
+            System.out.println(IMaterialMapper.instance().getMaterial(1));
+        } catch (NoSuchMaterialException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }

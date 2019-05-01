@@ -105,7 +105,6 @@ INSERT INTO `materials_withlength` (`name`, `unit`) VALUES
 ("25x150 mm. trykimp. Bræt", "Stk"),
 ("25x150 mm. trykimp. Bræt", "Stk");
 
-select * from material_lengths;
 
 CREATE TABLE `material_lengths` (
 	`material_id` INT NOT NULL,
@@ -200,8 +199,6 @@ values ("45x195mm spærtræ. ubh. ",240,"stk", 20),
 ("19x100 mm. trykimp. Bræt",690,"stk", 65),
 ("19x100 mm. trykimp. Bræt",720,"stk", 68),
 ("25x150 mm. trykimp. Bræt",540,"stk", 68);
-
-
 
 
 insert into CarportDB.material (name,  unit, price)

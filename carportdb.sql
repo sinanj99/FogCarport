@@ -6,7 +6,6 @@ DROP TABLE IF EXISTS CarportDB.users;
 DROP TABLE IF EXISTS `rooflength`;
 DROP TABLE IF EXISTS CarportDB.rooftype;
 
-
 CREATE TABLE CarportDB.rooftype (
 	roof_id INT(50) NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(50) NOT NULL,
@@ -54,7 +53,66 @@ CREATE TABLE CarportDB.material (
   price INT(10) NOT NULL,
   PRIMARY KEY (material_id));
 
+DROP TABLE IF EXISTS `material_lengths`;
+DROP TABLE IF EXISTS `materials_withlength`;
+DROP TABLE IF EXISTS `materials_nolength`;
+select * from material_lengths;
+CREATE TABLE `materials_withlength` (
+	`material_id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL,
+    `unit` VARCHAR(10) NOT NULL,
+    PRIMARY KEY (`material_id`)
+    );
+CREATE TABLE `materials_nolength` (
+	`material_id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL,
+    `unit` VARCHAR(10) NOT NULL,
+    `price` INT NOT NULL,
+    `stock` INT NOT NULL,
+    PRIMARY KEY (`material_id`)
+    );
 
+
+INSERT INTO `materials_nolength` (`name`, `unit`, `price`, `stock`) VALUES 
+("fædigskåret (byg-selv spær)", "Sæt", 10,1000),
+("universal 190 mm højre", "Stk.", 10,1000),
+("universal 190 mm venstre", "Stk.", 10,1000),
+("Stalddørsgreb 50x75", "Sæt.", 20,1000),
+("T-hængsel 390 mm.", "Stk.", 20,1000),
+("vinkelbeslag", "Stk.", 20,1000),
+("4,5 x 60 mm. Skruer 200 stk.", "Pakke", 20,1000),
+("5,0 x 40 mm. beslagskruer 250 stk.", "Pakke", 20,1000),
+("5,0 x 100 mm. skruer 100 stk.", "Pakke", 20,1000),
+("bræddebolt 10 x 120 mm.", "Stk.", 20,1000),
+("firkantskiver 40x40x11mm", "Stk.", 20,1000),
+("4,5 x 70 mm. Skruer 200 stk.", "Pakke", 20,1000),
+("4,5 x 50 mm. Skruer 350 stk.", "Pakke", 20,1000);
+
+INSERT INTO `materials_withlength` (`name`, `unit`) VALUES 
+("25x150 mm. trykimp. Bræt", "Stk."),
+("97x97 mm. trykimp. Stolpe", "Stk."),
+("45x195 spærtræ ubh.", "Stk."),
+("45x95 Reglar ubh.", "Stk."),
+("19x100 mm. trykimp. Bræt", "Stk."),
+("25x50 mm. trykimp. Bræt", "Stk."),
+("38x73 mm. taglægte T1", "Stk."),
+("B & C Dobbelt -s sort", "Stk."),
+("25x150 mm. trykimp. Bræt", "Stk"),
+("25x150 mm. trykimp. Bræt", "Stk"),
+("25x150 mm. trykimp. Bræt", "Stk");
+
+INSERT INTO `material_lengths` (`material_id`, `length`, `price`, `stock`) VALUES
+-- materials that only come in one length
+("97x97mm trykimp. Stolpe",300,"stk",  35);
+-- carportlength-shedlength+30
+
+CREATE TABLE `material_lengths` (
+	`material_id` INT NOT NULL,
+    `length` INT NOT NULL, 
+    `price` INT NOT NULL,
+    `stock` INT NOT NULL,
+    CONSTRAINT `material_lengths_ibfk_1` FOREIGN KEY (`material_id`) REFERENCES materials_withlength(`material_id`)
+    );
 
 insert into CarportDB.material (name, length, unit,  price)
 values ("45x195mm spærtræ. ubh. ",240,"stk", 20),
@@ -139,7 +197,7 @@ values ("45x195mm spærtræ. ubh. ",240,"stk", 20),
 ("19x100 mm. trykimp. Bræt",660,"stk", 62),
 ("19x100 mm. trykimp. Bræt",690,"stk", 65),
 ("19x100 mm. trykimp. Bræt",720,"stk", 68),
-("25x50 mm. trykimp. Bræt",540,"stk", 68);
+("25x150 mm. trykimp. Bræt",540,"stk", 68);
 
 
 
@@ -183,7 +241,6 @@ CREATE TABLE CarportDB.requests (
 );
 
 
-
 CREATE TABLE CarportDB.users_personalinfo (
 	request_id INT,
 	user_id INT(50) NOT NULL,
@@ -225,3 +282,4 @@ CREATE TABLE CarportDB.sheds (
 	CONSTRAINT `sheds_ibfk_1` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`)
 );
 
+	

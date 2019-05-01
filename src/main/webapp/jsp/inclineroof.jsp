@@ -4,6 +4,10 @@
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
 <%List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
+User user = (User) session.getAttribute("user");
+
+if(user == null) response.sendRedirect("login.jsp");
+
     int a;
     int b; %>
 <body class="background2">
@@ -40,9 +44,10 @@
                 <div class="col-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Tagtype</p>
                     <select class="inputbig">
-                        <% for (Roof r : roofs)  {%>
+                        <% if(roofs != null){
+                            for (Roof r : roofs)  {%>
                         <option value="<%=r.getRoof_id()%>"><%=r.getName()%></option>
-                        <%}%>
+                        <%}}%>
                     </select>
                 </div>
             </div>

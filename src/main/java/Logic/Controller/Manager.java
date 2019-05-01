@@ -5,6 +5,7 @@
  */
 package Logic.Controller;
 
+import Data.Entity.Material;
 import Logic.Exceptions.UserNotFoundException;
 import Logic.Exceptions.DuplicateException;
 import Logic.Exceptions.NoSuchRoofException;
@@ -14,6 +15,7 @@ import Data.Mappers.IUserMapper;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.User;
+import Logic.Exceptions.NoSuchMaterialException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -44,5 +46,8 @@ public class Manager {
     
     public static int getDimensionPrice(int roof_id, int length) {
         return IRequestMapper.instance().getDimensionPrice(roof_id, length);
+    }
+    public static Material getMaterial(String name) throws NoSuchMaterialException{
+        return IMaterialMapper.instance().getMaterial_(name);
     }
 }

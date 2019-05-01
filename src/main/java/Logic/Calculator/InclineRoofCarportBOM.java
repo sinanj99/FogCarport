@@ -91,7 +91,7 @@ public class InclineRoofCarportBOM {
         }
         return (int) Math.ceil((rafterQty + shedRafters)/8);
     }
-
+    
     public static int amountOfRaftersShed(int shedLength) {
 
         int quantity = 3;
@@ -474,9 +474,12 @@ public class InclineRoofCarportBOM {
      * @return (firkantskiver)
      */
     public static int amountOfSquareDiscs() {
-        return 20;
+        return 20; 
     }
     
+    public static int amountOfRoofTileBinders() {
+        return 2; // 2 packs -- amount in a single pack and how many is needed is unknown. 
+    }
     /*
     
     
@@ -500,7 +503,7 @@ public class InclineRoofCarportBOM {
 
 
     public static void main(String[] args) {
-        System.out.println(amountOfRafters(730, true, 220));
+//        System.out.println(amountOfRafters(730, true, 220));
 //        System.out.println(amountOfLaths(360,20));
 //        System.out.println(amountOfRoofTiles(360, 730, 20));
 //        System.out.println(amountOfRidgeTiles(730));
@@ -510,7 +513,7 @@ public class InclineRoofCarportBOM {
 //System.out.println(amountOfScrewsLathHolders(360, true, 220));
 //        System.out.println(amountOfScrewsFasciaAndSoffits(730, 360, true,220,20));
 //System.out.println(amountOfScrewsLaths(360,20));
-
+System.out.println(Math.sqrt(TILE_W_X_H));
 
     }
 }

@@ -68,7 +68,7 @@ public class InclineRoofCarportBOM {
             shedRafters = amountOfRaftersShed(shedLength);
         }
         //the minimum quantity of rafters will always be 3.
-        int rafterQty = 3;
+        double rafterQty = 3;
 
         float widthOfSpær = 4.5f;
 
@@ -77,7 +77,7 @@ public class InclineRoofCarportBOM {
 
         //there is a space between the middle rafter and front rafter, and a space between the middle and back rafter.
         int spaceAmount = 2;
-        float spaceBetweenSpær = (carportLength - (widthOfSpær * rafterQty)) / spaceAmount;
+        double spaceBetweenSpær = (carportLength - (widthOfSpær * rafterQty)) / spaceAmount;
 
         //105 is the limit of how much space is allowed between the rafters
         while (spaceBetweenSpær >= 105) {
@@ -89,7 +89,7 @@ public class InclineRoofCarportBOM {
 
             spaceBetweenSpær = (carportLength - widthOfSpær * rafterQty) / spaceAmount;
         }
-        return rafterQty + shedRafters;
+        return (int) Math.ceil((rafterQty + shedRafters)/8);
     }
 
     public static int amountOfRaftersShed(int shedLength) {
@@ -351,7 +351,7 @@ public class InclineRoofCarportBOM {
      */
     public static int amountOfBracketsInterties() {
         /*
-        2 bracket per intertie.
+        2 brackets per intertie.
          */
         return (amountOfIntertiesGable() + amountOfIntertiesSides()) * 2;
     }
@@ -491,7 +491,6 @@ public class InclineRoofCarportBOM {
     i eksemplet er det altså 730 cm - 220 cm + 30 cm.
     
     vindskede-længde kommer i 480. 
-    
      */
     
     public LineItem rafters(int carportLength, boolean isShed, int shedLength) throws NoSuchMaterialException {
@@ -501,7 +500,7 @@ public class InclineRoofCarportBOM {
 
 
     public static void main(String[] args) {
-//        System.out.println(amountOfRafters(730, true, 220));
+        System.out.println(amountOfRafters(730, true, 220));
 //        System.out.println(amountOfLaths(360,20));
 //        System.out.println(amountOfRoofTiles(360, 730, 20));
 //        System.out.println(amountOfRidgeTiles(730));

@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="/project/include/javascriptForShop.js" async></script>
+        
         <title>JSP Page</title>
         
         <style>

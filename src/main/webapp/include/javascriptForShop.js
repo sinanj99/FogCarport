@@ -10,20 +10,23 @@ console.log(removeCartItemButton);
 for(var i = 0; i < removeCartItemButton.length; i++)
 {
     var button = removeCartItemButton[i];
-    button.addEventListener('click', function(event)
-    {
+    button.addEventListener('click', removeCartItem)
+    
+}
+
+function removeCartItem(event)
+{
         var buttonClicked = event.target;
         buttonClicked.parentElement.parentElement.remove();
         updateCartTotal();
         console.log("clicked");
-    })
 }
 
 function updateCartTotal()
 {
     var cartItemContainer = document.getElementsByClassName("cart-items")[0];
     var cartRows = cartItemContainer.getElementsByClassName("cart-row");
-    
+    var total = 0;
     for(var i = 1; i < cartRows.length; i++)
     {
         var cartRow = cartRows[i];
@@ -38,5 +41,7 @@ function updateCartTotal()
         console.log(quantity);
         console.log(price * quantity);
         
+        total = total + (price * quantity);
     }
+    document.getElementsByClassName("cart-total-price")[0].innerText = total; 
 }

@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS CarportDB.sheds;
 DROP TABLE IF EXISTS CarportDB.carports;
 DROP TABLE IF EXISTS CarportDB.users_personalinfo;
+DROP TABLE IF EXISTS `shipping_address`;
 DROP TABLE IF EXISTS CarportDB.requests;
 DROP TABLE IF EXISTS CarportDB.users;
 DROP TABLE IF EXISTS `rooflength`;
@@ -213,7 +214,6 @@ values ("10x120mm brædderbolt","stk",  4),
 ("5,0 x 100 mm. skruer 100 stk.", "pakke", 10),
 ("4,5 x 50 mm. Skruer 350 stk.", "pakke", 10);
 
-select * from rooflength;
 
 
 
@@ -241,7 +241,6 @@ CREATE TABLE CarportDB.requests (
 
 
 CREATE TABLE CarportDB.users_personalinfo (
-	request_id INT,
 	user_id INT(50) NOT NULL,
 	firstname VARCHAR(50) NOT NULL,
 	lastname VARCHAR(50) NOT NULL,
@@ -249,8 +248,17 @@ CREATE TABLE CarportDB.users_personalinfo (
   	zipcode INT(4) NOT NULL,
 	city VARCHAR(50) NOT NULL,
 	gender VARCHAR(1) NOT NULL, /* M/Y */
-	CONSTRAINT `users_address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
-    CONSTRAINT `users_address_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`)
+	CONSTRAINT `users_address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
+);
+
+CREATE TABLE `shipping_address` (
+	`request_id` INT NOT NULL,
+	`firstname` VARCHAR(50) NOT NULL,
+	`lastname` VARCHAR(50) NOT NULL,
+	`address` VARCHAR(50) NOT NULL,
+	`zipcode` INT(4) NOT NULL,
+	`city` VARCHAR(50) NOT NULL,
+    CONSTRAINT `shipping_address_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`)
 );
 
 
@@ -262,10 +270,9 @@ CREATE TABLE CarportDB.carports (
 	carport_id INT(50) NOT NULL AUTO_INCREMENT,
 	request_id INT(50) NOT NULL,
 	roof_id INT(50) NOT NULL, 
-	inclined INT(1) NOT NULL,
+	inclination INT(1) NOT NULL,
   	width INT(50) NOT NULL,
   	length INT(50) NOT NULL,
-  	shed int(1) NOT NULL,
 	PRIMARY KEY (carport_id),
 	CONSTRAINT `carports_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`),
     CONSTRAINT `carports_ibfk_2` FOREIGN KEY (`roof_id`) REFERENCES rooftype(`roof_id`)

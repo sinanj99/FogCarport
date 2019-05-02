@@ -20,7 +20,7 @@ public class DataInsertion {
     public static void main(String[] args) throws NoSuchRoofException {
 
         /* insertion of roofs */
-        List<Roof> roofs = IRequestMapper.instance().getAllRoofs();
+        List<Roof> roofs = IRequestMapper.instance().getRoofs();
 
         for (Roof r : roofs) {
             int price = 50;

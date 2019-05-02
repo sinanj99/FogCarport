@@ -16,23 +16,23 @@ public class Request {
     private int user_id;
     private String datePlaced;
     private Carport carport;
-    PersonalInfo info;
+    private ShippingAddress address;
     
     // for when a request is being created with specified input.
-    public Request(PersonalInfo info, int user_id, String datePlaced, Carport carport) {
-        this.info = info;
+    public Request(ShippingAddress address, int user_id, String datePlaced, Carport carport) {
+        this.address = address;
         this.user_id = user_id;
         this.carport = carport;
         this.datePlaced = datePlaced;
     }
 
     // for when a request is received from the database. 
-    public Request(int req_id, int user_id, String datePlaced, Carport carport, PersonalInfo info) {
+    public Request(int req_id, int user_id, String datePlaced, Carport carport, ShippingAddress address) {
         this.req_id = req_id;
         this.user_id = user_id;
         this.datePlaced = datePlaced;
         this.carport = carport;
-        this.info = info;
+        this.address = address;
     }
 
     public int getReq_id() {
@@ -53,9 +53,10 @@ public class Request {
         return datePlaced;
     }
 
-    public PersonalInfo getInfo() {
-        return info;
+    public ShippingAddress getAddress() {
+        return address;
     }
+
 
     @Override
     public String toString() {

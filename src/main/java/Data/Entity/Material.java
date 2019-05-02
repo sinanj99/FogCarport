@@ -26,10 +26,11 @@ public class Material {
         this.price = price;
     }
 
-    public Material(int id, String name, String unit) {
+    public Material(int id, String name, String unit, int price) {
         this.id = id;
         this.name = name;
         this.unit = unit;
+        this.price = price;
     }
 
     public int getId() {

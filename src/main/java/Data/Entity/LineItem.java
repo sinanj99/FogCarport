@@ -48,9 +48,14 @@ public class LineItem {
     {
         return description;
     }
+
+    public Roof getRoof() {
+        return roof;
+    }
     
     @Override
     public String toString() {
         return "LineItem{" + "material=" + material + "qty=" + qty + "description=" + description + "price=" + price + '}';
     }
+    
 }

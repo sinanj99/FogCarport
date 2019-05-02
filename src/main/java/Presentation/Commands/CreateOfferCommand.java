@@ -29,9 +29,9 @@ public class CreateOfferCommand implements Command {
         Request r = Manager.getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
         CalculateBOM b = new CalculateBOM();
-        if(r.getCarport().isInclined()) {
+        if(r.getCarport().getInclination() == 0) {
             bom = b.inclineRoofBOM(r);
-        } else if(!r.getCarport().isInclined() && !r.getCarport().isShed()){
+        } else if(r.getCarport().getInclination() != 0 && r.getCarport().getShed_() != null){
             bom = b.generateFlatRoofCarportBOM(r);
         } else {
             bom = b.generateFlatRoofWihtToolShedBOM(r);

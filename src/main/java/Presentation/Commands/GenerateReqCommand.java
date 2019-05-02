@@ -11,6 +11,7 @@ import Data.Entity.PersonalInfo;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
+import Data.Entity.ShippingAddress;
 import Data.Entity.User;
 import Logic.Controller.Manager;
 import Logic.Exceptions.NoSuchRoofException;
@@ -30,19 +31,19 @@ public class GenerateReqCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
-        
+        if(request.getSession().getAttribute("user") == null) return "login.jsp";
         boolean inclined = Boolean.valueOf(request.getParameter("inclined"));
         int inclination = 0;
         if(inclined) inclination = Integer.parseInt(request.getParameter("inclination"));
+        
         int cwidth = Integer.parseInt(request.getParameter("cwidth"));
         int clength = Integer.parseInt(request.getParameter("clength"));
         int rchoice = Integer.parseInt(request.getParameter("rchoice"));
+        System.out.println(cwidth);
         Roof roof = Manager.getRoof(rchoice);
-        System.out.println("ROOF = " + roof.getRoof_id() + " " + roof.getName());
         String schoice = request.getParameter("schoice");
         boolean bshed = false;
         if (schoice.equals("1")) bshed = true;
-        
         Shed shed = null;
         
         if(bshed==true) {
@@ -50,48 +51,27 @@ public class GenerateReqCommand implements Command {
         int swidth = Integer.parseInt(request.getParameter("swidth"));
         shed = new Shed(swidth, slength);
         }
-        
-        Carport cp = new Carport(roof, inclined, cwidth, clength, bshed, shed); //hvorfor har carport boolean shed?
-        if(inclined) cp = new Carport(roof, inclined, cwidth, clength, bshed, shed);
-        
+
+        Carport cp = new Carport(roof, inclination, cwidth, clength, shed); 
+        System.out.println(cp);
         String fname = request.getParameter("fname");
-        System.out.println("FNAME = " + fname);
         String lname = request.getParameter("lname");
         String address = request.getParameter("address");
         int zip = Integer.parseInt(request.getParameter("zip"));
         String city = request.getParameter("city");
-        String email = request.getParameter("email");
         
         
         User user = (User) request.getSession().getAttribute("user");
         int user_id = user.getId();
-        PersonalInfo info = new PersonalInfo(fname, lname, address, zip, city, "m");
-        System.out.println("PERSONALINFO = " + info);
+        ShippingAddress sAddress = new ShippingAddress(fname, lname, address, zip, city);
         
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String datePlaced = String.valueOf(date.format(dateFormat));
         
-        Request req = new Request(info, user_id, datePlaced, cp);
+        Request req = new Request(sAddress, user_id, datePlaced, cp);
         
-        System.out.println("FIRSTNAME ======" + req.getInfo().getFirstname());
-        Manager.insertRequest(req);
-        
-        System.out.println("==============================================");
-        System.out.println("CWIDTH=" + cwidth);
-        System.out.println("CLENGTH=" + clength);
-        System.out.println("ROOFTYPE=" + roof);
-        System.out.println("INCLINEDCHOICE=" + inclined);
-        System.out.println("INCLINATION=" + inclination);
-        System.out.println("SHEDCHOICE=" + bshed);
-        System.out.println("SHED=" + shed);
-        System.out.println("FN=" + fname);
-        System.out.println("LN=" + lname);
-        System.out.println("ADDRESS=" + address);
-        System.out.println("ZIPCODE=" + zip);
-        System.out.println("CITY=" + city);
-        System.out.println("EMAIL=" + email);
-        System.out.println("==============================================");        
+        Manager.insertRequest(req);  
         
         return "reqsent.jsp";
     }

@@ -33,9 +33,9 @@ class MaterialMapper extends IMaterialMapper {
         }
         return instance;
     }
+
     @Override
-    public Material getMaterial_(String name) throws NoSuchMaterialException
-    {
+    public Material getMaterial_(String name) throws NoSuchMaterialException {
         int material_id = 0;
         String name_ = "";
         int length = 0;
@@ -84,6 +84,7 @@ class MaterialMapper extends IMaterialMapper {
         }
         return new Material(material_id, name, length, unit, price);
     }
+
     @Override
     public String getMaterial(int id) throws NoSuchMaterialException {
         String name_ = "";
@@ -100,27 +101,98 @@ class MaterialMapper extends IMaterialMapper {
         }
         return name_;
     }
-    
 
     @Override
-    public List<Material> getMaterials() {
-        
-        List<Material> materials = new ArrayList();
-
+    public Material getMaterialWithLength(int id, int length) {
+        String name = "";
+        String unit = "";
+        int price = 0;
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM materials_withlength;");
-            while (rs.next()) {
-                int material_id = rs.getInt("material_id");
-                String name_ = rs.getString("name");
-                String unit = rs.getString("unit");
-
-                materials.add(new Material(material_id, name_, unit));
+            String sql = "SELECT * FROM `materials_withlength` WHERE material_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                name = rs.getString("name");
+                unit = rs.getString("unit");
             }
+            sql = "SELECT * FROM `material_lengths` WHERE material_id = ? AND length = ?;";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            pstmt.setInt(2, length);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                length = rs.getInt("length");
+                price = rs.getInt("price");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return new Material(id, name, length, unit, price);
+    }
+
+    @Override
+    public Material getMaterialNoLength(int id) {
+        String name = "";
+        String unit = "";
+        int length = 0;
+        int price = 0;
+        try {
+            String sql = "SELECT * FROM `materials_nolength` WHERE material_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                name = rs.getString("name");
+                unit = rs.getString("unit");
+                price = rs.getInt("price");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return new Material(id, name, unit, price);
+    }
+
+    @Override
+    public void updateStockWithLength(int id) {
+        int stock = 0;
+        try {
+            String sql = "SELECT stock FROM `material_lengths` WHERE material_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                stock = rs.getInt("stock");
+            }
+            sql = "UPDATE `material_lengths` SET stock = ? WHERE material_id = ?;";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, stock--);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return materials;
+    }
+
+    @Override
+    public void updateStockNoLength(int id) {
+        int stock = 0;
+        try {
+            String sql = "SELECT stock FROM `materials_nolength` WHERE material_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                stock = rs.getInt("stock");
+            }
+            sql = "UPDATE `materials_nolength` SET stock = ? WHERE material_id = ?;";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, stock--);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @Override
@@ -132,9 +204,10 @@ class MaterialMapper extends IMaterialMapper {
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new NoSuchMaterialException();
+            System.out.println(ex.getMessage());
         }
     }
+
     @Override
     public void insertMaterial(String name, int length, String unit, String desc, int price) {
         try {
@@ -147,11 +220,12 @@ class MaterialMapper extends IMaterialMapper {
             pstmt.setString(4, desc);
             pstmt.setInt(5, price);
             pstmt.executeUpdate();
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
+
     @Override
     public void insertMaterialDim(int id, int length, int price, int stock) {
         try {
@@ -163,18 +237,22 @@ class MaterialMapper extends IMaterialMapper {
             pstmt.setInt(3, price);
             pstmt.setInt(4, stock);
             pstmt.executeUpdate();
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    
-    public static void main(String[] args){
+    public static void main(String[] args) {
         try {
             System.out.println(IMaterialMapper.instance().getMaterial(7));
         } catch (NoSuchMaterialException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public List<Material> getMaterials() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

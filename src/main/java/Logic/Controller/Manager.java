@@ -51,9 +51,17 @@ public class Manager {
     public static Material getMaterial(String name) throws NoSuchMaterialException{
         return IMaterialMapper.instance().getMaterial_(name);
     }
+    public static Material getMaterialWithLength(int id, int length) {
+        return IMaterialMapper.instance().getMaterialWithLength(id, length);
+    }
+    public static Material getMaterialNoLength(int id) {
+        return IMaterialMapper.instance().getMaterialNoLength(id);
+    }
     public static List<Request> getRequests() {
         return IRequestMapper.instance().getRequests();
-
+    }
+    public static Roof newGetRoof(int id, int length) {
+        return IRequestMapper.instance().newGetRoof(id, length);
     }
 }
 

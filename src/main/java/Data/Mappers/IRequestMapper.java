@@ -11,13 +11,10 @@ import Data.Entity.Roof;
 import Data.Entity.Shed;
 
 
-import Logic.Exceptions.NoSuchCarportException;
-import Logic.Exceptions.NoSuchMaterialException;
+
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.NoSuchShedException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -45,6 +42,24 @@ public abstract class IRequestMapper {
     public abstract int getDimensionPrice(int roof_id, int length);
     public abstract Roof getRoof(String name) throws NoSuchRoofException;
     public abstract Roof getRoof(int id) throws NoSuchRoofException;
+    /**
+     * 
+     * @param id
+     * @param length
+     * @return specific roof
+     */
+    public abstract Roof newGetRoof(int id, int length);
+    /**
+     * 
+     * @return all roofs
+     */
+    public abstract List<Roof> getAllRoofs();
+    /**
+     * 
+     * @param rooftype
+     * @return all roofs with specified rooftype
+     * @throws NoSuchRoofException 
+     */
     public abstract List<Roof> getRoofs(int rooftype) throws NoSuchRoofException;
     public abstract void updateRoofPrice(int roof_id, int price) throws NoSuchRoofException;
 }

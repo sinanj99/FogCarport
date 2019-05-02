@@ -22,8 +22,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -80,7 +78,7 @@ class RequestMapper extends IRequestMapper {
 
     @Override
     public Carport getRequestCarport(int request_id) {
-       
+
         Roof roof = null;
         Shed shed_ = null;
         int roof_id = 0;
@@ -88,7 +86,7 @@ class RequestMapper extends IRequestMapper {
         int width = 0;
         int length = 0;
         boolean shed = false;
-        
+
         String query = "SELECT * FROM carports WHERE request_id = ?;";
         try {
             PreparedStatement pstmt = con.prepareStatement(query);
@@ -274,10 +272,38 @@ class RequestMapper extends IRequestMapper {
 
         return new Roof(roof_id, name_, inclined);
     }
+    @Override
+    public List<Roof> getAllRoofs() {
+        List<Roof> roofs = new ArrayList();
+        int roof_id = 0;
+        String name = "";
+        int price = 0;
+        int inclined_ = 0;
+        boolean inclined = false;
 
+        String query = "SELECT * FROM rooftype";
+
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                roof_id = rs.getInt("roof_id");
+                name = rs.getString("name");
+                inclined_ = rs.getInt("inclined");
+                if(inclined_ == 1) inclined = true;
+                
+                roofs.add(new Roof(roof_id, name, inclined));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return roofs;
+    }
     @Override
     public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException {
-        List<Roof> roofs = new ArrayList<Roof>();
+        List<Roof> roofs = new ArrayList();
         int roof_id = 0;
         String name = "";
         int price = 0;
@@ -289,6 +315,7 @@ class RequestMapper extends IRequestMapper {
         }
         if (rooftype == 1) {
             query = "SELECT * FROM rooftype WHERE inclined = 1";
+            inclined = true;
         }
 
         try {
@@ -298,9 +325,6 @@ class RequestMapper extends IRequestMapper {
             while (rs.next()) {
                 roof_id = rs.getInt("roof_id");
                 name = rs.getString("name");
-                if (rs.getInt("inclined") == 1) {
-                    inclined = true;
-                }
                 roofs.add(new Roof(roof_id, name, inclined));
             }
         } catch (SQLException e) {
@@ -461,8 +485,45 @@ class RequestMapper extends IRequestMapper {
         } catch (SQLException e) {
             System.out.println("REQUESTEX" + e.getMessage());
         }
-        
+
         return requests;
+    }
+
+    @Override
+    public Roof newGetRoof(int id, int length) {
+        int roof_id = 0;
+        String name_ = "";
+        int price = 0;
+        int inclined_ = 0;
+        boolean inclined = false;
+
+        try {
+            
+            String query = "SELECT * FROM rooftype WHERE roof_id = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                roof_id = rs.getInt("roof_id");
+                name_ = rs.getString("name");
+                inclined_ = rs.getInt("inclined");
+                if(inclined_ == 1) inclined = true;
+            }
+            
+            query = "SELECT * FROM rooflength WHERE roof_id = ? AND length = ?;";
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, id);
+            pstmt.setInt(2, length);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                price = rs.getInt("price");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return new Roof(roof_id, name_, price, inclined);
     }
 
 }

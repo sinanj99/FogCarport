@@ -20,6 +20,14 @@ public abstract class IMaterialMapper {
     }
     public abstract String getMaterial(int id) throws NoSuchMaterialException;
     
+    public abstract void updateStockWithLength(int id);
+    
+    public abstract void updateStockNoLength(int id);
+    
+    public abstract Material getMaterialWithLength(int id, int length);
+    
+    public abstract Material getMaterialNoLength(int id);
+    
     public abstract void insertMaterialDim(int id, int length, int price, int stock);
     
     public abstract Material getMaterial(String name, int length) throws NoSuchMaterialException;

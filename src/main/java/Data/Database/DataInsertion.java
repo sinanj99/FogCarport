@@ -20,7 +20,7 @@ public class DataInsertion {
     public static void main(String[] args) throws NoSuchRoofException {
 
         /* insertion of roofs */
-        List<Roof> roofs = IRequestMapper.instance().getRoofs(0);
+        List<Roof> roofs = IRequestMapper.instance().getAllRoofs();
 
         for (Roof r : roofs) {
             int price = 50;
@@ -31,9 +31,11 @@ public class DataInsertion {
                     price += 50;
 
                 }
-            } else {
+            } else if (r.isInclined() == true){
                 price = 50;
                 IRequestMapper.instance().insertDimensions(r.getRoof_id(), 37, price);
+                price = 30;
+                IRequestMapper.instance().insertDimensions(r.getRoof_id(), 6, price);
             }
         }
         /* insertion of materials */

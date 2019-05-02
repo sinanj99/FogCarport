@@ -11,11 +11,12 @@
                     <div class="list-group">
                         <%for (Request r : requests) {%>
                         <a href="FrontController?command=createOffer&requestID=<%=r.getReq_id()%>" class="list-group-item">
-                            <%="Navn " + r.getInfo().getFirstname() + " " + r.getInfo().getLastname() + " - Tidspunkt for oprettelse: " + r.getDatePlaced()%>
+                            <%="Lavet af: " + r.getAddress().getFirstname() + " " + r.getAddress().getLastname() + " - Tidspunkt for oprettelse: " + r.getDatePlaced()%>
                         </a>
                         <% }%>
                     </div>
                 </div>
             </div>
         </div>
-        <jsp:include page='/include/sitefoot.jsp'></jsp:include>
+    </div>
+    <jsp:include page='/include/sitefoot.jsp'></jsp:include>

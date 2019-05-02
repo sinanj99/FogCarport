@@ -46,7 +46,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public Request getRequest(int id) throws NoSuchRequestException, NoSuchRoofException, NoSuchShedException {
+    public Request getRequest(int id) {
         Request r = null;
         int user_id = 0;
         String datePlaced = "";
@@ -70,7 +70,7 @@ class RequestMapper extends IRequestMapper {
                 r = new Request(info, user_id, datePlaced, cp);
             }
         } catch (SQLException e) {
-            throw new NoSuchRequestException();
+            System.out.println(e.getMessage());
         }
 
         return r;
@@ -107,14 +107,14 @@ class RequestMapper extends IRequestMapper {
             System.out.println("test test test");
             roof = getRoof(roof_id);
             shed_ = getRequestShed(request_id);
-        } catch (NoSuchRoofException | NoSuchShedException | SQLException e) {
+        } catch (SQLException e) {
             System.out.println("carport ex " + e.getMessage());
         }
         return new Carport(roof, inclined, width, length, shed, shed_);
     }
 
     @Override
-    public Shed getRequestShed(int request_id) throws NoSuchShedException {
+    public Shed getRequestShed(int request_id) {
         int width = 0;
         int length = 0;
         try {
@@ -128,7 +128,7 @@ class RequestMapper extends IRequestMapper {
                 length = rs.getInt("length");
             }
         } catch (SQLException e) {
-            throw new NoSuchShedException();
+            System.out.println(e.getMessage());
         }
 
         return new Shed(width, length);
@@ -168,7 +168,6 @@ class RequestMapper extends IRequestMapper {
 
         } catch (SQLException e) {
             System.out.println("REQUEST TABLE " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -218,7 +217,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public Roof getRoof(String name) throws NoSuchRoofException {
+    public Roof getRoof(String name) {
         int roof_id = 0;
         String name_ = "";
         int price = 0;
@@ -239,14 +238,13 @@ class RequestMapper extends IRequestMapper {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            throw new NoSuchRoofException();
         }
 
         return new Roof(roof_id, name, inclined);
     }
 
     @Override
-    public Roof getRoof(int id) throws NoSuchRoofException {
+    public Roof getRoof(int id){
         int roof_id = 0;
         String name_ = "";
         int price = 0;
@@ -267,7 +265,6 @@ class RequestMapper extends IRequestMapper {
             }
         } catch (SQLException e) {
             System.out.println("ROOFEX " + e.getMessage());
-            throw new NoSuchRoofException();
         }
 
         return new Roof(roof_id, name_, inclined);
@@ -302,7 +299,7 @@ class RequestMapper extends IRequestMapper {
         return roofs;
     }
     @Override
-    public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException {
+    public List<Roof> getRoofs(int rooftype) {
         List<Roof> roofs = new ArrayList();
         int roof_id = 0;
         String name = "";
@@ -329,14 +326,13 @@ class RequestMapper extends IRequestMapper {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            throw new NoSuchRoofException();
         }
 
         return roofs;
     }
 
     @Override
-    public void updateRoofPrice(int roof_id, int price) throws NoSuchRoofException {
+    public void updateRoofPrice(int roof_id, int price) {
         try {
             String query = "UPDATE `rooftype` SET price = ? WHERE roof_id = ?;";
             PreparedStatement pstmt = con.prepareStatement(query);
@@ -345,7 +341,6 @@ class RequestMapper extends IRequestMapper {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            throw new NoSuchRoofException();
         }
     }
 
@@ -480,7 +475,7 @@ class RequestMapper extends IRequestMapper {
                 datePlaced = rs.getString("dateplaced");
                 info = getRequestInfo(user_id);
                 cp = getRequestCarport(req_id);
-                requests.add(new Request(info, user_id, datePlaced, cp));
+                requests.add(new Request(req_id, user_id, datePlaced, cp, info));
             }
         } catch (SQLException e) {
             System.out.println("REQUESTEX" + e.getMessage());

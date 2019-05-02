@@ -10,7 +10,7 @@
                 <div class="col-12 d-flex flex-column justify-content-center align-items-center">
                     <div class="list-group">
                         <%for (Request r : requests) {%>
-                        <a href="#" class="list-group-item">
+                        <a href="FrontController?command=createOffer&requestID=<%=r.getReq_id()%>" class="list-group-item">
                             <%="Navn " + r.getInfo().getFirstname() + " " + r.getInfo().getLastname() + " - Tidspunkt for oprettelse: " + r.getDatePlaced()%>
                         </a>
                         <% }%>

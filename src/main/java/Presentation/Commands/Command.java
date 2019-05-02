@@ -6,6 +6,7 @@
 package Presentation.Commands;
 
 import Logic.Controller.Manager;
+import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
@@ -20,5 +21,5 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface Command {
     
-    String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException;
+    String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException;
 }

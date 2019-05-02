@@ -27,7 +27,7 @@ public abstract class IRequestMapper {
         return RequestMapper.getInstance();
     }
     
-    public abstract Request getRequest(int id) throws NoSuchRequestException, NoSuchRoofException, NoSuchShedException;
+    public abstract Request getRequest(int id);
     /**
      * 
      * @return list of all requests in dB 

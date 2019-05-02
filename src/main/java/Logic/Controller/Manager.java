@@ -63,7 +63,7 @@ public class Manager {
         return IRequestMapper.instance().getRequests();
     }
     public static Roof newGetRoof(int id, int length) {
-        return IRequestMapper.instance().newGetRoof(id, length);
+        return IRequestMapper.instance().getRoof(id, length);
     }
     public static Request getRequest(int id) {
         return IRequestMapper.instance().getRequest(id);

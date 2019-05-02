@@ -5,15 +5,15 @@
  */
 package Logic.Calculator;
 
-import Data.Mappers.IMaterialMapper;
 import Data.Entity.LineItem;
 import Data.Entity.Material;
+import Data.Entity.Roof;
 import Logic.Controller.Manager;
-import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.NoSuchRoofException;
 
 /**
  *
- * @author Kasper Jeppesen
+ * @author Sinan Jasar
  */
 public class InclineRoofCarportBOM {
 
@@ -277,19 +277,7 @@ public class InclineRoofCarportBOM {
      * @return (remme - carportdel)
      */
     public static int amountOfBeams(int carportLength, boolean isShed, int shedLength) {
-        if (isShed) {
-            carportLength -= shedLength;
-        }
-        int totalLengthNeeded = carportLength * 2; //*2 since there is two (length)sides. 
-        if (totalLengthNeeded <= 480) {
-            return 1;
-        } else if (totalLengthNeeded > 480 && totalLengthNeeded <= 480 * 2) {
-            return 2;
-        } else if (totalLengthNeeded > 480 && totalLengthNeeded <= 480 * 3) {
-            return 3;
-        } else {
-            return 4; //4*480 is 1920, max length needed is 780*2 (1560)
-        }
+        return 2;
     }
 
     /**
@@ -300,7 +288,7 @@ public class InclineRoofCarportBOM {
     public static int amountOfBeamsShed(int shedLength) {
         int totalLengthNeeded = shedLength * 2;
         if (totalLengthNeeded <= 480) {
-            return 2; // 1 board of 540cm will be enough for both sides. 
+            return 1; // 1 board of 540cm will be enough for both sides. 
         } else if (totalLengthNeeded > 480 && totalLengthNeeded <= 480 * 2) {
 
             return 2;
@@ -481,28 +469,115 @@ public class InclineRoofCarportBOM {
         return 2; // 2 packs -- amount in a single pack and how many is needed is unknown. 
     }
     /*
-    
-    
     beslagsskruer (vinkelbeslag):
     4 skruer per vinkelbeslag
-    (done, står ikke i styklisten, men i beskrivelsen)
+    (står ikke i styklisten, men i beskrivelsen)
+    */
     
-    ---------
-    
-    længder:
-    taglægter og sternbræt skal være 30cm længere end carportens længde (minus carporten)
-    i eksemplet er det altså 730 cm - 220 cm + 30 cm.
-    
-    vindskede-længde kommer i 480. 
-     */
-    
-    public LineItem rafters(int carportLength, boolean isShed, int shedLength) throws NoSuchMaterialException {
-        Material m = IMaterialMapper.instance().getMaterial_("fædigskåret (byg-selv spær)");
+    public LineItem soffits(int carportWidth, int inclination) {
+        Material m = Manager.getMaterialWithLength(1, 480);
+        return new LineItem(m, amountOfSoffits(carportWidth, inclination), "Vindskeder på rejsning", m.getPrice() * amountOfSoffits(carportWidth, inclination));
+    }
+    public LineItem rafters(int carportLength, boolean isShed, int shedLength) {
+        Material m = Manager.getMaterialNoLength(1);
         return new LineItem(m, amountOfRafters(carportLength, isShed, shedLength), "byg-selv spær (skal samles) 8 stk.", m.getPrice() * amountOfRafters(carportLength, isShed, shedLength));
+    }
+    public static LineItem fasciaCarport(int carportLength, boolean isShed, int shedLength) {
+        Material m = Manager.getMaterialWithLength(1, 600);
+        return new LineItem(m, amountOfFasciaBoardsCarport(carportLength, isShed, shedLength), "Sternbrædder til siderne Carport del", m.getPrice() * amountOfFasciaBoardsCarport(carportLength, isShed, shedLength));
+    }
+    public LineItem fasciaShed(int shedLength) {
+        Material m = Manager.getMaterialWithLength(1, 540);
+        return new LineItem(m, amountOfFasciaBoardsShed(shedLength), "Sternbrædder til siderne Skur del ( deles )", m.getPrice() * amountOfFasciaBoardsShed(shedLength));
+    }
+    public LineItem roofTiles(int id, int carportWidth, int carportLength, int inclination) throws NoSuchRoofException {
+        Roof r = Manager.newGetRoof(id, 37);
+        return new LineItem(r, amountOfRoofTiles(carportWidth, carportLength, inclination), "monteres på taglægter", r.getPrice() *  amountOfRoofTiles(carportWidth, carportLength, inclination));
+    }
+    public LineItem laths(int cWidth, int inclination, int cLength, int sLength) {
+        Material m = Manager.getMaterialWithLength(7, cLength-sLength+30);
+        return new LineItem(m, amountOfLaths(cWidth, inclination), "til montering på spær, 7 rækker lægter på hver skiftevis 1 hel & 1 halv lægte", m.getPrice() * amountOfLaths(cWidth, inclination));
+    }
+    public LineItem ridgeTiles(int id, int cLength) {
+        Roof r = Manager.newGetRoof(id, 6);
+        return new LineItem(r, amountOfRidgeTiles(cLength), "monteres på toplægte med medfølgende beslag se tagstens vejledning", r.getPrice() * amountOfRidgeTiles(cLength));
+    }
+    public LineItem ridgeTileBrackets(int cLength) {
+        Material m = Manager.getMaterialNoLength(cLength);
+        return new LineItem(m, amountOfRidgeTileBrackets(cLength), "Til montering af rygsten", m.getPrice() * amountOfRidgeTileBrackets(cLength));
+    }
+    public LineItem lathHolders(int carportLength, boolean isShed, int shedLength) {
+        Material m = Manager.getMaterialNoLength(14);
+        return new LineItem(m, amountOfLathHolders(carportLength, isShed, shedLength), "monteres på toppen af spæret (til toplægte)", m.getPrice() * amountOfLathHolders(carportLength, isShed, shedLength));
+    }
+    public LineItem beamsCarport(int carportLength, boolean isShed, int shedLength) {
+        Material m = Manager.getMaterialWithLength(3, carportLength-shedLength-30);
+        return new LineItem(m, amountOfBeams(carportLength, isShed, shedLength), "Remme i sider, sadles ned i stolper Carport del", m.getPrice() * amountOfLathHolders(carportLength, isShed, shedLength));
+    }
+    public LineItem beamsShed(int shedLength) {
+        Material m = Manager.getMaterialWithLength(3, 480);
+        return new LineItem(m, amountOfBeamsShed(shedLength), "Remme i sider, sadles ned i stolper Skur del", m.getPrice() * amountOfBeamsShed(shedLength));
+    }
+    public LineItem intertiesSides(int shedLength) {
+        Material m = Manager.getMaterialWithLength(4, shedLength);
+        return new LineItem(m, amountOfIntertiesSides(), "Løsholter i siderne af skur", m.getPrice() * amountOfIntertiesSides());
+    }
+    public LineItem intertiesGables(int shedWidth) {
+        Material m = Manager.getMaterialWithLength(4, shedWidth);
+        return new LineItem(m, amountOfIntertiesGable(), "Løsholter i gavle af skur", m.getPrice() * amountOfIntertiesGable());
+    }
+    public LineItem rainboards(int cWidth, int inclination) {
+        Material m = Manager.getMaterialWithLength(5, 480);
+        return new LineItem(m, amountOfRainBoards(cWidth, inclination), "Vand bræt på vindskeder", m.getPrice() * amountOfRainBoards(cWidth, inclination));
+    }
+    public LineItem bracketInterties() {
+        Material m = Manager.getMaterialNoLength(5);
+        return new LineItem(m, amountOfBracketsInterties(), "til montering af løsholter", m.getPrice() * amountOfBracketsInterties());
+    }
+    public LineItem screwsInnerTimbering(int shedWidth, int shedLength) {
+        Material m = Manager.getMaterialNoLength(13);
+        return new LineItem(m, amountOfBracketScrewsTimbering1(shedWidth, shedLength), "til montering af inderste bræt ved beklædning", m.getPrice() * amountOfBracketScrewsTimbering1(shedWidth, shedLength));
+    }
+    public LineItem screwsOuterTimbering(int shedWidth, int shedLength) {
+        Material m = Manager.getMaterialNoLength(12);
+        return new LineItem(m, amountOfBracketScrewsTimbering2(shedWidth, shedLength), "til montering af yderste bræt ved beklædning", m.getPrice() * amountOfBracketScrewsTimbering2(shedWidth, shedLength));
+    }
+    public LineItem screwsLathHolders(int carportLength, boolean isShed, int shedLength) {
+        Material m = Manager.getMaterialNoLength(12);
+        return new LineItem(m, amountOfScrewsLathHolders(carportLength, isShed, shedLength), "Til montering af universalbeslag + toplægte", m.getPrice() * amountOfScrewsLathHolders(carportLength, isShed, shedLength));
+    }
+    public LineItem leftBracketRafters(int carportLength, boolean isShed, int shedLength) {
+        Material m = Manager.getMaterialNoLength(2);
+        return new LineItem(m, amountOfLeftBracketRafters(carportLength, isShed, shedLength), "Til montering af spær på rem", m.getPrice() * amountOfLeftBracketRafters(carportLength, isShed, shedLength));
+    }
+    public LineItem rigthBracketRafters(int carportLength, boolean isShed, int shedLength) {
+        Material m = Manager.getMaterialNoLength(1);
+        return new LineItem(m, amountOfRightBracketRafters(carportLength, isShed, shedLength), "Til montering af spær på rem", m.getPrice() * amountOfRightBracketRafters(carportLength, isShed, shedLength));
+    }
+
+    public LineItem fasciaAndSoffitScrews(int carportLength, int carportWidth, 
+            boolean isShed, int shedLength, int inclination) {
+        Material m = Manager.getMaterialNoLength(7);
+        return new LineItem(m, amountOfScrewsFasciaAndSoffits(carportLength, carportWidth,
+        isShed, shedLength, inclination), "Til montering af Stern, vindskeder, vindkryds & vand bræt", m.getPrice() * amountOfScrewsFasciaAndSoffits(carportLength, carportWidth,
+        isShed, shedLength, inclination));
+    }
+    public LineItem LathScrews(int carportWidth, int inclination) {
+        Material m = Manager.getMaterialNoLength(9);
+        return new LineItem(m, amountOfScrewsLaths(carportWidth, inclination), "til taglægter", m.getPrice() * amountOfScrewsLaths(carportWidth, inclination));
+    }
+    public LineItem squareDiscs() {
+        Material m = Manager.getMaterialNoLength(11);
+        return new LineItem(m, amountOfSquareDiscs(), "Til montering af rem på stolper", m.getPrice() * amountOfSquareDiscs());
+    }
+    public LineItem roofTileBinders() {
+        Material m = Manager.getMaterialNoLength(16);
+        return new LineItem(m, amountOfRoofTileBinders(), "til montering af tagsten, alle ydersten + hver anden fastgøres", m.getPrice() * amountOfRoofTileBinders());
     }
 
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws NoSuchRoofException {
 //        System.out.println(amountOfRafters(730, true, 220));
 //        System.out.println(amountOfLaths(360,20));
 //        System.out.println(amountOfRoofTiles(360, 730, 20));
@@ -513,7 +588,8 @@ public class InclineRoofCarportBOM {
 //System.out.println(amountOfScrewsLathHolders(360, true, 220));
 //        System.out.println(amountOfScrewsFasciaAndSoffits(730, 360, true,220,20));
 //System.out.println(amountOfScrewsLaths(360,20));
-System.out.println(Math.sqrt(TILE_W_X_H));
+//System.out.println(Math.sqrt(TILE_WIDTH));
+//System.out.println(fasciaCarport(730, true, 220));
 
     }
 }

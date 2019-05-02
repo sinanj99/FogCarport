@@ -12,6 +12,7 @@ package Data.Entity;
 public class Carport {
     private Roof roof;
     private boolean inclined;
+    private double inclination;
     private int width;
     private int length;
     private boolean shed;
@@ -24,6 +25,16 @@ public class Carport {
         this.length = length;
         this.shed = shed;
         this.shed_ = shed_;
+    }
+    
+    public Carport(Roof roof, boolean inclined, int width, int length, boolean shed, Shed shed_, double inclination) {
+        this.roof = roof;
+        this.inclined = inclined;
+        this.width = width;
+        this.length = length;
+        this.shed = shed;
+        this.shed_ = shed_;
+        this.inclination = inclination;
     }
 
     public boolean isInclined() {

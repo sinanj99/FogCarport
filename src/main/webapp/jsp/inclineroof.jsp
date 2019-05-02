@@ -5,84 +5,95 @@
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
 <%List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
 User user = (User) session.getAttribute("user");
-
 if(user == null) response.sendRedirect("login.jsp");
 
     int a;
-    int b; %>
-<body class="background2">
+    int b;
+%>
+<body onload="spaceForShed();" class="background2">
     <div class="container">
         <form class="standarddiv pl-0 pr-0 d-flex flex-column justify-content-center">
             <h3>Tilpas din carport</h3>
             <div class="row">
-                <div class="col-12 d-flex flex-column align-items-center">
+                <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Carportens bredde</p>
-                    <select class="inputbig" id="carportWidth" onchange="widthSubtract30()">
+                    <select name="cwidth" required class="inputbig" id="carportWidth" onchange="spaceForShed(); widthSubtract30();">
                         <option value="n/a">Vælg</option>
-                        <% b = 210;
-                            for (int i = 0; i < 18; i += 1) {
-                                b += 30;%>
-                        <option value="<%=i + 1%>"><%=b%> cm</option>
+                        <%
+                            for (int i = 240; i <= 750; i += 30) {
+                        %>
+                        <option value="<%=i%>" ><%=i%> cm</option>
                         <%}%>
                     </select>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 d-flex flex-column align-items-center">
+                <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Carportens længde</p>
-                    <select class="inputbig" id="carportLength" onchange="lengthSubtract30()">
+                    <select required name="clength" class="inputbig" id="carportLength" onchange="spaceForShed(); lengthSubtract30();">
                         <option value="n/a">Vælg</option>
-                        <% b = 210;
-                            for (int i = 0; i < 18; i += 1) {
-                                b += 30;%>
-                        <option value="<%=i + 1%>"><%=b%> cm</option>
+                        <%
+                            for (int i = 240; i <= 750; i += 30) {
+                        %>
+                        <option value="<%=i%>" ><%=i%> cm</option>
                         <%}%>
                     </select>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 d-flex flex-column align-items-center">
+                <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Tagtype</p>
-                    <select class="inputbig">
+                    <select required name="rchoice" class="inputbig">
+                        <option value="n/a">Vælg</option>
                         <% if(roofs != null){
-                            for (Roof r : roofs)  {%>
-                        <option value="<%=r.getRoof_id()%>"><%=r.getName()%></option>
-                        <%}}%>
+                            for (Roof r : roofs) {%>
+                        <option value="<%=r.getRoof_id()%>"><%= r.getName()%></option>
+                        <% }} %>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 d-flex flex-column align-items-center">
-                    <p class="p-0" style="width: 65%;">Redskabsrum?</p>
-                    <select onchange="wantShed()" id="shedChoice" class="inputbig">
+                    <p class="p-0" style="width: 65%;">Taghældning</p>
+                    <select name="inclination" class="inputbig">
+                        <%for (int i = 15; i <= 45; i+=5)  {%>
+                        <option value="<%=i%>"><%=i%> grader</option>
+                        <%}%>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 d-flex flex-column align-items-center">
+                    <p class="p-0" style="width: 65%;"><label id="shedLabel">Redskabsrum?</label></p>
+                    <select required name="schoice" onchange="wantShed()" id="shedChoice" class="inputbig">
                         <option value="n/a">Vælg</option>
-                        <option value="1">Ja</option>
+                        <option id="yes" value="1">Ja</option>
                         <option value="2">Nej</option>
                     </select>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 d-flex flex-column align-items-center">
+                <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;" ><label id="shedWidthLabel" style="margin-bottom: 0px;" class="d-none">Redskabsrummets bredde</label></p>
-                    <select id="shedWidth" class="inputbig d-none" class="d-none">
+                    <select required name="swidth" id="shedWidth" class="inputbig d-none" class="d-none">
                         <option value="n/a">Vælg</option>
-                        <% a = 180;
-                            for (int i = 0; i < 18; i += 1) {
-                                a += 30;%>
-                        <option id="widthOption<%=i%>"> <%= a%> cm </option>
+                        <%
+                            for (int i = 210; i <= 720; i += 30) {
+                        %>
+                        <option value="<%=i%>" id="widthOption<%=i%>" > <%=i%> cm</option>
                         <% }%>
                     </select>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 d-flex flex-column align-items-center">
+                <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;" ><label id="shedLengthLabel" style="margin-bottom: 0px;" class="d-none">Redskabsrummets Længde</label></p>
-                    <select id="shedLength" class="inputbig d-none" class="d-none">
+                    <select required name="slength" id="shedLength" class="inputbig d-none" class="d-none">
                         <option value="n/a">Vælg</option>
-                        <% a = 180;
-                            for (int i = 0; i < 18; i += 1) {
-                                a += 30;%>
-                        <option id="lengthOption<%=i%>"> <%= a%> cm </option>
+                        <%
+                            for (int i = 150; i <= 510; i += 30) {
+                        %>
+                        <option value="<%=i%>" id="lengthOption<%=i%>" > <%=i%> cm</option>
                         <% }%>
                     </select>
                 </div>
@@ -98,19 +109,19 @@ if(user == null) response.sendRedirect("login.jsp");
                         <div class="textsmallr">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input name="fname" onfocus="this.value=''" id="fname" class="inputsmalll" type="text" value="" placeholder="Fornavn..." required>
+                        <input name="fname" onfocus="this.value=''" id="fname" class="inputsmalll" type="text" value="<%=user.getInfo().getFirstname()%>" placeholder="Fornavn..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input id="lname" name="lname" onfocus="this.value=''" class="inputsmallr" type="text" value="" placeholder="Efternavn..." required>
+                        <input id="lname" name="lname" onfocus="this.value=''" class="inputsmallr" type="text" value="<%=user.getInfo().getLastname()%>" placeholder="Efternavn..." required>
                     </div>
                 </div>  
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Adresse</p>
-                        <input class="inputbig" name="address" onfocus="this.value=''" id="adresss" type="text" value="" placeholder="Adresse..." required>
+                        <input class="inputbig" name="address" onfocus="this.value=''" id="adresss" type="text" value="<%=user.getInfo().getAddress()%>" placeholder="Adresse..." required>
                     </div>
                 </div>
                 <div class="row">
@@ -121,19 +132,19 @@ if(user == null) response.sendRedirect("login.jsp");
                         <div class="textsmallr">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" id="zip" name="zip" onfocus="this.value=''" type="text" value="" placeholder="Postnummer..." required>
+                        <input class="inputsmalll" id="zip" name="zip" onfocus="this.value=''" type="text" value="<%=user.getInfo().getZipcode()%>" placeholder="Postnummer..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input class="inputsmallr" id="city" name="city" onfocus="this.value=''" type="text" value="" placeholder="By..." required>
+                        <input class="inputsmallr" id="city" name="city" onfocus="this.value=''" type="text" value="<%=user.getInfo().getCity()%>" placeholder="By..." required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Email</p>
-                        <input class="inputbig" id="email" name="email" onfocus="this.value=''" type="text" value="" placeholder="Email..." required>
+                        <input class="inputbig" id="email" name="email" onfocus="this.value=''" type="text" value="<%=user.getEmail()%>" placeholder="Email..." required>
                     </div>
                 </div>
             </div>
@@ -141,13 +152,33 @@ if(user == null) response.sendRedirect("login.jsp");
                 <div class="col-sm-12 d-flex justify-content-center">
                     <input type="submit" class="btn notmemberbtn" value="Send forespørgsel">
                     <input type="hidden" name="command" value="request">
+                    <input type="hidden" name="inclined" value="true">
                 </div>
-            </div>   
+            </div>
         </form>
     </div>
 
     <script type="text/javascript">
-        /*function wantShed() {
+        function spaceForShed() {
+            if (document.getElementById("carportLength").value == "n/a" || document.getElementById("carportWidth").value == "n/a"){
+                //explanation:
+                //you shouldn't be able to choose a toolshed, if a length or width is not specified. 
+                document.getElementById("shedChoice").classList.add("d-none");
+                document.getElementById("shedLabel").classList.add("d-none");
+
+            } else if (document.getElementById("carportLength").value < 390){
+                // explanation:
+                // minimum length for toolshed is 150cm
+                // minimum length for full carport is 240cm (excluding toolshed) for there to be space for a car. 
+                // therefore the carport must be at least 390 long (240+150) for there to be space for a tool shed. 
+                document.getElementById("shedLabel").classList.add("d-none");
+                document.getElementById("shedChoice").classList.add("d-none");
+            }else{
+                document.getElementById("shedLabel").classList.remove("d-none");
+                document.getElementById("shedChoice").classList.remove("d-none");
+            }
+        }
+        function wantShed() {
             var shedChoice = document.getElementById("shedChoice").value;
             var shedWidth = document.getElementById("shedWidth");
             var shedLength = document.getElementById("shedLength");
@@ -161,36 +192,38 @@ if(user == null) response.sendRedirect("login.jsp");
                 shedLength.classList.add("d-none");
                 document.getElementById("shedWidthLabel").classList.add("d-none");
                 document.getElementById("shedLengthLabel").classList.add("d-none");
+            } else if (shedChoice == "n/a") {
+                shedWidth.classList.add("d-none");
+                shedLength.classList.add("d-none");
+                document.getElementById("shedWidthLabel").classList.add("d-none");
+                document.getElementById("shedLengthLabel").classList.add("d-none");
             }
         }
-        function widthSubtract30()
-        {
-
+        function widthSubtract30(){
             var shedLengthOptions = document.querySelectorAll("#shedWidth option");
             shedLengthOptions.forEach(shedOption => {
                 shedOption.disabled = false;
             });
-
+            var shedWidth = document.getElementById("shedWidth");
+            shedWidth.selectedIndex = 0;
             var chosenWidth = document.getElementById("carportWidth").value;
-            for (i = chosenWidth; i <= 18; i++)
-            {
+            chosenWidth = chosenWidth - 0; // doesnt work if you do not do this. 
+            for (i = chosenWidth; i <= 720; i += 30){
                 document.getElementById("widthOption" + i).disabled = true;
             }
-
         }
-        function lengthSubtract30()
-        {
+        function lengthSubtract30(){
+             var shedLengthOptions = document.querySelectorAll("#shedLength option");
+             shedLengthOptions.forEach(shedOption => {
+                 shedOption.disabled = false;
+             });
+             var shedLength = document.getElementById("shedLength");
+             shedLength.selectedIndex = 0;
 
-            var shedLengthOptions = document.querySelectorAll("#shedLength option");
-            shedLengthOptions.forEach(shedOption => {
-                shedOption.disabled = false;
-            });
-
-            var chosenLength = document.getElementById("carportLength").value;
-            for (i = chosenLength; i <= 18; i++)
-            {
-                document.getElementById("lengthOption" + i).disabled = true;
-            }
-
-        }
+             var chosenLength = document.getElementById("carportLength").value;
+             var maxLength = chosenLength - 210; // 210 and not 240, as the first index is removed. 
+             for (i = maxLength; i <= 750; i += 30){
+                 document.getElementById("lengthOption" + i).disabled = true;
+             }
+         }
     </script>

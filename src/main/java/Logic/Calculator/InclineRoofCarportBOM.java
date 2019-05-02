@@ -482,7 +482,7 @@ public class InclineRoofCarportBOM {
         Material m = Manager.getMaterialNoLength(1);
         return new LineItem(m, amountOfRafters(carportLength, isShed, shedLength), "byg-selv spær (skal samles) 8 stk.", m.getPrice() * amountOfRafters(carportLength, isShed, shedLength));
     }
-    public static LineItem fasciaCarport(int carportLength, boolean isShed, int shedLength) {
+    public LineItem fasciaCarport(int carportLength, boolean isShed, int shedLength) {
         Material m = Manager.getMaterialWithLength(1, 600);
         return new LineItem(m, amountOfFasciaBoardsCarport(carportLength, isShed, shedLength), "Sternbrædder til siderne Carport del", m.getPrice() * amountOfFasciaBoardsCarport(carportLength, isShed, shedLength));
     }
@@ -497,6 +497,11 @@ public class InclineRoofCarportBOM {
     public LineItem laths(int cWidth, int inclination, int cLength, int sLength) {
         Material m = Manager.getMaterialWithLength(7, cLength-sLength+30);
         return new LineItem(m, amountOfLaths(cWidth, inclination), "til montering på spær, 7 rækker lægter på hver skiftevis 1 hel & 1 halv lægte", m.getPrice() * amountOfLaths(cWidth, inclination));
+    }
+    public LineItem toplaths(int cLength, int sLength, int cWidth) {
+        Material m = Manager.getMaterialWithLength(7, cLength-sLength-90);
+        return new LineItem(m, amountOfTopLaths(), "toplægte til montering af rygsten lægges i toplægte holder", m.getPrice() * amountOfTopLaths());
+ 
     }
     public LineItem ridgeTiles(int id, int cLength) {
         Roof r = Manager.newGetRoof(id, 6);

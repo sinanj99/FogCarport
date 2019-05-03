@@ -26,6 +26,7 @@ public class FlatRoofFormCommand implements Command {
         if (request.getSession().getAttribute("user") == null) {
             return "login.jsp";
         }
+        request.setAttribute("inclined", "false");
         request.setAttribute("roofs", Manager.getRoofs(0)); // 0 for flat roofs 
         return "flatroof.jsp";
     }

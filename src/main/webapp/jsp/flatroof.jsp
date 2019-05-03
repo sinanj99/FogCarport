@@ -45,7 +45,7 @@
                     <select required name="rchoice" class="inputbig">
                         <option value="n/a">Vælg</option>
                         <% for (Roof r : roofs) {%>
-                        <option value="<%= r.getName()%>"><%= r.getName()%></option>
+                        <option value="<%=r.getRoof_id()%>"><%= r.getName()%></option>
                         <% } %>
                     </select>
                 </div>

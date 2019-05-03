@@ -10,6 +10,7 @@ import Data.Entity.LineItem;
 import Data.Entity.Material;
 import Data.Entity.Request;
 import Data.Entity.Roof;
+import Data.Entity.Shed;
 import Data.Mappers.IRequestMapper;
 import Logic.Controller.Manager;
 import Logic.Exceptions.NoSuchMaterialException;
@@ -51,9 +52,9 @@ public class FlatRoofCarportBOM {
         return packsNeeded;
     }
 
-    public int calculateQuantityOfBrædderbolt(int length, boolean isShed, int shedLengt) {
+    public int calculateQuantityOfBrædderbolt(int length, Shed shed, int shedLengt) {
         //two brædderbolte per stolpe
-        return calculateQuantityOfStolper(length, isShed, shedLengt) * 2;
+        return calculateQuantityOfStolper(length, shed, shedLengt) * 2;
     }
 
     public int calculateQuantityOfHøjreBeslag(int length) {
@@ -128,19 +129,19 @@ public class FlatRoofCarportBOM {
 
     /**
      *
-     * @param isShed
+     * @param shed
      * @param shedLength
      * @param length
      * @return
      */
-    public int calculateQuantityOfStolper(int length, boolean isShed, int shedLength) {
+    public int calculateQuantityOfStolper(int length, Shed shed, int shedLength) {
 
         //Substraicing spaceBetweenSpær times 2 because stolper cant appear at the front spear and back spear
         float lengthAvaiableForStolper = length - spaceBetweenSpær(length) * 2;
         // four corner stolper
         int quantity = 4;
 
-        if (isShed == true) {
+        if (shed == null) {
             lengthAvaiableForStolper -= shedLength;
             //A shed consists of 6 stolper, the 2 back corner stolper and 4 other.
             quantity += 4;
@@ -179,7 +180,7 @@ public class FlatRoofCarportBOM {
     public double hulbåndAntal(Request req) {
         double lengthM;
         // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
-        if (req.getCarport().isShed()) {
+        if (req.getCarport().getShed_()==null) {
             lengthM = req.getCarport().getLength() - req.getCarport().getShed_().getLength() - spaceBetweenSpær(req.getCarport().getLength()) / 100;
         } else {
             //length in meters
@@ -255,9 +256,9 @@ public class FlatRoofCarportBOM {
         return new LineItem(m, calculateQuantityOfBeslagskruer(length), "Til montering af universalbeslag + hulbånd", m.getPrice() * calculateQuantityOfBeslagskruer(length));
     }
 
-    public LineItem brædderbolt(int length, boolean isShed, int shedLength) throws NoSuchMaterialException {
+    public LineItem brædderbolt(int length, Shed shed, int shedLength) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("10x120mm brædderbolt");
-        return new LineItem(m, calculateQuantityOfBrædderbolt(length, isShed, shedLength), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length, isShed, shedLength));
+        return new LineItem(m, calculateQuantityOfBrædderbolt(length, shed, shedLength), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length, shed, shedLength));
     }
 
     public LineItem højrebeslag(int length) throws NoSuchMaterialException {
@@ -272,9 +273,9 @@ public class FlatRoofCarportBOM {
     }
 //    
 
-    public LineItem stolpe(int length, boolean isShed, int shedLength) throws NoSuchMaterialException {
+    public LineItem stolpe(int length, Shed shed, int shedLength) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("97x97mm trykimp. Stolpe");
-        return new LineItem(m, calculateQuantityOfStolper(length, isShed, shedLength), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length, isShed, shedLength));
+        return new LineItem(m, calculateQuantityOfStolper(length, shed, shedLength), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length, shed, shedLength));
 
     }
 

@@ -8,6 +8,8 @@ package Presentation.Controller;
 import Presentation.Commands.Command;
 import Logic.Exceptions.DuplicateException;
 import Logic.Controller.Manager;
+import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.UserNotFoundException;
 import Logic.Exceptions.NoSuchRoofException;
 import java.io.IOException;
@@ -32,7 +34,7 @@ public class FrontController extends HttpServlet {
         try {
             String target = command.execute(request);
             request.getRequestDispatcher(target).forward(request, response);
-        } catch (NoSuchRoofException | ServletException | IOException | SQLException | UserNotFoundException ex) {
+        } catch (NoSuchMaterialException | NoSuchRoofException | ServletException | IOException | SQLException | UserNotFoundException ex) {
             System.out.println("EXCEPTION: " + ex.getMessage());
         }
     }

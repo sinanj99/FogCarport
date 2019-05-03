@@ -5,20 +5,9 @@
  */
 package Data.Mappers;
 
-import Data.Entity.Carport;
 import Data.Entity.Request;
 import Data.Entity.Roof;
-import Data.Entity.Shed;
-
-
-import Logic.Exceptions.NoSuchCarportException;
-import Logic.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.NoSuchShedException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -26,19 +15,95 @@ import java.util.List;
  * @author Obaydah Mohamad
  */
 public abstract class IRequestMapper {
+    
     public static IRequestMapper instance() {
         return RequestMapper.getInstance();
     }
     
-    public abstract Request getRequest(int id) throws NoSuchRequestException, NoSuchRoofException, NoSuchShedException;
-    public abstract Carport getRequestCarport(int request_id) throws NoSuchRoofException, SQLException, NoSuchShedException;
-    public abstract Shed getRequestShed(int request_id) throws NoSuchShedException;
+    /**
+     * Returns a specific request object with all its sub-tables - used when a seller
+     * wants to process a request.
+     * @param id
+     * @return 
+     */
+    public abstract Request getRequest(int id);
+    
+    /**
+     * Returns a list of all requests in dB; used to display all requests not yet 
+     * processed in jsp-file 'showrequests'.
+     * @return list of all requests in dB 
+     */
+    public abstract List<Request> getRequests();
+    
+    /**
+     * Inserts a request to db-table 'request' (and all its child tables)
+     * with specified user-input fetched from jsp-files 'flatroof- and incline'.
+     * @param req 
+     */
+    
     public abstract void insertRequest(Request req);
+    
+    /**
+     * ??
+     * @param id
+     * @param length
+     * @param price 
+     */
     public abstract void insertDimensions(int id, int length, int price);
-    public abstract int getDimensionID(int roof_id, int length);
+
+    /**
+     * ??
+     * @param roof_id
+     * @param length
+     * @return 
+     */
     public abstract int getDimensionPrice(int roof_id, int length);
-    public abstract Roof getRoof(String name) throws NoSuchRoofException;
+    
+    
+    /**
+     * Fetches data from rooftype-table in dB and returns a roof object 
+     * with id, name and inclined attributes - used in genereate request command,
+     * when a request object is created. 
+     * @param id
+     * @return
+     * @throws NoSuchRoofException 
+     */
     public abstract Roof getRoof(int id) throws NoSuchRoofException;
+    
+    /**
+     * Fetches data from rooftype-table and its child-table, rooflength,
+     * where the length and price of the can be found - used to return a LineItem
+     * in calculateBOM.
+     * @param id
+     * @param length
+     * @return 
+     */
+    public abstract Roof getRoof(int id, int length);
+    
+    
+    /**
+     * Returns roofs of all types - used in DataInsertion class which loops through list,
+     * checks if roof is type inclined or flat, and inserts data dependent on which type it is. 
+     * Returns all roofs
+     * @return all roofs, independent on rooftype.
+     */
+    
+    public abstract List<Roof> getRoofs();
+    
+    /**
+     * Returns all roofs with specified rooftype (inclined or flat).
+     * @param rooftype
+     * @return all roofs with specified rooftype
+     * @throws NoSuchRoofException 
+     */
+    
     public abstract List<Roof> getRoofs(int rooftype) throws NoSuchRoofException;
+    
+    /**
+     * Updates price of a roof with specified length and rooftype.
+     * @param roof_id
+     * @param price
+     * @throws NoSuchRoofException 
+     */
     public abstract void updateRoofPrice(int roof_id, int price) throws NoSuchRoofException;
 }

@@ -6,20 +6,24 @@
 package Presentation.Commands;
 
 import Logic.Controller.Manager;
-import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author sinanjasar
  */
-public interface Command {
-    
-    String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException;
+public class ShowRequestCommand implements Command {
+
+    @Override
+    public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
+        request.setAttribute("requests", Manager.getRequests());
+        System.out.println(request.getAttribute("requests"));
+        return "showrequests.jsp";
+    }
+
 }

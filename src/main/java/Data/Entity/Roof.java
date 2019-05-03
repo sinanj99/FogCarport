@@ -13,6 +13,7 @@ public class Roof {
     private int roof_id;
     private String name;
     private boolean inclined;
+    private int price;
 
     public Roof(int roof_id, String name, boolean inclined) {
         this.roof_id = roof_id;
@@ -20,6 +21,17 @@ public class Roof {
         this.inclined = inclined;
     }
 
+    public Roof(int roof_id, String name, int price, boolean inclined) {
+        this.roof_id = roof_id;
+        this.name = name;
+        this.price = price;
+        this.inclined = inclined;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+     
     public int getRoof_id() {
         return roof_id;
     }

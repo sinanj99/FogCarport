@@ -8,6 +8,7 @@ package Logic.Calculator;
 import Data.Entity.BOM;
 import Data.Entity.Carport;
 import Data.Entity.LineItem;
+import Data.Entity.PersonalInfo;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
@@ -23,7 +24,7 @@ public class TestCalculateBOMMethods
     {
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         InclineRoofCarportBOM i = new InclineRoofCarportBOM();
-       
+        CalculateBOM c = new CalculateBOM();
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);
 //        System.out.println(c.calculateQuantityOfSpær(450));
@@ -52,7 +53,7 @@ public class TestCalculateBOMMethods
 //String str = "/jsp/flatroof.jsp";
 //        System.out.println(str.substring(1).split("/")[1]);
 
-        System.out.println(i.amountOfRafters(500, false, 0));
+//        System.out.println(f.calculateQuantityOfSpær(780));
 //        System.out.println(f.calculateQuantityOfSpær(300));
         
 

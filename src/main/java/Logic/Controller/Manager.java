@@ -5,6 +5,7 @@
  */
 package Logic.Controller;
 
+import Data.Entity.Material;
 import Logic.Exceptions.UserNotFoundException;
 import Logic.Exceptions.DuplicateException;
 import Logic.Exceptions.NoSuchRoofException;
@@ -14,6 +15,9 @@ import Data.Mappers.IUserMapper;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.User;
+import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.NoSuchRequestException;
+import Logic.Exceptions.NoSuchShedException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,7 +27,7 @@ import java.util.List;
  */
 public class Manager {
 
-    public static List<Roof> getRoofs(int rooftype) throws NoSuchRoofException {
+    public static List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException {
         return IRequestMapper.instance().getRoofs(rooftype);
     }
 
@@ -31,18 +35,38 @@ public class Manager {
         IUserMapper.instance().insertUser(user);
     }
 
-    public static User getUser(String email) throws SQLException, UserNotFoundException {
+    public static User getUser(String email) throws UserNotFoundException, SQLException, SQLException {
         return IUserMapper.instance().getUser(email);
     }
 
-    public static void insertRequest(Request req) throws NoSuchRoofException {
+    public static void insertRequest(Request req) {
         IRequestMapper.instance().insertRequest(req);
     }
-    public static Roof getRoof(String name) throws NoSuchRoofException {
-        return IRequestMapper.instance().getRoof(name);
+    public static Roof getRoof(int id) throws NoSuchRoofException {
+        return IRequestMapper.instance().getRoof(id);
     }
     
     public static int getDimensionPrice(int roof_id, int length) {
         return IRequestMapper.instance().getDimensionPrice(roof_id, length);
     }
+
+    public static Material getMaterial(String name) throws NoSuchMaterialException {
+        return IMaterialMapper.instance().getMaterial_(name);
+    }
+    public static Material getMaterialWithLength(int id, int length) {
+        return IMaterialMapper.instance().getMaterialWithLength(id, length);
+    }
+    public static Material getMaterialNoLength(int id) {
+        return IMaterialMapper.instance().getMaterialNoLength(id);
+    }
+    public static List<Request> getRequests() {
+        return IRequestMapper.instance().getRequests();
+    }
+    public static Roof newGetRoof(int id, int length) {
+        return IRequestMapper.instance().getRoof(id, length);
+    }
+    public static Request getRequest(int id) {
+        return IRequestMapper.instance().getRequest(id);
+    }
 }
+

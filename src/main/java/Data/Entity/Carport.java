@@ -11,35 +11,28 @@ package Data.Entity;
  */
 public class Carport {
     private Roof roof;
-    private boolean inclined;
+    private int inclination;
     private int width;
     private int length;
-    private boolean shed;
     private Shed shed_;
 
-    public Carport(Roof roof, boolean inclined, int width, int length, boolean shed, Shed shed_) {
+    public Carport(Roof roof, int inclination, int width, int length, Shed shed_) {
         this.roof = roof;
-        this.inclined = inclined;
+        this.inclination = inclination;
         this.width = width;
         this.length = length;
-        this.shed = shed;
         this.shed_ = shed_;
-    }
-
-    public boolean isInclined() {
-        return inclined;
     }
 
     public int getWidth() {
         return width;
     }
 
+    public double getInclination() {
+        return inclination;
+    }
     public int getLength() {
         return length;
-    }
-
-    public boolean isShed() {
-        return shed;
     }
 
     public Shed getShed_() {
@@ -49,12 +42,10 @@ public class Carport {
     public Roof getRoof() {
         return roof;
     }
-
+    
     @Override
     public String toString() {
-        return "Carport{" + "roof=" + roof + ", inclined=" + inclined + ", width=" + width + ", length=" + length + ", shed=" + shed + ", shed_=" + shed_ + '}';
-    }
-    
-    
+        return "Carport{" + "roof=" + roof + ", inclination=" + inclination + ", width=" + width + ", length=" + length + ", shed_=" + shed_ + '}';
+    } 
     
 }

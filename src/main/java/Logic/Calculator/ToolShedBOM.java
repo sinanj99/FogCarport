@@ -18,8 +18,15 @@ public class ToolShedBOM
 {
     public int calculateQuantityForBeklædning(int widthOfShed, int lengthOfShed)
     {
+        return calculateQuantityForBeklædning1(widthOfShed, lengthOfShed) + 
+                calculateQuantityForBeklædning2(widthOfShed, lengthOfShed);
+        
+    }
+    
+    public int calculateQuantityForBeklædning1(int widthOfShed, int lengthOfShed)
+    {
         int widthOfBrædt = 10;
-        int spaceBetweenBrædt = 5;
+        int spaceBetweenBrædt = 6;
         
         // --- calculate amount of brædt needed for beklædning of first lag --- 
         
@@ -28,6 +35,14 @@ public class ToolShedBOM
         int brædtNeededForLength = (lengthOfShed / (widthOfBrædt + spaceBetweenBrædt)) * 2;
         
         int quantityOfBrædtNeededForFirstLag = brædtNeededForWidth + brædtNeededForLength;
+        
+        return quantityOfBrædtNeededForFirstLag;
+        
+    }
+        public int calculateQuantityForBeklædning2(int widthOfShed, int lengthOfShed)
+    {
+        int widthOfBrædt = 10;
+        int spaceBetweenBrædt = 6;
         
         // --- calculate amount of brædt needed for beklædning of second lag ---
         
@@ -39,13 +54,11 @@ public class ToolShedBOM
         int brædtNeededForSecondLagLength = (lengthOfSecondLag / (widthOfBrædt + spaceBetweenBrædt)) * 2;
                 
         int quantityOfBrædtNeededForSecondLag = brædtNeededForSecondLagWidth + brædtNeededForSecondLagLength;
-        
-        // ------------
-        
-        int totalQuantity = quantityOfBrædtNeededForFirstLag + quantityOfBrædtNeededForSecondLag;
-        return totalQuantity;
+
+        return quantityOfBrædtNeededForSecondLag;
         
     }
+    
     public LineItem beklædning(int widthOfShed, int lengthOfShed) throws NoSuchMaterialException
     {
          Material m = IMaterialMapper.instance().getMaterial("19x100mm trykimp. brædt", 210);
@@ -73,7 +86,7 @@ public class ToolShedBOM
         LineItem l = null;
         Material m;
         
-        for(int i = 150; i < 540; i += 20)
+        for(int i = 150; i < 540; i += 30)
         {
             if(lengthOfToolShed == i)
             {

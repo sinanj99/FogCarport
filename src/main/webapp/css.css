@@ -4,6 +4,20 @@ body, html
     margin: 0;
     padding: 0;
 }
+a
+{
+    color: black;
+    display: block;
+}
+a:hover
+{
+    color: grey;
+    text-decoration: none;
+}
+#svgmaster
+{
+    border: 1px solid black;
+}
 .background1
 {
     background-image: url(images/foggang.jpg);
@@ -203,7 +217,7 @@ p
         display: none;
     }
 }
-.col-sm-12
+.col-sm-12, .col-12
 {
     padding: 0;
     margin: 0;

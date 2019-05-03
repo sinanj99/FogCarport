@@ -52,7 +52,7 @@ public abstract class IRequestMapper {
     public abstract void insertDimensions(int id, int length, int price);
 
     /**
-     * ??
+     * Used in flatRoof calculator to find price of rooftype with specified dimensions.
      * @param roof_id
      * @param length
      * @return 

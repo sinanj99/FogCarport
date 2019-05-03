@@ -300,7 +300,7 @@ public class FlatRoofCarportBOM {
         String desc = "Tagplader monteres på spær";
         for (int i = 260; i <= 770; i += 30) {
             if (length + 20 == i) {
-                l = new LineItem(roof, tagpladeAntal(length), desc, Manager.getDimensionPrice(roof.getRoof_id(), length)) ;
+                l = new LineItem(roof, tagpladeAntal(length), desc, Manager.getDimensionPrice(roof.getRoof_id(), length));
             }
         }
         return l;

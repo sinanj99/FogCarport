@@ -49,8 +49,11 @@ public class CreateOfferCommand implements Command {
         List<LineItem> materialsNoLength = new ArrayList();
 
         int fullPrice = 0;
-
+int i = 0;
         for (LineItem l : bom.getLineitems()) {
+            System.out.println(i);
+            i++;
+            System.out.println(l.getPrice());
             fullPrice += l.getPrice();
             if (l.getType() == Type.LENGTH) {
                 materialsLength.add(l);

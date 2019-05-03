@@ -11,6 +11,7 @@ import Data.Entity.Material;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
+import Data.Entity.Type;
 import Data.Mappers.IRequestMapper;
 import Logic.Controller.Manager;
 import Logic.Exceptions.NoSuchMaterialException;
@@ -253,29 +254,29 @@ public class FlatRoofCarportBOM {
 
     public LineItem beslagskruer(int length) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("4.0x50mm beslagskruer 250 stk");
-        return new LineItem(m, calculateQuantityOfBeslagskruer(length), "Til montering af universalbeslag + hulbånd", m.getPrice() * calculateQuantityOfBeslagskruer(length));
+        return new LineItem(m, calculateQuantityOfBeslagskruer(length), "Til montering af universalbeslag + hulbånd", m.getPrice() * calculateQuantityOfBeslagskruer(length), Type.NOLENGTH);
     }
 
     public LineItem brædderbolt(int length, Shed shed, int shedLength) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("10x120mm brædderbolt");
-        return new LineItem(m, calculateQuantityOfBrædderbolt(length, shed, shedLength), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length, shed, shedLength));
+        return new LineItem(m, calculateQuantityOfBrædderbolt(length, shed, shedLength), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length, shed, shedLength), Type.NOLENGTH);
     }
 
     public LineItem højrebeslag(int length) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("universal 190mm højre");
-        return new LineItem(m, calculateQuantityOfHøjreBeslag(length), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfHøjreBeslag(length));
+        return new LineItem(m, calculateQuantityOfHøjreBeslag(length), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfHøjreBeslag(length), Type.NOLENGTH);
     }
 //    
 
     public LineItem venstrebeslag(int length) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("universal 190mm venstre");
-        return new LineItem(m, calculateQuantityOfVenstrebeslag(length), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfVenstrebeslag(length));
+        return new LineItem(m, calculateQuantityOfVenstrebeslag(length), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfVenstrebeslag(length), Type.NOLENGTH);
     }
 //    
 
     public LineItem stolpe(int length, Shed shed, int shedLength) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("97x97mm trykimp. Stolpe");
-        return new LineItem(m, calculateQuantityOfStolper(length, shed, shedLength), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length, shed, shedLength));
+        return new LineItem(m, calculateQuantityOfStolper(length, shed, shedLength), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length, shed, shedLength), Type.LENGTH);
 
     }
 
@@ -288,7 +289,7 @@ public class FlatRoofCarportBOM {
         for (int i = 240; i <= 750; i += 30) {
             if (length == i) {
                 m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", i);
-                l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen());
+                l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen(), Type.LENGTH);
             }
         }
         return l;
@@ -299,7 +300,7 @@ public class FlatRoofCarportBOM {
         String desc = "Tagplader monteres på spær";
         for (int i = 260; i <= 770; i += 30) {
             if (length + 20 == i) {
-                l = new LineItem(roof, tagpladeAntal(length), desc, Manager.getDimensionPrice(roof.getRoof_id(), length));
+                l = new LineItem(roof, tagpladeAntal(length), desc, Manager.getDimensionPrice(roof.getRoof_id(), length)) ;
             }
         }
         return l;
@@ -314,7 +315,7 @@ public class FlatRoofCarportBOM {
         for (int i = 240; i <= 750; i += 30) {
             if (length == i) {
                 m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", i);
-                l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen());
+                l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen(), Type.LENGTH);
             }
         }
         return l;
@@ -322,36 +323,36 @@ public class FlatRoofCarportBOM {
 
     public LineItem understernbrædderForFrontAndBack(int width) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("25x200mm trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfUndersternbrædderForFrontAndBack(width), "understernbrædder til forende og bagende", m.getPrice() * calculateQuantityOfUndersternbrædderForFrontAndBack(width));
+        return new LineItem(m, calculateQuantityOfUndersternbrædderForFrontAndBack(width), "understernbrædder til forende og bagende", m.getPrice() * calculateQuantityOfUndersternbrædderForFrontAndBack(width), Type.LENGTH);
     }
 
     public LineItem understernBrædderForSides(int length) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("25x200mm trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfUndersternbrædderForSides(length), "understernbrædder til siderne", m.getPrice() * calculateQuantityOfUndersternbrædderForSides(length));
+        return new LineItem(m, calculateQuantityOfUndersternbrædderForSides(length), "understernbrædder til siderne", m.getPrice() * calculateQuantityOfUndersternbrædderForSides(length), Type.LENGTH);
     }
 
     public LineItem oversternbrædderForFront(int width) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("25x125m trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfOversternbrædderForFront(width), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOversternbrædderForFront(width));
+        return new LineItem(m, calculateQuantityOfOversternbrædderForFront(width), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOversternbrædderForFront(width), Type.LENGTH);
     }
 
     public LineItem oversternbrædderForSides(int length) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("25x125m trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfOversternbrædderForSides(length), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOversternbrædderForSides(length));
+        return new LineItem(m, calculateQuantityOfOversternbrædderForSides(length), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOversternbrædderForSides(length), Type.LENGTH);
     }
 
     public LineItem vandbrætForFront(int width) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("19x100mm trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfVandbrætForFront(width), "vandbrædt på stern i forenden", m.getPrice() * calculateQuantityOfVandbrætForFront(width));
+        return new LineItem(m, calculateQuantityOfVandbrætForFront(width), "vandbrædt på stern i forenden", m.getPrice() * calculateQuantityOfVandbrætForFront(width), Type.LENGTH);
     }
 
     public LineItem vandbrætForSides(int length) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("19x100mm trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfVandbrædtForSides(length), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfVandbrædtForSides(length));
+        return new LineItem(m, calculateQuantityOfVandbrædtForSides(length), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfVandbrædtForSides(length), Type.LENGTH);
     }
 
     public LineItem hulbånd(Request req) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("hulbånd 1x20 mm. 10 mtr.");
-        return new LineItem(m, (int) hulbåndAntal(req), "Til vindkryds på spær", m.getPrice() * (int) hulbåndAntal(req));
+        return new LineItem(m, (int) hulbåndAntal(req), "Til vindkryds på spær", m.getPrice() * (int) hulbåndAntal(req), Type.LENGTH);
     }
 }

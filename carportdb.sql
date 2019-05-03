@@ -74,7 +74,6 @@ CREATE TABLE `materials_nolength` (
     );
     
 INSERT INTO `materials_nolength` (`name`, `unit`, `price`, `stock`) VALUES 
-("fædigskåret (byg-selv spær)", "Sæt", 10,1000),
 ("universal 190 mm højre", "Stk.", 10,1000),
 ("universal 190 mm venstre", "Stk.", 10,1000),
 ("Stalddørsgreb 50x75", "Sæt.", 20,1000),
@@ -88,7 +87,7 @@ INSERT INTO `materials_nolength` (`name`, `unit`, `price`, `stock`) VALUES
 ("4,5 x 70 mm. Skruer 200 stk.", "Pakke", 20,1000),
 ("4,5 x 50 mm. Skruer 350 stk.", "Pakke", 20,1000),
 ("Toplægteholder", "Stk.", 50, 1000),
-("Rygstensbeslag", "Styk", 50, 1000),
+("Rygstensbeslag", "Stk.", 50, 1000),
 ("Tagstensbindere & nakkekroge", "Pakke", 50, 1000);
 
 INSERT INTO `materials_withlength` (`name`, `unit`) VALUES 
@@ -102,7 +101,9 @@ INSERT INTO `materials_withlength` (`name`, `unit`) VALUES
 ("B & C Dobbelt -s sort", "Stk."),
 ("25x150 mm. trykimp. Bræt", "Stk"),
 ("25x150 mm. trykimp. Bræt", "Stk"),
-("25x150 mm. trykimp. Bræt", "Stk");
+("25x150 mm. trykimp. Bræt", "Stk")
+;
+select * from materials_nolength;
 
 CREATE TABLE `material_lengths` (
 	`material_id` INT NOT NULL,

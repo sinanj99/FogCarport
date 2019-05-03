@@ -10,21 +10,19 @@ package Data.Entity;
  * @author sinanjasar
  */
 public class LineItem {
-    
+    private Type type;
     private Material material;
     private Roof roof;
     private final int qty;
     private final int price;
     private final String description;
-    private boolean hasLength;
-    private boolean isRoof;
 
-    public LineItem(Material material, int qty, String description, int price)
-    {
+    public LineItem(Material material, int qty, String description, int price, Type type) {
         this.material = material;
         this.qty = qty;
         this.description = description;
         this.price = material.getPrice() * qty;
+        this.type = type;
     }
 
     public LineItem(Roof roof, int qty, String description, int price) {
@@ -32,27 +30,8 @@ public class LineItem {
         this.qty = qty;
         this.price = price;
         this.description = description;
+        this.type = Type.ROOF;
     }
-
-    public LineItem(Material material, int qty, int price, String description, boolean hasLength, boolean isRoof) {
-        this.material = material;
-        this.qty = qty;
-        this.price = price;
-        this.description = description;
-        this.hasLength = hasLength;
-        this.isRoof = isRoof;
-    }
-
-    public LineItem(Roof roof, int qty, int price, String description, boolean hasLength, boolean isRoof) {
-        this.roof = roof;
-        this.qty = qty;
-        this.price = price;
-        this.description = description;
-        this.hasLength = hasLength;
-        this.isRoof = isRoof;
-    }
-
-      
 
     public Material getMaterial() {
         return material;
@@ -61,23 +40,26 @@ public class LineItem {
     public int getQty() {
         return qty;
     }
-    
+
     public int getPrice() {
         return price;
     }
-    
-    public String getDescription()
-    {
+
+    public String getDescription() {
         return description;
     }
 
     public Roof getRoof() {
         return roof;
     }
-    
+
+    public Type getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return "LineItem{" + "material=" + material + "qty=" + qty + "description=" + description + "price=" + price + '}';
     }
-    
+
 }

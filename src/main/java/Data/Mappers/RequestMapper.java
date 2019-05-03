@@ -221,7 +221,6 @@ class RequestMapper extends IRequestMapper {
      */
     private int insertRequestCarport(PreparedStatement pstmt, String query, ResultSet rs,
             int request_id, Carport cp) {
-        int inclination = 0;
         int id = 0;
         
         try {
@@ -229,7 +228,7 @@ class RequestMapper extends IRequestMapper {
             pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, request_id);
             pstmt.setInt(2, cp.getRoof().getRoof_id());
-            pstmt.setInt(3, inclination);
+            pstmt.setInt(3, cp.getInclination());
             pstmt.setInt(4, cp.getWidth());
             pstmt.setInt(5, cp.getLength());
             pstmt.executeUpdate();
@@ -268,7 +267,6 @@ class RequestMapper extends IRequestMapper {
     public Roof getRoof(int id) {
         int roof_id = 0;
         String name_ = "";
-        int price = 0;
         boolean inclined = false;
 
         try {

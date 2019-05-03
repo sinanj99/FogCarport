@@ -35,9 +35,9 @@ public class GenerateReqCommand implements Command {
         if (request.getSession().getAttribute("user") == null) {
             return "login.jsp";
         }
-        boolean inclined = Boolean.valueOf((String) request.getAttribute("inclined"));
+        String inclined = (String) request.getSession().getAttribute("inclined");
         int inclination = 0;
-        if (inclined == true) {
+        if (inclined.equals("true")) {
             inclination = Integer.parseInt(request.getParameter("inclination"));
         }
         int cwidth = Integer.parseInt(request.getParameter("cwidth"));
@@ -73,9 +73,10 @@ public class GenerateReqCommand implements Command {
         String datePlaced = String.valueOf(date.format(dateFormat));
 
         Request req = new Request(sAddress, user_id, datePlaced, cp);
+        System.out.println(req.getCarport().getInclination());
 
         Manager.insertRequest(req);
-
+        request.getSession().removeAttribute("inclined");
         return "reqsent.jsp";
     }
 }

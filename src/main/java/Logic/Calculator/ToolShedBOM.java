@@ -8,6 +8,7 @@ package Logic.Calculator;
 import Data.Mappers.IMaterialMapper;
 import Data.Entity.LineItem;
 import Data.Entity.Material;
+import Data.Entity.Type;
 import Logic.Exceptions.NoSuchMaterialException;
 
 /**
@@ -62,7 +63,7 @@ public class ToolShedBOM
     public LineItem beklædning(int widthOfShed, int lengthOfShed) throws NoSuchMaterialException
     {
          Material m = IMaterialMapper.instance().getMaterial("19x100mm trykimp. brædt", 210);
-         return new LineItem(m, calculateQuantityForBeklædning(widthOfShed, lengthOfShed), "Til beklædning af skur 1 på 2", m.getPrice()*calculateQuantityForBeklædning(widthOfShed, lengthOfShed));
+         return new LineItem(m, calculateQuantityForBeklædning(widthOfShed, lengthOfShed), "Til beklædning af skur 1 på 2", m.getPrice()*calculateQuantityForBeklædning(widthOfShed, lengthOfShed), Type.LENGTH);
     }
     
     public LineItem løsholterGalve(int widthOfToolShed) throws NoSuchMaterialException
@@ -75,7 +76,7 @@ public class ToolShedBOM
             if(widthOfToolShed == i)
             {
                 m = IMaterialMapper.instance().getMaterial("45x95mm reglar. ub.", i);
-                l = new LineItem(m, 12, "Løsholter til skur gavle", m.getPrice()*12);
+                l = new LineItem(m, 12, "Løsholter til skur gavle", m.getPrice()*12, Type.LENGTH);
             }
         }
         return l;
@@ -91,7 +92,7 @@ public class ToolShedBOM
             if(lengthOfToolShed == i)
             {
                 m = IMaterialMapper.instance().getMaterial("45x95mm reglar. ub.", i);
-                l = new LineItem(m, 4, "løsholter til skur siderne", m.getPrice()*4);
+                l = new LineItem(m, 4, "løsholter til skur siderne", m.getPrice()*4, Type.LENGTH);
             }
         }
         return l;
@@ -100,21 +101,21 @@ public class ToolShedBOM
     public LineItem lægteForDoor() throws NoSuchMaterialException
     {
          Material m = IMaterialMapper.instance().getMaterial_("38x73mm lægte. ubh.");
-         return new LineItem(m, 1, "Til z på bagside af dør", m.getPrice());
+         return new LineItem(m, 1, "Til z på bagside af dør", m.getPrice(), Type.LENGTH);
     }
     public LineItem stalddørsgreb() throws NoSuchMaterialException
     {
          Material m = IMaterialMapper.instance().getMaterial_("50x75mm stalddørsgreb");
-         return new LineItem(m, 1, "Til løs på dør i skur", m.getPrice());
+         return new LineItem(m, 1, "Til løs på dør i skur", m.getPrice(), Type.NOLENGTH);
     }
     public LineItem tHængsel() throws NoSuchMaterialException
     {
          Material m = IMaterialMapper.instance().getMaterial_("390mm t-hængsel");
-         return new LineItem(m, 2, "Til dør i skur", m.getPrice()*2);
+         return new LineItem(m, 2, "Til dør i skur", m.getPrice()*2, Type.NOLENGTH);
     }
     public LineItem vinkelbeslag() throws NoSuchMaterialException
     {
         Material m = IMaterialMapper.instance().getMaterial_("vinkelbeslag 35");
-        return new LineItem(m, 32, "Til montering af løsholter til skur", m.getPrice()*32);
+        return new LineItem(m, 32, "Til montering af løsholter til skur", m.getPrice()*32, Type.NOLENGTH);
     }
   }

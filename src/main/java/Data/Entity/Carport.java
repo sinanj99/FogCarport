@@ -28,7 +28,7 @@ public class Carport {
         return width;
     }
 
-    public double getInclination() {
+    public int getInclination() {
         return inclination;
     }
     public int getLength() {

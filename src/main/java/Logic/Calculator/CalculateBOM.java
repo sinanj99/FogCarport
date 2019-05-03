@@ -31,8 +31,8 @@ public class CalculateBOM {
         ArrayList listOfLineItems = new ArrayList();
         ToolShedBOM b = new ToolShedBOM();
         BOM bom;
-
-        if (r.getCarport().getShed_() == null) {
+        
+        if (r.getCarport().getShed_() == null || r.getCarport().getShed_().getLength() == 0) {
             listOfLineItems.add(f.beslagskruer(r.getCarport().getLength()));
             listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
             listOfLineItems.add(f.højrebeslag(r.getCarport().getLength()));
@@ -47,7 +47,7 @@ public class CalculateBOM {
             listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
             listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
             listOfLineItems.add(f.hulbånd(r));
-            //listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));        
+            listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));        
 
             //mangler lægter, galjer
 
@@ -68,7 +68,7 @@ public class CalculateBOM {
             listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
             listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
             listOfLineItems.add(f.hulbånd(r));
-            //listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));
+            listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));
             //mangler lægter, gajler, tagpplader
 
             //Adds materials related to tool shed

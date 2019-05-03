@@ -104,7 +104,7 @@ class RequestMapper extends IRequestMapper {
                 length = rs.getInt("length");
                 inclination = rs.getInt("inclination");
             }
-            roof = getRoof(roof_id);
+            roof = getRoof(roof_id, width);
             shed_ = getRequestShed(request_id);
         } catch (SQLException e) {
             System.out.println("There was an error fetching data from carport table: \n" + e.getMessage());
@@ -432,7 +432,7 @@ class RequestMapper extends IRequestMapper {
             pstmt.setInt(2, length);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                price = rs.getInt("rooflength_id");
+                price = rs.getInt("price");
             }
         } catch (SQLException ex) {
             System.out.println("Dimension price exception: " + ex.getMessage());

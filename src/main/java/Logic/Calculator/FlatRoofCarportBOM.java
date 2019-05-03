@@ -300,7 +300,7 @@ public class FlatRoofCarportBOM {
         String desc = "Tagplader monteres på spær";
         for (int i = 260; i <= 770; i += 30) {
             if (length + 20 == i) {
-                l = new LineItem(roof, tagpladeAntal(length), desc, Manager.getDimensionPrice(roof.getRoof_id(), length));
+                l = new LineItem(roof, tagpladeAntal(length), desc, roof.getPrice()*tagpladeAntal(length));
             }
         }
         return l;
@@ -353,6 +353,6 @@ public class FlatRoofCarportBOM {
 
     public LineItem hulbånd(Request req) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("hulbånd 1x20 mm. 10 mtr.");
-        return new LineItem(m, (int) hulbåndAntal(req), "Til vindkryds på spær", m.getPrice() * (int) hulbåndAntal(req), Type.LENGTH);
+        return new LineItem(m, (int) hulbåndAntal(req), "Til vindkryds på spær", m.getPrice() * (int) hulbåndAntal(req), Type.NOLENGTH);
     }
 }

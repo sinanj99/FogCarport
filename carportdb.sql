@@ -103,8 +103,8 @@ INSERT INTO `materials_withlength` (`name`, `unit`) VALUES
 ("25x150 mm. trykimp. Bræt", "Stk"),
 ("25x150 mm. trykimp. Bræt", "Stk")
 ;
-select * from materials_nolength;
 
+select * from rooflength;
 CREATE TABLE `material_lengths` (
 	`material_id` INT NOT NULL,
     `length` INT NOT NULL, 
@@ -112,7 +112,6 @@ CREATE TABLE `material_lengths` (
     `stock` INT NOT NULL,
     CONSTRAINT `material_lengths_ibfk_1` FOREIGN KEY (`material_id`) REFERENCES materials_withlength(`material_id`)
     );
-    
 
 insert into CarportDB.material (name, length, unit,  price)
 values ("45x195mm spærtræ. ubh. ",240,"stk", 20),

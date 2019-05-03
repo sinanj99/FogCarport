@@ -34,12 +34,9 @@ public class CreateOfferCommand implements Command {
         Request r = Manager.getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
         CalculateBOM b = new CalculateBOM();
-
         if (r.getCarport().getInclination() != 0) {
-            System.out.println("test1");
             bom = b.inclineRoofBOM(r);
         } else {
-            System.out.println("test2");
             bom = b.generateFlatRoofCarportBOM(r);
         }
 
@@ -49,11 +46,7 @@ public class CreateOfferCommand implements Command {
         List<LineItem> materialsNoLength = new ArrayList();
 
         int fullPrice = 0;
-int i = 0;
         for (LineItem l : bom.getLineitems()) {
-            System.out.println(i);
-            i++;
-            System.out.println(l.getPrice());
             fullPrice += l.getPrice();
             if (l.getType() == Type.LENGTH) {
                 materialsLength.add(l);
@@ -66,7 +59,7 @@ int i = 0;
             }
         }
         double sellPrice = fullPrice * 12;
-        
+        request.setAttribute("request", r);
         request.setAttribute("buyPrice", fullPrice);
         request.setAttribute("sellPrice", (int) sellPrice);
         request.setAttribute("materialLength", materialsLength);

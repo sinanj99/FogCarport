@@ -38,6 +38,7 @@ public class DataInsertion {
                 IRequestMapper.instance().insertDimensions(r.getRoof_id(), 6, price);
             }
         }
+        
         /* insertion of materials */
         int price = 40;
         for (int i = 270; i <= 780; i += 30) {

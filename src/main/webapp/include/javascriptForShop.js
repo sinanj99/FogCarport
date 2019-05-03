@@ -5,7 +5,6 @@
  */
 
 var removeCartItemButton = document.getElementsByClassName("btn-danger");
-console.log(removeCartItemButton);
 
 for(var i = 0; i < removeCartItemButton.length; i++)
 {
@@ -26,7 +25,6 @@ function removeCartItem(event)
         var buttonClicked = event.target;
         buttonClicked.parentElement.parentElement.remove();
         updateCartTotal();
-        console.log("clicked");
 }
 
 function quantityChanged(event)
@@ -50,14 +48,9 @@ function updateCartTotal()
         var cartRow = cartRows[i];
         var priceElement = cartRow.getElementsByClassName("cart-price")[0];
         var quantityElement = cartRow.getElementsByClassName("cart-quantity-input")[0];
-        console.log(priceElement, quantityElement);
         
         var price = parseFloat(priceElement.innerText);
         var quantity = quantityElement.value;
-        
-        console.log(price);
-        console.log(quantity);
-        console.log(price * quantity);
         
         total = total + (price * quantity);
     }

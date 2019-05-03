@@ -9,10 +9,12 @@
             <div class="row">
                 <div class="col-12 d-flex flex-column justify-content-center align-items-center">
                     <div class="list-group">
+                        <hr>
                         <%for (Request r : requests) {%>
-                        <a href="FrontController?command=createOffer&requestID=<%=r.getReq_id()%>" class="list-group-item">
+                        <a href="FrontController?command=createOffer&requestID=<%=r.getReq_id()%>">
                             <%="Lavet af: " + r.getAddress().getFirstname() + " " + r.getAddress().getLastname() + " - Tidspunkt for oprettelse: " + r.getDatePlaced()%>
                         </a>
+                        <hr style="width: 100%;">
                         <% }%>
                     </div>
                 </div>

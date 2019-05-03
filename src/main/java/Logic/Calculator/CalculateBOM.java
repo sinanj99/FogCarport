@@ -103,7 +103,7 @@ public class CalculateBOM {
         InclineRoofCarportBOM calc = new InclineRoofCarportBOM();
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         ToolShedBOM b = new ToolShedBOM();
-        List list = new ArrayList();
+        List<LineItem> list = new ArrayList();
 
         int clength = r.getCarport().getLength();
         int cwidth = r.getCarport().getWidth();
@@ -113,12 +113,12 @@ public class CalculateBOM {
         int roofid = r.getCarport().getRoof().getRoof_id();
         int inclination = (int) r.getCarport().getInclination();
 
-        if (shed == null) {
+        if (shed != null) {
             //with length index 0-12
             list.add(calc.soffits(cwidth, inclination));
             list.add(calc.fasciaCarport(clength, shed, slength));
             list.add(calc.fasciaShed(slength));//shed
-            list.add(f.calculateQuantityOfStolper(clength, shed, slength));
+            list.add(f.stolpe(clength, shed, slength));
             list.add(calc.beamsCarport(clength, shed, slength));
             list.add(calc.beamsShed(slength));//shed
             list.add(calc.intertiesSides(slength));//shed
@@ -151,10 +151,9 @@ public class CalculateBOM {
             list.add(calc.screwsOuterTimbering(swidth, slength));//shed
             list.add(calc.screwsInnerTimbering(swidth, slength));//shed
         } else {
-            
             list.add(calc.soffits(cwidth, inclination));
             list.add(calc.fasciaCarport(clength, shed, slength));
-            list.add(f.calculateQuantityOfStolper(clength, shed, slength));
+            list.add(f.stolpe(clength, shed, slength));
             list.add(calc.beamsCarport(clength, shed, slength));
             list.add(calc.rainboards(cwidth, inclination));
             list.add(calc.laths(cwidth, inclination, clength, slength));

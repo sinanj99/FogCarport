@@ -210,6 +210,15 @@ class RequestMapper extends IRequestMapper {
         }
     }
 
+    /**
+     * Called in insert request method. 
+     * @param pstmt
+     * @param query
+     * @param rs
+     * @param request_id
+     * @param cp
+     * @return 
+     */
     private int insertRequestCarport(PreparedStatement pstmt, String query, ResultSet rs,
             int request_id, Carport cp) {
         int inclination = 0;
@@ -233,7 +242,14 @@ class RequestMapper extends IRequestMapper {
         }
         return id;
     }
-
+    /**
+     * Called in insert request method.
+     * @param pstmt
+     * @param query
+     * @param rs
+     * @param cp_id
+     * @param shed 
+     */
     private void insertRequestShed(PreparedStatement pstmt, String query, ResultSet rs,
             int cp_id, Shed shed) {
         try {
@@ -382,6 +398,14 @@ class RequestMapper extends IRequestMapper {
         }
     }
 
+    /**
+     * Called in insert request method.
+     * @param pstmt
+     * @param query
+     * @param rs
+     * @param req
+     * @param req_id 
+     */
     private void insertRequestShippingAddress(PreparedStatement pstmt, String query, ResultSet rs, Request req, int req_id) {
 
         try {
@@ -413,7 +437,7 @@ class RequestMapper extends IRequestMapper {
                 price = rs.getInt("rooflength_id");
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Dimension price exception: " + ex.getMessage());
         }
         return price;
     }
@@ -470,7 +494,7 @@ class RequestMapper extends IRequestMapper {
                 }
             }
 
-            query = "SELECT * FROM rooflength WHERE roof_id = ? AND length = ?;";
+            query = "SELECT * FROM rooflength WHERE roof_id = ? AND roof_length = ?;";
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);
@@ -479,7 +503,7 @@ class RequestMapper extends IRequestMapper {
                 price = rs.getInt("price");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Roof exception: " + e.getMessage());
         }
 
         return new Roof(roof_id, name_, price, inclined);

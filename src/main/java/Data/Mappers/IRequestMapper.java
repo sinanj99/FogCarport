@@ -68,7 +68,6 @@ public abstract class IRequestMapper {
      * @return
      * @throws NoSuchRoofException 
      */
-    
     public abstract Roof getRoof(int id) throws NoSuchRoofException;
     
     /**

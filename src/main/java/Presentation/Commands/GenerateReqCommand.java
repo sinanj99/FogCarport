@@ -31,48 +31,51 @@ public class GenerateReqCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
-        if(request.getSession().getAttribute("user") == null) return "login.jsp";
-        boolean inclined = Boolean.valueOf(request.getParameter("inclined"));
+
+        if (request.getSession().getAttribute("user") == null) {
+            return "login.jsp";
+        }
+        boolean inclined = Boolean.valueOf((String) request.getAttribute("inclined"));
         int inclination = 0;
-        if(inclined) inclination = Integer.parseInt(request.getParameter("inclination"));
-        
+        if (inclined == true) {
+            inclination = Integer.parseInt(request.getParameter("inclination"));
+        }
         int cwidth = Integer.parseInt(request.getParameter("cwidth"));
         int clength = Integer.parseInt(request.getParameter("clength"));
         int rchoice = Integer.parseInt(request.getParameter("rchoice"));
-        System.out.println(cwidth);
         Roof roof = Manager.getRoof(rchoice);
         String schoice = request.getParameter("schoice");
         boolean bshed = false;
-        if (schoice.equals("1")) bshed = true;
+        if (schoice.equals("1")) {
+            bshed = true;
+        }
         Shed shed = null;
-        
-        if(bshed==true) {
-        int slength = Integer.parseInt(request.getParameter("slength"));
-        int swidth = Integer.parseInt(request.getParameter("swidth"));
-        shed = new Shed(swidth, slength);
+
+        if (bshed == true) {
+            int slength = Integer.parseInt(request.getParameter("slength"));
+            int swidth = Integer.parseInt(request.getParameter("swidth"));
+            shed = new Shed(swidth, slength);
         }
 
-        Carport cp = new Carport(roof, inclination, cwidth, clength, shed); 
-        System.out.println(cp);
+        Carport cp = new Carport(roof, inclination, cwidth, clength, shed);
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         String address = request.getParameter("address");
         int zip = Integer.parseInt(request.getParameter("zip"));
         String city = request.getParameter("city");
-        
-        
+
         User user = (User) request.getSession().getAttribute("user");
         int user_id = user.getId();
         ShippingAddress sAddress = new ShippingAddress(fname, lname, address, zip, city);
-        
+
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String datePlaced = String.valueOf(date.format(dateFormat));
-        
+
         Request req = new Request(sAddress, user_id, datePlaced, cp);
-        
-        Manager.insertRequest(req);  
-        
+
+        Manager.insertRequest(req);
+
         return "reqsent.jsp";
     }
 }

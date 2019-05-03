@@ -288,7 +288,7 @@ public class FlatRoofCarportBOM {
         for (int i = 240; i <= 750; i += 30) {
             if (length == i) {
                 m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", i);
-                l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen());
+                l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length));
             }
         }
         return l;

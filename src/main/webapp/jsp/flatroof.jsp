@@ -42,12 +42,18 @@
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 65%;">Tagtype</p>
-                    <select required name="rchoice" class="inputbig">
+                    <select required name="rchoice" id="rchoice" class="inputbig" onchange="visualizeRoof();">
                         <option value="n/a">Vælg</option>
                         <% for (Roof r : roofs) {%>
-                        <option value="<%=r.getRoof_id()%>"><%= r.getName()%></option>
+                        <option value="<%=r.getRoof_id()%>"><%=r.getName()%></option>
+
                         <% } %>
                     </select>
+
+                    <% for (Roof r : roofs) {%>
+                    <p name="pics" id="<%=r.getName() + "text"%>" class="p-0 d-none" style="width: 65%;">Udseende: </p>
+                    <img name="pics" id="<%=r.getName()%>" class="pics d-none col-xs-12" style="margin-bottom: 10px; margin-top: 10px; border: 1px solid black; height:auto; width: 65%; max-width: 500px;" src="/project/images/<%=r.getName()%>.jpg" alt="<%=r.getName()%>" > 
+                    <% } %>
                 </div>
             </div>
             <div class="row">
@@ -87,7 +93,7 @@
                 </div>
             </div>
             <h3>Kontaktinformationer</h3>
-           
+
             <div id="adress">
                 <div class="row">
                     <div class="col-sm-6 p-0 col-sm-6-l">
@@ -97,19 +103,19 @@
                         <div class="textsmallr">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input name="fname" onfocus="this.value=''" id="fname" class="inputsmalll" type="text" value="<%=firstname%>" placeholder="Fornavn..." required>
+                        <input name="fname" onfocus="this.value = ''" id="fname" class="inputsmalll" type="text" value="<%=firstname%>" placeholder="Fornavn..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input id="lname" name="lname" onfocus="this.value=''" class="inputsmallr" type="text" value="<%=user.getInfo().getLastname()%>" placeholder="Efternavn..." required>
+                        <input id="lname" name="lname" onfocus="this.value = ''" class="inputsmallr" type="text" value="<%=user.getInfo().getLastname()%>" placeholder="Efternavn..." required>
                     </div>
                 </div>  
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Adresse</p>
-                        <input class="inputbig" name="address" onfocus="this.value=''" id="adresss" type="text" value="<%=user.getInfo().getAddress()%>" placeholder="Adresse..." required>
+                        <input class="inputbig" name="address" onfocus="this.value = ''" id="adresss" type="text" value="<%=user.getInfo().getAddress()%>" placeholder="Adresse..." required>
                     </div>
                 </div>
                 <div class="row">
@@ -120,19 +126,19 @@
                         <div class="textsmallr">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" id="zip" name="zip" onfocus="this.value=''" type="text" value="<%=user.getInfo().getZipcode()%>" placeholder="Postnummer..." required>
+                        <input class="inputsmalll" id="zip" name="zip" onfocus="this.value = ''" type="text" value="<%=user.getInfo().getZipcode()%>" placeholder="Postnummer..." required>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input class="inputsmallr" id="city" name="city" onfocus="this.value=''" type="text" value="<%=user.getInfo().getCity()%>" placeholder="By..." required>
+                        <input class="inputsmallr" id="city" name="city" onfocus="this.value = ''" type="text" value="<%=user.getInfo().getCity()%>" placeholder="By..." required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Email</p>
-                        <input class="inputbig" id="email" name="email" onfocus="this.value=''" type="text" value="<%=user.getEmail()%>" placeholder="Email..." required>
+                        <input class="inputbig" id="email" name="email" onfocus="this.value = ''" type="text" value="<%=user.getEmail()%>" placeholder="Email..." required>
                     </div>
                 </div>
             </div>
@@ -145,7 +151,19 @@
         </form>
     </div>
     <script type="text/javascript">
-        
+
+        function visualizeRoof() {
+
+            var elements = document.getElementsByName("pics");
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].classList.add("d-none");
+            }
+            var element = document.getElementById("rchoice");
+            var text = element.options[element.selectedIndex].text;
+            document.getElementById(text).classList.remove("d-none");
+            document.getElementById(text + "text").classList.remove("d-none");
+        }
+
         function spaceForShed() {
 
             if (document.getElementById("carportLength").value == "n/a"

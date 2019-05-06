@@ -498,11 +498,11 @@ public class InclineRoofCarportBOM {
     }
     public LineItem laths(int cWidth, int inclination, int cLength, int sLength) {
         Material m = Manager.getMaterialWithLength(7, cLength-sLength+30);
-        return new LineItem(m, amountOfLaths(cWidth, inclination), "til montering på spær, 7 rækker lægter på hver skiftevis 1 hel & 1 halv lægte", m.getPrice() * amountOfLaths(cWidth, inclination), Type.ROOF);
+        return new LineItem(m, amountOfLaths(cWidth, inclination), "til montering på spær, 7 rækker lægter på hver skiftevis 1 hel & 1 halv lægte", m.getPrice() * amountOfLaths(cWidth, inclination), Type.LENGTH);
     }
     public LineItem toplaths(int cLength, int sLength, int cWidth) {
         Material m = Manager.getMaterialWithLength(7, cLength-sLength-90);
-        return new LineItem(m, amountOfTopLaths(), "toplægte til montering af rygsten lægges i toplægte holder", m.getPrice() * amountOfTopLaths(), Type.ROOF);
+        return new LineItem(m, amountOfTopLaths(), "toplægte til montering af rygsten lægges i toplægte holder", m.getPrice() * amountOfTopLaths(), Type.LENGTH);
  
     }
     public LineItem ridgeTiles(int id, int cLength) {

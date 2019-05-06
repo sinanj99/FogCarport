@@ -34,7 +34,7 @@ public class InclineRoofCarportBOM {
      * @param inclination
      * @return (vindskeder)
      */
-    public static int amountOfSoffits(int carportWidth, double inclination) {
+    private static int amountOfSoffits(int carportWidth, double inclination) {
         int triangleWidth = carportWidth / 2; // width of each triangle.
         inclination = Math.toRadians(inclination); //Math.cos expects radians
         double hypotenuse = triangleWidth / Math.cos(inclination);
@@ -58,7 +58,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (spær)
      */
-    public static int amountOfRafters(int carportLength, Shed shed, int shedLength) {
+    private static int amountOfRafters(int carportLength, Shed shed, int shedLength) {
         //the laths extend beyond the first/last rafter by 30 cm.
         carportLength -= 30;
         int shedRafters = 0;
@@ -94,7 +94,7 @@ public class InclineRoofCarportBOM {
         return (int) Math.ceil((rafterQty + shedRafters));
     }
     
-    public static int amountOfRaftersShed(int shedLength) {
+    private static int amountOfRaftersShed(int shedLength) {
 
         int quantity = 3;
         float widthOfSpær = 4.5f;
@@ -125,7 +125,7 @@ public class InclineRoofCarportBOM {
      * @param inclination
      * @return (taglægter)
      */
-    public static int amountOfLaths(int carportWidth, double inclination) {
+    private static int amountOfLaths(int carportWidth, double inclination) {
         /*firstly, the roof is divided into 2 right-angled triangles,
         and the hypotenuse is calculated*/
         int triangleWidth = carportWidth / 2; // width of each triangle.
@@ -158,7 +158,7 @@ public class InclineRoofCarportBOM {
         return lathQty * 2 * 2;
     }
 
-    public static int amountOfLathHolders(int carportLength, Shed shed, int shedLength) {
+    private static int amountOfLathHolders(int carportLength, Shed shed, int shedLength) {
         /*amount of lath-holders is the same as rafters; 1 lath-holder for each rafter*/
         return amountOfRafters(carportLength, shed, shedLength);
     }
@@ -170,7 +170,7 @@ public class InclineRoofCarportBOM {
      * @param inclination
      * @return (tagsten)
      */
-    public static int amountOfRoofTiles(int carportWidth, int carportLength, double inclination) {
+    private static int amountOfRoofTiles(int carportWidth, int carportLength, double inclination) {
 
         /*for a carport with width 360 and length 730, 288 roof tiles are needed.
 
@@ -204,7 +204,7 @@ public class InclineRoofCarportBOM {
      * @param carportLength
      * @return (rygsten)
      */
-    public static int amountOfRidgeTiles(int carportLength) {
+    private static int amountOfRidgeTiles(int carportLength) {
         /*
         since the width of the roof and amount of ridge tiles needed is known (21), 
         the width of a single tile can be calculated.
@@ -217,7 +217,7 @@ public class InclineRoofCarportBOM {
      * @param carportLength
      * @return (rygstensbeslag)
      */
-    public static int amountOfRidgeTileBrackets(int carportLength) {
+    private static int amountOfRidgeTileBrackets(int carportLength) {
         //same amount as ridge tiles.
         return amountOfRidgeTiles(carportLength);
     }
@@ -229,7 +229,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (sternbrædder)
      */
-    public static int amountOfFasciaBoardsCarport(int carportLength, Shed shed, int shedLength) {
+    private static int amountOfFasciaBoardsCarport(int carportLength, Shed shed, int shedLength) {
         /*
         (carport minus shed)
          */
@@ -252,7 +252,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (sternbrædder - skur)
      */
-    public static int amountOfFasciaBoardsShed(int shedLength) {
+    private static int amountOfFasciaBoardsShed(int shedLength) {
 
         if (shedLength <= 540 / 2) {
             return 1; // 1 board of 540cm will be enough for both sides. 
@@ -278,7 +278,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (remme - carportdel)
      */
-    public static int amountOfBeams(int carportLength, Shed shed, int shedLength) {
+    private static int amountOfBeams(int carportLength, Shed shed, int shedLength) {
         return 2;
     }
 
@@ -287,7 +287,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (rem (skur))
      */
-    public static int amountOfBeamsShed(int shedLength) {
+    private static int amountOfBeamsShed(int shedLength) {
         int totalLengthNeeded = shedLength * 2;
         if (totalLengthNeeded <= 480) {
             return 1; // 1 board of 540cm will be enough for both sides. 
@@ -305,7 +305,7 @@ public class InclineRoofCarportBOM {
      *
      * @return (toplægte)
      */
-    public static int amountOfTopLaths() {
+    private static int amountOfTopLaths() {
         return 2;
     }
 
@@ -315,7 +315,7 @@ public class InclineRoofCarportBOM {
      * @param inclination
      * @return (vandbræt)
      */
-    public static int amountOfRainBoards(int carportWidth, double inclination) {
+    private static int amountOfRainBoards(int carportWidth, double inclination) {
         return amountOfSoffits(carportWidth, inclination);
     }
 
@@ -323,7 +323,7 @@ public class InclineRoofCarportBOM {
      *
      * @return (løsholter, gavl)
      */
-    public static int amountOfIntertiesGable() {
+    private static int amountOfIntertiesGable() {
         return 6;
     }
 
@@ -331,7 +331,7 @@ public class InclineRoofCarportBOM {
      *
      * @return (løsholter, sider)
      */
-    public static int amountOfIntertiesSides() {
+    private static int amountOfIntertiesSides() {
         return 4;
     }
 
@@ -339,7 +339,7 @@ public class InclineRoofCarportBOM {
      *
      * @return (vinkelbeslag til løsholter)
      */
-    public static int amountOfBracketsInterties() {
+    private static int amountOfBracketsInterties() {
         /*
         2 brackets per intertie.
          */
@@ -350,7 +350,7 @@ public class InclineRoofCarportBOM {
      *
      * @return (beslagsskruer til vinkelbeslag (løsholter) (står ikke i stykliste))
      */
-    public static int amountOfBracketScrewsInterties() {
+    private static int amountOfBracketScrewsInterties() {
         return amountOfBracketsInterties() * 4; // 4 screws per bracket
     }
 
@@ -360,7 +360,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (beslagsskruer for beklædning inderst)
      */
-    public static int amountOfBracketScrewsTimbering1(int shedWidth, int shedLength) {
+    private static int amountOfBracketScrewsTimbering1(int shedWidth, int shedLength) {
         double amount = tbom.calculateQuantityForBeklædning1(shedWidth, shedLength) * 3;
         return (int) Math.ceil(amount/350);// a single pack consists of 350 screws. 
         /*
@@ -373,7 +373,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (beslagsskruer for bekædning yderst)
      */
-    public static int amountOfBracketScrewsTimbering2(int shedWidth, int shedLength) {
+    private static int amountOfBracketScrewsTimbering2(int shedWidth, int shedLength) {
         double amount = tbom.calculateQuantityForBeklædning2(shedWidth, shedLength) * 6;
         return (int) Math.ceil(amount/200); // a single pack consists of 200 screws. 
         /*
@@ -381,7 +381,7 @@ public class InclineRoofCarportBOM {
          */
     }
 
-    public static int amountOfScrewsLathHolders(int carportLength, Shed shed, int shedLength) {
+    private static int amountOfScrewsLathHolders(int carportLength, Shed shed, int shedLength) {
         double amount = amountOfLathHolders(carportLength, shed, shedLength);
         return (int) Math.ceil(amount/250); // a single pack consists of 250 screws. 
         
@@ -399,7 +399,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (højrebeslag til spær)
      */
-    public static int amountOfLeftBracketRafters(int carportLength, Shed shed, int shedLength) {
+    private static int amountOfLeftBracketRafters(int carportLength, Shed shed, int shedLength) {
         return amountOfRafters(carportLength, shed, shedLength);
     }
     /**
@@ -409,7 +409,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (venstrebeslag spær)
      */
-    public static int amountOfRightBracketRafters(int carportLength, Shed shed, int shedLength) {
+    private static int amountOfRightBracketRafters(int carportLength, Shed shed, int shedLength) {
         return amountOfRafters(carportLength, shed, shedLength);
     }
     /**
@@ -419,7 +419,7 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (skruer til spærbeslag)
      */
-    public static int amountOfScrewsRafterBrackets(int carportLength, Shed shed, int shedLength) {
+    private static int amountOfScrewsRafterBrackets(int carportLength, Shed shed, int shedLength) {
         double amount = amountOfRightBracketRafters(carportLength, shed, shedLength)
                 * 3 + amountOfLeftBracketRafters(carportLength, shed, shedLength) * 3;
         return (int) Math.ceil(amount/250);
@@ -433,7 +433,7 @@ public class InclineRoofCarportBOM {
      * @param inclination
      * @return (skruer til sternbræt og vindskeder)
      */
-    public static int amountOfScrewsFasciaAndSoffits(int carportLength, int carportWidth,
+    private static int amountOfScrewsFasciaAndSoffits(int carportLength, int carportWidth,
             Shed shed, int shedLength, int inclination) {
         double amount = amountOfRafters(carportLength, shed, shedLength) * 2 /* for each rafter */ * 2 /*2 sides*/
                 + amountOfLaths(carportWidth, inclination) * 2 /* for each lath*/ * 2 /*2 sides*/;
@@ -452,7 +452,7 @@ public class InclineRoofCarportBOM {
      * @param inclination
      * @return (antal skruer til lægter (står ikke i beskrivelsen))
      */
-    public static int amountOfScrewsLaths(int carportWidth, int inclination) {
+    private static int amountOfScrewsLaths(int carportWidth, int inclination) {
         double amount = amountOfLaths(carportWidth, inclination) * 10;
         return (int) Math.ceil(amount/100);
         /*amount of screws laths - unknown
@@ -463,11 +463,11 @@ public class InclineRoofCarportBOM {
      * 
      * @return (firkantskiver)
      */
-    public static int amountOfSquareDiscs() {
+    private static int amountOfSquareDiscs() {
         return 20; 
     }
     
-    public static int amountOfRoofTileBinders() {
+    private static int amountOfRoofTileBinders() {
         return 2; // 2 packs -- amount in a single pack and how many is needed is unknown. 
     }
     /*

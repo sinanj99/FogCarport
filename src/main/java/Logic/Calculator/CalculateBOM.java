@@ -98,7 +98,7 @@ public class CalculateBOM {
         int roofid = r.getCarport().getRoof().getRoof_id();
         int inclination = (int) r.getCarport().getInclination();
 
-        if (shed != null) {
+        if (shed != null && shed.getLength() != 0) {
             //with length index 0-12
             list.add(calc.soffits(cwidth, inclination));
             list.add(calc.fasciaCarport(clength, shed, slength));

@@ -1,3 +1,4 @@
+<%@page import="Data.Entity.User"%>
 <%@page import="Data.Entity.Request"%>
 <%@page import="Data.Entity.Roof"%>
 <%@page import="java.util.ArrayList"%>
@@ -6,7 +7,15 @@
 <%@page import="Data.Entity.Type"%>
 <%@page import="Data.Entity.LineItem"%>
 <%@page import="Data.Entity.BOM"%>
-<%      int buyPrice = (int) request.getAttribute("buyPrice");
+<%  
+    
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+    }
+
+    
+    int buyPrice = (int) request.getAttribute("buyPrice");
     int sellPrice = (int) request.getAttribute("sellPrice");
     Request r = (Request) request.getAttribute("request");
     List<LineItem> materialsLength = (List) request.getAttribute("materialLength");
@@ -125,4 +134,3 @@
             </div>
         </div>
     </div>
-</div>

@@ -5,7 +5,7 @@
 --%>
 
 
-<%@page import="Logic.Calculator.spærTestKasper"%>
+
 <%@page import="Data.Entity.Shed"%>
 <%@page import="Data.Entity.Roof"%>
 <%@page import="Data.Entity.Carport"%>
@@ -70,46 +70,87 @@
 
                 for(int i = 0; i < quantityOfStolper; i++)
                 {
+                    if(r.getCarport().getShed_() != null)
+                    {
+                        //Top left stolpe
+                        if(i == 0)
+                        {
+                            //yCordinate changed to make place it under remmen
+                            yCordinate -= 3.6f;
+                        }
+                        //Top right stolpe
+                        if(i == 1)
+                        {
+                            //xCordinate changed to place it at the second last spær
+                            xCordinate = startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR - 9.7f;
+                        }
+                        //Botton right stolpe
+                        if(i == 2)
+                        {
+                            //yCordinate changed to place it at the at the other rem 
+                            yCordinate = startingPointFirstSpærY + carportWidth - 36;
+                        }
+                        //Bottom left stolpe
+                        if(i == 3)
+                        {
+                            //xCordinato changed to place it at the same xCordinate at the top left stolpe
+                            xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
+                        }
+                        //The bottom front stolpe of the shed
+                        if(i == 4)
+                        {
+                            //xCprdinate changed to place it the length of the shed away from the bottom right stolpe
+                            xCordinate = (startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR) - shedLength;
+                        }
+                        //The top front stolpe of the shed
+                        if(i == 5)
+                        {
+                            //Changed yCordinate to place it at the same yCordinat as the top left/right stolpe
+                            yCordinate = startingPointFirstSpærY - 3.6f;
+                        }
+                        //the front middle stolpe of the shed
+                        if(i == 6)
+                        {
+                            //yCordinate changed to place it between the front bottom and top stolpe of the shed
+                            yCordinate = yCordinate + (carportWidth - 30) / 2;
+                        }
+                        //the back middle stolpe of the shed
+                        if(i == 7)
+                        {
+                            //xCordinate changed to place it at the same xCordinate as the rigth top/bottom stolpe
+                            xCordinate = startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR - 9.7f;
+                        }
+                        //Stolpe between the top left stolpe and top front stolpe of the shed
+                        if(i == 8)
+                        {
+                            //yCordinate changed to place it at same yCordinate at top left stolpe
+                            yCordinate = startingPointFirstSpærX - 3.6f;
+                            //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
+                            xCordinate = (xCordinate - shedLength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                        }
+                        //stolpe between the bottom left stolpe and the bottom front stolpe of the shed
+                        if(i == 9)
+                        {
+                            //yCordinate changed to place it at the same yCordinate as the front bottom stolpe
+                            yCordinate = startingPointFirstSpærY + carportWidth - 36;
+                        }
+                    }
+                    
+                    
+                    
             %>
             <rect class="stolper" x=<%= xCordinate %>  y=<%= yCordinate %> height="9.7" width="9.7" fill="none" stroke="black" stroke-width="3px" />
             <%      
 
-                    if(i == 0)
-                    {
-                        xCordinate = startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR;
-                    }
-                    if(i == 1)
-                    {
-                        yCordinate = startingPointFirstSpærY + carportWidth - 30;
-                    }
-                    if(i == 2)
-                    {
-                        xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
-                    }
-                    if(i == 3)
-                    {
-                        xCordinate = (startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR) - shedLength;
-                    }
-                    if(i == 4)
-                    {
-                        yCordinate = startingPointFirstSpærY;
-                    }
-                    if(i == 5)
-                    {
-                        yCordinate = yCordinate + (carportWidth - 30) / 2;
-                    }
-                    if(i == 6)
-                    {
-                        xCordinate = startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR;
-                    }
+                    
                 }
             %>
         </svg>
 
         <svg class="remmenene">
             
-            <rect class="remmen" x=<%= startingPointFirstSpærX %> y=<%= startingPointFirstSpærY +2 %> height="4.5" width=<%=carportLength%> fill="none" stroke="black" stroke-width="3px"  />
-            <rect class="remmen" x=<%= startingPointFirstSpærX %> y=<%= startingPointFirstSpærY + carportWidth - 30 + 2  %> height="4.5" width=<%=carportLength%> fill="none" stroke="black" stroke-width="3px"  />
+            <rect class="remmen" x=<%= startingPointFirstSpærX %> y=<%= startingPointFirstSpærY  %> height="4.5" width=<%=carportLength%> fill="none" stroke="black" stroke-width="3px"  />
+            <rect class="remmen" x=<%= startingPointFirstSpærX %> y=<%= startingPointFirstSpærY + carportWidth - 34  %> height="4.5" width=<%=carportLength%> fill="none" stroke="black" stroke-width="3px"  />
 
         </svg>
         
@@ -120,7 +161,7 @@
                 int quantityOfSpærPlusTheBackSpær = f.calculateQuantityOfSpærIncludedBackSpær(carportLength);
                 
                 float frontSpærPlacementX =  startingPointFirstSpærX;
-                float frontSpærPlacementY = startingPointFirstSpærY - 10;
+                float frontSpærPlacementY = startingPointFirstSpærY - 15;
                 
                 for(int i = 0; i < quantityOfSpærPlusTheBackSpær; i++)
                 {

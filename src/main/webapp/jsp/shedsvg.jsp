@@ -33,7 +33,7 @@
         <%
             ShippingAddress s = new ShippingAddress("bob", "johnson", "vejen", 3420, "opdigtet");
             Roof roof = new Roof(1, "taget", false);
-            Carport c = new Carport(roof, 0, 420,750 , new Shed(210, 210));
+            Carport c = new Carport(roof, 0, 530,750 , null);
             
             Request r = new Request(s, 2, "", c);
         %>
@@ -52,7 +52,10 @@
         
         int carportLength = r.getCarport().getLength();
         int carportWidth = r.getCarport().getWidth();
-        int shedLength = r.getCarport().getShed_().getLength();
+        int shedLength = 10;
+        
+        //new Shed(210, 240)
+        //r.getCarport().getShed_().getLength();
         
         float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(carportLength), carportLength);
 
@@ -136,6 +139,65 @@
                         }
                     }
                     
+                    if(r.getCarport().getShed_() == null)
+                    {
+                        //Top left stolpe
+                        if(i == 0)
+                        {
+                            //yCordinate changed to make place it under remmen
+                            yCordinate -= 3.6f;
+                        }
+                        //Top right stolpe
+                        if(i == 1)
+                        {
+                            //xCordinate changed to place it at the second last spær
+                            xCordinate = startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR - 9.7f;
+                        }
+                         //Botton right stolpe
+                        if(i == 2)
+                        {
+                            //yCordinate changed to place it at the at the other rem 
+                            yCordinate = startingPointFirstSpærY + carportWidth - 36;
+                        }
+                        //Bottom left stolpe
+                        if(i == 3)
+                        {
+                            //xCordinato changed to place it at the same xCordinate at the top left stolpe
+                            xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
+                        }
+                        // one of middle bottom stolpe
+                        if(i == 4)
+                        {
+                            if(quantityOfStolper == 8)
+                            {
+                                //xCordinate changed to place it so that this middle stolpe and the other middle stolpe is as far from other stolpe as possible
+                                //Take the position of the bottem right stolpe and add the position of bottom left, then divide by 1.5f
+                                xCordinate = (startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 1.5f;
+                            }
+                            else
+                            {
+                                //xCordinate changed to place it in the center of bottom left and bottom right stolpe
+                                //Take the position of the bottem right stolpe and add the position of bottom left, then divide by 2
+                                xCordinate = (startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                            }
+                            
+                        }
+                        //one of the middle top stolpe
+                        if(i == 5)
+                        {
+                            //yCordinate changed to place it at the same yCordination as the other top stolper
+                            yCordinate = startingPointFirstSpærY - 3.6f;
+                        }
+                        if(i == 6)
+                        {
+                            xCordinate = (startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2.5f;
+                        }
+                        if(i == 7)
+                        {
+                            yCordinate = startingPointFirstSpærY + carportWidth - 36;
+                        }
+                    }
+                    
                     
                     
             %>
@@ -145,7 +207,7 @@
                     
                 }
             %>
-        </svg>
+        </svg>224
 
         <svg class="remmenene">
             

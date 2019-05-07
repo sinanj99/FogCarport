@@ -252,6 +252,55 @@ p
     box-shadow: 0 0 10px -5px black; 
     padding: 20px;
 }
+
+.showorders-table{
+	font-family: 'Poppins', sans-serif;
+	font-size: .8rem;
+	
+}
+	.showorders-thead{
+		color: #a1a1a1;
+		text-transform: uppercase;
+		
+	}
+
+		.showorders-th{
+			border: none!important;
+			font-weight: 400;
+			letter-spacing: 1px;
+		}
+
+	.showorders-tr {
+		background-color: #fff;
+		border: 1px solid #e1e1e1;
+		border-radius: 2px;
+		margin-bottom: 10px;
+		-webkit-transition: background-color 0.3s ease-out, border-color 0.3s ease-out;
+		-moz-transition: background-color 0.3s ease-out, border-color 0.3s ease-out;
+		-o-transition: background-color 0.3s ease-out, border-color 0.3s ease-out;
+		transition: background-color 0.3s ease-out, border-color 0.3s ease-out;	
+	}
+
+		.showorders-tr:hover{
+			background-color: #6db6ff;
+			border-color: #6db6ff;
+			color: #FFF;
+		}
+
+		.showorders-tr:active{
+			background-color: #5d9dd8;
+			border-color: #5d9dd8;
+		}
+
+.last-tr {
+	border-bottom: 1px solid #dee2e6;	
+}
+
+.neworder-tr{
+	border-left: 1px solid #dee2e6;
+	border-right: 1px solid #dee2e6;
+}
+
 /* 
 th {
     text-align: center;

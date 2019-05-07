@@ -22,6 +22,7 @@
     List<LineItem> rooftiles = (List) request.getAttribute("roofTiles");
     List<LineItem> roofmaterials = (List) request.getAttribute("roofMaterials");
     List<LineItem> materialsNoLength = (List) request.getAttribute("materialsNoLength");
+    String svg = (String) request.getAttribute("svg");
     int fullPrice = 0;
 %>
 
@@ -33,17 +34,17 @@
                 <div class="row">
                     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
 
-                    <h1 class="mb-0"><b>Stykliste</b></h1>
+                        <h1 class="mb-0"><b>Stykliste</b></h1>
 
-                    <table class="table table-striped mb-0">
-                        <h3>Træ</h3>
-                        <tr>
-                            <th>Materiale</th>
-                            <th>Længde</th>
-                            <th>Antal</th>
-                            <th>Enhed</th>
-                            <th>Beskrivelse</th>
-                        </tr>
+                        <table class="table table-striped mb-0">
+                            <h3>Træ</h3>
+                            <tr>
+                                <th>Materiale</th>
+                                <th>Længde</th>
+                                <th>Antal</th>
+                                <th>Enhed</th>
+                                <th>Beskrivelse</th>
+                            </tr>
 
                         <%for (LineItem l : materialsLength) {%>
                         <tr>
@@ -109,15 +110,16 @@
                         <% }%>
                     </table>
                     <h3>Indkøbspris: <%= buyPrice%>,-</h3>
-                    <hr style="width: 100%;" class="m-0">
+
                     <h3>Foreslået salgspris: <u><%=sellPrice%>,-</u></h3>
                     <hr style="width: 100%;" class="m-0">
+
                     <h1><b>Carportens mål:</b></h1>
 
-                        <div class="d-flex" style="padding-bottom: 40px;">
-                            <div class="d-flex flex-column align-items-center">
-                                <h3 class="">Carport:</h3>
-                                <p>Bredde: <%=r.getCarport().getWidth()%></p>
+                    <div class="d-flex" style="padding-bottom: 40px;">
+                        <div class="d-flex flex-column align-items-center">
+                            <h3 class="">Carport:</h3>
+                            <p>Bredde: <%=r.getCarport().getWidth()%></p>
                             <p>Længde: <%=r.getCarport().getLength()%></p>
                         </div>
 
@@ -128,8 +130,11 @@
                             <p>Længde: <%=r.getCarport().getShed_().getLength()%></p>
                         </div>
 
-                        <% } %>
+                        <% }%>
                     </div>
+                    <h3>Skitse:</h3>
+                    <%= svg %>
+                    <br><br>
                 </div>
             </div>
         </div>

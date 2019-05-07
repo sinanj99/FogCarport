@@ -109,7 +109,7 @@ public class InclineRoofCarportBOM {
         if (spaceBetweenRafters > 40) {
             holeQty++;
         }
-        return holeQty*2;
+        return (holeQty+1)*2;
     }
 
     private int amountOfLathHolders(int carportLength, Shed shed, int shedLength) {

@@ -103,5 +103,18 @@ public class DrawSVG {
 
     }
         
+    public String drawPerforatedBand(Carport c){
+        String drawing = "";
+        double carportWidth = c.getWidth() - c.getShed_().getWidth();
+        double carportLength = c.getLength() - c.getShed_().getLength();
+        double hypotenuse = Math.sqrt((carportWidth * carportWidth) + (carportLength * carportLength));
+        
+        drawing += "<svg height='30%' width='30%' viewbox='0 0 " + c.getLength() + " " + c.getWidth() + "' style='border: 1px solid black'>"
+                + "<line x1=\"0\" y1=\"0\" x2=\"100%\" y2=\"100%\" style=\"stroke:black; stroke-width:5\" />"
+                + "<line x1=\"0\" y1=\"100%\" x2=\"100%\" y2=\"0\" style=\"stroke:black; stroke-width:5\" />"
+                + "</svg>";
+        
+        return drawing;
+    }
         
 }

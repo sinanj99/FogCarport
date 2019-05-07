@@ -74,6 +74,8 @@ public class CreateOfferCommand implements Command {
         DrawSVG d = new DrawSVG();
         InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
         String svg = d.drawTopInclineShed(r.getCarport());
+        String bandSvg = d.drawPerforatedBand(r.getCarport());
+        request.setAttribute("bandSvg", bandSvg);
         request.setAttribute("svg", svg);
 
         return "create_offer.jsp";

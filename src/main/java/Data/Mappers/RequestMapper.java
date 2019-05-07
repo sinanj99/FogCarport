@@ -450,7 +450,7 @@ class RequestMapper extends IRequestMapper {
         Carport cp = null;
 
         try {
-            String query = "SELECT * FROM requests;";
+            String query = "SELECT * FROM requests ORDER BY `request_id` DESC;";
             Statement stmt = con.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {

@@ -54,33 +54,3 @@
         </div>
     </div>
     <jsp:include page='/include/sitefoot.jsp'></jsp:include>
-
-        <!--
-        
-        <div class="col-12 d-flex flex-column justify-content-center align-items-center">
-                            <div class="list-group">
-                                <hr>
-                                <h1>Forespørgsler: </h1>
-                                <hr style="width:100%;">
-    <%--for (Request r : requests) {%>
-    <a href="FrontController?command=createOffer&requestID=<%=r.getReq_id()%>">
-        <b>Ordrenummer: </b><%=r.getReq_id()%><br>
-        <b>Kunde: </b> <%=r.getAddress().getFirstname() + " " + r.getAddress().getLastname()%><br>
-        <b>Tidspunkt for oprettelse: </b> <%=r.getDatePlaced()%>
-        <%if (r.getCarport().getInclination() != 0 && r.getCarport().getShed_().getLength() == 0) {%>
-        <br><b>Type:</b> Carport med rejsning
-        <% } else if (r.getCarport().getInclination() != 0 && r.getCarport().getShed_().getLength() != 0) {%>
-        <br><b>Type:</b> Carport med rejsning & skur 
-        <% } else if (r.getCarport().getInclination() == 0 && r.getCarport().getShed_().getLength() != 0) {%>
-        <br><b>Type:</b> Carport med rejsning & skur  
-        <% } else { %>
-        <br><b>Type:</b> Carport uden rejsning  
-        <% }%>
-        
-    </a>
-    <hr style="width: 100%;">
-    <% }%>
-</div>
-</div>
-    --%>
-    -->

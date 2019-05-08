@@ -87,8 +87,12 @@ public class CreateOfferCommand implements Command {
         }
         
         InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
+
         
+        String bandSvg = d.drawPerforatedBand(r.getCarport());
+
         request.setAttribute("svg", svg);
+        request.setAttribute("bandSvg", bandSvg);
 
         return "create_offer.jsp";
     }

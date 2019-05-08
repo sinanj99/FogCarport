@@ -23,6 +23,7 @@
     List<LineItem> roofmaterials = (List) request.getAttribute("roofMaterials");
     List<LineItem> materialsNoLength = (List) request.getAttribute("materialsNoLength");
     String svg = (String) request.getAttribute("svg");
+    String bandSvg = (String) request.getAttribute("bandSvg");
     int fullPrice = 0;
 %>
 
@@ -135,6 +136,8 @@
                     <h3>Skitse:</h3>
                     <%= svg %>
                     <br><br>
+                    <h5>Hulbånd</h5>
+                    <%= bandSvg %>
                 </div>
             </div>
         </div>

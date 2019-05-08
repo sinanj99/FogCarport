@@ -20,6 +20,7 @@ import Logic.Exceptions.NoSuchRoofException;
 public class InclineRoofCarportBOM {
 
     // contstants used in roof-calculations. 
+    private static FlatRoofCarportBOM fc = new FlatRoofCarportBOM();
     private static final int TRIANGLE_WIDTH = 360 / 2;
     private static final double INCLINATION = Math.toRadians(20);
     private static final double HYPOTENUSE = TRIANGLE_WIDTH / Math.cos(INCLINATION);
@@ -98,23 +99,12 @@ public class InclineRoofCarportBOM {
         hypotenuse -= 65;
         /*the hypotenuse is now used to calculate the amount of laths*/
         //amount of holes or amount of rafters(excluding back rafter)
-        int holeQty = (int) hypotenuse / 40;
-        //the total width of all rafters together(excluding back rafter)
-        float totalLathWidth = holeQty * 3.8f;
-        //the total width of all holes together
-        float totalHoleWidth = (int) hypotenuse - totalLathWidth;
-        //the space between each rafter
-        float spaceBetweenRafters = totalHoleWidth / holeQty;
-
-        if (spaceBetweenRafters > 40) {
-            holeQty++;
-        }
-        return (holeQty+1)*2;
+        return amountOfRafters((int) hypotenuse);
     }
 
     private int amountOfLathHolders(int carportLength, Shed shed, int shedLength) {
         /*amount of lath-holders is the same as rafters; 1 lath-holder for each rafter*/
-        return amountOfRafters(carportLength, shedLength);
+        return amountOfRafters(carportLength);
     }
 
     /**
@@ -357,7 +347,7 @@ public class InclineRoofCarportBOM {
      */
 
     private  int amountOfLeftBracketRafters(int carportLength, Shed shed, int shedLength) {
-        return amountOfRafters(carportLength, shedLength);
+        return amountOfRafters(carportLength);
     }
 
     /**
@@ -369,7 +359,7 @@ public class InclineRoofCarportBOM {
      */
 
     private  int amountOfRightBracketRafters(int carportLength, Shed shed, int shedLength) {
-        return amountOfRafters(carportLength, shedLength);
+        return amountOfRafters(carportLength);
     }
 
     /**
@@ -396,7 +386,7 @@ public class InclineRoofCarportBOM {
      */
     private int amountOfScrewsFasciaAndSoffits(int carportLength, int carportWidth,
             Shed shed, int shedLength, int inclination) {
-        double amount = amountOfRafters(carportLength, shedLength) * 2 /* for each rafter */ * 2 /*2 sides*/
+        double amount = amountOfRafters(carportLength) * 2 /* for each rafter */ * 2 /*2 sides*/
                 + amountOfLaths(carportWidth, inclination) * 2 /* for each lath*/ * 2 /*2 sides*/;
         return (int) Math.ceil(amount / 200);
         /*
@@ -446,7 +436,7 @@ public class InclineRoofCarportBOM {
 
     public LineItem rafters(int carportWidth, int carportLength, Shed shed, int shedLength) {
         Material m = Manager.getMaterialWithLength(3, carportWidth);
-        return new LineItem(m, amountOfRafters(carportLength, shedLength), "Spær, monteres på rem", m.getPrice() * amountOfRafters(carportLength, shedLength), Type.LENGTH);
+        return new LineItem(m, amountOfRafters(carportLength), "Spær, monteres på rem", m.getPrice() * amountOfRafters(carportLength), Type.LENGTH);
     }
 
     public LineItem fasciaCarport(int carportLength, Shed shed, int shedLength) {
@@ -568,35 +558,12 @@ public class InclineRoofCarportBOM {
         return new LineItem(m, amountOfRoofTileBinders(), "til montering af tagsten, alle ydersten + hver anden fastgøres", m.getPrice() * amountOfRoofTileBinders(), Type.ROOF);
     }
 
-    public int amountOfRafters(int carportLength, int shedLength) {
-        //amount of holes or amount of rafters(excluding back rafter)
-        int holeQty = carportLength / 90;
-        //the total width of all rafters together(excluding back rafter)
-        float totalRafterWidth = holeQty * 4.5f;
-        //the total width of all holes together
-        float totalHoleWidth = carportLength - totalRafterWidth;
-        //the space between each rafter
-        float spaceBetweenRafters = totalHoleWidth / holeQty;
-
-        if (spaceBetweenRafters > 90) {
-            holeQty++;
-        }
-        return holeQty;
+    public int amountOfRafters(int carportLength) {
+        return fc.calculateQuantityOfSpærIncludedBackSpær(carportLength, 90);
     }
     
     public float spaceBetweenRafters(int carportLength, int shedLength) {
-        if(shedLength > 0) {
-            carportLength -= shedLength;
-        } 
-        //amount of holes or amount of rafters(excluding back rafter)
-        int holeQty = carportLength / 90;
-        //the total width of all rafters together(excluding back rafter)
-        float totalRafterWidth = holeQty * 4.5f;
-        //the total width of all holes together
-        float totalHoleWidth = carportLength - totalRafterWidth;
-        //the space between each rafter
-        float spaceBetweenRafters = totalHoleWidth / holeQty;
-        return spaceBetweenRafters;
+        return fc.spaceBetweenSpær(fc.calculateQuantityOFSpærExcluedBackSpær(carportLength, 90), carportLength, 90);
     }
  
 //    public static void main(String[] args) {

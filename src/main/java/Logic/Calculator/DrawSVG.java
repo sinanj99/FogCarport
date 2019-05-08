@@ -150,8 +150,6 @@ public class DrawSVG {
 
             drawingTop += "<rect x='0' y='" + (position - 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
         }
-        drawingTop += "<line x1=\"0\" y1=\"0\" x2=\"" + bandLengthPercent + "%\" y2=\"100%\" style=\"stroke:blue; stroke-width:5\" />"
-                + "<line x1=\"0\" y1=\"100%\" x2=\"" + bandLengthPercent + "%\" y2=\"0\" style=\"stroke:blue; stroke-width:5\" />";
         
         int minusRafters = 2;
         if(c.getShed_().getLength() > 0) minusRafters = 1;

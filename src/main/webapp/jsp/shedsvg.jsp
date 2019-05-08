@@ -4,8 +4,6 @@
     Author     : Kasper Jeppesen
 --%>
 
-
-<%@page import="Logic.Calculator.spærTestKasper"%>
 <%@page import="Data.Entity.Shed"%>
 <%@page import="Data.Entity.Roof"%>
 <%@page import="Data.Entity.Carport"%>

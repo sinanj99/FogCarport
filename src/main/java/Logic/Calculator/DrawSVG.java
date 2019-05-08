@@ -25,7 +25,7 @@ public class DrawSVG {
         int amountOfRafters = fb.calculateQuantityOfSpærIncludedBackSpær(carportLength, 90);
 
         //rafters
-        drawingTop += "<svg height='60%' width='60%' viewbox='0 0 " + (carportLength + 60) + " " + carportWidth + "' >";
+        drawingTop += "<svg height='500' width='400' viewbox='0 0 " + (carportLength + 60) + " " + carportWidth + "' >";
         drawingTop += "<rect x='0' y='50%' width='" + (carportLength + 60) + "' height='5' fill='black' stroke='black' stroke-width='5'/>";
         drawingTop += "<rect x='33' y='0' height='" + (carportWidth) + "' width='15' fill='none' stroke='black' stroke-width='3'/>";
 
@@ -108,11 +108,17 @@ public class DrawSVG {
         FlatRoofCarportBOM fb = new FlatRoofCarportBOM();
         int carportLength = c.getLength();
         int carportWidth = c.getWidth();
+        double hypotenuse = Math.sqrt(((carportLength - c.getShed_().getLength()) * (carportLength - c.getShed_().getLength()))
+                + ((carportWidth - c.getShed_().getWidth()) * (carportWidth - c.getShed_().getWidth())));
+        double bandLengthPercent = ((100.0 / (carportLength * 1.0))) * hypotenuse;
+        if (c.getShed_().getLength() == 0) {
+            bandLengthPercent = 100.0;
+        }
         int shedLength = 0;
         int amountOfRafters = fb.calculateQuantityOfSpærIncludedBackSpær(carportLength, 90);
 
         //rafters
-        drawingTop += "<svg height='60%' width='60%' viewbox='0 0 " + (carportLength + 60) + " " + carportWidth + "' >";
+        drawingTop += "<svg height='500' width='400' viewbox='0 0 " + (carportLength + 60) + " " + carportWidth + "' >";
         drawingTop += "<rect x='0' y='50%' width='" + (carportLength + 60) + "' height='5' fill='black' stroke='black' stroke-width='5'/>";
         drawingTop += "<rect x='33' y='0' height='" + (carportWidth) + "' width='15' fill='none' stroke='black' stroke-width='3'/>";
 
@@ -141,56 +147,10 @@ public class DrawSVG {
             drawingTop += "<rect x='0' y='" + (position - 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
         }
 
+        drawingTop += "<line x1=\"0\" y1=\"0\" x2=\"" + bandLengthPercent + "%\" y2=\"100%\" style=\"stroke:blue; stroke-width:5\" />"
+                + "<line x1=\"0\" y1=\"100%\" x2=\"" + bandLengthPercent + "%\" y2=\"0\" style=\"stroke:blue; stroke-width:5\" />";
         drawingTop += "</svg>";
         return drawingTop;
-    }
-
-    public String drawFlat(Carport c) {
-        String drawing = "";
-        int length = c.getLength();
-        int width = c.getWidth();
-        Shed shed = c.getShed_();
-        int slength = shed.getLength();
-        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
-        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + (length + 60) + " " + width + "' >";
-
-        float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60);
-
-        float startingPointFirstSpærX = 50;
-        float startingPointFirstSpærY = 50;
-
-        float xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
-        float yCordinate = startingPointFirstSpærY;
-
-        int quantityOfStolper = f.calculateQuantityOfStolper(length, shed, slength);
-
-        for (int i = 0; i < quantityOfStolper; i++) {
-            drawing += "<rect x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
-            if (i == 0) {
-                xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR;
-            }
-            if (i == 1) {
-                yCordinate = startingPointFirstSpærY + width - 30;
-            }
-            if (i == 2) {
-                xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
-            }
-            if (i == 3) {
-                xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength;
-            }
-            if (i == 4) {
-                yCordinate = startingPointFirstSpærY;
-            }
-            if (i == 5) {
-                yCordinate = yCordinate + (width - 30) / 2;
-            }
-            if (i == 6) {
-                xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR;
-            }
-        }
-
-        drawing += "</svg>";
-        return drawing;
     }
 
 }

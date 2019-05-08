@@ -7,8 +7,9 @@
     <a class="right d-none d-md-block" href="register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a>
     <a class="right d-none d-md-block" href="login.jsp"> <i class="fas fa-sign-in-alt"></i>    Log ind</a>
     <% } else if(user != null && user.isSeller()){ %>
-    <a class="right d-none d-md-block" href="FrontController?command=showrequests"> <i class="fas fa-clipboard-list"></i>    Vis forespørgsler</a>
+    <a class="left" href="sellerfrontpage.jsp">FORSIDE</a>
     <a class="right d-none d-md-block" href="FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
+    <a class="right d-none d-md-block" href="FrontController?command=showrequests"> <i class="fas fa-clipboard-list"></i>    Vis forespørgsler</a>
     <% } else { %>
     <a class="left" href="frontpage.jsp">FOG CARPORT</a>
     <a class="right d-none d-md-block" href="FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>

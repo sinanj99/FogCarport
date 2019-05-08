@@ -145,4 +145,52 @@ public class DrawSVG {
         return drawingTop;
     }
 
+    public String drawFlat(Carport c) {
+        String drawing = "";
+        int length = c.getLength();
+        int width = c.getWidth();
+        Shed shed = c.getShed_();
+        int slength = shed.getLength();
+        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
+        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + (length + 60) + " " + width + "' >";
+
+        float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60);
+
+        float startingPointFirstSpærX = 50;
+        float startingPointFirstSpærY = 50;
+
+        float xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
+        float yCordinate = startingPointFirstSpærY;
+
+        int quantityOfStolper = f.calculateQuantityOfStolper(length, shed, slength);
+
+        for (int i = 0; i < quantityOfStolper; i++) {
+            drawing += "<rect x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
+            if (i == 0) {
+                xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR;
+            }
+            if (i == 1) {
+                yCordinate = startingPointFirstSpærY + width - 30;
+            }
+            if (i == 2) {
+                xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
+            }
+            if (i == 3) {
+                xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength;
+            }
+            if (i == 4) {
+                yCordinate = startingPointFirstSpærY;
+            }
+            if (i == 5) {
+                yCordinate = yCordinate + (width - 30) / 2;
+            }
+            if (i == 6) {
+                xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR;
+            }
+        }
+
+        drawing += "</svg>";
+        return drawing;
+    }
+
 }

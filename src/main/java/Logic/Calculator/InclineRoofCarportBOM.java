@@ -99,7 +99,7 @@ public class InclineRoofCarportBOM {
         hypotenuse -= 65;
         /*the hypotenuse is now used to calculate the amount of laths*/
         //amount of holes or amount of rafters(excluding back rafter)
-        return amountOfRafters((int) hypotenuse);
+        return fc.calculateQuantityOfSpærIncludedBackSpær((int) hypotenuse, 35);
     }
 
     private int amountOfLathHolders(int carportLength, Shed shed, int shedLength) {

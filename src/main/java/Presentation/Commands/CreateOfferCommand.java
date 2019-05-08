@@ -12,6 +12,7 @@ import Data.Entity.Type;
 import Logic.Calculator.CalculateBOM;
 import Logic.Calculator.CalculatePrice;
 import Logic.Calculator.DrawSVG;
+import Logic.Calculator.DrawSVGFlatroof;
 import Logic.Calculator.InclineRoofCarportBOM;
 import Logic.Controller.Manager;
 import Logic.Exceptions.NoSuchMaterialException;
@@ -72,9 +73,24 @@ public class CreateOfferCommand implements Command {
 
         // drawing
         DrawSVG d = new DrawSVG();
+        DrawSVGFlatroof df = new DrawSVGFlatroof();
+        
+        String svg = "";
+        
+        if(r.getCarport().getInclination() == 0)
+        {
+            svg = df.drawFlatCarportNoShed(r.getCarport());
+        } 
+        else
+        {
+            svg = d.drawTopInclineShed(r.getCarport());
+        }
+        
         InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
-        String svg = d.drawTopInclineShed(r.getCarport());
+
+        
         String bandSvg = d.drawPerforatedBand(r.getCarport());
+
         request.setAttribute("svg", svg);
         request.setAttribute("bandSvg", bandSvg);
 

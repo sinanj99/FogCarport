@@ -33,7 +33,7 @@
         <%
             ShippingAddress s = new ShippingAddress("bob", "johnson", "vejen", 3420, "opdigtet");
             Roof roof = new Roof(1, "taget", false);
-            Carport c = new Carport(roof, 0, 530,750 , null);
+            Carport c = new Carport(roof, 0, 530,420 , null);
             
             Request r = new Request(s, 2, "", c);
         %>

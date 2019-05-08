@@ -79,7 +79,7 @@ public class CreateOfferCommand implements Command {
         
         if(r.getCarport().getInclination() == 0)
         {
-            svg = df.drawFlatCarportNoShed(r.getCarport());
+            svg = df.drawFlat(r.getCarport());
         } 
         else
         {

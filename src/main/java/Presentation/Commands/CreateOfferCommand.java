@@ -11,6 +11,8 @@ import Data.Entity.Request;
 import Data.Entity.Type;
 import Logic.Calculator.CalculateBOM;
 import Logic.Calculator.CalculatePrice;
+import Logic.Calculator.DrawSVG;
+import Logic.Calculator.InclineRoofCarportBOM;
 import Logic.Controller.Manager;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
@@ -31,6 +33,7 @@ public class CreateOfferCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
+        //calculations
         Request r = Manager.getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
         CalculateBOM b = new CalculateBOM();
@@ -66,8 +69,13 @@ public class CreateOfferCommand implements Command {
         request.setAttribute("roofTiles", roofTiles);
         request.setAttribute("roofMaterials", roofMaterials);
         request.setAttribute("materialsNoLength", materialsNoLength);
-        
-        
+
+        // drawing
+        DrawSVG d = new DrawSVG();
+        InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
+        String svg = d.drawTopInclineShed(r.getCarport());
+        request.setAttribute("svg", svg);
+
         return "create_offer.jsp";
     }
 

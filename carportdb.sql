@@ -13,7 +13,7 @@ CREATE TABLE CarportDB.rooftype (
   	inclined INT(1) NOT NULL,
 	PRIMARY KEY (roof_id)
 );
-
+select * from material_lengths;
 insert into CarportDB.rooftype (`name`, inclined) values 
 ("Plasttrapezplader - Blåtonet", 0),
 ("Plasttrapezplader - Gråtonet", 0),

@@ -99,18 +99,7 @@ public class InclineRoofCarportBOM {
         hypotenuse -= 65;
         /*the hypotenuse is now used to calculate the amount of laths*/
         //amount of holes or amount of rafters(excluding back rafter)
-        int holeQty = (int) hypotenuse / 40;
-        //the total width of all rafters together(excluding back rafter)
-        float totalLathWidth = holeQty * 3.8f;
-        //the total width of all holes together
-        float totalHoleWidth = (int) hypotenuse - totalLathWidth;
-        //the space between each rafter
-        float spaceBetweenRafters = totalHoleWidth / holeQty;
-
-        if (spaceBetweenRafters > 40) {
-            holeQty++;
-        }
-        return (holeQty+1)*2;
+        return amountOfRafters((int) hypotenuse);
     }
 
     private int amountOfLathHolders(int carportLength, Shed shed, int shedLength) {

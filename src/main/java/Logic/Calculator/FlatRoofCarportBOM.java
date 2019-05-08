@@ -13,7 +13,7 @@ import Data.Entity.Roof;
 import Data.Entity.Shed;
 import Data.Entity.Type;
 import Data.Mappers.IRequestMapper;
-import Logic.Controller.Manager;
+import Logic.Controller.Facade;
 import Logic.Exceptions.NoSuchMaterialException;
 
 /**

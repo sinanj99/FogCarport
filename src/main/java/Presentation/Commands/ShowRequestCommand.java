@@ -5,7 +5,7 @@
  */
 package Presentation.Commands;
 
-import Logic.Controller.Manager;
+import Logic.Controller.Facade;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class ShowRequestCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
-        request.setAttribute("requests", Manager.getRequests());
+        request.setAttribute("requests", Facade.getRequests());
         System.out.println(request.getAttribute("requests"));
         return "showrequests.jsp";
     }

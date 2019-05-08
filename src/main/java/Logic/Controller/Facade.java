@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author sinanjasar
  */
-public class Manager {
+public class Facade {
 
     public static List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException {
         return IRequestMapper.instance().getRoofs(rooftype);

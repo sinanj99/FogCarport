@@ -21,7 +21,7 @@ public class DrawSVGFlatroof {
         Shed shed = c.getShed_();
         int slength = shed.getLength();
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
-        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + (length + 60) + " " + width + "' >";
+        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
 
         //STOLPER 
         float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60);

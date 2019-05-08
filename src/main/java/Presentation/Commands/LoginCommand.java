@@ -7,7 +7,7 @@ package Presentation.Commands;
 
 import Data.Entity.User;
 import Logic.Controller.LoginController;
-import Logic.Controller.Manager;
+import Logic.Controller.Facade;
 import Logic.Exceptions.NoMatchException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class LoginCommand implements Command {
         String password = request.getParameter("pword");
         
         try {
-            user = Manager.getUser(email);
+            user = Facade.getUser(email);
             LoginController.doesMatch(email, password);
             request.getSession().setAttribute("user", user);
         } catch (UserNotFoundException | NoMatchException e) {

@@ -6,7 +6,7 @@
 package Presentation.Commands;
 
 import Data.Entity.Roof;
-import Logic.Controller.Manager;
+import Logic.Controller.Facade;
 import Logic.Exceptions.NoSuchRoofException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class FlatRoofFormCommand implements Command {
             return "login.jsp";
         }
         request.getSession().setAttribute("inclined", "false");
-        request.setAttribute("roofs", Manager.getRoofs(0)); // 0 for flat roofs 
+        request.setAttribute("roofs", Facade.getRoofs(0)); // 0 for flat roofs 
         return "flatroof.jsp";
     }
 

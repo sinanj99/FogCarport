@@ -13,7 +13,7 @@ import Data.Entity.Shed;
  *
  * @author sinanjasar
  */
-public class DrawSVG {
+public class DrawSVGIncline {
 
     public String drawTopInclineShed(Carport c) {
         String drawingTop = "";
@@ -39,7 +39,7 @@ public class DrawSVG {
         position = 0;
         drawingTop += "<rect x='0' y='" + (position + 30) + "' width='" + (carportLength + 60) + "' height='5' fill='none' stroke='black' stroke-width='3'/>";
         System.out.println("SPACELENGTH = " + ib.spaceLength(carportWidth, c.getInclination()));
-        for (int i = 0; i < ib.amountOfLaths(carportWidth, c.getInclination()) / 2 - 1; i++) {
+        for (int i = 0; i < ib.amountOfLaths(carportWidth, c.getInclination()) / 2-1; i++) {
 
             position += ib.spaceLength(carportWidth, c.getInclination());
 

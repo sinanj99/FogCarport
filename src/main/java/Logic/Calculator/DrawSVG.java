@@ -145,10 +145,10 @@ public class DrawSVG {
             drawingTop += "<rect x='0' y='" + (position - 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
         }
         
-        int divideRafters = 2;
-        if(c.getShed_().getLength() > 0) divideRafters = 1;
+        int minusRafters = 2;
+        if(c.getShed_().getLength() > 0) minusRafters = 1;
         double startPoint = 33 + ib.spaceBetweenRafters(carportLength, shedLength);
-        double endPoint = (33 + (ib.spaceBetweenRafters(carportLength, shedLength) * (amountOfRafters - divideRafters)));
+        double endPoint = (33 + (ib.spaceBetweenRafters(carportLength, shedLength) * (amountOfRafters - minusRafters)));
         drawingTop += "<line x1=\""+startPoint+"\" y1=\"0\" x2=\""+ endPoint +"\" y2=\"100%\" style=\"stroke:blue; stroke-width:5\" />"
                 + "<line x1=\""+startPoint+"\" y1=\"100%\" x2=\""+ endPoint +"\" y2=\"0\" style=\"stroke:blue; stroke-width:5\" />";
         drawingTop += "</svg>";

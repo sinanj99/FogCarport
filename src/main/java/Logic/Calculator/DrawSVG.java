@@ -108,10 +108,10 @@ public class DrawSVG {
         FlatRoofCarportBOM fb = new FlatRoofCarportBOM();
         int carportLength = c.getLength();
         int carportWidth = c.getWidth();
-        double hypotenuse = Math.sqrt(((carportLength - c.getShed_().getLength()) * (carportLength - c.getShed_().getLength())) 
-                + ((carportWidth - c.getShed_().getWidth()) * (carportWidth - c.getShed_().getWidth())));
-        double bandLengthPercent = ((100.0 / (carportLength * 1.0))) * hypotenuse; 
-        if(c.getShed_().getLength() == 0) bandLengthPercent = 100.0;
+        //double hypotenuse = Math.sqrt(((carportLength - c.getShed_().getLength()) * (carportLength - c.getShed_().getLength())) 
+          //      + ((carportWidth - c.getShed_().getWidth()) * (carportWidth - c.getShed_().getWidth())));
+        //double bandLengthPercent = (((100.0 / (carportLength * 1.0))) * hypotenuse); //- ((100.0 / carportLength * 1.0) * 30) 
+        //if(c.getShed_().getLength() == 0) bandLengthPercent = 100.0;
         int shedLength = 0;
         int amountOfRafters = fb.calculateQuantityOfSpærIncludedBackSpær(carportLength, 90);      
         
@@ -144,9 +144,13 @@ public class DrawSVG {
 
             drawingTop += "<rect x='0' y='" + (position - 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
         }
-
-        drawingTop += "<line x1=\"0\" y1=\"0\" x2=\""+ bandLengthPercent +"%\" y2=\"100%\" style=\"stroke:blue; stroke-width:5\" />"
-                + "<line x1=\"0\" y1=\"100%\" x2=\""+ bandLengthPercent +"%\" y2=\"0\" style=\"stroke:blue; stroke-width:5\" />";
+        
+        int divideRafters = 2;
+        if(c.getShed_().getLength() > 0) divideRafters = 1;
+        double startPoint = 33 + ib.spaceBetweenRafters(carportLength, shedLength);
+        double endPoint = (33 + (ib.spaceBetweenRafters(carportLength, shedLength) * (amountOfRafters - divideRafters)));
+        drawingTop += "<line x1=\""+startPoint+"\" y1=\"0\" x2=\""+ endPoint +"\" y2=\"100%\" style=\"stroke:blue; stroke-width:5\" />"
+                + "<line x1=\""+startPoint+"\" y1=\"100%\" x2=\""+ endPoint +"\" y2=\"0\" style=\"stroke:blue; stroke-width:5\" />";
         drawingTop += "</svg>";
         return drawingTop;
     }

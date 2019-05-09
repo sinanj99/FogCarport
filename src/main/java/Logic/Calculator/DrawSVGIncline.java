@@ -59,8 +59,8 @@ public class DrawSVGIncline {
         int quantityOfStolper = f.calculateQuantityOfStolper(length, width, shed);
 
         // REM
-        drawing += "<rect x='" + startingPointFirstSpærX + "' y='" + startingPointFirstSpærY + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
-        drawing += "<rect x='" + startingPointFirstSpærX + "' y='" + (startingPointFirstSpærY + hypotenuse * 2 - 90) + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
+        drawing += "<rect class='remmen' x='" + startingPointFirstSpærX + "' y='" + startingPointFirstSpærY + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
+        drawing += "<rect class='remmen' x='" + startingPointFirstSpærX + "' y='" + (startingPointFirstSpærY + hypotenuse * 2 - 90) + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
 
         //SPÆR
         int quantityOfRafters = f.calculateQuantityOFSpærExcluedBackSpær(length, 90);

@@ -207,6 +207,17 @@ public class DrawSVGIncline {
             }
             drawing += "<rect class='stolper' x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";   
         }
+        
+        drawing += "<line x1='20' y1='45' x2='20' y2='" + (startingPointFirstSpærY + 25) + "' style='stroke:black;stroke-width:2'/>";
+        drawing += "<text x='-80' transform='rotate(-90)' y='15' fill='black'>"+(int)f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int)hypotenuse, 40), (int)hypotenuse, 40)+" cm</text>";
+        drawing += "<line x1='25' y1='35' x2='25' y2='" + (hypotenuse * 2 - 17) + "' style='stroke:black;stroke-width:2'/>";
+        drawing += "<text x='" + (-hypotenuse * 2 + 23) + "' transform='rotate(-90)' y='20' fill='black'>" + width + " cm</text>";
+        
+        drawing += "<line x1='25' y1='30' x2='" + (length + 70) + "' y2='30' style='stroke:black;stroke-width:2'/>";
+        drawing += "<text x='25' y='25' fill='black'>"+length+" cm</text>";
+        drawing += "<line x1='"+(length-23)+"' y1='25' x2='" + (length+40) + "' y2='25' style='stroke:black;stroke-width:2'/>";
+        drawing += "<text x='" + (length-23) + "' y='20' fill='black'>"+(int) f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60)+" cm</text>";
+
 //        if (slength != 0) {
 //            // SKUR
 //            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";

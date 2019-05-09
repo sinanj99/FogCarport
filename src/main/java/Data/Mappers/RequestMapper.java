@@ -123,6 +123,7 @@ class RequestMapper extends IRequestMapper {
     private Shed getRequestShed(int carport_id) {
         int width = 0;
         int length = 0;
+        Shed shed = null;
         try {
             String query = "SELECT * FROM sheds WHERE carport_id = ?;";
             PreparedStatement pstmt = con.prepareStatement(query);
@@ -132,11 +133,12 @@ class RequestMapper extends IRequestMapper {
             if (rs.next()) {
                 width = rs.getInt("width");
                 length = rs.getInt("length");
+                shed = new Shed(width, length);
             }
         } catch (SQLException e) {
             System.out.println("There was an error fetching data from shed table: " + e.getMessage());
         }
-        return new Shed(width, length);
+        return shed;
     }
 
     /**
@@ -442,13 +444,12 @@ class RequestMapper extends IRequestMapper {
 
     @Override
     public List<Request> getRequests() {
-        int user_id = 0;
-        int req_id = 0;
-        String datePlaced = "";
-        ShippingAddress address = null;
+        int user_id, req_id;
+        String datePlaced;
+        ShippingAddress address;
         List<Request> requests = new ArrayList();
-        Carport cp = null;
-
+        Carport cp;
+        System.out.println("TEST TEST");
         try {
             String query = "SELECT * FROM requests ORDER BY `request_id` DESC;";
             Statement stmt = con.prepareStatement(query);
@@ -459,8 +460,10 @@ class RequestMapper extends IRequestMapper {
                 datePlaced = rs.getString("dateplaced");
                 address = getRequestShippingAddress(req_id);
                 cp = getRequestCarport(req_id);
+                System.out.println("CARPORT = " + cp);
                 requests.add(new Request(req_id, user_id, datePlaced, cp, address));
             }
+            System.out.println(requests);
         } catch (SQLException e) {
             System.out.println("REQUESTEX" + e.getMessage());
         }

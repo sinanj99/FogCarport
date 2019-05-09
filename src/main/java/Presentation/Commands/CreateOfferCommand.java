@@ -90,10 +90,10 @@ public class CreateOfferCommand implements Command {
             svg1 = d.drawTopIncline(r.getCarport());
             svg2 = d.drawFrontIncline(r.getCarport());
         }
-        String bandSvg = d.drawPerforatedBand(r.getCarport());
+//        String bandSvg = d.drawPerforatedBand(r.getCarport());
         request.setAttribute("svg1", svg1);
         request.setAttribute("svg2", svg2);
-        request.setAttribute("bandSvg", bandSvg);
+//        request.setAttribute("bandSvg", bandSvg);
 
         return "create_offer.jsp";
     }

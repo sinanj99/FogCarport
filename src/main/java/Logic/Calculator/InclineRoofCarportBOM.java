@@ -447,7 +447,7 @@ public class InclineRoofCarportBOM {
         return new LineItem(m, amountOfSoffits(carportWidth, inclination), "Vindskeder på rejsning", m.getPrice() * amountOfSoffits(carportWidth, inclination), Type.LENGTH);
     }
 
-    public LineItem rafters(int carportWidth, int carportLength, Shed shed, int shedLength) {
+    public LineItem rafters(int carportWidth, int carportLength, Shed shed) {
         Material m = Facade.getMaterialWithLength(3, carportWidth);
         return new LineItem(m, amountOfRafters(carportLength), "Spær, monteres på rem", m.getPrice() * amountOfRafters(carportLength), Type.LENGTH);
     }

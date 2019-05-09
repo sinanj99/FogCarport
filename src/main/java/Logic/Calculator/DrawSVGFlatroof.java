@@ -19,8 +19,12 @@ public class DrawSVGFlatroof {
         int length = c.getLength();
         int width = c.getWidth();
         Shed shed = c.getShed_();
-        int slength = shed.getLength();
-        int swidth = shed.getWidth();
+        int slength = 0;
+        int swidth = 0;
+        if(shed!=null) {
+        slength = shed.getLength();
+        swidth = shed.getWidth();
+        }
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
 
@@ -33,7 +37,7 @@ public class DrawSVGFlatroof {
         float xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
         float yCordinate = startingPointFirstSpærY;
 
-        int quantityOfStolper = f.calculateQuantityOfStolper(length,width, shed, slength);
+        int quantityOfStolper = f.calculateQuantityOfStolper(length,width, shed);
         
 
         for (int i = 0; i < quantityOfStolper; i++) {

@@ -55,7 +55,7 @@ public class GenerateReqCommand implements Command {
             int slength = Integer.parseInt(request.getParameter("slength"));
             int swidth = Integer.parseInt(request.getParameter("swidth"));
             shed = new Shed(swidth, slength);
-        }
+        } 
 
         Carport cp = new Carport(roof, inclination, cwidth, clength, shed);
         String fname = request.getParameter("fname");

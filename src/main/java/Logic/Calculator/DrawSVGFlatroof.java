@@ -26,7 +26,7 @@ public class DrawSVGFlatroof {
         swidth = shed.getWidth();
         }
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
-        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
+        drawing += "<svg height='800' width='800' viewbox='0 0 " + 900 + " " + 900 + "' >";
 
         //STOLPER 
         float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60);
@@ -219,6 +219,14 @@ public class DrawSVGFlatroof {
                 
                 
         
+        //Hulbånd
+        int bandWidth = width + 20;
+        float startPoint = 110;
+        double endPoint = 110 + (spaceBetweenSpærVAR * (quantityOfSpær - 2)) + (4 * (quantityOfSpær - 2));
+        if(shed != null) endPoint = (110 + (spaceBetweenSpærVAR * (quantityOfSpær - 2)) + (1 * (quantityOfSpær - 2))) - slength;
+        //float endPoint = (spaceBetweenSpærVAR * (quantityOfSpær));// + (ib.spaceBetweenRafters(carportLength, shedLength) * (amountOfRafters - minusRafters)));
+        drawing += "<line x1='"+startPoint+"' y1='50' x2='"+ endPoint +"' y2='"+bandWidth+"' style='stroke:silver; stroke-width:5; stroke-dasharray:10, 5;' />"
+                + "<line x1='"+startPoint+"' y1='"+bandWidth+"' x2='"+ endPoint +"' y2='50' style='stroke:silver; stroke-width:5; stroke-dasharray:10, 5;' />";
         
         drawing += "</svg>";
         return drawing;

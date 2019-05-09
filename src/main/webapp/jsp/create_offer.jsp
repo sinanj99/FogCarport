@@ -8,11 +8,6 @@
 <%@page import="Data.Entity.LineItem"%>
 <%@page import="Data.Entity.BOM"%>
 <%  
-    
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-        response.sendRedirect("login.jsp");
-    }
 
     
     int buyPrice = (int) request.getAttribute("buyPrice");
@@ -22,7 +17,8 @@
     List<LineItem> rooftiles = (List) request.getAttribute("roofTiles");
     List<LineItem> roofmaterials = (List) request.getAttribute("roofMaterials");
     List<LineItem> materialsNoLength = (List) request.getAttribute("materialsNoLength");
-    String svg = (String) request.getAttribute("svg");
+    String svg1 = (String) request.getAttribute("svg1");
+    String svg2 = (String) request.getAttribute("svg2");
     String bandSvg = (String) request.getAttribute("bandSvg");
     int fullPrice = 0;
 %>
@@ -134,10 +130,11 @@
                         <% }%>
                     </div>
                     <h3>Skitse:</h3>
-                    <%= svg %>
+                    Tag fra oven:
+                    <%= svg1 %>
                     <br><br>
-                    <h5>Hulbånd</h5>
-                    <%= bandSvg %>
+                    Tag forfra:
+                    <%= svg2 %>
                 </div>
             </div>
         </div>

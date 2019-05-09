@@ -75,7 +75,7 @@ public class DrawSVGFlatroof {
                 //the front middle stolpe of the shed
                 if (i == 6) {
                     //yCordinate changed to place it between the front bottom and top stolpe of the shed
-                    yCordinate = ((startingPointFirstSpærY + width - 36) + yCordinate) / 2 ;
+                    yCordinate = (startingPointFirstSpærY + width - 36) + yCordinate / 2  ;
                 }
                 //the back middle stolpe of the shed
                 if (i == 7) {

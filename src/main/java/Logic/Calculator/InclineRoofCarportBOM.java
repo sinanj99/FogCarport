@@ -88,7 +88,7 @@ public class InclineRoofCarportBOM {
      * @param inclination
      * @return (taglægter)
      */
-    public static int amountOfLaths(int carportWidth, double inclination) {
+    public int amountOfLathsDraw(int carportWidth, double inclination) {
         /*firstly, the roof is divided into 2 right-angled triangles,
         and the hypotenuse is calculated*/
         int triangleWidth = carportWidth / 2; // width of each triangle.
@@ -99,7 +99,20 @@ public class InclineRoofCarportBOM {
         hypotenuse -= 65;
         /*the hypotenuse is now used to calculate the amount of laths*/
         //amount of holes or amount of rafters(excluding back rafter)
-        return fc.calculateQuantityOfSpærIncludedBackSpær((int) hypotenuse, 35)*2;
+        return fc.calculateQuantityOfSpærIncludedBackSpær((int) carportWidth/2, 35);
+    }
+    public int amountOfLaths(int carportWidth, double inclination) {
+        /*firstly, the roof is divided into 2 right-angled triangles,
+        and the hypotenuse is calculated*/
+        int triangleWidth = carportWidth / 2; // width of each triangle.
+        inclination = Math.toRadians(inclination); //Math.cos expects radians
+        double hypotenuse = triangleWidth / Math.cos(inclination);
+        /*there must be a space of 35 cm between the first and secong lath, and a space
+        of 30 cm between the last lath and the top.*/
+//      hypotenuse -= 65;
+        /*the hypotenuse is now used to calculate the amount of laths*/
+        //amount of holes or amount of rafters(excluding back rafter)
+        return fc.calculateQuantityOfSpærIncludedBackSpær((int) hypotenuse, 40)*2-2;
     }
 
     private int amountOfLathHolders(int carportLength, Shed shed, int shedLength) {
@@ -173,13 +186,13 @@ public class InclineRoofCarportBOM {
      * @param shedLength
      * @return (sternbrædder)
      */
-    private int amountOfFasciaBoardsCarport(int carportLength, Shed shed, int shedLength) {
+    private int amountOfFasciaBoardsCarport(int carportLength, Shed shed) {
         /*
         (carport minus shed)
          */
         int length = carportLength;
         if (shed != null) {
-            length -= shedLength;
+            length -= shed.getLength();
         }
         // check if 1 is enough.
         if (length <= 600) {
@@ -250,7 +263,7 @@ public class InclineRoofCarportBOM {
      * @return (toplægte)
      */
     private int amountOfTopLaths() {
-        return 2;
+        return 1;
     }
 
     /**
@@ -439,9 +452,9 @@ public class InclineRoofCarportBOM {
         return new LineItem(m, amountOfRafters(carportLength), "Spær, monteres på rem", m.getPrice() * amountOfRafters(carportLength), Type.LENGTH);
     }
 
-    public LineItem fasciaCarport(int carportLength, Shed shed, int shedLength) {
+    public LineItem fasciaCarport(int carportLength, Shed shed) {
         Material m = Facade.getMaterialWithLength(1, 600);
-        return new LineItem(m, amountOfFasciaBoardsCarport(carportLength, shed, shedLength), "Sternbrædder til siderne Carport del", m.getPrice() * amountOfFasciaBoardsCarport(carportLength, shed, shedLength), Type.LENGTH);
+        return new LineItem(m, amountOfFasciaBoardsCarport(carportLength, shed), "Sternbrædder til siderne Carport del", m.getPrice() * amountOfFasciaBoardsCarport(carportLength, shed), Type.LENGTH);
     }
 
     public LineItem fasciaShed(int shedLength) {
@@ -460,7 +473,7 @@ public class InclineRoofCarportBOM {
     }
 
     public LineItem toplaths(int cLength, int sLength, int cWidth) {
-        Material m = Facade.getMaterialWithLength(7, cLength - sLength - 90);
+        Material m = Facade.getMaterialWithLength(7, cLength);
         return new LineItem(m, amountOfTopLaths(), "toplægte til montering af rygsten lægges i toplægte holder", m.getPrice() * amountOfTopLaths(), Type.LENGTH);
 
     }
@@ -558,15 +571,18 @@ public class InclineRoofCarportBOM {
         return new LineItem(m, amountOfRoofTileBinders(), "til montering af tagsten, alle ydersten + hver anden fastgøres", m.getPrice() * amountOfRoofTileBinders(), Type.ROOF);
     }
 
-    public static int amountOfRafters(int carportLength) {
+    public int amountOfRafters(int carportLength) {
         return fc.calculateQuantityOfSpærIncludedBackSpær(carportLength, 90);
     }
     
     public float spaceBetweenRafters(int carportLength, int shedLength) {
         return fc.spaceBetweenSpær(fc.calculateQuantityOFSpærExcluedBackSpær(carportLength, 90), carportLength, 90);
     }
+    public float spaceBetweenLaths(int carportLength, int shedLength, int limit) {
+        return fc.spaceBetweenSpær(fc.calculateQuantityOFSpærExcluedBackSpær(carportLength, limit), carportLength, limit);
+    }
  
     public static void main(String[] args) {
-        System.out.println(amountOfLaths(360, 20));
+//        System.out.println(amountOfRafters(390));
     }
 }

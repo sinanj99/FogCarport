@@ -34,6 +34,7 @@ public class DrawSVGFlatroof {
         float yCordinate = startingPointFirstSpærY;
 
         int quantityOfStolper = f.calculateQuantityOfStolper(length,width, shed, slength);
+        
 
         for (int i = 0; i < quantityOfStolper; i++) {
             if (shed != null && shed.getLength() != 0) {
@@ -111,7 +112,7 @@ public class DrawSVGFlatroof {
                     //xCordinate changed so it is placed at the same xCordinate at the top right corner stolpe for the carport
                     xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f;
                 }
-            } else {
+            } if(slength == 0) {
                 //Top left stolpe
                 if (i == 0) {
                     //yCordinate changed to make place it under remmen
@@ -157,7 +158,7 @@ public class DrawSVGFlatroof {
                     yCordinate = startingPointFirstSpærY + width - 36;
                 }
             }
-
+            
             drawing += "<rect x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
         }
 

@@ -33,7 +33,7 @@
         <%
             ShippingAddress s = new ShippingAddress("bob", "johnson", "vejen", 3420, "opdigtet");
             Roof roof = new Roof(1, "taget", false);
-            Carport c = new Carport(roof, 0, 510,420 , new Shed(300, 180));
+            Carport c = new Carport(roof, 0, 330,240 , null);
             
             Request r = new Request(s, 2, "", c);
         %>
@@ -52,8 +52,8 @@
         
         int carportLength = r.getCarport().getLength();
         int carportWidth = r.getCarport().getWidth();
-        int shedLength = r.getCarport().getShed_().getLength();
-        int shedWitdh = r.getCarport().getShed_().getWidth();
+        int shedLength = 10;
+        int shedWitdh = 10;
         
         //new Shed(210, 240)
         //r.getCarport().getShed_().getLength();

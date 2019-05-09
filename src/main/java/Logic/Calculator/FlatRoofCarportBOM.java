@@ -142,7 +142,7 @@ public class FlatRoofCarportBOM {
         // four corner stolper
         int quantity = 4;
 
-        if (shed != null) {
+        if (shed != null && shed.getLength() != 0) {
             lengthAvaiableForStolper -= shedLength;
             
             if(widthOfCarport - shed.getWidth() == 30)

@@ -33,7 +33,7 @@
         <%
             ShippingAddress s = new ShippingAddress("bob", "johnson", "vejen", 3420, "opdigtet");
             Roof roof = new Roof(1, "taget", false);
-            Carport c = new Carport(roof, 0, 330,240 , null);
+            Carport c = new Carport(roof, 0, 330,480 , new Shed(210, 240));
             
             Request r = new Request(s, 2, "", c);
         %>
@@ -52,8 +52,8 @@
         
         int carportLength = r.getCarport().getLength();
         int carportWidth = r.getCarport().getWidth();
-        int shedLength = 10;
-        int shedWitdh = 10;
+        int shedLength = r.getCarport().getShed_().getLength();
+        int shedWitdh = r.getCarport().getShed_().getWidth();
         
         //new Shed(210, 240)
         //r.getCarport().getShed_().getLength();
@@ -71,7 +71,7 @@
                 float xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
                 float yCordinate = startingPointFirstSpærY;
                 
-                int quantityOfStolper = f.calculateQuantityOfStolper(carportLength, carportWidth, r.getCarport().getShed_(), shedLength);
+                int quantityOfStolper = f.calculateQuantityOfStolper(carportLength, carportWidth, r.getCarport().getShed_());
                 System.out.println(quantityOfStolper);
 
                 for(int i = 0; i < quantityOfStolper; i++)
@@ -260,6 +260,29 @@
                 }
             %>
             
+        </svg>
+        
+        <svg class="skurbeklædning">
+            
+        <line x1=<%= startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR  %> y1=<%= startingPointFirstSpærY + carportWidth - 36 + 10 %>
+              x2=<%= startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR  %> y2=<%= startingPointFirstSpærY + carportWidth - 36 - shedWitdh   %> 
+              style="stroke: darkblue; fill:none; stroke-width: 3px;"/>
+        
+        <line x1=<%= startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR  %> y1=<%= startingPointFirstSpærY + carportWidth - 36 - shedWitdh  %>
+              x2=<%= (startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR) - shedLength  %> y2=<%= startingPointFirstSpærY + carportWidth - 36 - shedWitdh   %> 
+              style="stroke: darkblue; fill:none; stroke-width: 3px;"/>
+        
+        <line x1=<%= (startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR) - shedLength  %> y1=<%= startingPointFirstSpærY + carportWidth - 36 - shedWitdh  %>
+              x2=<%= (startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR) - shedLength  %> y2=<%= startingPointFirstSpærY + carportWidth - 36 + 10 %> 
+              style="stroke: darkblue; fill:none; stroke-width: 3px;"/>
+        
+        <line x1=<%= (startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR) - shedLength   %> y1=<%= startingPointFirstSpærY + carportWidth - 36 + 10 %>
+              x2=<%= startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR  %> y2=<%= startingPointFirstSpærY + carportWidth - 36 + 10 %> 
+              style="stroke: darkblue; fill:none; stroke-width: 3px;"/>
+        
+        
+        
+        
         </svg>
 
     </svg>

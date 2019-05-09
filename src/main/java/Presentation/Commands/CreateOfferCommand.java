@@ -75,21 +75,24 @@ public class CreateOfferCommand implements Command {
         DrawSVGIncline d = new DrawSVGIncline();
         DrawSVGFlatroof df = new DrawSVGFlatroof();
         
-        String svg = "";
+        String svg1 = "";
+        String svg2 = "";
         
         if(r.getCarport().getInclination() == 0)
         {
-            svg = df.drawFlat(r.getCarport());
-            System.out.println(svg);
+            svg1 = df.drawFlat(r.getCarport());
+            System.out.println(svg1);
         } 
         
         
         else
         {
-            svg = d.drawTopInclineShed(r.getCarport());
+            svg1 = d.drawTopIncline(r.getCarport());
+            svg2 = d.drawFrontIncline(r.getCarport());
         }
         String bandSvg = d.drawPerforatedBand(r.getCarport());
-        request.setAttribute("svg", svg);
+        request.setAttribute("svg1", svg1);
+        request.setAttribute("svg2", svg2);
         request.setAttribute("bandSvg", bandSvg);
 
         return "create_offer.jsp";

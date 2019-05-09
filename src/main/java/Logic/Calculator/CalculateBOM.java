@@ -34,14 +34,14 @@ public class CalculateBOM {
         
         if (r.getCarport().getShed_() == null || r.getCarport().getShed_().getLength() == 0) {
             listOfLineItems.add(f.beslagskruer(r.getCarport().getLength()));
-            listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
+            listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().getWidth(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
             listOfLineItems.add(f.højrebeslag(r.getCarport().getLength()));
             listOfLineItems.add(f.venstrebeslag(r.getCarport().getLength()));
             listOfLineItems.add(f.oversternbrædderForFront(r.getCarport().getWidth()));
             listOfLineItems.add(f.oversternbrædderForSides(r.getCarport().getLength()));
             listOfLineItems.add(f.spær(r.getCarport().getLength(), r.getCarport().getWidth()));
             listOfLineItems.add(f.spærForRemmen(r.getCarport().getLength()));
-            listOfLineItems.add(f.stolpe(r.getCarport().getLength(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
+            listOfLineItems.add(f.stolpe(r.getCarport().getLength(), r.getCarport().getWidth(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
             listOfLineItems.add(f.understernBrædderForSides(r.getCarport().getLength()));
             listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
             listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
@@ -55,14 +55,14 @@ public class CalculateBOM {
 
             //Adds material related to the carport
             listOfLineItems.add(f.beslagskruer(r.getCarport().getLength()));
-            listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
+            listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().getWidth(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
             listOfLineItems.add(f.højrebeslag(r.getCarport().getLength()));
             listOfLineItems.add(f.venstrebeslag(r.getCarport().getLength()));
             listOfLineItems.add(f.oversternbrædderForFront(r.getCarport().getWidth()));
             listOfLineItems.add(f.oversternbrædderForSides(r.getCarport().getLength()));
             listOfLineItems.add(f.spær(r.getCarport().getLength(), r.getCarport().getWidth()));
             listOfLineItems.add(f.spærForRemmen(r.getCarport().getLength()));
-            listOfLineItems.add(f.stolpe(r.getCarport().getLength(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
+            listOfLineItems.add(f.stolpe(r.getCarport().getLength(),r.getCarport().getWidth(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
             listOfLineItems.add(f.understernBrædderForSides(r.getCarport().getLength()));
             listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
             listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
@@ -103,7 +103,7 @@ public class CalculateBOM {
             list.add(calc.soffits(cwidth, inclination));
             list.add(calc.fasciaCarport(clength, shed, slength));
             list.add(calc.fasciaShed(slength));//shed
-            list.add(f.stolpe(clength, shed, slength));
+            list.add(f.stolpe(clength, cwidth, shed, slength));
             list.add(calc.beamsCarport(clength, shed, slength));
             list.add(calc.beamsShed(slength));//shed
             list.add(calc.intertiesSides(slength));//shed
@@ -131,14 +131,14 @@ public class CalculateBOM {
             list.add(calc.fasciaAndSoffitScrews(clength, cwidth, shed, slength, inclination));
             list.add(calc.screwsLathHolders(clength, shed, slength));
             list.add(calc.LathScrews(cwidth, inclination));
-            list.add(f.brædderbolt(clength, shed, slength));
+            list.add(f.brædderbolt(clength, cwidth, shed, slength));
             list.add(calc.squareDiscs());
             list.add(calc.screwsOuterTimbering(swidth, slength));//shed
             list.add(calc.screwsInnerTimbering(swidth, slength));//shed
         } else {
             list.add(calc.soffits(cwidth, inclination));
             list.add(calc.fasciaCarport(clength, shed, slength));
-            list.add(f.stolpe(clength, shed, slength));
+            list.add(f.stolpe(clength,cwidth, shed, slength));
             list.add(calc.beamsCarport(clength, shed, slength));
             list.add(calc.rainboards(cwidth, inclination));
             list.add(calc.laths(cwidth, inclination, clength, slength));
@@ -156,7 +156,7 @@ public class CalculateBOM {
             list.add(calc.fasciaAndSoffitScrews(clength, cwidth, shed, slength, inclination));
             list.add(calc.screwsLathHolders(clength, shed, slength));
             list.add(calc.LathScrews(cwidth, inclination));
-            list.add(f.brædderbolt(clength, shed, slength));
+            list.add(f.brædderbolt(clength, cwidth, shed, slength));
             list.add(calc.squareDiscs());
         }
         return new BOM(list);

@@ -33,7 +33,7 @@
         <%
             ShippingAddress s = new ShippingAddress("bob", "johnson", "vejen", 3420, "opdigtet");
             Roof roof = new Roof(1, "taget", false);
-            Carport c = new Carport(roof, 0, 530,420 , null);
+            Carport c = new Carport(roof, 0, 510,420 , new Shed(300, 180));
             
             Request r = new Request(s, 2, "", c);
         %>
@@ -52,12 +52,14 @@
         
         int carportLength = r.getCarport().getLength();
         int carportWidth = r.getCarport().getWidth();
-        int shedLength = 10;
+        int shedLength = r.getCarport().getShed_().getLength();
+        int shedWitdh = r.getCarport().getShed_().getWidth();
         
         //new Shed(210, 240)
         //r.getCarport().getShed_().getLength();
+                //r.getCarport().getShed_().getWidth();
         
-        float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(carportLength), carportLength);
+        float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(carportLength, 60), carportLength, 60);
 
         float startingPointFirstSpærX = 50;
         float startingPointFirstSpærY = 50;
@@ -69,7 +71,8 @@
                 float xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
                 float yCordinate = startingPointFirstSpærY;
                 
-                int quantityOfStolper = f.calculateQuantityOfStolper(carportLength, r.getCarport().getShed_(), shedLength);
+                int quantityOfStolper = f.calculateQuantityOfStolper(carportLength, carportWidth, r.getCarport().getShed_(), shedLength);
+                System.out.println(quantityOfStolper);
 
                 for(int i = 0; i < quantityOfStolper; i++)
                 {
@@ -108,8 +111,8 @@
                         //The top front stolpe of the shed
                         if(i == 5)
                         {
-                            //Changed yCordinate to place it at the same yCordinat as the top left/right stolpe
-                            yCordinate = startingPointFirstSpærY - 3.6f;
+                            //Changed yCordinate to place it the width of the shed away
+                            yCordinate -= shedWitdh - 2.4;
                         }
                         //the front middle stolpe of the shed
                         if(i == 6)
@@ -126,16 +129,37 @@
                         //Stolpe between the top left stolpe and top front stolpe of the shed
                         if(i == 8)
                         {
-                            //yCordinate changed to place it at same yCordinate at top left stolpe
-                            yCordinate = startingPointFirstSpærX - 3.6f;
-                            //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
-                            xCordinate = (xCordinate - shedLength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                            //function as top right corner stolpe for the shed
+                            if(quantityOfStolper == 9)
+                            {
+                                //yCordiante changed so it is placed at the botton left corner stolpe
+                                yCordinate = startingPointFirstSpærY + carportWidth - 36;
+                                //yCordinate changed so is placed shedwidth away
+                                yCordinate -= shedWitdh - 2.4;
+                                
+                            }
+                            else
+                            {
+                                //yCordinate changed to place it at same yCordinate at top left stolpe
+                                yCordinate = startingPointFirstSpærX - 3.6f;
+                                //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
+                                xCordinate = (xCordinate - shedLength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                            }
+                            
                         }
                         //stolpe between the bottom left stolpe and the bottom front stolpe of the shed
                         if(i == 9)
                         {
                             //yCordinate changed to place it at the same yCordinate as the front bottom stolpe
                             yCordinate = startingPointFirstSpærY + carportWidth - 36;
+                        }
+                        //stolpe for the top right corner of the shed, if the top right corner stolpe of the carport cant be used.
+                        if(i == 10)
+                        {
+                            //yCordiante changed so it is placed at the carportwidth
+                            yCordinate -= shedWitdh - 2.4;
+                            //xCordinate changed so it is placed at the same xCordinate at the top right corner stolpe for the carport
+                            xCordinate = startingPointFirstSpærX + carportLength - spaceBetweenSpærVAR - 9.7f;
                         }
                     }
                     
@@ -219,8 +243,8 @@
         <svg class="spærerne">
             
             <%
-                int quantityOfSpær = f.calculateQuantityOFSpærExcluedBackSpær(carportLength);
-                int quantityOfSpærPlusTheBackSpær = f.calculateQuantityOfSpærIncludedBackSpær(carportLength);
+                int quantityOfSpær = f.calculateQuantityOFSpærExcluedBackSpær(carportLength, 60);
+                int quantityOfSpærPlusTheBackSpær = f.calculateQuantityOfSpærIncludedBackSpær(carportLength, 60);
                 
                 float frontSpærPlacementX =  startingPointFirstSpærX;
                 float frontSpærPlacementY = startingPointFirstSpærY - 15;
@@ -231,7 +255,7 @@
             <rect class="spær" x=<%= frontSpærPlacementX %> y=<%= frontSpærPlacementY  %> height=<%= carportWidth %> width=<%= 10 %> fill="none" stroke="black" stroke-width="3px" />
             <%
                 
-                frontSpærPlacementX += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(carportLength), carportLength) + 3f;
+                frontSpærPlacementX += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(carportLength,60), carportLength,60) + 3f;
                 
                 }
             %>

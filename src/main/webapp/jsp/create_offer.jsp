@@ -7,9 +7,8 @@
 <%@page import="Data.Entity.Type"%>
 <%@page import="Data.Entity.LineItem"%>
 <%@page import="Data.Entity.BOM"%>
-<%  
+<%
 
-    
     int buyPrice = (int) request.getAttribute("buyPrice");
     int sellPrice = (int) request.getAttribute("sellPrice");
     Request r = (Request) request.getAttribute("request");
@@ -130,11 +129,15 @@
                         <% }%>
                     </div>
                     <h3>Skitse:</h3>
-                    Tag fra oven:
-                    <%= svg1 %>
-                    <br><br>
-                    Tag forfra:
-                    <%= svg2 %>
+                    <div class="d-flex flex-column align-items-center text-align-center" width="500px" height="auto">
+                        Tag fra oven:
+                        <%= svg1%>
+                    </div>
+
+                    <div class="d-flex flex-column align-items-center text-align-center" width="500px" height="auto">
+                        Tag forfra:
+                        <%= svg2%>
+                    </div>
                 </div>
             </div>
         </div>

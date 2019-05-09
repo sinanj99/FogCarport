@@ -119,7 +119,7 @@
                             <p>Længde: <%=r.getCarport().getLength()%></p>
                         </div>
 
-                        <%if (r.getCarport().getShed_().getLength() != 0) {%>
+                        <%if (r.getCarport().getShed_() != null) {%>
                         <div class="d-flex flex-column align-items-center">
                             <h3 class="">Redskabsrum: </h3>
                             <p>Bredde: <%=r.getCarport().getShed_().getWidth()%></p>

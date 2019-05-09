@@ -38,8 +38,6 @@
                                     if (r.getCarport().getInclination() != 0 && r.getCarport().getShed_() == null) {
                                         out.println("Carport med rejsning");
                                     } else if (r.getCarport().getInclination() != 0 && r.getCarport().getShed_() != null) {
-                                        out.println("Carport med rejsning");
-                                    } else if (r.getCarport().getInclination() != 0 && r.getCarport().getShed_() != null) {
                                         out.println("Carport med rejsning & skur");
                                     } else if (r.getCarport().getInclination() == 0 && r.getCarport().getShed_() != null) {
                                         out.println("Carport uden rejsning, men med skur");

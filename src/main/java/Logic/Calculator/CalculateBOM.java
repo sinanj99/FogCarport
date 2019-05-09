@@ -32,7 +32,7 @@ public class CalculateBOM {
         ToolShedBOM b = new ToolShedBOM();
         BOM bom;
         
-        if (r.getCarport().getShed_() == null || r.getCarport().getShed_().getLength() == 0) {
+        if (r.getCarport().getShed_() == null) {
             listOfLineItems.add(f.beslagskruer(r.getCarport().getLength()));
             listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().getShed_(), r.getCarport().getShed_().getLength()));
             listOfLineItems.add(f.højrebeslag(r.getCarport().getLength()));
@@ -98,12 +98,12 @@ public class CalculateBOM {
         int roofid = r.getCarport().getRoof().getRoof_id();
         int inclination = (int) r.getCarport().getInclination();
 
-        if (shed != null && shed.getLength() != 0) {
+        if (shed != null) {
             //with length index 0-12
             list.add(calc.soffits(cwidth, inclination));
-            list.add(calc.fasciaCarport(clength, shed, slength));
+            list.add(calc.fasciaCarport(clength, shed));
             list.add(calc.fasciaShed(slength));//shed
-            list.add(f.stolpe(clength, shed, slength));
+            list.add(f.stolpe(clength, shed));
             list.add(calc.beamsCarport(clength, shed, slength));
             list.add(calc.beamsShed(slength));//shed
             list.add(calc.intertiesSides(slength));//shed
@@ -137,8 +137,8 @@ public class CalculateBOM {
             list.add(calc.screwsInnerTimbering(swidth, slength));//shed
         } else {
             list.add(calc.soffits(cwidth, inclination));
-            list.add(calc.fasciaCarport(clength, shed, slength));
-            list.add(f.stolpe(clength, shed, slength));
+            list.add(calc.fasciaCarport(clength, shed));
+            list.add(f.stolpe(clength, shed));
             list.add(calc.beamsCarport(clength, shed, slength));
             list.add(calc.rainboards(cwidth, inclination));
             list.add(calc.laths(cwidth, inclination, clength, slength));

@@ -35,18 +35,6 @@ public class DrawSVGIncline {
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
         drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 1000 + " " + 500 + "' >";
-//        //LÆGTE
-//        int position = 3;
-//        drawing += "<rect y='" + (width / 2 +25) + "' x='" + (20) + "' height='10' width='" + (length + 57) + "' fill='grey' stroke='black' stroke-width='3'/>";
-//        for (int i = 0; i < ic.amountOfLaths(width, c.getInclination()); i++) {
-//            position += ic.spaceBetweenLaths((int) hypotenuse, slength, 35);
-//            drawing += "<rect y='" + position + "' x='" + (20) + "' height='10' width='" + (length + 57) + "' fill='lightgrey' stroke='black' stroke-width='3'/>";
-//        }
-//        position = width + 58;
-//        for (int i = ic.amountOfLaths(width, c.getInclination()); i > 0; i--) {
-//            position -= ic.spaceBetweenLaths(length, slength, 35);
-//            drawing += "<rect y='" + position + "' x='" + (50 - 30) + "' height='10' width='" + (length + 57) + "' fill='lightgrey' stroke='black' stroke-width='3'/>";
-//        }
 
         float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 90), length, 90);
 
@@ -94,14 +82,12 @@ public class DrawSVGIncline {
         }
 
         //STOLPER 
-        
-
         for (int i = 0; i < quantityOfStolper; i++) {
             if (shed != null && shed.getLength() != 0) {
                 //Top left stolpe
                 if (i == 0) {
                     //yCordinate changed to make place it under remmen
-                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR/2;
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR / 2;
                     yCordinate -= 3.6f;
                 }
                 //Top right stolpe
@@ -112,12 +98,12 @@ public class DrawSVGIncline {
                 //Botton right stolpe
                 if (i == 2) {
                     //yCordinate changed to place it at the at the other rem 
-                    yCordinate = startingPointFirstSpærY + (int)hypotenuse*2 - 93;
+                    yCordinate = startingPointFirstSpærY + (int) hypotenuse * 2 - 93;
                 }
                 //Bottom left stolpe
                 if (i == 3) {
                     //xCordinato changed to place it at the same xCordinate at the top left stolpe
-                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR/2;
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR / 2;
                 }
                 //The bottom front stolpe of the shed
                 if (i == 4) {
@@ -133,8 +119,8 @@ public class DrawSVGIncline {
                 //the front middle stolpe of the shed
                 if (i == 6) {
                     //yCordinate changed to place it between the front bottom and top stolpe of the shed
-                    yCordinate = ((startingPointFirstSpærY + (int)hypotenuse*2 - 93) + yCordinate) /2  ;
-                            //((int)hypotenuse);
+                    yCordinate = ((startingPointFirstSpærY + (int) hypotenuse * 2 - 93) + yCordinate) / 2;
+                    //((int)hypotenuse);
                 }
                 //the back middle stolpe of the shed
                 if (i == 7) {
@@ -143,24 +129,21 @@ public class DrawSVGIncline {
                 }
                 //Stolpe between the top left stolpe and top front stolpe of the shed
                 if (i == 8) {
-                    
+
                     //function as top right corner stolpe for the shed
-                    if(quantityOfStolper == 9)
-                    {
+                    if (quantityOfStolper == 9) {
                         //yCordiante changed so it is placed at the botton right corner stolpe
-                        yCordinate = startingPointFirstSpærY + (int)hypotenuse*2 - 93;
+                        yCordinate = startingPointFirstSpærY + (int) hypotenuse * 2 - 93;
                         //yCordinate changed so is placed shedwidth away
                         yCordinate -= swidth - 2.4;
 
-                    }
-                    else
-                    {
+                    } else {
                         //yCordinate changed to place it at same yCordinate at top left stolpe
                         yCordinate = startingPointFirstSpærX - 3.6f;
                         //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
                         xCordinate = (xCordinate - slength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
                     }
-                    
+
                 }
                 //stolpe between the bottom left stolpe and the bottom front stolpe of the shed
                 if (i == 9) {
@@ -168,18 +151,18 @@ public class DrawSVGIncline {
                     yCordinate = startingPointFirstSpærY + width - 36;
                 }
                 //stolpe for the top right corner of the shed, if the top right corner stolpe of the carport cant be used.
-                if(i == 10)
-                {
+                if (i == 10) {
                     //yCordiante changed so it is placed at the carportwidth
                     yCordinate -= swidth - 2.4;
                     //xCordinate changed so it is placed at the same xCordinate at the top right corner stolpe for the carport
                     xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f;
                 }
-            } if(slength == 0) {
+            }
+            if (slength == 0) {
                 //Top left stolpe
                 if (i == 0) {
                     //yCordinate changed to make place it under remmen
-                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR/2;
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR / 2;
                     yCordinate -= 3.6f;
                 }
                 //Top right stolpe
@@ -190,12 +173,12 @@ public class DrawSVGIncline {
                 //Botton right stolpe
                 if (i == 2) {
                     //yCordinate changed to place it at the at the other rem 
-                    yCordinate = startingPointFirstSpærY + (int)hypotenuse*2 - 93;
+                    yCordinate = startingPointFirstSpærY + (int) hypotenuse * 2 - 93;
                 }
                 //Bottom left stolpe
                 if (i == 3) {
                     //xCordinato changed to place it at the same xCordinate at the top left stolpe
-                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR/2;
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR / 2;
                 }
                 // one of middle bottom stolpe
                 if (i == 4) {
@@ -219,13 +202,11 @@ public class DrawSVGIncline {
                     xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2.5f;
                 }
                 if (i == 7) {
-                    yCordinate = startingPointFirstSpærY + (int)hypotenuse*2-93;
+                    yCordinate = startingPointFirstSpærY + (int) hypotenuse * 2 - 93;
                 }
             }
-            
-            drawing += "<rect class='stolper' x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
+            drawing += "<rect class='stolper' x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";   
         }
-        
 //        if (slength != 0) {
 //            // SKUR
 //            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
@@ -244,8 +225,8 @@ public class DrawSVGIncline {
         Shed shed = c.getShed_();
         int slength, swidth = 0;
         if (shed != null) {
-           slength = shed.getLength();
-           swidth = shed.getWidth();
+            slength = shed.getLength();
+            swidth = shed.getWidth();
         }
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         InclineRoofCarportBOM ic = new InclineRoofCarportBOM();

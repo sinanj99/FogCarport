@@ -15,91 +15,252 @@ import Data.Entity.Shed;
  */
 public class DrawSVGIncline {
 
-    public String drawTopInclineShed(Carport c) {
-        String drawingTop = "";
-        InclineRoofCarportBOM ib = new InclineRoofCarportBOM();
-        FlatRoofCarportBOM fb = new FlatRoofCarportBOM();
-        int carportLength = c.getLength();
-        int carportWidth = c.getWidth();
-        int shedLength = 0;
-        int amountOfRafters = fb.calculateQuantityOfSpærIncludedBackSpær(carportLength, 90);
+    public String drawTopIncline(Carport c) {
+        String drawing = "";
+        int length = c.getLength();
+        int width = c.getWidth();
+        Shed shed = c.getShed_();
+        int slength = shed.getLength();
+        int swidth = shed.getWidth();
+        double inclination = c.getInclination();
+        int triangleWidth = width / 2; // width of each triangle.
+        inclination = Math.toRadians(inclination); //Math.cos expects radians
+        double hypotenuse = triangleWidth / Math.cos(inclination);
+        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
+        InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
+        drawing += "<svg height='80%' width='80%' viewbox='50 0 " + 700 + " " + 500 + "' >";
+//        //LÆGTE
+//        int position = 3;
+//        drawing += "<rect y='" + (width / 2 +25) + "' x='" + (20) + "' height='10' width='" + (length + 57) + "' fill='grey' stroke='black' stroke-width='3'/>";
+//        for (int i = 0; i < ic.amountOfLaths(width, c.getInclination()); i++) {
+//            position += ic.spaceBetweenLaths((int) hypotenuse, slength, 35);
+//            drawing += "<rect y='" + position + "' x='" + (20) + "' height='10' width='" + (length + 57) + "' fill='lightgrey' stroke='black' stroke-width='3'/>";
+//        }
+//        position = width + 58;
+//        for (int i = ic.amountOfLaths(width, c.getInclination()); i > 0; i--) {
+//            position -= ic.spaceBetweenLaths(length, slength, 35);
+//            drawing += "<rect y='" + position + "' x='" + (50 - 30) + "' height='10' width='" + (length + 57) + "' fill='lightgrey' stroke='black' stroke-width='3'/>";
+//        }
 
-        //rafters
-        drawingTop += "<svg height='500' width='400' viewbox='0 0 " + (carportLength + 60) + " " + carportWidth + "' >";
-        drawingTop += "<rect x='0' y='50%' width='" + (carportLength + 60) + "' height='5' fill='black' stroke='black' stroke-width='5'/>";
-        drawingTop += "<rect x='33' y='0' height='" + (carportWidth) + "' width='15' fill='none' stroke='black' stroke-width='3'/>";
+        
+        float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 90), length, 90);
 
-        int position = 0;
-        System.out.println(ib.spaceBetweenRafters(carportLength, shedLength));
-        for (int i = 0; i < amountOfRafters; i++) {
-            position += fb.spaceBetweenSpær(fb.calculateQuantityOFSpærExcluedBackSpær(carportLength, 90), carportLength, 90);
-            drawingTop += "<rect x='" + (position + 30) + "' y='0' width='15' height='100%' fill='none' stroke='black' stroke-width='3'/>";
+        float startingPointFirstSpærX = 50;
+        float startingPointFirstSpærY = 50;
+
+        float xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
+        float yCordinate = startingPointFirstSpærY;
+
+        int quantityOfStolper = f.calculateQuantityOfStolper(length, shed, slength);
+        
+        
+
+        // REM
+        drawing += "<rect x='" + startingPointFirstSpærX + "' y='" + startingPointFirstSpærY + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
+        drawing += "<rect x='" + startingPointFirstSpærX + "' y='" + (startingPointFirstSpærY + hypotenuse*2 - 90) + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
+
+        //SPÆR
+        int quantityOfRafters = f.calculateQuantityOFSpærExcluedBackSpær(length, 90);
+        int quantityOfRaftersPlusTheBackRafter = f.calculateQuantityOfSpærIncludedBackSpær(length, 90);
+
+        float frontSpærPlacementX = startingPointFirstSpærX;
+        float frontSpærPlacementY = startingPointFirstSpærY - 15;
+
+        for (int i = 0; i < quantityOfRaftersPlusTheBackRafter; i++) {
+            drawing += "<rect x='" + frontSpærPlacementX + "' y='" + frontSpærPlacementY + "' height='" + (hypotenuse*2-60) + "' width='10' fill='none' stroke='black' stroke-width='3px'/>";
+            frontSpærPlacementX += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 90), length, 90) + 3f;
         }
-        //laths
-        position = 0;
-        drawingTop += "<rect x='0' y='" + (position + 30) + "' width='" + (carportLength + 60) + "' height='5' fill='none' stroke='black' stroke-width='3'/>";
-        System.out.println("SPACELENGTH = " + ib.spaceLength(carportWidth, c.getInclination()));
-        for (int i = 0; i < ib.amountOfLaths(carportWidth, c.getInclination()) / 2-1; i++) {
+         //Lægter
 
-            position += ib.spaceLength(carportWidth, c.getInclination());
+        int quantityOfLathsPlusBackLath = f.calculateQuantityOfSpærIncludedBackSpær((int) hypotenuse, 40)-1;
 
-            drawingTop += "<rect x='0' y='" + (position + 30) + "' width='" + (carportLength + 60) + "' height='5' fill='none' stroke='black' stroke-width='3'/>";
+        float frontLathPlacementX = 30;
+        float frontLathPlacementY = startingPointFirstSpærY - 15;
+        
+        for (int i = 0; i < quantityOfLathsPlusBackLath; i++) {
+            drawing += "<rect x='" + frontLathPlacementX + "' y='" + frontLathPlacementY + "' height='" + 10 + "' width='"+(length+40)+"' fill='lightgrey' stroke='black' stroke-width='3px'/>";
+            frontLathPlacementY += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int)hypotenuse, 40), (int)hypotenuse, 40) + 3f;
         }
-        drawingTop += "<rect x='0' y='" + (carportWidth - 30) + "' width='" + (carportLength + 60) + "' height='5' fill='none' stroke='black' stroke-width='3'/>";
-        position = carportWidth;
-        for (int i = ib.amountOfLaths(carportWidth, c.getInclination()) / 2 - 1; i > 0; i--) {
-
-            position -= ib.spaceLength(carportWidth, c.getInclination());
-
-            drawingTop += "<rect x='0' y='" + (position - 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
+        //middle lath
+        drawing += "<rect x='" + frontLathPlacementX + "' y='" + (frontLathPlacementY-25)+ "' height='" + 10 + "' width='"+(length+40)+"' fill='grey' stroke='black' stroke-width='3px'/>";
+        frontLathPlacementY += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int)hypotenuse, 40), (int)hypotenuse, 40) + (3f-50);
+        
+        for (int i = 0; i < quantityOfLathsPlusBackLath; i++) {
+            drawing += "<rect x='" + frontLathPlacementX + "' y='" + frontLathPlacementY + "' height='" + 10 + "' width='"+(length+40)+"' fill='lightgrey' stroke='black' stroke-width='3px'/>";
+            frontLathPlacementY += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int)hypotenuse, 40), (int)hypotenuse, 40) + 3f;
         }
+        
+        //STOLPER 
+        
+        for (int i = 0; i < quantityOfStolper; i++) {
+            if (shed != null && shed.getLength() != 0) {
+                //Top left stolpe
+                if (i == 0) {
+                    //yCordinate changed to make place it under remmen
+                    yCordinate -= 3.6f;
+                }
+                //Top right stolpe
+                if (i == 1) {
+                    //xCordinate changed to place it at the second last spær
+                    xCordinate = startingPointFirstSpærX + length - 9.7f;
+                }
+                //Botton right stolpe
+                if (i == 2) {
+                    //yCordinate changed to place it at the at the other rem 
+                    yCordinate = startingPointFirstSpærY + width - 36;
+                }
+                //Bottom left stolpe
+                if (i == 3) {
+                    //xCordinato changed to place it at the same xCordinate at the top left stolpe
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
+                }
+                //The bottom front stolpe of the shed
+                if (i == 4) {
+                    //xCprdinate changed to place it the length of the shed away from the bottom right stolpe
+                    xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength;
+                }
+                //The top front stolpe of the shed
+                if (i == 5) {
+                    //Changed yCordinate to place it at the same yCordinat as the top left/right stolpe
+                    yCordinate = startingPointFirstSpærY - 3.6f;
+                }
+                //the front middle stolpe of the shed
+                if (i == 6) {
+                    //yCordinate changed to place it between the front bottom and top stolpe of the shed
+                    yCordinate = yCordinate + (width - 30) / 2;
+                }
+                //the back middle stolpe of the shed
+                if (i == 7) {
+                    //xCordinate changed to place it at the same xCordinate as the rigth top/bottom stolpe
+                    xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f;
+                }
+                //Stolpe between the top left stolpe and top front stolpe of the shed
+                if (i == 8) {
+                    //yCordinate changed to place it at same yCordinate at top left stolpe
+                    yCordinate = startingPointFirstSpærX - 3.6f;
+                    //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
+                    xCordinate = (xCordinate - slength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                }
+                //stolpe between the bottom left stolpe and the bottom front stolpe of the shed
+                if (i == 9) {
+                    //yCordinate changed to place it at the same yCordinate as the front bottom stolpe
+                    yCordinate = startingPointFirstSpærY + width - 36;
+                }
+            } else {
+                //Top left stolpe
+                if (i == 0) {
+                    //yCordinate changed to make place it under remmen
+                    yCordinate -= 3.6f;
+                }
+                //Top right stolpe
+                if (i == 1) {
+                    //xCordinate changed to place it at the second last spær
+                    xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f;
+                }
+                //Botton right stolpe
+                if (i == 2) {
+                    //yCordinate changed to place it at the at the other rem 
+                    yCordinate = startingPointFirstSpærY + width - 36;
+                }
+                //Bottom left stolpe
+                if (i == 3) {
+                    //xCordinato changed to place it at the same xCordinate at the top left stolpe
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
+                }
+                // one of middle bottom stolpe
+                if (i == 4) {
+                    if (quantityOfStolper == 8) {
+                        //xCordinate changed to place it so that this middle stolpe and the other middle stolpe is as far from other stolpe as possible
+                        //Take the position of the bottem right stolpe and add the position of bottom left, then divide by 1.5f
+                        xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 1.5f;
+                    } else {
+                        //xCordinate changed to place it in the center of bottom left and bottom right stolpe
+                        //Take the position of the bottem right stolpe and add the position of bottom left, then divide by 2
+                        xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                    }
 
-        drawingTop += "</svg>";
-        return drawingTop;
+                }
+                //one of the middle top stolpe
+                if (i == 5) {
+                    //yCordinate changed to place it at the same yCordination as the other top stolper
+                    yCordinate = startingPointFirstSpærY - 3.6f;
+                }
+                if (i == 6) {
+                    xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2.5f;
+                }
+                if (i == 7) {
+                    yCordinate = startingPointFirstSpærY + width - 36;
+                }
+            }
 
+            drawing += "<rect x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
+        }
+        if (shed.getLength() != 0) {
+            // SKUR
+            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y2='" + (startingPointFirstSpærY + width - 36+13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
+            drawing+= "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f+13) + "' y2='" + (startingPointFirstSpærY - 3.6f) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
+            drawing+= "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY + width - 36+13) + "' x2='" + (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f+13) + "' y2='" + (startingPointFirstSpærY + width - 36+13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
+            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f+13)) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f+13)) + "' y2='" + (startingPointFirstSpærY + width - 36+13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
+        }
+        drawing += "</svg>";
+        return drawing;
     }
-
-    public String drawTopInclineNoShed(Carport c) {
-        String drawingTop = "";
-        InclineRoofCarportBOM ib = new InclineRoofCarportBOM();
-        FlatRoofCarportBOM fb = new FlatRoofCarportBOM();
-        int carportLength = c.getLength();
-        int carportWidth = c.getWidth();
-        int shedLength = 0;
-        int amountOfRafters = ib.amountOfRafters(carportLength);
-
-        //rafters
-        drawingTop += "<svg height='900' width='800' viewbox='0 0 " + (carportLength + 60) + " " + carportWidth + "' >";
-        drawingTop += "<rect x='0' y='50%' width='100%' height='5' fill='black' stroke='black' stroke-width='5'/>";
-        drawingTop += "<rect x='33' y='0' height='100%' width='15' fill='none' stroke='black' stroke-width='3'/>";
-        int position = 0;
-        System.out.println(ib.spaceBetweenRafters(carportLength, shedLength));
-        for (int i = 0; i < amountOfRafters; i++) {
-            position += ib.spaceBetweenRafters(carportLength, shedLength);
-            drawingTop += "<rect x='" + (position + 30) + "' y='0' width='15' height='100%' fill='none' stroke='black' stroke-width='3'/>";
-        }
-        //laths
-        position = 0;
-        drawingTop += "<rect x='0' y='" + (position + 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
-        System.out.println("SPACELENGTH = " + ib.spaceLength(carportWidth - 60, c.getInclination()));
-        for (int i = 0; i < ib.amountOfLaths(carportWidth - 60, c.getInclination()) / 2 - 1; i++) {
-
-            position += ib.spaceLength(carportWidth, c.getInclination());
-
-            drawingTop += "<rect x='0' y='" + (position + 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
-        }
-        drawingTop += "<rect x='0' y='" + (carportWidth - 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
-        position = carportWidth;
-        for (int i = ib.amountOfLaths(carportWidth - 60, c.getInclination()) / 2 - 1; i > 0; i--) {
-
-            position -= ib.spaceLength(carportWidth, c.getInclination());
-
-            drawingTop += "<rect x='0' y='" + (position - 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
-        }
-
-        drawingTop += "</svg>";
-        return drawingTop;
-
+    public String drawFrontIncline(Carport c) {
+        String drawing = "";
+        int length = c.getLength();
+        int width = c.getWidth();
+        Shed shed = c.getShed_();
+        int slength = shed.getLength();
+        int swidth = shed.getWidth();
+        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
+        InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
+        double inclination = Math.toRadians(c.getInclination());
+        double hypotenuse = (width/2) / Math.cos(inclination);
+        double roofHeight =  Math.sin(inclination)* hypotenuse;
+        roofHeight*=2;
+        width*=2;
+        System.out.println("ROOFHEIGHT : " + roofHeight);
+        
+        drawing += "<svg height='100%' width='100%' viewbox='0 0 " + 1000 + " " + 1000 + "' >";
+        drawing += "<rect x='0' y='"+roofHeight+"' height='20' width='"+width+"' fill='lightgray' stroke='black' stroke-width='3'/>";
+        drawing += "<text x='"+(width/2-50)+"' y='"+(roofHeight+50)+"' fill='black'>Bredde: "+width+" cm</text>";
+        drawing += "<text x='"+(width/2+10)+"' y='"+(roofHeight/2)+"' fill='black'>Højde: "+(int)roofHeight+" cm</text>";
+        drawing += "<text x='"+(width-80)+"' y='"+(roofHeight-50)+"' fill='black'>Hældning: "+(int)c.getInclination()+"°</text>";
+        drawing += "<line x1='"+width/2+"' x2='"+width/2+"' y1='"+roofHeight+"' y2='"+0+"' stroke-dasharray='5,5' stroke='black' stroke-width='3'/>";
+        drawing += "<line x1='"+width+"' x2='"+width/2+"' y1='"+roofHeight+"' y2='"+0+"' stroke='black' stroke-width='3'/>";
+        drawing += "<line x1='"+0+"' x2='"+width/2+"' y1='"+roofHeight+"' y2='"+0+"' stroke='black' stroke-width='3'/>";
+        drawing+= "</svg>";
+        return drawing;
+    }
+    
+    public String drawSideIncline(Carport c) {
+        String drawing = "";
+        int height = 250;
+        height*=2;
+        int length = c.getLength();
+        int width = c.getWidth();
+        Shed shed = c.getShed_();
+        int slength = shed.getLength();
+        int swidth = shed.getWidth();
+        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
+        InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
+        double inclination = Math.toRadians(c.getInclination());
+        double hypotenuse = (width/2) / Math.cos(inclination);
+        double roofHeight =  Math.sin(inclination)* hypotenuse;
+        roofHeight*=2;
+        width*=2;
+        System.out.println("ROOFHEIGHT : " + roofHeight);
+        
+        drawing += "<svg height='100%' width='100%' viewbox='0 0 " + 1000 + " " + 1000 + "' >";
+        drawing += "<rect x='0' y='0' height='"+(height+roofHeight)+"' width='"+width+"' fill='lightgray' stroke='black' stroke-width='3'/>";
+        drawing += "<text x='"+(width/2-50)+"' y='"+(roofHeight+50)+"' fill='black'>Bredde: "+width+" cm</text>";
+        drawing += "<text x='"+(width/2+10)+"' y='"+(roofHeight/2)+"' fill='black'>Højde: "+(int)roofHeight+" cm</text>";
+        drawing += "<text x='"+(width-80)+"' y='"+(roofHeight-50)+"' fill='black'>Hældning: "+(int)c.getInclination()+" cm</text>";
+        drawing += "<line x1='"+width/2+"' x2='"+width/2+"' y1='"+roofHeight+"' y2='"+0+"' stroke-dasharray='5,5' stroke='black' stroke-width='3'/>";
+        drawing += "<line x1='"+width+"' x2='"+width/2+"' y1='"+roofHeight+"' y2='"+0+"' stroke='black' stroke-width='3'/>";
+        drawing += "<line x1='"+0+"' x2='"+width/2+"' y1='"+roofHeight+"' y2='"+0+"' stroke='black' stroke-width='3'/>";
+        drawing+= "</svg>";
+        return drawing;
     }
 
     public String drawPerforatedBand(Carport c) {
@@ -115,7 +276,7 @@ public class DrawSVGIncline {
             bandLengthPercent = 100.0;
         }
         //double hypotenuse = Math.sqrt(((carportLength - c.getShed_().getLength()) * (carportLength - c.getShed_().getLength())) 
-          //      + ((carportWidth - c.getShed_().getWidth()) * (carportWidth - c.getShed_().getWidth())));
+        //      + ((carportWidth - c.getShed_().getWidth()) * (carportWidth - c.getShed_().getWidth())));
         //double bandLengthPercent = (((100.0 / (carportLength * 1.0))) * hypotenuse); //- ((100.0 / carportLength * 1.0) * 30) 
         //if(c.getShed_().getLength() == 0) bandLengthPercent = 100.0;
         int shedLength = 0;
@@ -150,13 +311,15 @@ public class DrawSVGIncline {
 
             drawingTop += "<rect x='0' y='" + (position - 30) + "' width='100%' height='5' fill='none' stroke='black' stroke-width='3'/>";
         }
-        
+
         int minusRafters = 2;
-        if(c.getShed_().getLength() > 0) minusRafters = 1;
+        if (c.getShed_().getLength() > 0) {
+            minusRafters = 1;
+        }
         double startPoint = 33 + ib.spaceBetweenRafters(carportLength, shedLength);
         double endPoint = (33 + (ib.spaceBetweenRafters(carportLength, shedLength) * (amountOfRafters - minusRafters)));
-        drawingTop += "<line x1=\""+startPoint+"\" y1=\"0\" x2=\""+ endPoint +"\" y2=\"100%\" style=\"stroke:blue; stroke-width:5\" />"
-                + "<line x1=\""+startPoint+"\" y1=\"100%\" x2=\""+ endPoint +"\" y2=\"0\" style=\"stroke:blue; stroke-width:5\" />";
+        drawingTop += "<line x1=\"" + startPoint + "\" y1=\"0\" x2=\"" + endPoint + "\" y2=\"100%\" style=\"stroke:blue; stroke-width:5\" />"
+                + "<line x1=\"" + startPoint + "\" y1=\"100%\" x2=\"" + endPoint + "\" y2=\"0\" style=\"stroke:blue; stroke-width:5\" />";
         drawingTop += "</svg>";
         return drawingTop;
     }

@@ -34,7 +34,7 @@ public class DrawSVGIncline {
         double hypotenuse = triangleWidth / Math.cos(inclination);
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
-        drawing += "<svg height='80%' width='80%' viewbox='50 0 " + 1000 + " " + 500 + "' >";
+        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 1000 + " " + 500 + "' >";
 //        //LÆGTE
 //        int position = 3;
 //        drawing += "<rect y='" + (width / 2 +25) + "' x='" + (20) + "' height='10' width='" + (length + 57) + "' fill='grey' stroke='black' stroke-width='3'/>";
@@ -224,7 +224,7 @@ public class DrawSVGIncline {
             
             drawing += "<rect x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
         }
-
+        
 //        if (slength != 0) {
 //            // SKUR
 //            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";

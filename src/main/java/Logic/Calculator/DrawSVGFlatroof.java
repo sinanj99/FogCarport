@@ -75,7 +75,7 @@ public class DrawSVGFlatroof {
                 //the front middle stolpe of the shed
                 if (i == 6) {
                     //yCordinate changed to place it between the front bottom and top stolpe of the shed
-                    yCordinate = yCordinate + (width - 30) / 2;
+                    yCordinate = ((startingPointFirstSpærY + width - 36) + yCordinate) / 2 ;
                 }
                 //the back middle stolpe of the shed
                 if (i == 7) {
@@ -163,7 +163,7 @@ public class DrawSVGFlatroof {
                 }
             }
             
-            drawing += "<rect x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
+            drawing += "<rect class=*stolper* x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
         }
 
         

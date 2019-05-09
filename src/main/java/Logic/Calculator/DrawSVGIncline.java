@@ -122,7 +122,7 @@ public class DrawSVGIncline {
                 //The bottom front stolpe of the shed
                 if (i == 4) {
                     //xCprdinate changed to place it the length of the shed away from the bottom right stolpe
-                    yCordinate = (int)hypotenuse*2-(((int)hypotenuse*2-swidth)/2);
+                    //yCordinate = (int)hypotenuse*2-(((int)hypotenuse*2-swidth)/2);
                     xCordinate = (startingPointFirstSpærX + length) - slength;
                 }
                 //The top front stolpe of the shed
@@ -133,7 +133,8 @@ public class DrawSVGIncline {
                 //the front middle stolpe of the shed
                 if (i == 6) {
                     //yCordinate changed to place it between the front bottom and top stolpe of the shed
-                    yCordinate = ((int)hypotenuse);
+                    yCordinate = ((startingPointFirstSpærY + (int)hypotenuse*2 - 93) + yCordinate) /2  ;
+                            //((int)hypotenuse);
                 }
                 //the back middle stolpe of the shed
                 if (i == 7) {
@@ -146,8 +147,8 @@ public class DrawSVGIncline {
                     //function as top right corner stolpe for the shed
                     if(quantityOfStolper == 9)
                     {
-                        //yCordiante changed so it is placed at the botton left corner stolpe
-                        yCordinate = startingPointFirstSpærY + width - 36;
+                        //yCordiante changed so it is placed at the botton right corner stolpe
+                        yCordinate = startingPointFirstSpærY + (int)hypotenuse*2 - 93;
                         //yCordinate changed so is placed shedwidth away
                         yCordinate -= swidth - 2.4;
 
@@ -222,7 +223,7 @@ public class DrawSVGIncline {
                 }
             }
             
-            drawing += "<rect x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
+            drawing += "<rect class='stolper' x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
         }
         
 //        if (slength != 0) {

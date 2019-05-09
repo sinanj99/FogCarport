@@ -53,9 +53,9 @@ public class FlatRoofCarportBOM {
         return packsNeeded;
     }
 
-    public int calculateQuantityOfBrædderbolt(int length, Shed shed, int shedLengt) {
+    public int calculateQuantityOfBrædderbolt(int length, int width, Shed shed, int shedLengt) {
         //two brædderbolte per stolpe
-        return calculateQuantityOfStolper(length, shed, shedLengt) * 2;
+        return calculateQuantityOfStolper(length, width, shed, shedLengt) * 2;
     }
 
     public int calculateQuantityOfHøjreBeslag(int lengthOfCarport) {
@@ -135,17 +135,27 @@ public class FlatRoofCarportBOM {
      * @param length
      * @return
      */
-    public int calculateQuantityOfStolper(int lengthOfCarport, Shed shed, int shedLength) {
+    public int calculateQuantityOfStolper(int lengthOfCarport, int widthOfCarport, Shed shed, int shedLength) {
 
         //Substraicing spaceBetweenSpær times 2 because stolper cant appear at the front spear and back spear
         float lengthAvaiableForStolper = lengthOfCarport - spaceBetweenSpær(calculateQuantityOFSpærExcluedBackSpær(lengthOfCarport, 60), lengthOfCarport, 60) * 2;
         // four corner stolper
         int quantity = 4;
 
-        if (shed != null) {
+        if (shed != null && shed.getLength() != 0) {
             lengthAvaiableForStolper -= shedLength;
-            //A shed consists of 6 stolper, the 2 back corner stolper and 4 other.
-            quantity += 4;
+            
+            if(widthOfCarport - shed.getWidth() == 30)
+            {
+                //A shed consists of 6 stolper, the 2 back corner of the carport, aswell as two front stolper for the shed abd two middle stolper for the shed
+                quantity += 4;
+            }
+            else
+            {
+                //one extra stolpe is needed to function as a corner stolpe for the shed, as the top right corner stolpe for the carport can no longer be used
+                quantity += 5;
+            }
+            
         }
 
         //check if carport is to small to have other stolper than the corner stolpe and eventual stolper added for the shed
@@ -300,9 +310,9 @@ public class FlatRoofCarportBOM {
         return new LineItem(m, calculateQuantityOfBeslagskruer(length), "Til montering af universalbeslag + hulbånd", m.getPrice() * calculateQuantityOfBeslagskruer(length), Type.NOLENGTH);
     }
 
-    public LineItem brædderbolt(int length, Shed shed, int shedLength) throws NoSuchMaterialException {
+    public LineItem brædderbolt(int length, int width,Shed shed, int shedLength) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("10x120mm brædderbolt");
-        return new LineItem(m, calculateQuantityOfBrædderbolt(length, shed, shedLength), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length, shed, shedLength), Type.NOLENGTH);
+        return new LineItem(m, calculateQuantityOfBrædderbolt(length, width, shed, shedLength), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length,width, shed, shedLength), Type.NOLENGTH);
     }
 
     public LineItem højrebeslag(int length) throws NoSuchMaterialException {
@@ -317,9 +327,9 @@ public class FlatRoofCarportBOM {
     }
 //    
 
-    public LineItem stolpe(int length, Shed shed, int shedLength) throws NoSuchMaterialException {
+    public LineItem stolpe(int length,int width, Shed shed, int shedLength) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("97x97mm trykimp. Stolpe");
-        return new LineItem(m, calculateQuantityOfStolper(length, shed, shedLength), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length, shed, shedLength), Type.LENGTH);
+        return new LineItem(m, calculateQuantityOfStolper(length,width, shed, shedLength), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length,width, shed, shedLength), Type.LENGTH);
 
     }
 

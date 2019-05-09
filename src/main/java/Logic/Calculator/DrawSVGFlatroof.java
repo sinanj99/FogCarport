@@ -20,6 +20,7 @@ public class DrawSVGFlatroof {
         int width = c.getWidth();
         Shed shed = c.getShed_();
         int slength = shed.getLength();
+        int swidth = shed.getWidth();
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
 
@@ -32,7 +33,8 @@ public class DrawSVGFlatroof {
         float xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
         float yCordinate = startingPointFirstSpærY;
 
-        int quantityOfStolper = f.calculateQuantityOfStolper(length, shed, slength);
+        int quantityOfStolper = f.calculateQuantityOfStolper(length,width, shed, slength);
+        
 
         for (int i = 0; i < quantityOfStolper; i++) {
             if (shed != null && shed.getLength() != 0) {
@@ -63,8 +65,8 @@ public class DrawSVGFlatroof {
                 }
                 //The top front stolpe of the shed
                 if (i == 5) {
-                    //Changed yCordinate to place it at the same yCordinat as the top left/right stolpe
-                    yCordinate = startingPointFirstSpærY - 3.6f;
+                    //Changed yCordinate to place it the width of the shed away
+                    yCordinate -= swidth - 2.4;
                 }
                 //the front middle stolpe of the shed
                 if (i == 6) {
@@ -78,17 +80,39 @@ public class DrawSVGFlatroof {
                 }
                 //Stolpe between the top left stolpe and top front stolpe of the shed
                 if (i == 8) {
-                    //yCordinate changed to place it at same yCordinate at top left stolpe
-                    yCordinate = startingPointFirstSpærX - 3.6f;
-                    //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
-                    xCordinate = (xCordinate - slength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                    
+                    //function as top right corner stolpe for the shed
+                    if(quantityOfStolper == 9)
+                    {
+                        //yCordiante changed so it is placed at the botton left corner stolpe
+                        yCordinate = startingPointFirstSpærY + width - 36;
+                        //yCordinate changed so is placed shedwidth away
+                        yCordinate -= swidth - 2.4;
+
+                    }
+                    else
+                    {
+                        //yCordinate changed to place it at same yCordinate at top left stolpe
+                        yCordinate = startingPointFirstSpærX - 3.6f;
+                        //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
+                        xCordinate = (xCordinate - slength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                    }
+                    
                 }
                 //stolpe between the bottom left stolpe and the bottom front stolpe of the shed
                 if (i == 9) {
                     //yCordinate changed to place it at the same yCordinate as the front bottom stolpe
                     yCordinate = startingPointFirstSpærY + width - 36;
                 }
-            } else {
+                //stolpe for the top right corner of the shed, if the top right corner stolpe of the carport cant be used.
+                if(i == 10)
+                {
+                    //yCordiante changed so it is placed at the carportwidth
+                    yCordinate -= swidth - 2.4;
+                    //xCordinate changed so it is placed at the same xCordinate at the top right corner stolpe for the carport
+                    xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f;
+                }
+            } if(slength == 0) {
                 //Top left stolpe
                 if (i == 0) {
                     //yCordinate changed to make place it under remmen
@@ -134,7 +158,7 @@ public class DrawSVGFlatroof {
                     yCordinate = startingPointFirstSpærY + width - 36;
                 }
             }
-
+            
             drawing += "<rect x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
         }
 

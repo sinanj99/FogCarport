@@ -34,7 +34,7 @@ public class DrawSVGIncline {
         double hypotenuse = triangleWidth / Math.cos(inclination);
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
-        drawing += "<svg height='80%' width='80%' viewbox='50 0 " + 700 + " " + 500 + "' >";
+        drawing += "<svg height='80%' width='80%' viewbox='50 0 " + 1000 + " " + 500 + "' >";
 //        //LÆGTE
 //        int position = 3;
 //        drawing += "<rect y='" + (width / 2 +25) + "' x='" + (20) + "' height='10' width='" + (length + 57) + "' fill='grey' stroke='black' stroke-width='3'/>";
@@ -94,11 +94,14 @@ public class DrawSVGIncline {
         }
 
         //STOLPER 
+        
+
         for (int i = 0; i < quantityOfStolper; i++) {
             if (shed != null && shed.getLength() != 0) {
                 //Top left stolpe
                 if (i == 0) {
                     //yCordinate changed to make place it under remmen
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR/2;
                     yCordinate -= 3.6f;
                 }
                 //Top right stolpe
@@ -109,65 +112,89 @@ public class DrawSVGIncline {
                 //Botton right stolpe
                 if (i == 2) {
                     //yCordinate changed to place it at the at the other rem 
-                    yCordinate = startingPointFirstSpærY + width - 36;
+                    yCordinate = startingPointFirstSpærY + (int)hypotenuse*2 - 93;
                 }
                 //Bottom left stolpe
                 if (i == 3) {
                     //xCordinato changed to place it at the same xCordinate at the top left stolpe
-                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR/2;
                 }
                 //The bottom front stolpe of the shed
                 if (i == 4) {
                     //xCprdinate changed to place it the length of the shed away from the bottom right stolpe
-                    xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength;
+                    yCordinate = (int)hypotenuse*2-(((int)hypotenuse*2-swidth)/2);
+                    xCordinate = (startingPointFirstSpærX + length) - slength;
                 }
                 //The top front stolpe of the shed
                 if (i == 5) {
-                    //Changed yCordinate to place it at the same yCordinat as the top left/right stolpe
-                    yCordinate = startingPointFirstSpærY - 3.6f;
+                    //Changed yCordinate to place it the width of the shed away
+                    yCordinate -= swidth - 2.4;
                 }
                 //the front middle stolpe of the shed
                 if (i == 6) {
                     //yCordinate changed to place it between the front bottom and top stolpe of the shed
-                    yCordinate = yCordinate + (width - 30) / 2;
+                    yCordinate = ((int)hypotenuse);
                 }
                 //the back middle stolpe of the shed
                 if (i == 7) {
                     //xCordinate changed to place it at the same xCordinate as the rigth top/bottom stolpe
-                    xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f;
+                    xCordinate = startingPointFirstSpærX + length - 9.7f;
                 }
                 //Stolpe between the top left stolpe and top front stolpe of the shed
                 if (i == 8) {
-                    //yCordinate changed to place it at same yCordinate at top left stolpe
-                    yCordinate = startingPointFirstSpærX - 3.6f;
-                    //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
-                    xCordinate = (xCordinate - slength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                    
+                    //function as top right corner stolpe for the shed
+                    if(quantityOfStolper == 9)
+                    {
+                        //yCordiante changed so it is placed at the botton left corner stolpe
+                        yCordinate = startingPointFirstSpærY + width - 36;
+                        //yCordinate changed so is placed shedwidth away
+                        yCordinate -= swidth - 2.4;
+
+                    }
+                    else
+                    {
+                        //yCordinate changed to place it at same yCordinate at top left stolpe
+                        yCordinate = startingPointFirstSpærX - 3.6f;
+                        //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
+                        xCordinate = (xCordinate - slength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
+                    }
+                    
                 }
                 //stolpe between the bottom left stolpe and the bottom front stolpe of the shed
                 if (i == 9) {
                     //yCordinate changed to place it at the same yCordinate as the front bottom stolpe
                     yCordinate = startingPointFirstSpærY + width - 36;
                 }
-            } else {
+                //stolpe for the top right corner of the shed, if the top right corner stolpe of the carport cant be used.
+                if(i == 10)
+                {
+                    //yCordiante changed so it is placed at the carportwidth
+                    yCordinate -= swidth - 2.4;
+                    //xCordinate changed so it is placed at the same xCordinate at the top right corner stolpe for the carport
+                    xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f;
+                }
+            } if(slength == 0) {
                 //Top left stolpe
                 if (i == 0) {
                     //yCordinate changed to make place it under remmen
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR/2;
                     yCordinate -= 3.6f;
                 }
                 //Top right stolpe
                 if (i == 1) {
                     //xCordinate changed to place it at the second last spær
-                    xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f;
+                    xCordinate = startingPointFirstSpærX + length - 9.7f;
                 }
                 //Botton right stolpe
                 if (i == 2) {
                     //yCordinate changed to place it at the at the other rem 
-                    yCordinate = startingPointFirstSpærY + width - 36;
+                    yCordinate = startingPointFirstSpærY + (int)hypotenuse*2 - 93;
                 }
                 //Bottom left stolpe
                 if (i == 3) {
                     //xCordinato changed to place it at the same xCordinate at the top left stolpe
-                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
+                    xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR/2;
                 }
                 // one of middle bottom stolpe
                 if (i == 4) {
@@ -191,19 +218,20 @@ public class DrawSVGIncline {
                     xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2.5f;
                 }
                 if (i == 7) {
-                    yCordinate = startingPointFirstSpærY + width - 36;
+                    yCordinate = startingPointFirstSpærY + (int)hypotenuse*2-93;
                 }
             }
-
+            
             drawing += "<rect x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
         }
-        if (slength != 0) {
-            // SKUR
-            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
-            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13) + "' y2='" + (startingPointFirstSpærY - 3.6f) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
-            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY + width - 36 + 13) + "' x2='" + (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
-            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13)) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13)) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
-        }
+
+//        if (slength != 0) {
+//            // SKUR
+//            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
+//            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13) + "' y2='" + (startingPointFirstSpærY - 3.6f) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
+//            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY + width - 36 + 13) + "' x2='" + (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
+//            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13)) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13)) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
+//        }
         drawing += "</svg>";
         return drawing;
     }

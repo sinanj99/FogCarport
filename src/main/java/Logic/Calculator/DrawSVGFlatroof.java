@@ -25,9 +25,9 @@ public class DrawSVGFlatroof {
         slength = shed.getLength();
         swidth = shed.getWidth();
         }
+
         BOMFlatRoof f = new BOMFlatRoof();
         drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
-
         //STOLPER 
         float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60);
 
@@ -75,7 +75,7 @@ public class DrawSVGFlatroof {
                 //the front middle stolpe of the shed
                 if (i == 6) {
                     //yCordinate changed to place it between the front bottom and top stolpe of the shed
-                    yCordinate = (startingPointFirstSpærY + width - 36) + yCordinate / 2  ;
+                    yCordinate = ((startingPointFirstSpærY + width - 36) + yCordinate) / 2;
                 }
                 //the back middle stolpe of the shed
                 if (i == 7) {
@@ -186,6 +186,89 @@ public class DrawSVGFlatroof {
             drawing += "<rect x='" + frontSpærPlacementX + "' y='" + frontSpærPlacementY + "' height='" + width + "' width='10' fill='none' stroke='black' stroke-width='3px'/>";
             frontSpærPlacementX += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60) + 3f;
         }
+        
+        // SKUR BEKLÆDNING
+        
+        if(shed != null)
+        {
+            drawing += "<line x1='"+(startingPointFirstSpærX + length - spaceBetweenSpærVAR)+"' y1='"+(startingPointFirstSpærY + width - 36 + 10)+
+                "' x2='"+(startingPointFirstSpærX + length - spaceBetweenSpærVAR)+"' y2='"+(startingPointFirstSpærY + width - 36 - swidth)+
+                "' stroke='darkblue' stroke-width='3px' fill='none'  />";
+            drawing += "<line x1='"+(startingPointFirstSpærX + length - spaceBetweenSpærVAR)+"' y1='"+(startingPointFirstSpærY + width - 36 - swidth)+
+                    "' x2='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y2='"+(startingPointFirstSpærY + width - 36 - swidth)+
+                    "' stroke='darkblue' stroke-width='3px' fill='none' />";
+            drawing += "<line x1='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y1='"+(startingPointFirstSpærY + width - 36 - swidth)+
+                    "' x2='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y2='"+(startingPointFirstSpærY + width - 36 + 10)+
+                    "' stroke='darkblue' stroke-width='3px' fill='none' />";
+            drawing += "<line x1='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y1='"+(startingPointFirstSpærY + width - 36 + 10)+
+                    "' x2='"+(startingPointFirstSpærX + length - spaceBetweenSpærVAR)+"' y2='"+(startingPointFirstSpærY + width - 36 + 10)+
+                    "' stroke='darkblue' stroke-width='3px' fill='none'  />";
+        }
+        
+        //DIMENSION mål
+        
+            drawing += "<line x1='"+20+"' y1='"+35+
+                "' x2='"+20+"' y2='"+  (width + 35) +
+                "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
+            drawing += "<text x='"+(-80)+"' transform='rotate(-90)' y='"+15+"' fill='black'>"
+                    +width+" cm</text>";
+            
+            drawing += "<line x1='"+50+"' y1='"+20+
+                "' x2='"+(length+50)+"' y2='"+  20 +
+                "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
+            drawing += "<text x='"+50+"' y='"+15+ "' fill='black'>"
+                    +length+" cm</text>";
+            
+            if(shed != null)
+            {
+                 drawing += "<line x1='"+(length+70)+"' y1='"+(width+20)+
+                "' x2='"+(length+70)+"' y2='"+  ((startingPointFirstSpærY + width - 36) - (swidth - 2.4)) +
+                "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
+                drawing += "<text x='"+(-width-20)+"' transform='rotate(-90)' y='"+(length+90)+"' fill='black'>"
+                        +swidth+" cm</text>";
+
+
+                 drawing += "<line x1='"+(startingPointFirstSpærX + length - spaceBetweenSpærVAR )+"' y1='"+(width+60)+
+                    "' x2='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y2='"+ (width+60)  +
+                    "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
+                 drawing += "<text x='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y='"+(width+80)+ "' fill='black'>"
+                        +slength+" cm</text>";
+            }
+            int startPointThis = 60;
+            for(int i = 0; i < f.calculateQuantityOFSpærExcluedBackSpær(length, 60); i++)
+            {
+                drawing += "<line x1='"+startPointThis+"' y1='"+40+
+                "' x2='"+(startPointThis + f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60) - 6)+"' y2='"+  40 +
+                "' class='lineFOrSpace'  stroke='darkgrey' stroke-width='3px' fill='none'  />";
+                
+                drawing += "<text x='"+(startPointThis + 2)+"' y='"+35+ "' fill='black' font-size='12px'>"
+                    +f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60)+" cm</text>";
+                
+                startPointThis += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60) + 3;
+            }
+            
+           
+        
+        
+                
+                
+                
+                //"<line class='beklædning' x1='" + startingPointFirstSpærX + length - spaceBetweenSpærVAR + "' y1='" + startingPointFirstSpærY + width - 36 + 10 + "' />";
+                //+ "' x2='" + startingPointFirstSpærX + width - spaceBetweenSpærVAR + "' y2='" +  startingPointFirstSpærY + carportWidth - 36 - shedWitdh
+                //+ "' style=stroke: 'darkblue'; fill='none; stroke-width='3px' /> ";
+                
+                
+                
+                
+        
+        //Hulbånd
+        int bandWidth = width + 20;
+        float startPoint = 110;
+        double endPoint = 110 + (spaceBetweenSpærVAR * (quantityOfSpær - 2)) + (4 * (quantityOfSpær - 2));
+        if(shed != null) endPoint = (110 + (spaceBetweenSpærVAR * (quantityOfSpær - 2)) + (1 * (quantityOfSpær - 2))) - slength;
+        //float endPoint = (spaceBetweenSpærVAR * (quantityOfSpær));// + (ib.spaceBetweenRafters(carportLength, shedLength) * (amountOfRafters - minusRafters)));
+        drawing += "<line x1='"+startPoint+"' y1='50' x2='"+ endPoint +"' y2='"+bandWidth+"' style='stroke:silver; stroke-width:5; stroke-dasharray:10, 5;' />"
+                + "<line x1='"+startPoint+"' y1='"+bandWidth+"' x2='"+ endPoint +"' y2='50' style='stroke:silver; stroke-width:5; stroke-dasharray:10, 5;' />";
         
         drawing += "</svg>";
         return drawing;

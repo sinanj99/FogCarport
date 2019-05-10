@@ -219,19 +219,35 @@ public class DrawSVGFlatroof {
             drawing += "<text x='"+50+"' y='"+15+ "' fill='black'>"
                     +length+" cm</text>";
             
-            
-            drawing += "<line x1='"+(length+70)+"' y1='"+(width+20)+
+            if(shed != null)
+            {
+                 drawing += "<line x1='"+(length+70)+"' y1='"+(width+20)+
                 "' x2='"+(length+70)+"' y2='"+  ((startingPointFirstSpærY + width - 36) - (swidth - 2.4)) +
                 "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
-            drawing += "<text x='"+(-width-20)+"' transform='rotate(-90)' y='"+(length+90)+"' fill='black'>"
-                    +swidth+" cm</text>";
+                drawing += "<text x='"+(-width-20)+"' transform='rotate(-90)' y='"+(length+90)+"' fill='black'>"
+                        +swidth+" cm</text>";
+
+
+                 drawing += "<line x1='"+(startingPointFirstSpærX + length - spaceBetweenSpærVAR )+"' y1='"+(width+60)+
+                    "' x2='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y2='"+ (width+60)  +
+                    "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
+                 drawing += "<text x='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y='"+(width+80)+ "' fill='black'>"
+                        +slength+" cm</text>";
+            }
+            int startPointThis = 60;
+            for(int i = 0; i < f.calculateQuantityOFSpærExcluedBackSpær(length, 60); i++)
+            {
+                drawing += "<line x1='"+startPointThis+"' y1='"+40+
+                "' x2='"+(startPointThis + f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60) - 6)+"' y2='"+  40 +
+                "' class='lineFOrSpace'  stroke='darkgrey' stroke-width='3px' fill='none'  />";
+                
+                drawing += "<text x='"+(startPointThis + 2)+"' y='"+35+ "' fill='black' font-size='12px'>"
+                    +f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60)+" cm</text>";
+                
+                startPointThis += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60) + 3;
+            }
             
-            
-             drawing += "<line x1='"+(startingPointFirstSpærX + length - spaceBetweenSpærVAR )+"' y1='"+(width+60)+
-                "' x2='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y2='"+ (width+60)  +
-                "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
-             drawing += "<text x='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y='"+(width+80)+ "' fill='black'>"
-                    +slength+" cm</text>";
+           
         
         
                 

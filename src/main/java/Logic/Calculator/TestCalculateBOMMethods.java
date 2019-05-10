@@ -22,8 +22,8 @@ public class TestCalculateBOMMethods
 {
     public static void main(String[] args) throws NoSuchMaterialException
     {
-        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
-        InclineRoofCarportBOM i = new InclineRoofCarportBOM();
+        BOMFlatRoof f = new BOMFlatRoof();
+        BOMInclineRoof i = new BOMInclineRoof();
         CalculateBOM c = new CalculateBOM();
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);

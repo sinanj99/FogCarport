@@ -20,7 +20,7 @@ import Logic.Exceptions.NoSuchMaterialException;
  *
  * @author Kasper Jeppesen
  */
-public class FlatRoofCarportBOM {
+public class BOMFlatRoof {
 
     /**
      *

@@ -32,9 +32,9 @@ public class DrawSVGIncline {
         int triangleWidth = width / 2; // width of each triangle.
         inclination = Math.toRadians(inclination); //Math.cos expects radians
         double hypotenuse = triangleWidth / Math.cos(inclination);
-        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
-        InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
-        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 1000 + " " + 500 + "' >";
+        BOMFlatRoof f = new BOMFlatRoof();
+        BOMInclineRoof ic = new BOMInclineRoof();
+        drawing += "<svg height='100%' width='100%' viewbox='-150 100 900 900' >";
 
         float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 90), length, 90);
 
@@ -205,26 +205,23 @@ public class DrawSVGIncline {
                     yCordinate = startingPointFirstSpærY + (int) hypotenuse * 2 - 93;
                 }
             }
-            drawing += "<rect class='stolper' x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";   
+            drawing += "<rect class='stolper' x='" + xCordinate + "' y='" + yCordinate + "' height='9.7' width='9.7' fill='none' stroke='black' stroke-width='3px'/>";
         }
-        
+        //lengths
         drawing += "<line x1='20' y1='45' x2='20' y2='" + (startingPointFirstSpærY + 25) + "' style='stroke:black;stroke-width:2'/>";
-        drawing += "<text x='-80' transform='rotate(-90)' y='15' fill='black'>"+(int)f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int)hypotenuse, 40), (int)hypotenuse, 40)+" cm</text>";
+        drawing += "<text x='-80' transform='rotate(-90)' y='15' fill='black'>" + (int) f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int) hypotenuse, 40), (int) hypotenuse, 40) + " cm</text>";
         drawing += "<line x1='25' y1='35' x2='25' y2='" + (hypotenuse * 2 - 17) + "' style='stroke:black;stroke-width:2'/>";
         drawing += "<text x='" + (-hypotenuse * 2 + 23) + "' transform='rotate(-90)' y='20' fill='black'>" + width + " cm</text>";
-        
-        drawing += "<line x1='25' y1='30' x2='" + (length + 70) + "' y2='30' style='stroke:black;stroke-width:2'/>";
-        drawing += "<text x='25' y='25' fill='black'>"+length+" cm</text>";
-        drawing += "<line x1='"+(length-23)+"' y1='25' x2='" + (length+40) + "' y2='25' style='stroke:black;stroke-width:2'/>";
-        drawing += "<text x='" + (length-23) + "' y='20' fill='black'>"+(int) f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60)+" cm</text>";
 
-//        if (slength != 0) {
-//            // SKUR
-//            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
-//            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13) + "' y2='" + (startingPointFirstSpærY - 3.6f) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
-//            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength) + "' y1='" + (startingPointFirstSpærY + width - 36 + 13) + "' x2='" + (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
-//            drawing += "<line x1='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13)) + "' y1='" + (startingPointFirstSpærY - 3.6f) + "' x2='" + ((startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + 13)) + "' y2='" + (startingPointFirstSpærY + width - 36 + 13) + "' style='stroke:rgb(255,0,0);stroke-width:2'/>";
-//        }
+        drawing += "<line x1='25' y1='30' x2='" + (length + 70) + "' y2='30' style='stroke:black;stroke-width:2'/>";
+        drawing += "<text x='25' y='25' fill='black'>" + length + " cm</text>";
+        drawing += "<line x1='" + (length - 23) + "' y1='25' x2='" + (length + 40) + "' y2='25' style='stroke:black;stroke-width:2'/>";
+        drawing += "<text x='" + (length - 23) + "' y='20' fill='black'>" + (int) f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60) + " cm</text>";
+        //beklædning
+        drawing += "<line x1='" + (length - slength + 47) + "' y1='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93) + "' x2='" + (startingPointFirstSpærX + length) + "' y2='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93) + "' style='stroke:red;stroke-width:2'/>";
+        drawing += "<line x1='" + (length - slength + 47) + "' y1='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93) + "' x2='" + (length - slength + 47) + "' y2='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93 - swidth) + "' style='stroke:red;stroke-width:2'/>";
+        drawing += "<line x1='" + (length - slength + 47) + "' y1='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93 - swidth) + "' x2='" + (startingPointFirstSpærX + length) + "' y2='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93 - swidth) + "' style='stroke:red;stroke-width:2'/>";
+        drawing += "<line x1='" + (startingPointFirstSpærX + length) + "' y1='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93) + "' x2='" + (startingPointFirstSpærX + length) + "' y2='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93 - swidth) + "' style='stroke:red;stroke-width:2'/>";
         drawing += "</svg>";
         return drawing;
     }
@@ -239,8 +236,8 @@ public class DrawSVGIncline {
             slength = shed.getLength();
             swidth = shed.getWidth();
         }
-        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
-        InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
+        BOMFlatRoof f = new BOMFlatRoof();
+        BOMInclineRoof ic = new BOMInclineRoof();
         double inclination = Math.toRadians(c.getInclination());
         double hypotenuse = (width / 2) / Math.cos(inclination);
         double roofHeight = Math.sin(inclination) * hypotenuse;
@@ -248,10 +245,10 @@ public class DrawSVGIncline {
         width *= 2;
         System.out.println("ROOFHEIGHT : " + roofHeight);
 
-        drawing += "<svg height='100%' width='100%' viewbox='0 0 " + 1000 + " " + 1000 + "' >";
+        drawing += "<svg height='100%' width='100%' viewbox='-300 -600 " + 1300 + " " + 1300 + "' >";
         drawing += "<rect x='0' y='" + roofHeight + "' height='20' width='" + width + "' fill='lightgray' stroke='black' stroke-width='3'/>";
-        drawing += "<text x='" + (width / 2 - 50) + "' y='" + (roofHeight + 50) + "' fill='black'>Bredde: " + width + " cm</text>";
-        drawing += "<text x='" + (width / 2 + 10) + "' y='" + (roofHeight / 2) + "' fill='black'>Højde: " + (int) roofHeight + " cm</text>";
+        drawing += "<text x='" + (width / 2 - 50) + "' y='" + (roofHeight + 50) + "' fill='black'>Bredde: " + width / 2 + " cm</text>";
+        drawing += "<text transform='rotate(-90)' x='" + (-roofHeight / 2 - 50) + "' y='" + (width / 2 - 10) + "' fill='black'>Højde: " + (int) roofHeight + " cm</text>";
         drawing += "<text x='" + (width - 80) + "' y='" + (roofHeight - 50) + "' fill='black'>Hældning: " + (int) c.getInclination() + "°</text>";
         drawing += "<line x1='" + width / 2 + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke-dasharray='5,5' stroke='black' stroke-width='3'/>";
         drawing += "<line x1='" + width + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke='black' stroke-width='3'/>";
@@ -267,18 +264,21 @@ public class DrawSVGIncline {
         int length = c.getLength();
         int width = c.getWidth();
         Shed shed = c.getShed_();
-        int slength = shed.getLength();
-        int swidth = shed.getWidth();
-        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
-        InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
+        if (shed != null) {
+            int slength = shed.getLength();
+            int swidth = shed.getWidth();
+        }
+        
+        BOMFlatRoof f = new BOMFlatRoof();
+        BOMInclineRoof ic = new BOMInclineRoof();
         double inclination = Math.toRadians(c.getInclination());
         double hypotenuse = (width / 2) / Math.cos(inclination);
         double roofHeight = Math.sin(inclination) * hypotenuse;
         roofHeight *= 2;
         width *= 2;
         System.out.println("ROOFHEIGHT : " + roofHeight);
-
-        drawing += "<svg height='100%' width='100%' viewbox='0 0 " + 1000 + " " + 1000 + "' >";
+        
+        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + width+20 + " " + length+20 + "' >";
         drawing += "<rect x='0' y='0' height='" + (height + roofHeight) + "' width='" + width + "' fill='lightgray' stroke='black' stroke-width='3'/>";
         drawing += "<text x='" + (width / 2 - 50) + "' y='" + (roofHeight + 50) + "' fill='black'>Bredde: " + width + " cm</text>";
         drawing += "<text x='" + (width / 2 + 10) + "' y='" + (roofHeight / 2) + "' fill='black'>Højde: " + (int) roofHeight + " cm</text>";

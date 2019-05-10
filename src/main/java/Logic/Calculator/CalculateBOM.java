@@ -27,9 +27,9 @@ public class CalculateBOM {
     //dette er en test mere
     //en trejde test
     public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException {
-        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
+        BOMFlatRoof f = new BOMFlatRoof();
         ArrayList listOfLineItems = new ArrayList();
-        ToolShedBOM b = new ToolShedBOM();
+        BOMToolshed b = new BOMToolshed();
         BOM bom;
         
         if (r.getCarport().getShed_() == null) {
@@ -85,9 +85,9 @@ public class CalculateBOM {
 
     public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException {
 
-        InclineRoofCarportBOM calc = new InclineRoofCarportBOM();
-        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
-        ToolShedBOM b = new ToolShedBOM();
+        BOMInclineRoof calc = new BOMInclineRoof();
+        BOMFlatRoof f = new BOMFlatRoof();
+        BOMToolshed b = new BOMToolshed();
         List<LineItem> list = new ArrayList();
 
         int clength = r.getCarport().getLength();

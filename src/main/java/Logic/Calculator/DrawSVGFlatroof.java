@@ -25,7 +25,7 @@ public class DrawSVGFlatroof {
         slength = shed.getLength();
         swidth = shed.getWidth();
         }
-        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
+        BOMFlatRoof f = new BOMFlatRoof();
         drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
 
         //STOLPER 

@@ -15,7 +15,7 @@ import Logic.Exceptions.NoSuchMaterialException;
  *
  * @author Kasper Jeppesen
  */
-public class ToolShedBOM
+public class BOMToolshed
 {
     public int calculateQuantityForBeklædning(int widthOfShed, int lengthOfShed)
     {

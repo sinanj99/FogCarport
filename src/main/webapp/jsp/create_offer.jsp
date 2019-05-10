@@ -129,15 +129,15 @@
                         <% }%>
                     </div>
                     <h3>Skitse:</h3>
-                    
-                        Tag fra oven:
-                        <%= svg1%>
-                   
+                    Tag fra oven:
+                    <svg style="height: 1200px; width: 900px;">
 
-                    
-                        Tag forfra:
-                        <%= svg2%>
-                    
+                    <%= svg1%>
+                    <%if (r.getCarport().getInclination() > 0) {%>
+                    Tag forfra:
+                    <%= svg2%>
+                    <% }%>
+                    </svg>
                 </div>
             </div>
         </div>

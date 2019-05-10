@@ -17,17 +17,17 @@ import Logic.Exceptions.NoSuchRoofException;
  *
  * @author Sinan Jasar
  */
-public class InclineRoofCarportBOM {
+public class BOMInclineRoof {
 
     // contstants used in roof-calculations. 
-    private static FlatRoofCarportBOM fc = new FlatRoofCarportBOM();
+    private static BOMFlatRoof fc = new BOMFlatRoof();
     private static final int TRIANGLE_WIDTH = 360 / 2;
     private static final double INCLINATION = Math.toRadians(20);
     private static final double HYPOTENUSE = TRIANGLE_WIDTH / Math.cos(INCLINATION);
     private static final double TILE_W_X_H = (HYPOTENUSE * 730) / 288;
     private static final int TILE_WIDTH = 730 / 21;
 
-    private static ToolShedBOM tbom = new ToolShedBOM();
+    private static BOMToolshed tbom = new BOMToolshed();
 
     /**
      *

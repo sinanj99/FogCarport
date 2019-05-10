@@ -205,7 +205,33 @@ public class DrawSVGFlatroof {
                     "' stroke='darkblue' stroke-width='3px' fill='none'  />";
         }
         
+        //DIMENSION mål
         
+            drawing += "<line x1='"+20+"' y1='"+35+
+                "' x2='"+20+"' y2='"+  (width + 35) +
+                "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
+            drawing += "<text x='"+(-80)+"' transform='rotate(-90)' y='"+15+"' fill='black'>"
+                    +width+" cm</text>";
+            
+            drawing += "<line x1='"+50+"' y1='"+20+
+                "' x2='"+(length+50)+"' y2='"+  20 +
+                "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
+            drawing += "<text x='"+50+"' y='"+15+ "' fill='black'>"
+                    +length+" cm</text>";
+            
+            
+            drawing += "<line x1='"+(length+70)+"' y1='"+(width+20)+
+                "' x2='"+(length+70)+"' y2='"+  ((startingPointFirstSpærY + width - 36) - (swidth - 2.4)) +
+                "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
+            drawing += "<text x='"+(-width-20)+"' transform='rotate(-90)' y='"+(length+90)+"' fill='black'>"
+                    +swidth+" cm</text>";
+            
+            
+             drawing += "<line x1='"+(startingPointFirstSpærX + length - spaceBetweenSpærVAR )+"' y1='"+(width+60)+
+                "' x2='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y2='"+ (width+60)  +
+                "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
+             drawing += "<text x='"+((startingPointFirstSpærX + length - spaceBetweenSpærVAR) - slength)+"' y='"+(width+80)+ "' fill='black'>"
+                    +slength+" cm</text>";
         
         
                 

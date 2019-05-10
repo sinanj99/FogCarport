@@ -217,6 +217,12 @@ public class DrawSVGIncline {
         drawing += "<text x='25' y='25' fill='black'>" + length + " cm</text>";
         drawing += "<line x1='" + (length - 23) + "' y1='25' x2='" + (length + 40) + "' y2='25' style='stroke:black;stroke-width:2'/>";
         drawing += "<text x='" + (length - 23) + "' y='20' fill='black'>" + (int) f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 60), length, 60) + " cm</text>";
+        if (c.getShed_() != null) {
+            drawing += "<line x1='" + (length+50 - slength) + "' y1='" + ((int) hypotenuse * 2-10) + "' x2='" + (length+50) + "' y2='" + ((int) hypotenuse * 2-10) + "' style='stroke:red;stroke-width:2'/>";
+            drawing += "<text x='" + (length+50 - slength) + "' y='"+((int) hypotenuse * 2+7)+"' fill='red'>" + c.getShed_().getLength() + " cm</text>";
+            drawing += "<line x1='" + (length+75) + "' y1='" + ((int) hypotenuse * 2-40) + "' x2='" + (length+75) + "' y2='" + ((int) hypotenuse * 2-10-c.getWidth()) + "' style='stroke:red;stroke-width:2'/>";
+            drawing += "<text transform='rotate(90)' x='" +(-(int) hypotenuse * 2-10-c.getWidth()) + "' y='"+(length+75)+"' fill='red'>" + c.getShed_().getLength() + " cm</text>";
+        }
         //beklædning
         drawing += "<line x1='" + (length - slength + 47) + "' y1='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93) + "' x2='" + (startingPointFirstSpærX + length) + "' y2='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93) + "' style='stroke:red;stroke-width:2'/>";
         drawing += "<line x1='" + (length - slength + 47) + "' y1='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93) + "' x2='" + (length - slength + 47) + "' y2='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 93 - swidth) + "' style='stroke:red;stroke-width:2'/>";
@@ -268,7 +274,7 @@ public class DrawSVGIncline {
             int slength = shed.getLength();
             int swidth = shed.getWidth();
         }
-        
+
         BOMFlatRoof f = new BOMFlatRoof();
         BOMInclineRoof ic = new BOMInclineRoof();
         double inclination = Math.toRadians(c.getInclination());
@@ -277,8 +283,8 @@ public class DrawSVGIncline {
         roofHeight *= 2;
         width *= 2;
         System.out.println("ROOFHEIGHT : " + roofHeight);
-        
-        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + width+20 + " " + length+20 + "' >";
+
+        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + width + 20 + " " + length + 20 + "' >";
         drawing += "<rect x='0' y='0' height='" + (height + roofHeight) + "' width='" + width + "' fill='lightgray' stroke='black' stroke-width='3'/>";
         drawing += "<text x='" + (width / 2 - 50) + "' y='" + (roofHeight + 50) + "' fill='black'>Bredde: " + width + " cm</text>";
         drawing += "<text x='" + (width / 2 + 10) + "' y='" + (roofHeight / 2) + "' fill='black'>Højde: " + (int) roofHeight + " cm</text>";

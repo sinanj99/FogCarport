@@ -28,6 +28,8 @@
                     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
                         <p>Ellers er du naturligvis velkommen til at kigge på vores udvalg af pre-byggede carporte:</p>
                         <input class="btn nicebtn" type="submit" value="Se pre-byggede" style="color: black;">
+                        <a href="FrontController?command=prebuiltCarport">link til prebuiltCarport.jsp gennem frontcontroller</a>
+                        
                     </div>
                 </div>
             </div>

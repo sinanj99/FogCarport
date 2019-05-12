@@ -12,7 +12,7 @@ package Data.Entity;
 public class PrebuiltCarport
 {
     private int id;
-    private String imgPpath;
+    private String imgPath;
     private int carportWidth;
     private int carportLength;
     private boolean shed;
@@ -20,15 +20,16 @@ public class PrebuiltCarport
     private int shedLength;
     private int price;
 
-    public PrebuiltCarport(int id, String imgPpath, int carportWidth, int carportLength, boolean shed, int shedWidth, int shedLength)
+    public PrebuiltCarport(int id, String imgPpath, int carportWidth, int carportLength, boolean shed, int shedWidth, int shedLength, int price)
     {
         this.id = id;
-        this.imgPpath = imgPpath;
+        this.imgPath = imgPpath;
         this.carportWidth = carportWidth;
         this.carportLength = carportLength;
         this.shed = shed;
         this.shedWidth = shedWidth;
         this.shedLength = shedLength;
+        this.price = price;
     }
 
     public int getId()
@@ -38,7 +39,7 @@ public class PrebuiltCarport
 
     public String getImgPpath()
     {
-        return imgPpath;
+        return imgPath;
     }
 
     public int getCarportWidth()
@@ -66,5 +67,10 @@ public class PrebuiltCarport
         return price;
     }
     
+     @Override
+    public String toString() {
+        return "PrebuiltCarport{" + "id=" + id + ", imgPath=" + imgPath + ", carportWidth=" + carportWidth + ", carportLength=" + carportLength
+                + ", shed=" + shed + ", shedWidth=" + shedWidth + ", shedLength=" + shedLength + ", price=" + price + '}';
+    }
     
 }

@@ -8,6 +8,7 @@ package Data.Database;
 import Logic.Exceptions.NoSuchMaterialException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 public class DBConnector {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://157.230.97.70:3306/CarportDB";
+    private static String URL = "jdbc:mysql://157.230.97.70:3306/CarportDB";
     private static final String USER = "root";
     private static final String PASSWORD = "prespa01";
     private static Connection conn = null;
@@ -33,7 +34,7 @@ public class DBConnector {
         }
         return conn;
     }
-    
+
     public static void close() {
         try {
             if (conn != null || !conn.isClosed()) {
@@ -44,19 +45,25 @@ public class DBConnector {
             System.out.println(ex.getMessage());
         }
     }
-    
-     public static void main(String[] args) throws NoSuchMaterialException {
-//        Test connection
-//        try {
-//            Connection con = DBConnector.getConnection();
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery("SELECT * FROM material;");
-//            while (rs.next()) {
-//                System.out.println(rs.getString("name"));
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-    }
 
+    public static Connection getTestConnection() {
+        URL = "jdbc:mysql://157.230.97.70:3306/CarportDBTest";
+        try {
+            Class.forName(DRIVER);
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return conn;
+    }
+    
+     public PreparedStatement preparedStatement(String sql) throws SQLException
+    {
+        return conn.prepareStatement(sql);
+    }
+    
+    public PreparedStatement preparedStatement(String sql, int indicator) throws SQLException
+    {
+        return conn.prepareStatement(sql, indicator);
+    }
 }

@@ -12,7 +12,9 @@ import Data.Entity.PersonalInfo;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
+import Data.Mappers.IUserMapper;
 import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.UserNotFoundException;
 
 /**
  *
@@ -20,11 +22,13 @@ import Logic.Exceptions.NoSuchMaterialException;
  */
 public class TestCalculateBOMMethods
 {
-    public static void main(String[] args) throws NoSuchMaterialException
+    public static void main(String[] args) throws NoSuchMaterialException, UserNotFoundException
     {
         FlatRoofCarportBOM f = new FlatRoofCarportBOM();
         InclineRoofCarportBOM i = new InclineRoofCarportBOM();
         CalculateBOM c = new CalculateBOM();
+        IUserMapper.instance().getTestConnection();
+        System.out.println(IUserMapper.instance().getUser("test@test.dk"));
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);
 //        System.out.println(c.calculateQuantityOfSpær(450));

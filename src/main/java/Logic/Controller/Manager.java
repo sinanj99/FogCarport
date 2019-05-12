@@ -5,6 +5,7 @@
  */
 package Logic.Controller;
 
+import Data.Database.DBConnector;
 import Data.Entity.Material;
 import Logic.Exceptions.UserNotFoundException;
 import Logic.Exceptions.DuplicateException;
@@ -18,6 +19,7 @@ import Data.Entity.User;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchShedException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,7 +28,12 @@ import java.util.List;
  * @author sinanjasar
  */
 public class Manager {
-
+    
+    
+    public static void getTestConnection() {
+        IUserMapper.instance().getTestConnection();
+    }
+    
     public static List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException {
         return IRequestMapper.instance().getRoofs(rooftype);
     }
@@ -53,7 +60,7 @@ public class Manager {
     public static Material getMaterial(String name) throws NoSuchMaterialException {
         return IMaterialMapper.instance().getMaterial_(name);
     }
-    public static Material getMaterialWithLength(int id, int length) {
+    public static Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException {
         return IMaterialMapper.instance().getMaterialWithLength(id, length);
     }
     public static Material getMaterialNoLength(int id) {

@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 class RequestMapper extends IRequestMapper {
 
     private static RequestMapper instance = null;
-    private static Connection con = DBConnector.getConnection();
+    private static final Connection con = DBConnector.getConnection();
 
     public synchronized static RequestMapper getInstance() {
         if (instance == null) {
@@ -42,6 +42,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     public static void main(String[] args) {
+        
         System.out.println(IRequestMapper.instance().getRequest(1));
     }
 

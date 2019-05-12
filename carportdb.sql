@@ -14,6 +14,8 @@ CREATE TABLE CarportDB.rooftype (
 	PRIMARY KEY (roof_id)
 );
 
+select * from users join users_personalinfo using(user_id) where user_id=1;
+
 insert into CarportDB.rooftype (`name`, inclined) values 
 ("Plasttrapezplader - Blåtonet", 0),
 ("Plasttrapezplader - Gråtonet", 0),

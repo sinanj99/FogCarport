@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 class MaterialMapper extends IMaterialMapper {
 
     private static MaterialMapper instance = null;
-    Connection con = DBConnector.getConnection();
+    Connection con = DBConnector.getTestConnection();
 
     public synchronized static MaterialMapper getInstance() {
         if (instance == null) {
@@ -54,7 +54,7 @@ class MaterialMapper extends IMaterialMapper {
                 price = rs.getInt("price");
             }
         } catch (SQLException ex) {
-            throw new NoSuchMaterialException();
+//            throw new NoSuchMaterialException();
         }
         return new Material(material_id, name, length, unit, price);
     }
@@ -80,7 +80,7 @@ class MaterialMapper extends IMaterialMapper {
                 price = rs.getInt("price");
             }
         } catch (SQLException ex) {
-            throw new NoSuchMaterialException();
+//            throw new NoSuchMaterialException();
         }
         return new Material(material_id, name, length, unit, price);
     }
@@ -89,7 +89,7 @@ class MaterialMapper extends IMaterialMapper {
     public String getMaterial(int id) throws NoSuchMaterialException {
         String name_ = "";
         try {
-            String sql = "SELECT name FROM `materials_withlength` WHERE material_id = ?;";
+            String sql = "SELECT name * `materials_withlength` WHERE material_id = ?;";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -97,13 +97,13 @@ class MaterialMapper extends IMaterialMapper {
                 name_ = rs.getString("name");
             }
         } catch (SQLException ex) {
-            throw new NoSuchMaterialException();
+            System.out.println(ex);
         }
         return name_;
     }
 
     @Override
-    public Material getMaterialWithLength(int id, int length) {
+    public Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException {
         String name = "";
         String unit = "";
         int price = 0;
@@ -124,6 +124,8 @@ class MaterialMapper extends IMaterialMapper {
             if (rs.next()) {
                 length = rs.getInt("length");
                 price = rs.getInt("price");
+            } else {
+                throw new NoSuchMaterialException(id, length);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -244,10 +246,10 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     public static void main(String[] args) {
-        try {
-            System.out.println(IMaterialMapper.instance().getMaterial(7));
-        } catch (NoSuchMaterialException ex) {
-            System.out.println(ex.getMessage());
+        try{
+            System.out.println(IMaterialMapper.instance().getMaterialWithLength(1, 120));
+        } catch(NoSuchMaterialException e) {
+            System.out.println(e.getMessage());
         }
     }
 

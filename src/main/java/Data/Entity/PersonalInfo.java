@@ -57,7 +57,7 @@ public class PersonalInfo {
 
     @Override
     public String toString() {
-        return "PersonalInfo{" + "user_id=" + user_id + ", firstname=" + firstname + ", lastname=" + lastname + ", address=" + address + ", zipcode=" + zipcode + ", city=" + city + ", gender=" + gender + '}';
+        return "PersonalInfo{" + "firstname=" + firstname + ", lastname=" + lastname + ", address=" + address + ", zipcode=" + zipcode + ", city=" + city + ", gender=" + gender + '}';
     }
     
     

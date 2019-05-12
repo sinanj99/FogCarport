@@ -8,7 +8,7 @@ package Presentation.Commands;
 import Data.Entity.PersonalInfo;
 import Data.Entity.User;
 import Logic.Exceptions.DuplicateException;
-import Logic.Controller.Manager;
+import Logic.Controller.Facade;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,7 +34,7 @@ public class RegisterCommand implements Command {
         String pword2 = request.getParameter("pword2");
         String gender = request.getParameter("gender");
         try {
-            Manager.insertUser(new User(new PersonalInfo(fname, lname, adress, zip, city, gender), email, pword));
+            Facade.insertUser(new User(new PersonalInfo(fname, lname, adress, zip, city, gender), email, pword));
         } catch (DuplicateException e) {
             request.setAttribute("registerResult", e.getMessage());
             return "register.jsp";

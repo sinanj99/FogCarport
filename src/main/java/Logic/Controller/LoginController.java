@@ -28,7 +28,7 @@ public class LoginController {
      * @throws Logic.NoMatchException
      */
     public static void doesMatch(String email, String password) throws UserNotFoundException, SQLException, NoMatchException {
-        User user = Manager.getUser(email);
+        User user = Facade.getUser(email);
         if (!password.equals(user.getPassword())) {
             throw new NoMatchException("Adgangskode passer ikke!");
         }

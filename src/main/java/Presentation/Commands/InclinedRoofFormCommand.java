@@ -5,7 +5,7 @@
  */
 package Presentation.Commands;
 
-import Logic.Controller.Manager;
+import Logic.Controller.Facade;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class InclinedRoofFormCommand implements Command {
         }
         request.getSession().setAttribute("inclined", "true");
         
-        request.setAttribute("roofs", Manager.getRoofs(1)); // 0 for flat roofs 
+        request.setAttribute("roofs", Facade.getRoofs(1)); // 0 for flat roofs 
         return "inclineroof.jsp";
     }
     

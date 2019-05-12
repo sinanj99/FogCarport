@@ -24,8 +24,8 @@ public class TestCalculateBOMMethods
 {
     public static void main(String[] args) throws NoSuchMaterialException, UserNotFoundException
     {
-        FlatRoofCarportBOM f = new FlatRoofCarportBOM();
-        InclineRoofCarportBOM i = new InclineRoofCarportBOM();
+        BOMFlatRoof f = new BOMFlatRoof();
+        BOMInclineRoof i = new BOMInclineRoof();
         CalculateBOM c = new CalculateBOM();
         IUserMapper.instance().getTestConnection();
         System.out.println(IUserMapper.instance().getUser("test@test.dk"));

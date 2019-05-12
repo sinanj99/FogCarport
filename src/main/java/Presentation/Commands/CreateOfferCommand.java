@@ -11,9 +11,10 @@ import Data.Entity.Request;
 import Data.Entity.Type;
 import Logic.Calculator.CalculateBOM;
 import Logic.Calculator.CalculatePrice;
-import Logic.Calculator.DrawSVG;
-import Logic.Calculator.InclineRoofCarportBOM;
-import Logic.Controller.Manager;
+import Logic.Calculator.DrawSVGIncline;
+import Logic.Calculator.DrawSVGFlatroof;
+import Logic.Calculator.BOMInclineRoof;
+import Logic.Controller.Facade;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchRoofException;
@@ -34,7 +35,7 @@ public class CreateOfferCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
         //calculations
-        Request r = Manager.getRequest(Integer.parseInt(request.getParameter("requestID")));
+        Request r = Facade.getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
         CalculateBOM b = new CalculateBOM();
         if (r.getCarport().getInclination() != 0) {
@@ -71,10 +72,28 @@ public class CreateOfferCommand implements Command {
         request.setAttribute("materialsNoLength", materialsNoLength);
 
         // drawing
-        DrawSVG d = new DrawSVG();
-        InclineRoofCarportBOM ic = new InclineRoofCarportBOM();
-        String svg = d.drawTopInclineWithShed(r.getCarport(), ic);
-        request.setAttribute("svg", svg);
+        DrawSVGIncline d = new DrawSVGIncline();
+        DrawSVGFlatroof df = new DrawSVGFlatroof();
+        
+        String svg1 = "";
+        String svg2 = "";
+        
+        if(r.getCarport().getInclination() == 0)
+        {
+            svg1 = df.drawFlat(r.getCarport());
+            System.out.println(svg1);
+        } 
+        
+        
+        else
+        {
+            svg1 = d.drawTopIncline(r.getCarport());
+            svg2 = d.drawFrontIncline(r.getCarport());
+        }
+//        String bandSvg = d.drawPerforatedBand(r.getCarport());
+        request.setAttribute("svg1", svg1);
+        request.setAttribute("svg2", svg2);
+//        request.setAttribute("bandSvg", bandSvg);
 
         return "create_offer.jsp";
     }

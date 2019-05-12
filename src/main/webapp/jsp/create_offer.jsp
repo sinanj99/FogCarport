@@ -1,3 +1,4 @@
+<%@page import="Data.Entity.User"%>
 <%@page import="Data.Entity.Request"%>
 <%@page import="Data.Entity.Roof"%>
 <%@page import="java.util.ArrayList"%>
@@ -6,14 +7,18 @@
 <%@page import="Data.Entity.Type"%>
 <%@page import="Data.Entity.LineItem"%>
 <%@page import="Data.Entity.BOM"%>
-<%      int buyPrice = (int) request.getAttribute("buyPrice");
+<%
+
+    int buyPrice = (int) request.getAttribute("buyPrice");
     int sellPrice = (int) request.getAttribute("sellPrice");
     Request r = (Request) request.getAttribute("request");
     List<LineItem> materialsLength = (List) request.getAttribute("materialLength");
     List<LineItem> rooftiles = (List) request.getAttribute("roofTiles");
     List<LineItem> roofmaterials = (List) request.getAttribute("roofMaterials");
     List<LineItem> materialsNoLength = (List) request.getAttribute("materialsNoLength");
-    String svg = (String) request.getAttribute("svg");
+    String svg1 = (String) request.getAttribute("svg1");
+    String svg2 = (String) request.getAttribute("svg2");
+    String bandSvg = (String) request.getAttribute("bandSvg");
     int fullPrice = 0;
 %>
 
@@ -114,7 +119,7 @@
                             <p>Længde: <%=r.getCarport().getLength()%></p>
                         </div>
 
-                        <%if (r.getCarport().getShed_().getLength() != 0) {%>
+                        <%if (r.getCarport().getShed_() != null) {%>
                         <div class="d-flex flex-column align-items-center">
                             <h3 class="">Redskabsrum: </h3>
                             <p>Bredde: <%=r.getCarport().getShed_().getWidth()%></p>
@@ -124,10 +129,16 @@
                         <% }%>
                     </div>
                     <h3>Skitse:</h3>
-                    <%= svg %>
-                    <br><br>
+                    Tag fra oven:
+                    <svg style="height: 1200px; width: 900px;">
+
+                    <%= svg1%>
+                    <%if (r.getCarport().getInclination() > 0) {%>
+                    Tag forfra:
+                    <%= svg2%>
+                    <% }%>
+                    </svg>
                 </div>
             </div>
         </div>
     </div>
-</div>

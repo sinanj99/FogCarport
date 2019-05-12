@@ -13,34 +13,34 @@ import Data.Entity.Roof;
 import Data.Entity.Shed;
 import Data.Entity.Type;
 import Data.Mappers.IRequestMapper;
-import Logic.Controller.Manager;
+import Logic.Controller.Facade;
 import Logic.Exceptions.NoSuchMaterialException;
 
 /**
  *
  * @author Kasper Jeppesen
  */
-public class FlatRoofCarportBOM {
+public class BOMFlatRoof {
 
     /**
      *
      * @param length
      * @return the amount of packages of bracket screws needed for the carport.
      */
-    public int calculateQuantityOfBeslagskruer(int length) {
+    public int calculateQuantityOfBeslagskruer(int lengthOfCarport) {
         //Der skal som minimum bruges 1 pakke. 
         int packsNeeded = 1;
         int quantity = 0;
 
         // Tre sider per beslag. 
-        int sidesOfVenstreBeslag = calculateQuantityOfVenstrebeslag(length) * 3;
-        int sidesOfHøjreBeslag = calculateQuantityOfHøjreBeslag(length) * 3;
+        int sidesOfVenstreBeslag = calculateQuantityOfVenstrebeslag(lengthOfCarport) * 3;
+        int sidesOfHøjreBeslag = calculateQuantityOfHøjreBeslag(lengthOfCarport) * 3;
 
         //Tre beslagsskruer per side.
         quantity = (sidesOfHøjreBeslag + sidesOfVenstreBeslag) * 3;
 
         //2 beslagskruer for each spær the hulbånd crosses and the hulbånd does not croos front or back spær, therefor minus 2
-        int quantityOfSpær = calculateQuantityOfSpær(length) - 2;
+        int quantityOfSpær = calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60) - 2;
 
         //*2 fordi der er to hulbånd og *2 fordi der er to skruer per beslag. 
         quantity += quantityOfSpær * 2 * 2;
@@ -53,19 +53,19 @@ public class FlatRoofCarportBOM {
         return packsNeeded;
     }
 
-    public int calculateQuantityOfBrædderbolt(int length, Shed shed, int shedLengt) {
+    public int calculateQuantityOfBrædderbolt(int length, int width, Shed shed) {
         //two brædderbolte per stolpe
-        return calculateQuantityOfStolper(length, shed, shedLengt) * 2;
+        return calculateQuantityOfStolper(length, width, shed) * 2;
     }
 
-    public int calculateQuantityOfHøjreBeslag(int length) {
+    public int calculateQuantityOfHøjreBeslag(int lengthOfCarport) {
         //one venstrebeslag per spær
-        return calculateQuantityOfSpær(length);
+        return calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60);
     }
 
-    public int calculateQuantityOfVenstrebeslag(int length) {
+    public int calculateQuantityOfVenstrebeslag(int lengthOfCarport) {
         //one venstrebeslag per spær
-        return calculateQuantityOfSpær(length);
+        return calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60);
     }
 
     public int calculateQuantityOfUndersternbrædderForFrontAndBack(int width) {
@@ -135,17 +135,27 @@ public class FlatRoofCarportBOM {
      * @param length
      * @return
      */
-    public int calculateQuantityOfStolper(int length, Shed shed, int shedLength) {
+    public int calculateQuantityOfStolper(int lengthOfCarport, int widthOfCarport, Shed shed) {
 
         //Substraicing spaceBetweenSpær times 2 because stolper cant appear at the front spear and back spear
-        float lengthAvaiableForStolper = length - spaceBetweenSpær(length) * 2;
+        float lengthAvaiableForStolper = lengthOfCarport - spaceBetweenSpær(calculateQuantityOFSpærExcluedBackSpær(lengthOfCarport, 60), lengthOfCarport, 60) * 2;
         // four corner stolper
         int quantity = 4;
 
-        if (shed == null) {
-            lengthAvaiableForStolper -= shedLength;
-            //A shed consists of 6 stolper, the 2 back corner stolper and 4 other.
-            quantity += 4;
+        if (shed != null) {
+            lengthAvaiableForStolper -= shed.getLength();
+            
+            if(widthOfCarport - shed.getWidth() == 30)
+            {
+                //A shed consists of 6 stolper, the 2 back corner of the carport, aswell as two front stolper for the shed abd two middle stolper for the shed
+                quantity += 4;
+            }
+            else
+            {
+                //one extra stolpe is needed to function as a corner stolpe for the shed, as the top right corner stolpe for the carport can no longer be used
+                quantity += 5;
+            }
+            
         }
 
         //check if carport is to small to have other stolper than the corner stolpe and eventual stolper added for the shed
@@ -181,11 +191,11 @@ public class FlatRoofCarportBOM {
     public double hulbåndAntal(Request req) {
         double lengthM;
         // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
-        if (req.getCarport().getShed_()==null) {
-            lengthM = req.getCarport().getLength() - req.getCarport().getShed_().getLength() - spaceBetweenSpær(req.getCarport().getLength()) / 100;
+        if (req.getCarport().getShed_()!=null) {
+            lengthM = req.getCarport().getLength() - req.getCarport().getShed_().getLength() - spaceBetweenSpær(calculateQuantityOFSpærExcluedBackSpær(req.getCarport().getLength(), 60), req.getCarport().getLength(), 60) / 100;
         } else {
             //length in meters
-            lengthM = (req.getCarport().getLength() - spaceBetweenSpær(req.getCarport().getLength())) / 100;
+            lengthM = (req.getCarport().getLength() - spaceBetweenSpær(calculateQuantityOFSpærExcluedBackSpær(req.getCarport().getLength(), 60), req.getCarport().getLength(), 60)) / 100;
         }
         // width in meters
         double widthM = req.getCarport().getWidth() / 100;
@@ -198,54 +208,97 @@ public class FlatRoofCarportBOM {
         return length / 30; // widt of a single roof tile is 30 cm. 
         
     }
-
-    public int calculateQuantityOfSpær(int length) {
-        //the front and back spær
-        int quantity = 2;
-        float widthOfSpær = 4.5f;
-
-        // This is the first spær which get added between the front spær and back spær
-        int lastAddedSpær = 1;
-        quantity += lastAddedSpær;
-        // 2 = There is a space between the middle spær to the front spær, and a space between the middle spær and back spær
-        int numberOfSpacesBetweenSpær = 2;
-        float spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
-
-        // 75 is the limit of how much space must be between spærene
-        while (spaceBetweenSpær > 75) {
-            //number of added spær gets doubled everty time
-            lastAddedSpær *= 2;
-            quantity += lastAddedSpær;
-            // as a result the amount of spaces between spær also gets doubled every time
-            numberOfSpacesBetweenSpær = numberOfSpacesBetweenSpær * 2;
-            spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+    public int calculateQuantityOFSpærExcluedBackSpær(int lengthOfCarport, int limit)
+    {
+        int quantity = lengthOfCarport / limit;
+        
+        float spaceBetweenSpær = calculateSpaceBetweenSpær(quantity, lengthOfCarport);
+        
+        if(spaceBetweenSpær > limit)
+        {
+            quantity++;
         }
+        
+        return quantity ;
+    }
+    public int calculateQuantityOfSpærIncludedBackSpær(int lengthOfCarport, int limit)
+    {
+        int quantity = calculateQuantityOFSpærExcluedBackSpær(lengthOfCarport, limit) + 1;
         return quantity;
     }
-
-    public float spaceBetweenSpær(int length) {
-        //the front and back spær
-        int quantity = 2;
-        float widthOfSpær = 4.5f;
-
-        // This is the first spær which get added between the front spær and back spær
-        int lastAddedSpær = 1;
-        quantity += lastAddedSpær;
-        // 2 = There is a space between the middle spær to the front spær, and a space between the middle spær and back spær
-        int numberOfSpacesBetweenSpær = 2;
-        float spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
-
-        // 75 is the limit of how much space must be between spærene
-        while (spaceBetweenSpær > 75) {
-            //number of added spær gets doubled everty time
-            lastAddedSpær *= 2;
-            quantity += lastAddedSpær;
-            // as a result the amount of spaces between spær also gets doubled every time
-            numberOfSpacesBetweenSpær *= 2;
-            spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+    
+    public float spaceBetweenSpær(int quantityOfSpærExcludedBackSpær,int lengthOfCarport, int limit)
+    {
+        float spaceBetweenSpær = calculateSpaceBetweenSpær(quantityOfSpærExcludedBackSpær, lengthOfCarport);
+        
+        if(spaceBetweenSpær > limit)
+        {
+            quantityOfSpærExcludedBackSpær++;
+            spaceBetweenSpær = calculateSpaceBetweenSpær(quantityOfSpærExcludedBackSpær, lengthOfCarport);
         }
+        
         return spaceBetweenSpær;
     }
+    private float calculateSpaceBetweenSpær(int quantityOfSpær, int lengthOfCarport)
+    {
+        float widthOfSpær = 4.5f;
+        
+        float spaceOfAllSpær = quantityOfSpær * widthOfSpær;
+        float spaceAviable = lengthOfCarport - spaceOfAllSpær;
+        float spaceBetweenSpær = spaceAviable / quantityOfSpær;
+        
+        return spaceBetweenSpær;
+    }
+    
+    
+
+//    public int calculateQuantityOfSpær2(int length) {
+//        //the front and back spær
+//        int quantity = 2;
+//        float widthOfSpær = 4.5f;
+//
+//        // This is the first spær which get added between the front spær and back spær
+//        int lastAddedSpær = 1;
+//        quantity += lastAddedSpær;
+//        // 2 = There is a space between the middle spær to the front spær, and a space between the middle spær and back spær
+//        int numberOfSpacesBetweenSpær = 2;
+//        float spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+//
+//        // 75 is the limit of how much space must be between spærene
+//        while (spaceBetweenSpær > 75) {
+//            //number of added spær gets doubled everty time
+//            lastAddedSpær *= 2;
+//            quantity += lastAddedSpær;
+//            // as a result the amount of spaces between spær also gets doubled every time
+//            numberOfSpacesBetweenSpær = numberOfSpacesBetweenSpær * 2;
+//            spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+//        }
+//        return quantity;
+//    }
+
+//    public float spaceBetweenSpær2(int length) {
+//        //the front and back spær
+//        int quantity = 2;
+//        float widthOfSpær = 4.5f;
+//
+//        // This is the first spær which get added between the front spær and back spær
+//        int lastAddedSpær = 1;
+//        quantity += lastAddedSpær;
+//        // 2 = There is a space between the middle spær to the front spær, and a space between the middle spær and back spær
+//        int numberOfSpacesBetweenSpær = 2;
+//        float spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+//
+//        // 75 is the limit of how much space must be between spærene
+//        while (spaceBetweenSpær > 75) {
+//            //number of added spær gets doubled everty time
+//            lastAddedSpær *= 2;
+//            quantity += lastAddedSpær;
+//            // as a result the amount of spaces between spær also gets doubled every time
+//            numberOfSpacesBetweenSpær *= 2;
+//            spaceBetweenSpær = (length - (widthOfSpær * quantity)) / numberOfSpacesBetweenSpær;
+//        }
+//        return spaceBetweenSpær;
+//    }
 
     public int calculateQuantityOfSpærForRemmen() {
         //1 spær is used for each side of the carport
@@ -257,9 +310,9 @@ public class FlatRoofCarportBOM {
         return new LineItem(m, calculateQuantityOfBeslagskruer(length), "Til montering af universalbeslag + hulbånd", m.getPrice() * calculateQuantityOfBeslagskruer(length), Type.NOLENGTH);
     }
 
-    public LineItem brædderbolt(int length, Shed shed, int shedLength) throws NoSuchMaterialException {
+    public LineItem brædderbolt(int length, int width, Shed shed) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("10x120mm brædderbolt");
-        return new LineItem(m, calculateQuantityOfBrædderbolt(length, shed, shedLength), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length, shed, shedLength), Type.NOLENGTH);
+        return new LineItem(m, calculateQuantityOfBrædderbolt(length, width, shed), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length,width, shed), Type.NOLENGTH);
     }
 
     public LineItem højrebeslag(int length) throws NoSuchMaterialException {
@@ -274,22 +327,22 @@ public class FlatRoofCarportBOM {
     }
 //    
 
-    public LineItem stolpe(int length, Shed shed, int shedLength) throws NoSuchMaterialException {
+    public LineItem stolpe(int length,int width, Shed shed) throws NoSuchMaterialException {
         Material m = IMaterialMapper.instance().getMaterial_("97x97mm trykimp. Stolpe");
-        return new LineItem(m, calculateQuantityOfStolper(length, shed, shedLength), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length, shed, shedLength), Type.LENGTH);
+        return new LineItem(m, calculateQuantityOfStolper(length,width, shed), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length,width, shed), Type.LENGTH);
 
     }
 
-    public LineItem spær(int length, int width) throws NoSuchMaterialException {
+    public LineItem spær(int lengthOfCarport, int width) throws NoSuchMaterialException {
         LineItem l = null;
         Material m;
 
         String desc = "Spær, monteres på rem";
 
         for (int i = 240; i <= 750; i += 30) {
-            if (length == i) {
+            if (lengthOfCarport == i) {
                 m = IMaterialMapper.instance().getMaterial("45x195mm spærtræ. ubh. ", i);
-                l = new LineItem(m, calculateQuantityOfSpær(length), desc, m.getPrice() * calculateQuantityOfSpær(length), Type.LENGTH);
+                l = new LineItem(m, calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60), desc, m.getPrice() * calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60), Type.LENGTH);
             }
         }
         return l;

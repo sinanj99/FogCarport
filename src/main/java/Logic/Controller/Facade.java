@@ -27,9 +27,8 @@ import java.util.List;
  *
  * @author sinanjasar
  */
-public class Manager {
-    
-    
+public class Facade {
+
     public static void getTestConnection() {
         IUserMapper.instance().getTestConnection();
     }

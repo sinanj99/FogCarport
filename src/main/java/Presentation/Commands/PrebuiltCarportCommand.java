@@ -34,12 +34,15 @@ public class PrebuiltCarportCommand implements Command
         try
         {
             prebuiltCarports = (ArrayList) Facade.getAllPrebuiltCarports();
+            System.out.println(prebuiltCarports);
             request.setAttribute("prebuiltCarport", prebuiltCarports);
         }
         catch (NoSuchPrebuiltCarportException ex)
         {
             //If there are no prebuilt carports
             Logger.getLogger(PrebuiltCarportCommand.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("Error", "Something went wrong");
+            return "errorpage.jsp";
         }
         return "prebuiltCarport.jsp";
     }

@@ -56,6 +56,11 @@ public class PrebuiltCarport
     {
         return shed;
     }
+    
+    public int getShedWidth()
+    {
+        return shedWidth;
+    }
 
     public int getShedLength()
     {

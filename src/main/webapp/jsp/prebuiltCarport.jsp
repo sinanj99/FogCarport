@@ -54,7 +54,7 @@
   <body class="background1">
     <%
         ArrayList<PrebuiltCarport> prebuiltCarports = (ArrayList<PrebuiltCarport>) request.getAttribute("prebuiltCarport");
-        
+        int numberOfButton = 1;
     %>
     <div class="containter"  >
           <div class="row">
@@ -64,12 +64,14 @@
                   <div class="card-deck ">
                       
                       <% 
+                          
                           for(int i = 0; i < 5; i++)
                           {
                               if(i < prebuiltCarports.size())
                               {
                       %>
                                 <div class="card text-white bg-secondary border-info  " style="max-width: 319px; ">
+                                    <form method="get" action="FrontController">
                                     <img src=<%= prebuiltCarports.get(i).getImgPpath()  %> class="card-img-top" alt="Card image"  />
 
                                       <div class="card-body ">
@@ -100,14 +102,14 @@
                                           <%
                                                 }
                                           %>
-                                                
-                                                
-                                                
                                          <br>
                                          <p class="card-text price ">pr. stk <span class="blue"><%= prebuiltCarports.get(i).getPrice()  %>,-</span></p>
-
-                                          <a href="" class="btn btn-success" >Læg i indkubskurv</a>
+                                                
+                                         <input class="btn btn-success"  type="submit" value="læg i indkøbskurv" name=<%=numberOfButton %> >
+                                         <% numberOfButton++; %>
+                                         <input type="hidden" name="command" value="shop">
                                       </div>
+                                    </form>
 
                                  </div>  
                         <%
@@ -129,6 +131,7 @@
                               {
                       %>
                                 <div class="card text-white bg-secondary border-info  " style="max-width: 319px; ">
+                                    <form method="get" action="FrontController">
                                     <img src=<%= prebuiltCarports.get(i).getImgPpath()  %> class="card-img-top" alt="Card image"  />
 
                                       <div class="card-body ">
@@ -162,9 +165,11 @@
                                          <br>
                                          <p class="card-text price ">pr. stk <span class="blue"><%= prebuiltCarports.get(i).getPrice()  %>,-</span></p>
 
-                                          <a href="" class="btn btn-success" >Læg i indkubskurv</a>
+                                           <input class="btn btn-success"  type="submit" value="læg i indkøbskurv" name=<%=numberOfButton %> >
+                                         <% numberOfButton++; %>
+                                         <input type="hidden" name="command" value="shop">
                                       </div>
-
+                                    </form>  
                                  </div>  
                         <%
                                }
@@ -185,6 +190,7 @@
                               {
                       %>
                                 <div class="card text-white bg-secondary border-info  " style="max-width: 319px; ">
+                                    <form method="get" action="FrontController">
                                     <img src=<%= prebuiltCarports.get(i).getImgPpath()  %> class="card-img-top" alt="Card image"  />
 
                                       <div class="card-body ">
@@ -218,9 +224,11 @@
                                          <br>
                                          <p class="card-text price ">pr. stk <span class="blue"><%= prebuiltCarports.get(i).getPrice()  %>,-</span></p>
 
-                                          <a href="" class="btn btn-success" >Læg i indkubskurv</a>
+                                         <input class="btn btn-success"  type="submit" value="læg i indkøbskurv" name=<%=numberOfButton %> >
+                                         <% numberOfButton++; %>
+                                         <input type="hidden" name="command" value="shop">
                                       </div>
-
+                                     </form>  
                                  </div>  
                         <%
                                }

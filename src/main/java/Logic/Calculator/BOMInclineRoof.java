@@ -15,6 +15,7 @@ import Logic.Exceptions.NoSuchMaterialException;
 
 import Logic.Controller.Facade;
 import Logic.Exceptions.NoSuchRoofException;
+import Logic.Exceptions.SystemErrorException;
 
 /**
  *
@@ -443,22 +444,22 @@ public class BOMInclineRoof {
     4 skruer per vinkelbeslag
     (står ikke i styklisten, men i beskrivelsen)
      */
-    public LineItem soffits(int carportWidth, int inclination) throws NoSuchMaterialException {
+    public LineItem soffits(int carportWidth, int inclination) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(1, 480);
         return new LineItem(m, amountOfSoffits(carportWidth, inclination), "Vindskeder på rejsning", m.getPrice() * amountOfSoffits(carportWidth, inclination), Type.LENGTH);
     }
 
-    public LineItem rafters(int carportWidth, int carportLength, Shed shed) throws NoSuchMaterialException {
+    public LineItem rafters(int carportWidth, int carportLength, Shed shed) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(3, carportWidth);
         return new LineItem(m, amountOfRafters(carportLength), "Spær, monteres på rem", m.getPrice() * amountOfRafters(carportLength), Type.LENGTH);
     }
 
-    public LineItem fasciaCarport(int carportLength, Shed shed) throws NoSuchMaterialException {
+    public LineItem fasciaCarport(int carportLength, Shed shed) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(1, 600);
         return new LineItem(m, amountOfFasciaBoardsCarport(carportLength, shed), "Sternbrædder til siderne Carport del", m.getPrice() * amountOfFasciaBoardsCarport(carportLength, shed), Type.LENGTH);
     }
 
-    public LineItem fasciaShed(int shedLength) throws NoSuchMaterialException {
+    public LineItem fasciaShed(int shedLength) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(1, 540);
         return new LineItem(m, amountOfFasciaBoardsShed(shedLength), "Sternbrædder til siderne Skur del ( deles )", m.getPrice() * amountOfFasciaBoardsShed(shedLength), Type.LENGTH);
     }
@@ -468,12 +469,12 @@ public class BOMInclineRoof {
         return new LineItem(r, amountOfRoofTiles(carportWidth, carportLength, inclination), "monteres på taglægter", r.getPrice() * amountOfRoofTiles(carportWidth, carportLength, inclination));
     }
 
-    public LineItem laths(int cWidth, int inclination, int cLength, int sLength) throws NoSuchMaterialException {
+    public LineItem laths(int cWidth, int inclination, int cLength, int sLength) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(7, cLength - sLength + 30);
         return new LineItem(m, amountOfLaths(cWidth, inclination), "til montering på spær, 7 rækker lægter på hver skiftevis 1 hel & 1 halv lægte", m.getPrice() * amountOfLaths(cWidth, inclination), Type.LENGTH);
     }
 
-    public LineItem toplaths(int cLength, int sLength, int cWidth) throws NoSuchMaterialException {
+    public LineItem toplaths(int cLength, int sLength, int cWidth) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(7, cLength);
         return new LineItem(m, amountOfTopLaths(), "toplægte til montering af rygsten lægges i toplægte holder", m.getPrice() * amountOfTopLaths(), Type.LENGTH);
 
@@ -484,90 +485,90 @@ public class BOMInclineRoof {
         return new LineItem(r, amountOfRidgeTiles(cLength), "monteres på toplægte med medfølgende beslag se tagstens vejledning", r.getPrice() * amountOfRidgeTiles(cLength));
     }
 
-    public LineItem ridgeTileBrackets(int cLength) {
+    public LineItem ridgeTileBrackets(int cLength) throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(14);
         return new LineItem(m, amountOfRidgeTileBrackets(cLength), "Til montering af rygsten", m.getPrice() * amountOfRidgeTileBrackets(cLength), Type.ROOF);
     }
 
-    public LineItem lathHolders(int carportLength, Shed shed, int shedLength) {
+    public LineItem lathHolders(int carportLength, Shed shed, int shedLength) throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(13);
         return new LineItem(m, amountOfLathHolders(carportLength, shed, shedLength), "monteres på toppen af spæret (til toplægte)", m.getPrice() * amountOfLathHolders(carportLength, shed, shedLength), Type.ROOF);
     }
 
-    public LineItem beamsCarport(int carportLength, Shed shed, int shedLength) throws NoSuchMaterialException {
+    public LineItem beamsCarport(int carportLength, Shed shed, int shedLength) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(3, carportLength - shedLength - 30);
         return new LineItem(m, amountOfBeams(carportLength, shed, shedLength), "Remme i sider, sadles ned i stolper Carport del", m.getPrice() * amountOfLathHolders(carportLength, shed, shedLength), Type.LENGTH);
     }
 
-    public LineItem beamsShed(int shedLength) throws NoSuchMaterialException {
+    public LineItem beamsShed(int shedLength) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(3, 480);
         return new LineItem(m, amountOfBeamsShed(shedLength), "Remme i sider, sadles ned i stolper Skur del", m.getPrice() * amountOfBeamsShed(shedLength), Type.LENGTH);
     }
 
-    public LineItem intertiesSides(int shedLength) throws NoSuchMaterialException {
+    public LineItem intertiesSides(int shedLength) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(4, shedLength);
         return new LineItem(m, amountOfIntertiesSides(), "Løsholter i siderne af skur", m.getPrice() * amountOfIntertiesSides(), Type.LENGTH);
     }
 
-    public LineItem intertiesGables(int shedWidth) throws NoSuchMaterialException {
+    public LineItem intertiesGables(int shedWidth) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(4, shedWidth);
         return new LineItem(m, amountOfIntertiesGable(), "Løsholter i gavle af skur", m.getPrice() * amountOfIntertiesGable(), Type.LENGTH);
     }
 
-    public LineItem rainboards(int cWidth, int inclination) throws NoSuchMaterialException {
+    public LineItem rainboards(int cWidth, int inclination) throws NoSuchMaterialException, SystemErrorException {
         Material m = Facade.getMaterialWithLength(5, 480);
         return new LineItem(m, amountOfRainBoards(cWidth, inclination), "Vand bræt på vindskeder", m.getPrice() * amountOfRainBoards(cWidth, inclination), Type.LENGTH);
     }
 
-    public LineItem bracketInterties() {
+    public LineItem bracketInterties() throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(5);
         return new LineItem(m, amountOfBracketsInterties(), "til montering af løsholter", m.getPrice() * amountOfBracketsInterties(), Type.NOLENGTH);
     }
 
-    public LineItem screwsInnerTimbering(int shedWidth, int shedLength) {
+    public LineItem screwsInnerTimbering(int shedWidth, int shedLength) throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(12);
         return new LineItem(m, amountOfBracketScrewsTimbering1(shedWidth, shedLength), "til montering af inderste bræt ved beklædning", m.getPrice() * amountOfBracketScrewsTimbering1(shedWidth, shedLength), Type.NOLENGTH);
     }
 
-    public LineItem screwsOuterTimbering(int shedWidth, int shedLength) {
+    public LineItem screwsOuterTimbering(int shedWidth, int shedLength) throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(11);
         return new LineItem(m, amountOfBracketScrewsTimbering2(shedWidth, shedLength), "til montering af yderste bræt ved beklædning", m.getPrice() * amountOfBracketScrewsTimbering2(shedWidth, shedLength), Type.NOLENGTH);
     }
 
-    public LineItem screwsLathHolders(int carportLength, Shed shed, int shedLength) {
+    public LineItem screwsLathHolders(int carportLength, Shed shed, int shedLength) throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(7);
         return new LineItem(m, amountOfScrewsLathHolders(carportLength, shed, shedLength), "Til montering af universalbeslag + toplægte", m.getPrice() * amountOfScrewsLathHolders(carportLength, shed, shedLength), Type.NOLENGTH);
     }
 
-    public LineItem leftBracketRafters(int carportLength, Shed shed, int shedLength) {
+    public LineItem leftBracketRafters(int carportLength, Shed shed, int shedLength) throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(2);
         return new LineItem(m, amountOfLeftBracketRafters(carportLength, shed, shedLength), "Til montering af spær på rem", m.getPrice() * amountOfLeftBracketRafters(carportLength, shed, shedLength), Type.NOLENGTH);
     }
 
-    public LineItem rigthBracketRafters(int carportLength, Shed shed, int shedLength) {
+    public LineItem rigthBracketRafters(int carportLength, Shed shed, int shedLength) throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(1);
         return new LineItem(m, amountOfRightBracketRafters(carportLength, shed, shedLength), "Til montering af spær på rem", m.getPrice() * amountOfRightBracketRafters(carportLength, shed, shedLength), Type.NOLENGTH);
     }
 
     public LineItem fasciaAndSoffitScrews(int carportLength, int carportWidth,
-            Shed shed, int shedLength, int inclination) {
+            Shed shed, int shedLength, int inclination) throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(6);
         return new LineItem(m, amountOfScrewsFasciaAndSoffits(carportLength, carportWidth,
                 shed, shedLength, inclination), "Til montering af Stern, vindskeder, vindkryds & vand bræt", m.getPrice() * amountOfScrewsFasciaAndSoffits(carportLength, carportWidth,
                 shed, shedLength, inclination), Type.NOLENGTH);
     }
 
-    public LineItem LathScrews(int carportWidth, int inclination) {
+    public LineItem LathScrews(int carportWidth, int inclination) throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(8);
         return new LineItem(m, amountOfScrewsLaths(carportWidth, inclination), "til taglægter", m.getPrice() * amountOfScrewsLaths(carportWidth, inclination), Type.NOLENGTH);
     }
 
-    public LineItem squareDiscs() {
+    public LineItem squareDiscs() throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(10);
         return new LineItem(m, amountOfSquareDiscs(), "Til montering af rem på stolper", m.getPrice() * amountOfSquareDiscs(), Type.NOLENGTH);
     }
 
-    public LineItem roofTileBinders() {
+    public LineItem roofTileBinders() throws SystemErrorException {
         Material m = Facade.getMaterialNoLength(15);
         return new LineItem(m, amountOfRoofTileBinders(), "til montering af tagsten, alle ydersten + hver anden fastgøres", m.getPrice() * amountOfRoofTileBinders(), Type.ROOF);
     }

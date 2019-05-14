@@ -1,6 +1,7 @@
-DROP SCHEMA IF EXISTS CarportTest;
-CREATE SCHEMA CarportTest;
-USE CarportTest;
+DROP SCHEMA IF EXISTS CarportDBTest;
+DROP SCHEMA IF EXISTS CarportDBTest;
+CREATE SCHEMA CarportDBTest;
+USE CarportDBTest;
 DROP TABLE IF EXISTS material_lengths;
 DROP TABLE IF EXISTS materials_withlength;
 DROP TABLE IF EXISTS materials_nolength;
@@ -22,7 +23,8 @@ CREATE TABLE material_lengths (
     CONSTRAINT material_lengths_ibfk_1 FOREIGN KEY (material_id) REFERENCES materials_withlength(material_id)
     );
     
-CREATE TABLE materials_nolength (
+    
+    CREATE TABLE materials_nolength (
 	material_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     unit VARCHAR(10) NOT NULL,
@@ -30,7 +32,6 @@ CREATE TABLE materials_nolength (
     stock INT NOT NULL,
     PRIMARY KEY (material_id)
     );
-    
     
     CREATE TABLE users (
 	user_id INT(10) NOT NULL AUTO_INCREMENT,
@@ -60,9 +61,9 @@ INSERT INTO material_lengths VALUES
 INSERT INTO materials_nolength (name, unit, price, stock) VALUES 
 ("universal 190 mm højre", "Stk.", 10,1000);
 
-INSERT INTO users (seller, email,  password) VALUES
+INSERT INTO users (seller, email,  password)
+VALUES
 (0,"test@test.dk","test");
 
 INSERT INTO users_personalinfo (user_id,  firstname, lastname, address, zipcode, city, gender)
 VALUES (1, "Peter","Petersen", "Tagensvej 100", 2200, "København N", "m");
-

@@ -8,6 +8,7 @@ package Data.Mappers;
 import Data.Mappers.UserMapper;
 import Data.Entity.User;
 import Logic.Exceptions.DuplicateException;
+import Logic.Exceptions.SystemErrorException;
 import Logic.Exceptions.UserNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,16 +18,14 @@ import java.sql.SQLException;
  * @author sinanjasar
  */
 public abstract class IUserMapper {
-    
-    public abstract void getTestConnection();
-    
+
     public static IUserMapper instance() {
         return UserMapper.getInstance();
     }
 
-    public abstract void insertUser(User user) throws DuplicateException;
+    public abstract void insertUser(User user) throws DuplicateException, SystemErrorException;
 
-    public abstract User getUser(String email) throws UserNotFoundException;
+    public abstract User getUser(String email) throws UserNotFoundException, SystemErrorException;
 
-    public abstract User getUser(int id) throws UserNotFoundException;
+    public abstract User getUser(int id) throws UserNotFoundException, SystemErrorException;
 }

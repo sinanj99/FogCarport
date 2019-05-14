@@ -9,30 +9,23 @@ import Data.Database.DBConnector;
 import Data.Entity.PersonalInfo;
 import Data.Entity.User;
 import Logic.Exceptions.DuplicateException;
-import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.SystemErrorException;
 import Logic.Exceptions.UserNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author sinanjasar
  */
-public class UserMapper extends IUserMapper {
+class UserMapper extends IUserMapper {
 
     private static UserMapper instance;
-    private static final DBConnector connector = new DBConnector();
-    private Connection con = DBConnector.getConnection();
-    
-    @Override
-    public void getTestConnection() {
-        con = DBConnector.getTestConnection();
-    }
-    
+    private final DBConnector connector = new DBConnector();
+    private final Connection con = connector.getConnection();
+
     public static UserMapper getInstance() {
         if (instance == null) {
             instance = new UserMapper();
@@ -41,7 +34,7 @@ public class UserMapper extends IUserMapper {
     }
 
     @Override
-    public void insertUser(User user) throws DuplicateException {
+    public void insertUser(User user) throws DuplicateException, SystemErrorException {
         try {
             con.setAutoCommit(false);
             String sql = "INSERT INTO `users`(email, password) "
@@ -67,12 +60,12 @@ public class UserMapper extends IUserMapper {
             try {
                 con.rollback();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                throw new SystemErrorException(ex.getMessage());
             }
             if (e.getMessage().toLowerCase().startsWith("duplicate entry")) {
                 throw new DuplicateException("Email optaget!");
             } else {
-                System.out.println("User could not be inserted: " + e.getMessage());
+                throw new SystemErrorException(e.getMessage());
             }
         }
     }
@@ -85,7 +78,7 @@ public class UserMapper extends IUserMapper {
      * @throws UserNotFoundException
      */
     @Override
-    public User getUser(String email) throws UserNotFoundException {
+    public User getUser(String email) throws UserNotFoundException, SystemErrorException {
         int user_id = 0, zip = 0, seller = 0;
         String password = "", fname = "", lname = "", address = "", city = "", gender = "";
         boolean seller_ = false;
@@ -108,7 +101,7 @@ public class UserMapper extends IUserMapper {
                 throw new UserNotFoundException("Bruger findes ikke!");
             }
         } catch (SQLException e) {
-            System.out.println("An error occured fetching user from DB: " + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
         if (seller == 1) {
             seller_ = true;
@@ -123,7 +116,7 @@ public class UserMapper extends IUserMapper {
      * @throws UserNotFoundException
      */
     @Override
-    public User getUser(int id) throws UserNotFoundException {
+    public User getUser(int id) throws UserNotFoundException, SystemErrorException {
 
         int zip = 0;
         String email_ = "";
@@ -154,22 +147,11 @@ public class UserMapper extends IUserMapper {
                 throw new UserNotFoundException("Bruger findes ikke!");
             }
         } catch (SQLException e) {
-            System.out.println("An error occured trying to fetch data from user table: " + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
         if (seller == 1) {
             seller_ = true;
         }
         return new User(new PersonalInfo(fname, lname, adress, zip, city, gender), id, seller_, email_, password);
     }
-
-    public static void main(String[] args) throws UserNotFoundException {
-
-        try {
-            System.out.println(IUserMapper.instance().getUser("test@test.dk").getInfo());
-            System.out.println(IUserMapper.instance().getUser(2).getInfo().getFirstname());
-        } catch (UserNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
 }

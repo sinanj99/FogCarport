@@ -8,15 +8,13 @@ package Data.Mappers;
 import Data.Database.DBConnector;
 import Data.Entity.Material;
 import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.SystemErrorException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.sql.DataSource;
 
 /**
  *
@@ -25,7 +23,8 @@ import java.util.logging.Logger;
 class MaterialMapper extends IMaterialMapper {
 
     private static MaterialMapper instance = null;
-    Connection con = DBConnector.getTestConnection();
+    private final DBConnector connector = new DBConnector();
+    private final Connection con = connector.getConnection();
 
     public synchronized static MaterialMapper getInstance() {
         if (instance == null) {
@@ -40,6 +39,7 @@ class MaterialMapper extends IMaterialMapper {
         String name_ = "";
         int length = 0;
         String unit = "";
+        int stock = 0;
         int price = 0;
         try {
             String sql = "SELECT * FROM `material` WHERE name = ?;";
@@ -52,11 +52,12 @@ class MaterialMapper extends IMaterialMapper {
                 length = rs.getInt("length");
                 unit = rs.getString("unit");
                 price = rs.getInt("price");
+                stock = rs.getInt("stock");
             }
         } catch (SQLException ex) {
 //            throw new NoSuchMaterialException();
         }
-        return new Material(material_id, name, length, unit, price);
+        return new Material(material_id, name, length, unit, price, stock);
     }
 
     @Override
@@ -65,6 +66,7 @@ class MaterialMapper extends IMaterialMapper {
         String name_ = "";
         //int length = 0;
         String unit = "";
+        int stock = 0;
         int price = 0;
         try {
             String sql = "SELECT * FROM `material` WHERE name = ? and length = ?;";
@@ -78,11 +80,12 @@ class MaterialMapper extends IMaterialMapper {
                 length = rs.getInt("length");
                 unit = rs.getString("unit");
                 price = rs.getInt("price");
+                stock = rs.getInt("stock");
             }
         } catch (SQLException ex) {
 //            throw new NoSuchMaterialException();
         }
-        return new Material(material_id, name, length, unit, price);
+        return new Material(material_id, name, length, unit, price, stock);
     }
 
     @Override
@@ -103,10 +106,11 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException {
+    public Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException {
         String name = "";
         String unit = "";
         int price = 0;
+        int stock = 0;
         try {
             String sql = "SELECT * FROM `materials_withlength` WHERE material_id = ?;";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -124,21 +128,30 @@ class MaterialMapper extends IMaterialMapper {
             if (rs.next()) {
                 length = rs.getInt("length");
                 price = rs.getInt("price");
+                stock = rs.getInt("stock");
             } else {
-                throw new NoSuchMaterialException(id, length);
+                throw new NoSuchMaterialException("Material " + id + ", " + length + " could not be found");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
-        return new Material(id, name, length, unit, price);
+        return new Material(id, name, length, unit, price, stock);
     }
 
+    /**
+     * Fetches material with specified id from material_nolength table in dB
+     *
+     * @param id of the material wanted
+     * @return a desired material
+     * @throws SystemErrorException
+     */
     @Override
-    public Material getMaterialNoLength(int id) {
+    public Material getMaterialNoLength(int id) throws SystemErrorException, NoSuchMaterialException {
         String name = "";
         String unit = "";
         int length = 0;
         int price = 0;
+        int stock = 0;
         try {
             String sql = "SELECT * FROM `materials_nolength` WHERE material_id = ?;";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -148,36 +161,72 @@ class MaterialMapper extends IMaterialMapper {
                 name = rs.getString("name");
                 unit = rs.getString("unit");
                 price = rs.getInt("price");
+                stock = rs.getInt("stock");
+            } else {
+                throw new NoSuchMaterialException("Material " + id + " could not be found");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
-        return new Material(id, name, unit, price);
+        return new Material(id, name, unit, price, stock);
     }
 
+    /**
+     * Substracts the qty parameter from material (with length) with specified
+     * id.
+     *
+     * @param id of the material to be updated
+     * @param qty quantity to substract
+     * @throws NoSuchMaterialException if there is no material with the
+     * specified id.
+     * @throws SystemErrorException if any other database-related error occurs.
+     */
     @Override
-    public void updateStockWithLength(int id) {
-        int stock = 0;
-        try {
-            String sql = "SELECT stock FROM `material_lengths` WHERE material_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, id);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                stock = rs.getInt("stock");
+    public void updateStockWithLength(int id, int length, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
+        if (qty <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        } else {
+            int stock = 0;
+            try {
+                String sql = "SELECT stock FROM `material_lengths` WHERE material_id = ? AND length = ?;";
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, id);
+                pstmt.setInt(2, length);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    stock = rs.getInt("stock");
+                    System.out.println(stock);
+                } else {
+                    throw new NoSuchMaterialException("Material " + id + "not found");
+                }
+                sql = "UPDATE `material_lengths` SET stock = ? WHERE material_id = ? AND length = ?;";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, stock -= qty);
+                pstmt.setInt(2, id);
+                pstmt.setInt(3, length);
+                pstmt.executeUpdate();
+            } catch (SQLException ex) {
+                throw new SystemErrorException(ex.getMessage());
             }
-            sql = "UPDATE `material_lengths` SET stock = ? WHERE material_id = ?;";
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, stock--);
-            pstmt.setInt(2, id);
-            pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
         }
     }
 
+    /**
+     * Substracts the qty parameter from material (without length) with
+     * specified id.
+     *
+     * @param id of the material to be updated
+     * @param qty quantity to substract
+     * @throws NoSuchMaterialException if there is no material with the
+     * specified id.
+     * @throws SystemErrorException if any other database-related exception
+     * occurs.
+     */
     @Override
-    public void updateStockNoLength(int id) {
+    public void updateStockNoLength(int id, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
+        if (qty <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
         int stock = 0;
         try {
             String sql = "SELECT stock FROM `materials_nolength` WHERE material_id = ?;";
@@ -186,19 +235,22 @@ class MaterialMapper extends IMaterialMapper {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 stock = rs.getInt("stock");
+                System.out.println("stock = " + stock);
+            } else {
+                throw new NoSuchMaterialException("Material with id + " + id + " could not be found");
             }
             sql = "UPDATE `materials_nolength` SET stock = ? WHERE material_id = ?;";
             pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, stock--);
+            pstmt.setInt(1, stock -= qty);
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            throw new SystemErrorException(ex.getMessage());
         }
     }
 
     @Override
-    public void updatePrice(int price, int id) throws NoSuchMaterialException {
+    public void updatePrice(int price, int id) throws SystemErrorException {
         try {
             String sql = "UPDATE `material` SET price = ? WHERE material_id = ?;";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -206,7 +258,7 @@ class MaterialMapper extends IMaterialMapper {
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            throw new SystemErrorException(ex.getMessage());
         }
     }
 
@@ -229,7 +281,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void insertMaterialDim(int id, int length, int price, int stock) {
+    public void insertMaterialDim(int id, int length, int price, int stock) throws SystemErrorException {
         try {
             String sql = "INSERT INTO `material_lengths`(material_id, length, price, stock) "
                     + "VALUES(?, ?, ?, ?);";
@@ -241,14 +293,14 @@ class MaterialMapper extends IMaterialMapper {
             pstmt.executeUpdate();
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            throw new SystemErrorException(ex.getMessage());
         }
     }
 
-    public static void main(String[] args) {
-        try{
+    public static void main(String[] args) throws SystemErrorException {
+        try {
             System.out.println(IMaterialMapper.instance().getMaterialWithLength(1, 120));
-        } catch(NoSuchMaterialException e) {
+        } catch (NoSuchMaterialException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -257,4 +309,5 @@ class MaterialMapper extends IMaterialMapper {
     public List<Material> getMaterials() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

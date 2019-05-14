@@ -5,6 +5,8 @@
  */
 package Logic.Calculator;
 
+import Data.Database.DBConnector;
+import Data.Database.DataSourceMysql;
 import Data.Entity.BOM;
 import Data.Entity.Carport;
 import Data.Entity.LineItem;
@@ -27,7 +29,7 @@ public class TestCalculateBOMMethods
         BOMFlatRoof f = new BOMFlatRoof();
         BOMInclineRoof i = new BOMInclineRoof();
         CalculateBOM c = new CalculateBOM();
-        IUserMapper.instance().getTestConnection();
+        DBConnector con = new DBConnector();
         System.out.println(IUserMapper.instance().getUser("test@test.dk"));
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);

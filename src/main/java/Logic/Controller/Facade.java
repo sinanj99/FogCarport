@@ -19,7 +19,7 @@ import Data.Entity.User;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchShedException;
-import java.sql.Connection;
+import Logic.Exceptions.SystemErrorException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -29,15 +29,11 @@ import java.util.List;
  */
 public class Facade {
 
-    public static void getTestConnection() {
-        IUserMapper.instance().getTestConnection();
-    }
-    
     public static List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException {
         return IRequestMapper.instance().getRoofs(rooftype);
     }
 
-    public static void insertUser(User user) throws DuplicateException, SQLException {
+    public static void insertUser(User user) throws DuplicateException {
         IUserMapper.instance().insertUser(user);
     }
 
@@ -59,10 +55,10 @@ public class Facade {
     public static Material getMaterial(String name) throws NoSuchMaterialException {
         return IMaterialMapper.instance().getMaterial_(name);
     }
-    public static Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException {
+    public static Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException {
         return IMaterialMapper.instance().getMaterialWithLength(id, length);
     }
-    public static Material getMaterialNoLength(int id) {
+    public static Material getMaterialNoLength(int id) throws SystemErrorException {
         return IMaterialMapper.instance().getMaterialNoLength(id);
     }
     public static List<Request> getRequests() {

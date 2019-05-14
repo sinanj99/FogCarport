@@ -18,6 +18,7 @@ import Logic.Controller.Facade;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchRoofException;
+import Logic.Exceptions.SystemErrorException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,10 +39,15 @@ public class CreateOfferCommand implements Command {
         Request r = Facade.getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
         CalculateBOM b = new CalculateBOM();
-        if (r.getCarport().getInclination() != 0) {
-            bom = b.inclineRoofBOM(r);
-        } else {
-            bom = b.generateFlatRoofCarportBOM(r);
+        try {
+            if (r.getCarport().getInclination() != 0) {
+                bom = b.inclineRoofBOM(r);
+            } else {
+                bom = b.generateFlatRoofCarportBOM(r);
+            }
+        } catch(SystemErrorException e) {
+            request.setAttribute("error", e.getMessage());
+            return "error.jsp";
         }
 
         List<LineItem> materialsLength = new ArrayList();
@@ -74,19 +80,14 @@ public class CreateOfferCommand implements Command {
         // drawing
         DrawSVGIncline d = new DrawSVGIncline();
         DrawSVGFlatroof df = new DrawSVGFlatroof();
-        
+
         String svg1 = "";
         String svg2 = "";
-        
-        if(r.getCarport().getInclination() == 0)
-        {
+
+        if (r.getCarport().getInclination() == 0) {
             svg1 = df.drawFlat(r.getCarport());
             System.out.println(svg1);
-        } 
-        
-        
-        else
-        {
+        } else {
             svg1 = d.drawTopIncline(r.getCarport());
             svg2 = d.drawFrontIncline(r.getCarport());
         }

@@ -5,22 +5,18 @@
  */
 package Data.Mappers;
 
+import DB.DataSourceMysqlTest;
 import Data.Database.DBConnector;
 import Data.Entity.PersonalInfo;
 import Data.Entity.User;
 import Logic.Exceptions.DuplicateException;
+import Logic.Exceptions.SystemErrorException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.sql.Connection;
 import java.sql.SQLException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -31,7 +27,7 @@ import static org.junit.Assert.*;
  */
 public class IUserMapperTest {
 
-    private static UserMapper userMapper;
+    private static IUserMapper mapper;
 
     private static String sqlStatements = "";
 
@@ -46,61 +42,88 @@ public class IUserMapperTest {
         try {
             //indlæser scriptet
             sqlScript = new BufferedReader(new InputStreamReader(new FileInputStream("CarportTest.sql"), "UTF-8"));
+            System.out.println("test");
 
             String sqlStatement;
-
             //henter alle sql statements fra scriptet
             while ((sqlStatement = sqlScript.readLine()) != null) {
-                sqlStatements += sqlStatement;
+                sqlStatements += sqlStatement + "\n";
             }
             System.out.println(sqlStatements);
+
             //henter DBCOnnector, ændrer URL til testDB
             DBConnector con = new DBConnector();
-            DBConnector.getTestConnection();
-
             //udfører alle statements (genstarter db-data)
+            con.setDataSource(new DataSourceMysqlTest().getDataSource());
+            con.getConnection();
             con.preparedStatement(sqlStatements).executeUpdate();
 
         } catch (SQLException | IOException e) {
             System.out.println(e.getMessage());
         }
-
-        userMapper = new UserMapper();
-        userMapper.getTestConnection();
-
+        
+        mapper = IUserMapper.instance();
     }
 
     @Test
-    public void testInsertUser() throws Exception {
+    public void testInsertUser() throws SystemErrorException, DuplicateException, UserNotFoundException {
         System.out.println("insertUser");
-        User user = new User(new PersonalInfo("Sinan", "Jasar", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), "sinanjasar@live.dk", "adgangskode");
+        User user = new User(new PersonalInfo("Sinan", "Jasar", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), 3, false, "sinanjasar@live.dk", "adgangskode");
         IUserMapper instance = IUserMapper.instance();
         instance.insertUser(user);
-        User expResult = instance.getUser("sinanjasar@live.dk");
-        assertEquals(expResult, user);
+        User result = instance.getUser("sinanjasar@live.dk");
+        assertEquals(result.getId(), user.getId());
+        assertEquals(result.getInfo().getFirstname(), user.getInfo().getFirstname());
+        assertEquals(result.getInfo().getLastname(), user.getInfo().getLastname());
+        assertEquals(result.getPassword(), user.getPassword());
     }
-
+    
+    @Test(expected = DuplicateException.class)
+    public void testInsertUserFail() throws Exception {
+        System.out.println("insertUserFail");
+        User user = new User(new PersonalInfo("Peter", "Petersen", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"),2, false, "test@test.dk", "adgangskode");
+        mapper.insertUser(user);
+ 
+    }
+    
     @Test
-    public void testGetUser_String() throws Exception {
+    public void testGetUser_String() throws SystemErrorException, UserNotFoundException {
         System.out.println("getUser");
         String email = "test@test.dk";
-        IUserMapper instance = IUserMapper.instance();
-        User user = instance.getUser(email);
+        
+        User user = mapper.getUser(email);
         String expResult = "1 Peter Petersen test";
         String result = String.valueOf(user.getId()) + " "
                 + user.getInfo().getFirstname() + " " + user.getInfo().getLastname()
                 + " " + user.getPassword();
         assertEquals(expResult, result);
     }
+    
+    @Test(expected = UserNotFoundException.class)
+    public void testGetUser_StringFail() throws Exception {
+        System.out.println("getUserFail");
+        String email = "terlix@test.dk";
+        
+        mapper.getUser(email);
+    }
 
     @Test
-    public void testGetUser_int() throws Exception {
+    public void testGetUser_int() throws SystemErrorException, UserNotFoundException {
         System.out.println("getUser");
-        int id = 0;
-        User expResult = null;
-        User result = IUserMapper.instance().getUser(id);
+        int id = 1;
+        User user = mapper.getUser(id);
+        String expResult = "1 Peter Petersen test";
+        String result = String.valueOf(user.getId()) + " "
+                + user.getInfo().getFirstname() + " " + user.getInfo().getLastname()
+                + " " + user.getPassword();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    }
+    
+    @Test(expected = UserNotFoundException.class)
+    public void testGetUser_intFail() throws Exception {
+        System.out.println("getUserFail");
+        int id = 21424124;
+        mapper.getUser(id);
     }
 
 }

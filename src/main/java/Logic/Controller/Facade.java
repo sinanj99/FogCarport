@@ -7,6 +7,7 @@ package Logic.Controller;
 
 import Data.Database.DBConnector;
 import Data.Entity.Material;
+import Data.Entity.PrebuiltCarport;
 import Logic.Exceptions.UserNotFoundException;
 import Logic.Exceptions.DuplicateException;
 import Logic.Exceptions.NoSuchRoofException;
@@ -16,7 +17,9 @@ import Data.Mappers.IUserMapper;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.User;
+import Data.Mappers.IPrebuiltCarportMapper;
 import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.NoSuchPrebuiltCarportException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchShedException;
 import Logic.Exceptions.SystemErrorException;
@@ -69,6 +72,9 @@ public class Facade {
     }
     public static Request getRequest(int id) {
         return IRequestMapper.instance().getRequest(id);
+    }
+    public static List<PrebuiltCarport> getAllPrebuiltCarports() throws NoSuchPrebuiltCarportException {
+        return IPrebuiltCarportMapper.instance().getAllPrebuiltCarports();
     }
 }
 

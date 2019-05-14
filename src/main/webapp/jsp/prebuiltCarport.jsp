@@ -4,6 +4,11 @@
     Author     : Kasper Jeppesen
 --%>
 
+<%@page import="Data.Entity.PrebuiltCarport"%>
+<%@page import="java.util.ArrayList"%>
+<jsp:include page='/include/sitehead.jsp'></jsp:include>
+<jsp:include page='/include/sitemenu.jsp'></jsp:include>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -22,7 +27,15 @@
         }
         .card-text
         {
-            margin: 0px;
+            maring: 0px;
+        }
+        .card-subtitle
+        {
+            margin-bottom: 2px;
+        }
+        .card-list
+        {
+            padding-left: 20px;
         }
         .blue
         {
@@ -37,110 +50,80 @@
         .price
         {
             position: absolute;
-            bottom: 40px;
+            bottom: 20px;
             right: 0;
         }
         
     </style>
+   
+    
+    
   </head>
-  <body>
-      <div class="containter" >
+  <body class="background1">
+    <%
+        ArrayList<PrebuiltCarport> prebuiltCarports = (ArrayList<PrebuiltCarport>) request.getAttribute("prebuiltCarport");
+        int numberOfButton = 1;
+    %>
+    <div class="containter"  >
           <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <br/>
                   
-                  <div class="card-deck">
-                      <div class="card text-white bg-secondary border-info  " style="max-width: 319px; ">
-                          <img src="/project/images/abc.png" class="card-img-top" alt="Card image"  />
-
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 450cm</p>
-                                <p class="card-text">- Længde: 750cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger</p>
-                                <p class="card-text">- Bredde: 420cm</p>
-                                <p class="card-text">- Længde: 180cm</p>
-                                <br/>
-                                <p class="card-text price">pr. stk <span class="blue">17.798,-</span></p>
-                                <br/>
-
-                                <a href="" class="btn btn-success" >Læg i indkubskurv</a>
-                            </div>
-                      </div>    
+                  <div class="card-deck ">
                       
-                      <div class="card text-white bg-secondary border-info" style="max-width: 319px; ">
-                            <img src="/project/images/carport2.png" class="card-img-top" alt="Card image" />
-                            
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 360cm</p>
-                                <p class="card-text">- Længde: 540cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger ikke</p>
-                                <br/>
-                                <p class="card-text price ">pr. stk <span class="blue">13.998,-</span></p>
-                                <br/>
-                                
+                      <% 
+                          
+                          for(int i = 0; i < 5; i++)
+                          {
+                              if(i < prebuiltCarports.size())
+                              {
+                      %>
+                                <div class="card text-white bg-secondary border-info  " style="max-width: 319px; ">
+                                    <form method="get" action="FrontController">
+                                    <img src=<%= prebuiltCarports.get(i).getImgPpath()  %> class="card-img-top" alt="Card image"  />
 
-                                <a href="" class="btn btn-success " >Læg i indkubskurv</a>
-                            </div>
-                     </div>
-                      
-                      <div class="card text-white bg-secondary border-info" style="max-width: 319px; ">
-                          <img src="/project/images/carport3.png" class="card-img-top " alt="Card image"  />
+                                      <div class="card-body ">
 
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 360cm</p>
-                                <p class="card-text">- Længde: 720cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger</p>
-                                <p class="card-text">- Bredde: 330cm</p>
-                                <p class="card-text">- Længde: 220cm</p>
-                                <br/>
-                                <p class="card-text price ">pr. stk <span class="blue">21.498,-</span></p>
-                                <br/>
+                                          <h4 class="card-subtitle"  >Mål på carporten: </h4>
 
-                                <a href="" class="btn btn-success" >Læg i indkubskurv</a>
-                            </div>
-                     </div>
-                      
-                       <div class="card text-white bg-secondary border-info" style="max-width: 319px; ">
-                            <img src="/project/images/carport4.png" class="card-img-top" alt="Card image" />
+                                          <ul class="card-list" >
+                                              <li >Bredde: <%= prebuiltCarports.get(i).getCarportWidth() %>cm
+                                              <li>Længde: <%= prebuiltCarports.get(i).getCarportLength()%>cm
+                                         </ul>
 
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 390cm</p>
-                                <p class="card-text">- Længde: 750cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger</p>
-                                <p class="card-text">- Bredde: 240cm</p>
-                                <p class="card-text">- Længde: 330cm</p>
-                                <br/>
-                                <p class="card-text price ">pr. stk <span class="blue">23.498,-</span></p>
-                                <br/>
+                                          <%
+                                              if(prebuiltCarports.get(i).isShed() == true)
+                                              {
+                                          %>
+                                                <h4 class="card-subtitle" > Mål på skuret: </h4>
 
-                                <a href="" class="btn btn-success" >Læg i indkubskurv</a>
-                            </div>
-                     </div>
-                      
-                      <div class="card text-white bg-secondary border-info" style="max-width: 319px; ">
-                            <img src="/project/images/carport5.png" class="card-img-top" alt="Card image" />
+                                                <ul class="card-list" >
+                                                     <li >Bredde: <%= prebuiltCarports.get(i).getShedWidth()%>cm
+                                                     <li>Længde: <%= prebuiltCarports.get(i).getShedLength()  %>cm
+                                                </ul>
+                                          <% 
+                                                }
+                                                else
+                                                {
+                                          %>
+                                                <h4 class="card-subtitle" > Skur medfølger ikke </h4>
+                                          <%
+                                                }
+                                          %>
+                                         <br>
+                                         <p class="card-text price ">pr. stk <span class="blue"><%= prebuiltCarports.get(i).getPrice()  %>,-</span></p>
+                                                
+                                         <input class="btn btn-success"  type="submit" value="læg i indkøbskurv" name=<%=numberOfButton %> >
+                                         <% numberOfButton++; %>
+                                         <input type="hidden" name="command" value="shop">
+                                      </div>
+                                    </form>
 
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 300cm</p>
-                                <p class="card-text">- Længde: 480cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger ikke</p>
-                                <br/>
-                                <p class="card-text price ">pr. stk <span class="blue">3.998,-</span></p>
-                                <br/>
-
-                                <a href="" class="btn btn-success" >Læg i indkubskurv</a>
-                            </div>
-                     </div>
+                                 </div>  
+                        <%
+                               }
+                            }
+                        %>
                   </div>
               </div>
               
@@ -148,97 +131,119 @@
                   <br/>
                   
                   <div class="card-deck">
-                      <div class="card text-white bg-secondary border-info" style="max-width: 319px; ">
-                            <img src="/project/images/carport6.png" class="card-img-top" alt="Card image" />
-
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 600cm</p>
-                                <p class="card-text">- Længde: 750cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger</p>
-                                <p class="card-text">- Bredde: 210cm</p>
-                                <p class="card-text">- Længde: 510cm</p>
-                                <br/>
-                                <p class="card-text price ">pr. stk <span class="blue">31.998,-</span></p>
-                                <br/>
-
-                                <a href="" class="btn btn-success" >Læg i indkubskurv</a>
-                            </div>
-                      </div>    
                       
-                      <div class="card text-white bg-secondary border-info" style="max-width: 319px; ">
-                            <img src="/project/images/carport7.png" class="card-img-top" alt="Card image" />
+                      <% 
+                          for(int i = 5; i < 10; i++)
+                          {
+                              if(i < prebuiltCarports.size())
+                              {
+                      %>
+                                <div class="card text-white bg-secondary border-info  " style="max-width: 319px; ">
+                                    <form method="get" action="FrontController">
+                                    <img src=<%= prebuiltCarports.get(i).getImgPpath()  %> class="card-img-top" alt="Card image"  />
 
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 600cm</p>
-                                <p class="card-text">- Længde: 540cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger</p>
-                                <p class="card-text">- Bredde: 270cm</p>
-                                <p class="card-text">- Længde: 240cm</p>
-                                <br/>
-                                <p class="card-text price ">pr. stk <span class="blue">13.798,-</span></p>
-                                <br/>
+                                      <div class="card-body ">
 
-                                <a href="" class="btn btn-success"  >Læg i indkubskurv</a>
-                            </div>
-                     </div>
-                      
-                      <div class="card text-white bg-secondary border-info" style="max-width: 319px; ">
-                            <img src="/project/images/carport8.png" class="card-img-top" alt="Card image" />
+                                          <h4 class="card-subtitle"  >Mål på carporten: </h4>
 
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 600cm</p>
-                                <p class="card-text">- Længde: 480cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger ikke</p>
-                                <br/>
-                                <p class="card-text price ">pr. stk <span class="blue">10.498,-</span></p>
-                                <br/>
+                                          <ul class="card-list" >
+                                              <li >Bredde: <%= prebuiltCarports.get(i).getCarportWidth() %>cm
+                                              <li>Længde: <%= prebuiltCarports.get(i).getCarportLength()%>cm
+                                         </ul>
 
-                                <a href="" class="btn btn-success" >Læg i indkubskurv</a>
-                            </div>
-                     </div>
-                      
-                       <div class="card text-white bg-secondary border-info" style="max-width: 319px; ">
-                            <img src="/project/images/carport9.jpg" class="card-img-top" alt="Card image" />
+                                          <%
+                                              if(prebuiltCarports.get(i).isShed() == true)
+                                              {
+                                          %>
+                                                <h4 class="card-subtitle" > Mål på skuret: </h4>
 
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 630cm</p>
-                                <p class="card-text">- Længde: 540cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger</p>
-                                <p class="card-text">- Bredde: 570cm</p>
-                                <p class="card-text">- Længde: 150cm</p>
-                                <br/>
-                                <p class="card-text price ">pr. stk <span class="blue">15.798,-</span></p>
-                                <br/>
-                                <a href="" class="btn btn-success" >Læg i indkubskurv</a>
-                            </div>
-                     </div>
-                      
-                      <div class="card text-white bg-secondary border-info" style="max-width: 319px; ">
-                            <img src="/project/images/carport10.jpg" class="card-img-top" alt="Card image" />
+                                                <ul class="card-list" >
+                                                     <li >Bredde: <%= prebuiltCarports.get(i).getShedWidth()%>cm
+                                                     <li>Længde: <%= prebuiltCarports.get(i).getShedLength()  %>cm
+                                                </ul>
+                                          <% 
+                                                }
+                                                else
+                                                {
+                                          %>
+                                                <h4 class="card-subtitle" > Skur medfølger ikke </h4>
+                                          <%
+                                                }
+                                          %>
+                                         <br>
+                                         <p class="card-text price ">pr. stk <span class="blue"><%= prebuiltCarports.get(i).getPrice()  %>,-</span></p>
 
-                            <div class="card-body ">
-                                
-                                <p class="card-text">- Bredde: 300cm</p>
-                                <p class="card-text">- Længde: 480cm</p>
-                                <br/>
-                                <p class="card-text">Redskabsrum medfølger ikke</p>
-                                <br/>
-                                <p class="card-text price ">pr. stk <span class="blue">3.998,-</span></p>
-                                <br/>
-
-                                <a href="" class="btn btn-success" >Læg i indkubskurv</a>
-                            </div>
-                     </div>
+                                           <input class="btn btn-success"  type="submit" value="læg i indkøbskurv" name=<%=numberOfButton %> >
+                                         <% numberOfButton++; %>
+                                         <input type="hidden" name="command" value="shop">
+                                      </div>
+                                    </form>  
+                                 </div>  
+                        <%
+                               }
+                            }
+                        %>
                   </div>
               </div>
+                  
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <br/>
+                  
+                  <div class="card-deck">
+                      
+                      <% 
+                          for(int i = 10; i < 15; i++)
+                          {
+                              if(i < prebuiltCarports.size())
+                              {
+                      %>
+                                <div class="card text-white bg-secondary border-info  " style="max-width: 319px; ">
+                                    <form method="get" action="FrontController">
+                                    <img src=<%= prebuiltCarports.get(i).getImgPpath()  %> class="card-img-top" alt="Card image"  />
+
+                                      <div class="card-body ">
+
+                                          <h4 class="card-subtitle"  >Mål på carporten: </h4>
+
+                                          <ul class="card-list" >
+                                              <li >Bredde: <%= prebuiltCarports.get(i).getCarportWidth() %>cm
+                                              <li>Længde: <%= prebuiltCarports.get(i).getCarportLength()%>cm
+                                         </ul>
+
+                                          <%
+                                              if(prebuiltCarports.get(i).isShed() == true)
+                                              {
+                                          %>
+                                                <h4 class="card-subtitle" > Mål på skuret: </h4>
+
+                                                <ul class="card-list" >
+                                                     <li >Bredde: <%= prebuiltCarports.get(i).getShedWidth()%>cm
+                                                     <li>Længde: <%= prebuiltCarports.get(i).getShedLength()  %>cm
+                                                </ul>
+                                          <% 
+                                                }
+                                                else
+                                                {
+                                          %>
+                                                <h4 class="card-subtitle" > Skur medfølger ikke </h4>
+                                          <%
+                                                }
+                                          %>
+                                         <br>
+                                         <p class="card-text price ">pr. stk <span class="blue"><%= prebuiltCarports.get(i).getPrice()  %>,-</span></p>
+
+                                         <input class="btn btn-success"  type="submit" value="læg i indkøbskurv" name=<%=numberOfButton %> >
+                                         <% numberOfButton++; %>
+                                         <input type="hidden" name="command" value="shop">
+                                      </div>
+                                     </form>  
+                                 </div>  
+                        <%
+                               }
+                            }
+                        %>
+                  </div>
+              </div>   
           </div>
       </div>
       

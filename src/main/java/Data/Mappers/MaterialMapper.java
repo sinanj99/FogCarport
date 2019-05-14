@@ -15,7 +15,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -31,12 +34,11 @@ class MaterialMapper extends IMaterialMapper {
     Connection conn;
 
     @Override
-    public void setDataSource(DataSource ds)
-    {
+    public void setDataSource(DataSource ds) {
         con.setDataSource(ds);
         conn = con.getConnection();
     }
-    
+
     public synchronized static MaterialMapper getInstance() {
         if (instance == null) {
             instance = new MaterialMapper();
@@ -261,27 +263,50 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceWithLength(int price, int id, int length) throws SystemErrorException {
-        List<Integer> prices = getMaterialLengthPrices(id);
-        int oldPrice = prices.get(0);
-        int dif = oldPrice-price;
-        if(dif == 0) {
+    public void updatePriceWithLength(int price, int id) throws SystemErrorException {
+        LinkedHashMap<Integer, Integer> prices = getMaterialLengthPrices(id);
+        String sql;
+
+        int length;
+
+        int oldPrice = prices.entrySet().iterator().next().getValue();
+        System.out.println("OLDPRICE = " + oldPrice);
+        int dif = oldPrice - price;
+        System.out.println("DIF = " + dif);
+        if (dif == 0) {
             throw new IllegalArgumentException("Indtast venligst en ny pris!");
-        } else if(dif>0) {
-            for(int i : prices) {
-                i-=dif;
-            } 
+        } else if (dif > 0) {
+            for (HashMap.Entry<Integer, Integer> entry : prices.entrySet()) {
+                if (entry.getValue() == oldPrice) {
+                    prices.put(entry.getKey(), price);
+                } else {
+                    prices.put(entry.getKey(), entry.getValue() - dif);
+                }
+                System.out.println("new price = " + (entry.getValue()));
+            }
         } else {
-            for(int i : prices) {
-                i+=dif;
+            for (HashMap.Entry<Integer, Integer> entry : prices.entrySet()) {
+                if (entry.getValue() == oldPrice) {
+                    prices.put(entry.getKey(), price);
+                } else {
+                    prices.put(entry.getKey(), entry.getValue() + Math.abs(dif));
+                }
+                System.out.println("new price = " + (entry.getValue()));
             }
         }
         try {
-            String sql = "UPDATE `material` SET price = ? WHERE material_id = ?;";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, price);
-            pstmt.setInt(2, id);
-            pstmt.executeUpdate();
+            for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
+                price = entry.getValue();
+                System.out.println("PRICE = " + price);
+                length = entry.getKey();
+                System.out.println("Length = " + length);
+                sql = "UPDATE material_lengths SET price = ? WHERE material_id = ? AND length = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, price);
+                pstmt.setInt(2, id);
+                pstmt.setInt(3, length);
+                pstmt.executeUpdate();
+            }
         } catch (SQLException ex) {
             throw new SystemErrorException(ex.getMessage());
         }
@@ -331,16 +356,16 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public List<Integer> getMaterialLengthPrices(int id) throws SystemErrorException {
+    public LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException {
 
-        List<Integer> prices = new ArrayList();
-        String sql = "SELECT price FROM material_lengths WHERE material_id = ?";
+        LinkedHashMap<Integer, Integer> prices = new LinkedHashMap();
+        String sql = "SELECT * FROM material_lengths WHERE material_id = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                prices.add(rs.getInt("price"));
+                prices.put(rs.getInt("length"), rs.getInt("price"));
             }
         } catch (SQLException ex) {
             throw new SystemErrorException(ex.getMessage());

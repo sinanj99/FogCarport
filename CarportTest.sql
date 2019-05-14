@@ -31,7 +31,7 @@ CREATE TABLE materials_nolength (
     PRIMARY KEY (material_id)
     );
     
-    
+    select * from material_lengths;
     CREATE TABLE users (
 	user_id INT(10) NOT NULL AUTO_INCREMENT,
     seller INT(1) NOT NULL DEFAULT 0,
@@ -55,7 +55,11 @@ INSERT INTO materials_withlength VALUES
 (1, "25x150 mm. trykimp. Bræt", "Stk.");
 
 INSERT INTO material_lengths VALUES 
-(1, 270, 1000, 1000);
+(1, 270, 1000, 1000),
+(1, 300, 1100, 1000),
+(1, 330, 1200, 1000),
+(1, 360, 1300, 1000);
+
 
 INSERT INTO materials_nolength (name, unit, price, stock) VALUES 
 ("universal 190 mm højre", "Stk.", 10,1000);

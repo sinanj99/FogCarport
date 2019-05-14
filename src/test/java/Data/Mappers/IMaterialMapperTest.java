@@ -129,4 +129,9 @@ public class IMaterialMapperTest {
         
         mapper.updateStockNoLength(id, qty);
     }
+    @Test
+    public void testUpdatePriceWithLength() throws SystemErrorException {
+        System.out.println("updatePriceWithLength");
+        mapper.updatePriceWithLength(990, 1);
+    }
 }

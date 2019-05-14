@@ -8,6 +8,7 @@ package Data.Mappers;
 import Data.Entity.Material;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.SystemErrorException;
+import java.util.HashMap;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -48,7 +49,7 @@ public abstract class IMaterialMapper {
      * @return list of materials.
      * @throws Logic.Exceptions.SystemErrorException
      */
-    public abstract List<Integer> getMaterialLengthPrices(int id) throws SystemErrorException;
+    public abstract HashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException;
     
     /**
      * Updates price of all lengths of a material specified by id
@@ -57,7 +58,7 @@ public abstract class IMaterialMapper {
      * @throws SystemErrorException 
      */
     
-    public abstract void updatePriceWithLength(int price, int id, int length) throws SystemErrorException;
+    public abstract void updatePriceWithLength(int price, int id) throws SystemErrorException;
     
     /**
      * Updates price of a no-length material specified by id. 

@@ -50,32 +50,32 @@ public class DataInsertion {
         int price = 40;
         for (int i = 270; i <= 780; i += 30) {
 
-            mmapper.instance().insertMaterialDim(1, i, price, 1000);
+            mmapper.insertMaterialDim(1, i, price, 1000);
             price += 40;
         }
-        mmapper.instance().insertMaterialDim(2, 300, 40, 1000);
+        mmapper.insertMaterialDim(2, 300, 40, 1000);
         price = 40;
         for (int i = 210; i <= 750; i += 30) {
-            mmapper.instance().insertMaterialDim(3, i, price, 1000);
+            mmapper.insertMaterialDim(3, i, price, 1000);
             price += 40;
         }
         price = 20;
         for (int i = 150; i <= 720; i += 30) {
-            mmapper.instance().insertMaterialDim(4, i, price, 1000);
+            mmapper.insertMaterialDim(4, i, price, 1000);
             price += 40;
         }
         price = 40;
         for (int i = 210; i <= 780; i += 30) {
 
-            mmapper.instance().insertMaterialDim(5, i, price, 1000);
+            mmapper.insertMaterialDim(5, i, price, 1000);
             price += 40;
         }
         price = 80;
-        mmapper.instance().insertMaterialDim(6, 540, price, 1000);
+        mmapper.insertMaterialDim(6, 540, price, 1000);
         price = 40;
         for (int i = 240; i <= 810; i += 30) {
 
-            mmapper.instance().insertMaterialDim(7, i, price, 1000);
+            mmapper.insertMaterialDim(7, i, price, 1000);
             price += 40;
         }
 

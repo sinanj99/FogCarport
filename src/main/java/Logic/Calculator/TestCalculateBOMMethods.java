@@ -5,6 +5,8 @@
  */
 package Logic.Calculator;
 
+import Data.Database.DBConnector;
+import Data.Database.DataSourceMysql;
 import Data.Entity.BOM;
 import Data.Entity.Carport;
 import Data.Entity.LineItem;
@@ -12,7 +14,9 @@ import Data.Entity.PersonalInfo;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
+import Data.Mappers.IUserMapper;
 import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.UserNotFoundException;
 
 /**
  *
@@ -20,11 +24,13 @@ import Logic.Exceptions.NoSuchMaterialException;
  */
 public class TestCalculateBOMMethods
 {
-    public static void main(String[] args) throws NoSuchMaterialException
+    public static void main(String[] args) throws NoSuchMaterialException, UserNotFoundException
     {
         BOMFlatRoof f = new BOMFlatRoof();
         BOMInclineRoof i = new BOMInclineRoof();
         CalculateBOM c = new CalculateBOM();
+        DBConnector con = new DBConnector();
+        System.out.println(IUserMapper.instance().getUser("test@test.dk"));
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);
 //        System.out.println(c.calculateQuantityOfSpær(450));

@@ -12,7 +12,7 @@
                         <div class="textsmallr">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" name="fname" type="text" placeholder="Fornavn..." required>
+                        <input class="inputsmalll" id="fname" name="fname" type="text" placeholder="Fornavn..." required onchange="fnamechecker();">
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">Efternavn</div>
@@ -92,5 +92,19 @@
                 </div>
             </form>
         </div>
-
+        <script>
+            function fnamechecker() {
+                var firstname = document.getElementById("fname");
+                var regex = /[A-Za-z{1,20}]/g;
+                console.log(firstname.value);
+                var found = regex.test(firstname.value);
+                if (found) {
+                    console.log(found);
+                    firstname.style.border = "2px solid green";
+                } else {
+                    console.log(found)
+                    firstname.style.border = "2px solid red";
+                }
+            }
+        </script>
     <jsp:include page='/include/sitefoot.jsp'></jsp:include>

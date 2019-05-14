@@ -14,6 +14,7 @@ import Data.Entity.Roof;
 import Data.Entity.Shed;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
+import Logic.Exceptions.SystemErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class CalculateBOM {
         return new BOM(listOfLineItems);
     }
 
-    public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException {
+    public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException, SystemErrorException {
 
         BOMInclineRoof calc = new BOMInclineRoof();
         BOMFlatRoof f = new BOMFlatRoof();

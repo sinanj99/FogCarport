@@ -5,6 +5,7 @@
  */
 package Logic.Controller;
 
+import Data.Database.DBConnector;
 import Data.Entity.Material;
 import Data.Entity.PrebuiltCarport;
 import Logic.Exceptions.UserNotFoundException;
@@ -21,6 +22,7 @@ import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchPrebuiltCarportException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchShedException;
+import Logic.Exceptions.SystemErrorException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class Facade {
         return IRequestMapper.instance().getRoofs(rooftype);
     }
 
-    public static void insertUser(User user) throws DuplicateException, SQLException {
+    public static void insertUser(User user) throws DuplicateException {
         IUserMapper.instance().insertUser(user);
     }
 
@@ -56,10 +58,10 @@ public class Facade {
     public static Material getMaterial(String name) throws NoSuchMaterialException {
         return IMaterialMapper.instance().getMaterial_(name);
     }
-    public static Material getMaterialWithLength(int id, int length) {
+    public static Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException {
         return IMaterialMapper.instance().getMaterialWithLength(id, length);
     }
-    public static Material getMaterialNoLength(int id) {
+    public static Material getMaterialNoLength(int id) throws SystemErrorException {
         return IMaterialMapper.instance().getMaterialNoLength(id);
     }
     public static List<Request> getRequests() {

@@ -9,6 +9,7 @@ import Data.Entity.Roof;
 import Data.Mappers.IMaterialMapper;
 import Data.Mappers.IRequestMapper;
 import Logic.Exceptions.NoSuchRoofException;
+import Logic.Exceptions.SystemErrorException;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class DataInsertion {
 
-    public static void main(String[] args) throws NoSuchRoofException {
+    public static void main(String[] args) throws NoSuchRoofException, SystemErrorException {
 
         /* insertion of roofs */
         List<Roof> roofs = IRequestMapper.instance().getRoofs();

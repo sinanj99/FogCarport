@@ -36,11 +36,11 @@ public class Facade {
         return IRequestMapper.instance().getRoofs(rooftype);
     }
 
-    public static void insertUser(User user) throws DuplicateException {
+    public static void insertUser(User user) throws DuplicateException, SystemErrorException {
         IUserMapper.instance().insertUser(user);
     }
 
-    public static User getUser(String email) throws UserNotFoundException, SQLException, SQLException {
+    public static User getUser(String email) throws UserNotFoundException, SQLException, SQLException, SystemErrorException {
         return IUserMapper.instance().getUser(email);
     }
 

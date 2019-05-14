@@ -13,7 +13,7 @@ import Data.Entity.Roof;
 import Data.Entity.Shed;
 import Data.Entity.ShippingAddress;
 import Data.Entity.User;
-import Logic.Controller.Facade;
+import Logic.Controller.LogicFacade;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
@@ -31,7 +31,6 @@ public class GenerateReqCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
-
         if (request.getSession().getAttribute("user") == null) {
             return "login.jsp";
         }
@@ -43,7 +42,7 @@ public class GenerateReqCommand implements Command {
         int cwidth = Integer.parseInt(request.getParameter("cwidth"));
         int clength = Integer.parseInt(request.getParameter("clength"));
         int rchoice = Integer.parseInt(request.getParameter("rchoice"));
-        Roof roof = Facade.getRoof(rchoice);
+        Roof roof = LogicFacade.getInstance().getRoof(rchoice);
         String schoice = request.getParameter("schoice");
         boolean bshed = false;
         if (schoice.equals("1")) {
@@ -55,7 +54,7 @@ public class GenerateReqCommand implements Command {
             int slength = Integer.parseInt(request.getParameter("slength"));
             int swidth = Integer.parseInt(request.getParameter("swidth"));
             shed = new Shed(swidth, slength);
-        } 
+        }
 
         Carport cp = new Carport(roof, inclination, cwidth, clength, shed);
         String fname = request.getParameter("fname");
@@ -75,7 +74,7 @@ public class GenerateReqCommand implements Command {
         Request req = new Request(sAddress, user_id, datePlaced, cp);
         System.out.println(req.getCarport().getInclination());
 
-        Facade.insertRequest(req);
+        LogicFacade.getInstance().insertRequest(req);
         request.getSession().removeAttribute("inclined");
         return "reqsent.jsp";
     }

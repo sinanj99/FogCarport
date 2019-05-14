@@ -12,6 +12,7 @@ import Logic.Exceptions.SystemErrorException;
 import Logic.Exceptions.UserNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 
 /**
  *
@@ -22,6 +23,8 @@ public abstract class IUserMapper {
     public static IUserMapper instance() {
         return UserMapper.getInstance();
     }
+    
+    public abstract void setDataSource(DataSource ds);
 
     public abstract void insertUser(User user) throws DuplicateException, SystemErrorException;
 

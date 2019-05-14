@@ -14,7 +14,7 @@ import Logic.Calculator.CalculatePrice;
 import Logic.Calculator.DrawSVGIncline;
 import Logic.Calculator.DrawSVGFlatroof;
 import Logic.Calculator.BOMInclineRoof;
-import Logic.Controller.Facade;
+import Logic.Controller.PresentationFacade;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchRoofException;
@@ -36,7 +36,7 @@ public class CreateOfferCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
         //calculations
-        Request r = Facade.getRequest(Integer.parseInt(request.getParameter("requestID")));
+        Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
         CalculateBOM b = new CalculateBOM();
         try {

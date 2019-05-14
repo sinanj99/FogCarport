@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -28,8 +29,8 @@ import static org.junit.Assert.*;
 public class IUserMapperTest {
 
     private static IUserMapper mapper;
-
     private static String sqlStatements = "";
+    private static DataSource ds = new DataSourceMysqlTest().getDataSource();
 
     public IUserMapperTest() {
     }
@@ -61,8 +62,9 @@ public class IUserMapperTest {
         } catch (SQLException | IOException e) {
             System.out.println(e.getMessage());
         }
-        
+
         mapper = IUserMapper.instance();
+        mapper.setDataSource(ds);
     }
 
     @Test
@@ -77,20 +79,20 @@ public class IUserMapperTest {
         assertEquals(result.getInfo().getLastname(), user.getInfo().getLastname());
         assertEquals(result.getPassword(), user.getPassword());
     }
-    
+
     @Test(expected = DuplicateException.class)
     public void testInsertUserFail() throws Exception {
         System.out.println("insertUserFail");
-        User user = new User(new PersonalInfo("Peter", "Petersen", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"),2, false, "test@test.dk", "adgangskode");
+        User user = new User(new PersonalInfo("Peter", "Petersen", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), 2, false, "test@test.dk", "adgangskode");
         mapper.insertUser(user);
- 
+
     }
-    
+
     @Test
     public void testGetUser_String() throws SystemErrorException, UserNotFoundException {
         System.out.println("getUser");
         String email = "test@test.dk";
-        
+
         User user = mapper.getUser(email);
         String expResult = "1 Peter Petersen test";
         String result = String.valueOf(user.getId()) + " "
@@ -98,12 +100,12 @@ public class IUserMapperTest {
                 + " " + user.getPassword();
         assertEquals(expResult, result);
     }
-    
+
     @Test(expected = UserNotFoundException.class)
     public void testGetUser_StringFail() throws Exception {
         System.out.println("getUserFail");
         String email = "terlix@test.dk";
-        
+
         mapper.getUser(email);
     }
 
@@ -118,7 +120,7 @@ public class IUserMapperTest {
                 + " " + user.getPassword();
         assertEquals(expResult, result);
     }
-    
+
     @Test(expected = UserNotFoundException.class)
     public void testGetUser_intFail() throws Exception {
         System.out.println("getUserFail");

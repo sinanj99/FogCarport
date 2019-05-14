@@ -27,14 +27,19 @@ import javax.sql.DataSource;
 class MaterialMapper extends IMaterialMapper {
 
     private static MaterialMapper instance = null;
-    private static final DBConnector connector = new DBConnector();
-    private static Connection con = null;
+    private final DBConnector con = new DBConnector();
+    Connection conn;
 
+    @Override
+    public void setDataSource(DataSource ds)
+    {
+        con.setDataSource(ds);
+        conn = con.getConnection();
+    }
+    
     public synchronized static MaterialMapper getInstance() {
         if (instance == null) {
             instance = new MaterialMapper();
-            connector.setDataSource(new DataSourceMysql().getDataSource());
-            con = connector.getConnection();
         }
         return instance;
     }
@@ -49,7 +54,7 @@ class MaterialMapper extends IMaterialMapper {
         int price = 0;
         try {
             String sql = "SELECT * FROM `material` WHERE name = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -76,7 +81,7 @@ class MaterialMapper extends IMaterialMapper {
         int price = 0;
         try {
             String sql = "SELECT * FROM `material` WHERE name = ? and length = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setInt(2, length);
             ResultSet rs = pstmt.executeQuery();
@@ -99,7 +104,7 @@ class MaterialMapper extends IMaterialMapper {
         String name_ = "";
         try {
             String sql = "SELECT name * `materials_withlength` WHERE material_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -119,7 +124,7 @@ class MaterialMapper extends IMaterialMapper {
         int stock = 0;
         try {
             String sql = "SELECT * FROM `materials_withlength` WHERE material_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -127,7 +132,7 @@ class MaterialMapper extends IMaterialMapper {
                 unit = rs.getString("unit");
             }
             sql = "SELECT * FROM `material_lengths` WHERE material_id = ? AND length = ?;";
-            pstmt = con.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);
             rs = pstmt.executeQuery();
@@ -160,7 +165,7 @@ class MaterialMapper extends IMaterialMapper {
         int stock = 0;
         try {
             String sql = "SELECT * FROM `materials_nolength` WHERE material_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -195,7 +200,7 @@ class MaterialMapper extends IMaterialMapper {
             int stock = 0;
             try {
                 String sql = "SELECT stock FROM `material_lengths` WHERE material_id = ? AND length = ?;";
-                PreparedStatement pstmt = con.prepareStatement(sql);
+                PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, id);
                 pstmt.setInt(2, length);
                 ResultSet rs = pstmt.executeQuery();
@@ -206,7 +211,7 @@ class MaterialMapper extends IMaterialMapper {
                     throw new NoSuchMaterialException("Material " + id + "not found");
                 }
                 sql = "UPDATE `material_lengths` SET stock = ? WHERE material_id = ? AND length = ?;";
-                pstmt = con.prepareStatement(sql);
+                pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, stock -= qty);
                 pstmt.setInt(2, id);
                 pstmt.setInt(3, length);
@@ -236,7 +241,7 @@ class MaterialMapper extends IMaterialMapper {
         int stock = 0;
         try {
             String sql = "SELECT stock FROM `materials_nolength` WHERE material_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -246,7 +251,7 @@ class MaterialMapper extends IMaterialMapper {
                 throw new NoSuchMaterialException("Material with id + " + id + " could not be found");
             }
             sql = "UPDATE `materials_nolength` SET stock = ? WHERE material_id = ?;";
-            pstmt = con.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, stock -= qty);
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
@@ -257,9 +262,23 @@ class MaterialMapper extends IMaterialMapper {
 
     @Override
     public void updatePriceWithLength(int price, int id, int length) throws SystemErrorException {
+        List<Integer> prices = getMaterialLengthPrices(id);
+        int oldPrice = prices.get(0);
+        int dif = oldPrice-price;
+        if(dif == 0) {
+            throw new IllegalArgumentException("Indtast venligst en ny pris!");
+        } else if(dif>0) {
+            for(int i : prices) {
+                i-=dif;
+            } 
+        } else {
+            for(int i : prices) {
+                i+=dif;
+            }
+        }
         try {
             String sql = "UPDATE `material` SET price = ? WHERE material_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, price);
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
@@ -273,7 +292,7 @@ class MaterialMapper extends IMaterialMapper {
         try {
             String sql = "INSERT INTO `material`(name, length, unit, description, price) "
                     + "VALUES(?, ?, ?, ?, ?);";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setInt(2, length);
             pstmt.setString(3, unit);
@@ -291,7 +310,7 @@ class MaterialMapper extends IMaterialMapper {
         try {
             String sql = "INSERT INTO `material_lengths`(material_id, length, price, stock) "
                     + "VALUES(?, ?, ?, ?);";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);
             pstmt.setInt(3, price);
@@ -317,7 +336,7 @@ class MaterialMapper extends IMaterialMapper {
         List<Integer> prices = new ArrayList();
         String sql = "SELECT price FROM material_lengths WHERE material_id = ?";
         try {
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {

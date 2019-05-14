@@ -5,7 +5,7 @@
  */
 package Presentation.Commands;
 
-import Logic.Controller.Facade;
+import Logic.Controller.LogicFacade;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
 import java.sql.SQLException;

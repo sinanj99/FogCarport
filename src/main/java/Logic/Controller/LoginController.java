@@ -9,6 +9,7 @@ import Logic.Exceptions.UserNotFoundException;
 import Logic.Exceptions.NoMatchException;
 import Data.Mappers.IUserMapper;
 import Data.Entity.User;
+import Logic.Exceptions.SystemErrorException;
 import java.sql.SQLException;
 
 /**
@@ -23,12 +24,12 @@ public class LoginController {
      *
      * @param email
      * @param password password of the user that needs validation.
-     * @throws Logic.UserNotFoundException
-     * @throws java.sql.SQLException
-     * @throws Logic.NoMatchException
+     * @throws Logic.Exceptions.UserNotFoundException
+     * @throws Logic.Exceptions.SystemErrorException
+     * @throws Logic.Exceptions.NoMatchException
      */
-    public static void doesMatch(String email, String password) throws UserNotFoundException, SQLException, NoMatchException {
-        User user = Facade.getUser(email);
+    public static void doesMatch(String email, String password) throws UserNotFoundException, SystemErrorException, NoMatchException {
+        User user = LogicFacade.getInstance().getUser(email);
         if (!password.equals(user.getPassword())) {
             throw new NoMatchException("Adgangskode passer ikke!");
         }

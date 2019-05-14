@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 
 /**
  *
@@ -23,9 +24,16 @@ import java.sql.SQLException;
 class UserMapper extends IUserMapper {
 
     private static UserMapper instance;
-    private final DBConnector connector = new DBConnector();
-    private final Connection con = connector.getConnection();
+    private final DBConnector con = new DBConnector();
+    Connection conn;
 
+    @Override
+    public void setDataSource(DataSource ds)
+    {
+        con.setDataSource(ds);
+        conn = con.getConnection();
+    }
+    
     public static UserMapper getInstance() {
         if (instance == null) {
             instance = new UserMapper();
@@ -36,17 +44,17 @@ class UserMapper extends IUserMapper {
     @Override
     public void insertUser(User user) throws DuplicateException, SystemErrorException {
         try {
-            con.setAutoCommit(false);
+            conn.setAutoCommit(false);
             String sql = "INSERT INTO `users`(email, password) "
                     + "VALUES(?, ?);";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user.getEmail());
             pstmt.setString(2, user.getPassword());
             pstmt.executeUpdate();
 
             sql = "INSERT INTO `users_personalinfo`(user_id, firstname, lastname, address, zipcode, city, gender) "
                     + "values ((SELECT user_id FROM `users` WHERE email = '" + user.getEmail() + "' ORDER BY user_id DESC LIMIT 1),?,?,?,?,?,?);";
-            pstmt = con.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user.getInfo().getFirstname());
             pstmt.setString(2, user.getInfo().getLastname());
             pstmt.setString(3, user.getInfo().getAddress());
@@ -54,11 +62,11 @@ class UserMapper extends IUserMapper {
             pstmt.setString(5, user.getInfo().getCity());
             pstmt.setString(6, user.getInfo().getGender());
             pstmt.executeUpdate();
-            con.commit();
+            conn.commit();
 
         } catch (SQLException e) {
             try {
-                con.rollback();
+                conn.rollback();
             } catch (SQLException ex) {
                 throw new SystemErrorException(ex.getMessage());
             }
@@ -84,7 +92,7 @@ class UserMapper extends IUserMapper {
         boolean seller_ = false;
         try {
             String sql = "SELECT * FROM `users` INNER JOIN `users_personalinfo` USING(user_id) WHERE email = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -130,7 +138,7 @@ class UserMapper extends IUserMapper {
         boolean seller_ = false;
         try {
             String sql = "SELECT * FROM `users` INNER JOIN `users_personalinfo` USING(user_id) WHERE user_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {

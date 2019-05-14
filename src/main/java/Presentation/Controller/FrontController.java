@@ -7,7 +7,7 @@ package Presentation.Controller;
 
 import Presentation.Commands.Command;
 import Logic.Exceptions.DuplicateException;
-import Logic.Controller.Facade;
+import Logic.Controller.LogicFacade;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.UserNotFoundException;

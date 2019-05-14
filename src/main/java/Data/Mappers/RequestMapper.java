@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sql.DataSource;
 
 /**
  *
@@ -32,9 +33,15 @@ import java.util.logging.Logger;
 class RequestMapper extends IRequestMapper {
 
     private static RequestMapper instance = null;
-    private final DBConnector connector = new DBConnector();
-    private final Connection con = connector.getConnection();
+    private final DBConnector con = new DBConnector();
+    private Connection conn;
 
+    @Override
+    public void setDataSource(DataSource ds) {
+        con.setDataSource(ds);
+        conn = con.getConnection();
+    }
+    
     public synchronized static RequestMapper getInstance() {
         if (instance == null) {
             instance = new RequestMapper();
@@ -57,7 +64,7 @@ class RequestMapper extends IRequestMapper {
 
         try {
             String query = "SELECT * FROM requests WHERE request_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
@@ -96,7 +103,7 @@ class RequestMapper extends IRequestMapper {
 
         String query = "SELECT * FROM carports WHERE request_id = ?;";
         try {
-            PreparedStatement pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, request_id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -128,7 +135,7 @@ class RequestMapper extends IRequestMapper {
         Shed shed = null;
         try {
             String query = "SELECT * FROM sheds WHERE carport_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, carport_id);
             ResultSet rs = pstmt.executeQuery();
 
@@ -160,7 +167,7 @@ class RequestMapper extends IRequestMapper {
 
         try {
             String query = "SELECT * FROM shipping_address WHERE request_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
@@ -188,7 +195,7 @@ class RequestMapper extends IRequestMapper {
         try {
 
             String query = "INSERT INTO `requests` (user_id, dateplaced) VALUES (?,?);";
-            PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, req.getUser_id());
             pstmt.setString(2, req.getDatePlaced());
             pstmt.executeUpdate();
@@ -229,7 +236,7 @@ class RequestMapper extends IRequestMapper {
         
         try {
             query = "INSERT INTO `carports` (request_id, roof_id, inclination, width, length) VALUES (?,?,?,?,?);";
-            pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, request_id);
             pstmt.setInt(2, cp.getRoof().getRoof_id());
             pstmt.setInt(3, cp.getInclination());
@@ -257,7 +264,7 @@ class RequestMapper extends IRequestMapper {
             int cp_id, Shed shed) {
         try {
             query = "INSERT INTO `sheds` (carport_id, width, length) VALUES (?,?,?);";
-            pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, cp_id);
             pstmt.setInt(2, shed.getWidth());
             pstmt.setInt(3, shed.getLength());
@@ -275,7 +282,7 @@ class RequestMapper extends IRequestMapper {
 
         try {
             String query = "SELECT * FROM rooftype WHERE roof_id = ?";
-            PreparedStatement pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
@@ -304,7 +311,7 @@ class RequestMapper extends IRequestMapper {
         String query = "SELECT * FROM rooftype";
 
         try {
-            Statement stmt = con.createStatement();
+            PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
@@ -342,7 +349,7 @@ class RequestMapper extends IRequestMapper {
         }
 
         try {
-            Statement stmt = con.createStatement();
+            Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
@@ -361,7 +368,7 @@ class RequestMapper extends IRequestMapper {
     public void updateRoofPrice(int roof_id, int price) {
         try {
             String query = "UPDATE `rooftype` SET price = ? WHERE roof_id = ?;";
-            PreparedStatement pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(2, roof_id);
             pstmt.setInt(1, price);
             pstmt.executeUpdate();
@@ -390,7 +397,7 @@ class RequestMapper extends IRequestMapper {
     public void insertDimensions(int id, int length, int price) {
         try {
             String query = "INSERT INTO rooflength (roof_id, roof_length, price) VALUES (?, ?, ?);";
-            PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);
             pstmt.setInt(3, price);
@@ -413,7 +420,7 @@ class RequestMapper extends IRequestMapper {
         try {
             query = "INSERT INTO shipping_address (request_id, firstname, "
                     + "lastname, address, zipcode, city) VALUES (?, ?, ?, ?, ?, ?);";
-            pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, req_id);
             pstmt.setString(2, req.getAddress().getFirstname());
             pstmt.setString(3, req.getAddress().getLastname());
@@ -431,7 +438,7 @@ class RequestMapper extends IRequestMapper {
         int price = 0;
         try {
             String query = "SELECT * FROM rooflength WHERE roof_id = ? AND roof_length = ?";
-            PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, roof_id);
             pstmt.setInt(2, length);
             ResultSet rs = pstmt.executeQuery();
@@ -454,7 +461,7 @@ class RequestMapper extends IRequestMapper {
         System.out.println("TEST TEST");
         try {
             String query = "SELECT * FROM requests ORDER BY `request_id` DESC;";
-            Statement stmt = con.prepareStatement(query);
+            Statement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 req_id = rs.getInt("request_id");
@@ -484,7 +491,7 @@ class RequestMapper extends IRequestMapper {
         try {
 
             String query = "SELECT * FROM rooftype WHERE roof_id = ?";
-            PreparedStatement pstmt = con.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
@@ -498,7 +505,7 @@ class RequestMapper extends IRequestMapper {
             }
 
             query = "SELECT * FROM rooflength WHERE roof_id = ? AND roof_length = ?;";
-            pstmt = con.prepareStatement(query);
+            pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);
             rs = pstmt.executeQuery();

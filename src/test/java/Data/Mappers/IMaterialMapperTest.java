@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -26,6 +27,7 @@ public class IMaterialMapperTest {
     
     private static String sqlStatements = "";
     private static IMaterialMapper mapper;
+    private static DataSource ds = new DataSourceMysqlTest().getDataSource();
             
     public IMaterialMapperTest() {
     }
@@ -50,7 +52,7 @@ public class IMaterialMapperTest {
             //henter DBCOnnector, ændrer URL til testDB
             DBConnector con = new DBConnector();
             //udfører alle statements (genstarter db-data)
-            con.setDataSource(new DataSourceMysqlTest().getDataSource());
+            con.setDataSource(ds);
             con.getConnection();
             con.preparedStatement(sqlStatements).executeUpdate();
 
@@ -59,6 +61,8 @@ public class IMaterialMapperTest {
         }
         //materialMapper.instance returns the connection, which is already established (singleton)
         mapper = IMaterialMapper.instance();
+        mapper.setDataSource(ds);
+        
     }
 
     @Test

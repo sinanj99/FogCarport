@@ -9,16 +9,20 @@ import Data.Entity.Material;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.SystemErrorException;
 import java.util.List;
+import javax.sql.DataSource;
 
 /**
  *
  * @author sinanjasar
  */
 public abstract class IMaterialMapper {
-    //teknika 3
+    
+    
     public static IMaterialMapper instance() {
         return MaterialMapper.getInstance();
     }
+    
+    public abstract void setDataSource(DataSource ds);
     
     public abstract String getMaterial(int id) throws NoSuchMaterialException;
     
@@ -42,6 +46,7 @@ public abstract class IMaterialMapper {
      * Returns a list of prices of all available lengths of a material with the specified id.
      * @param id of the material type
      * @return list of materials.
+     * @throws Logic.Exceptions.SystemErrorException
      */
     public abstract List<Integer> getMaterialLengthPrices(int id) throws SystemErrorException;
     

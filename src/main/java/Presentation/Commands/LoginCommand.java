@@ -7,8 +7,10 @@ package Presentation.Commands;
 
 import Data.Entity.User;
 import Logic.Controller.LoginController;
-import Logic.Controller.Facade;
+import Logic.Controller.LogicFacade;
+import Logic.Controller.PresentationFacade;
 import Logic.Exceptions.NoMatchException;
+import Logic.Exceptions.SystemErrorException;
 import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -28,7 +30,7 @@ public class LoginCommand implements Command {
         String password = request.getParameter("pword");
         
         try {
-            user = Facade.getUser(email);
+            user = PresentationFacade.getInstance().getUser(email);
             LoginController.doesMatch(email, password);
             request.getSession().setAttribute("user", user);
         } catch (UserNotFoundException | NoMatchException e) {
@@ -36,6 +38,9 @@ public class LoginCommand implements Command {
             if there is no match */
             request.setAttribute("loginResult", e.getMessage());
             return "login.jsp";
+        } catch(SystemErrorException e) {
+            request.setAttribute("error", e.getMessage());
+            return "error.jsp";
         }
         if(user.isSeller() == true) return "frontpage.jsp";
         return "frontpage.jsp";

@@ -104,7 +104,6 @@ INSERT INTO `materials_withlength` (`name`, `unit`) VALUES
 ("25x150 mm. trykimp. Bræt", "Stk")
 ;
 
-select * from rooflength;
 CREATE TABLE `material_lengths` (
 	`material_id` INT NOT NULL,
     `length` INT NOT NULL, 

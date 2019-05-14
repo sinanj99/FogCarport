@@ -8,6 +8,7 @@ package Data.Database;
 import Data.Entity.Roof;
 import Data.Mappers.IMaterialMapper;
 import Data.Mappers.IRequestMapper;
+import Logic.Controller.LogicFacade;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
 import java.util.List;
@@ -21,22 +22,27 @@ public class DataInsertion {
     public static void main(String[] args) throws NoSuchRoofException, SystemErrorException {
 
         /* insertion of roofs */
+        IRequestMapper rmapper = IRequestMapper.instance();
+        IMaterialMapper mmapper = IMaterialMapper.instance();
+        rmapper.setDataSource(new DataSourceMysql().getDataSource());
+        mmapper.setDataSource(new DataSourceMysql().getDataSource());
+        
         List<Roof> roofs = IRequestMapper.instance().getRoofs();
-
+        
         for (Roof r : roofs) {
             int price = 50;
             if (r.isInclined() == false) {
                 for (int i = 240; i <= 750; i += 30) {
 
-                    IRequestMapper.instance().insertDimensions(r.getRoof_id(), i, price);
+                    rmapper.insertDimensions(r.getRoof_id(), i, price);
                     price += 50;
 
                 }
             } else if (r.isInclined() == true){
                 price = 50;
-                IRequestMapper.instance().insertDimensions(r.getRoof_id(), 37, price);
+                rmapper.insertDimensions(r.getRoof_id(), 37, price);
                 price = 30;
-                IRequestMapper.instance().insertDimensions(r.getRoof_id(), 6, price);
+                rmapper.insertDimensions(r.getRoof_id(), 6, price);
             }
         }
         
@@ -44,32 +50,32 @@ public class DataInsertion {
         int price = 40;
         for (int i = 270; i <= 780; i += 30) {
 
-            IMaterialMapper.instance().insertMaterialDim(1, i, price, 1000);
+            mmapper.instance().insertMaterialDim(1, i, price, 1000);
             price += 40;
         }
-        IMaterialMapper.instance().insertMaterialDim(2, 300, 40, 1000);
+        mmapper.instance().insertMaterialDim(2, 300, 40, 1000);
         price = 40;
         for (int i = 210; i <= 750; i += 30) {
-            IMaterialMapper.instance().insertMaterialDim(3, i, price, 1000);
+            mmapper.instance().insertMaterialDim(3, i, price, 1000);
             price += 40;
         }
         price = 20;
         for (int i = 150; i <= 720; i += 30) {
-            IMaterialMapper.instance().insertMaterialDim(4, i, price, 1000);
+            mmapper.instance().insertMaterialDim(4, i, price, 1000);
             price += 40;
         }
         price = 40;
         for (int i = 210; i <= 780; i += 30) {
 
-            IMaterialMapper.instance().insertMaterialDim(5, i, price, 1000);
+            mmapper.instance().insertMaterialDim(5, i, price, 1000);
             price += 40;
         }
         price = 80;
-        IMaterialMapper.instance().insertMaterialDim(6, 540, price, 1000);
+        mmapper.instance().insertMaterialDim(6, 540, price, 1000);
         price = 40;
         for (int i = 240; i <= 810; i += 30) {
 
-            IMaterialMapper.instance().insertMaterialDim(7, i, price, 1000);
+            mmapper.instance().insertMaterialDim(7, i, price, 1000);
             price += 40;
         }
 

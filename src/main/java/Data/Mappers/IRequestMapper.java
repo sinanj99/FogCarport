@@ -9,6 +9,7 @@ import Data.Entity.Request;
 import Data.Entity.Roof;
 import Logic.Exceptions.NoSuchRoofException;
 import java.util.List;
+import javax.sql.DataSource;
 
 /**
  *
@@ -19,6 +20,8 @@ public abstract class IRequestMapper {
     public static IRequestMapper instance() {
         return RequestMapper.getInstance();
     }
+    
+    public abstract void setDataSource(DataSource ds);
     
     /**
      * Returns a specific request object with all its sub-tables - used when a seller

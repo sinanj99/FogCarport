@@ -20,20 +20,21 @@ import javax.sql.DataSource;
 public class DBConnector {
 
     private DataSource ds;
-    private static Connection conn;
+    private Connection conn;
 
     public void setDataSource(DataSource ds) {
         this.ds = ds;
     }
 
     public Connection getConnection() {
-        if (conn == null) {
-            try {
+        try {
+            if (conn == null || conn.isClosed()) {
                 conn = ds.getConnection();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
             }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
+
         return conn;
     }
 
@@ -43,7 +44,6 @@ public class DBConnector {
 //        }
 //        return conn;
 //    }
-
 //    public void close() {
 //        try {
 //            if (conn != null || !conn.isClosed()) {
@@ -54,7 +54,6 @@ public class DBConnector {
 //            System.out.println(ex.getMessage());
 //        }
 //    }
-
 //    public static Connection getTestConnection() {
 //        URL = "jdbc:mysql://157.230.97.70:3306/CarportDBTest";
 //        try {
@@ -65,7 +64,6 @@ public class DBConnector {
 //        }
 //        return conn;
 //    }
-    
     public PreparedStatement preparedStatement(String sql) throws SQLException {
         return conn.prepareStatement(sql);
     }

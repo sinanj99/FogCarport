@@ -29,6 +29,14 @@
         {
             maring: 0px;
         }
+        .card-subtitle
+        {
+            margin-bottom: 2px;
+        }
+        .card-list
+        {
+            padding-left: 20px;
+        }
         .blue
         {
             color: blue;
@@ -76,9 +84,9 @@
 
                                       <div class="card-body ">
 
-                                          <h4 class="card-subtitle" style="margin-bottom: 2px" >Mål på carporten: </h4>
+                                          <h4 class="card-subtitle"  >Mål på carporten: </h4>
 
-                                          <ul style="padding-left: 20px">
+                                          <ul class="card-list" >
                                               <li >Bredde: <%= prebuiltCarports.get(i).getCarportWidth() %>cm
                                               <li>Længde: <%= prebuiltCarports.get(i).getCarportLength()%>cm
                                          </ul>
@@ -87,9 +95,9 @@
                                               if(prebuiltCarports.get(i).isShed() == true)
                                               {
                                           %>
-                                                <h4 class="card-subtitle" style="margin-bottom: 2px"> Mål på skuret: </h4>
+                                                <h4 class="card-subtitle" > Mål på skuret: </h4>
 
-                                                <ul style="padding-left: 20px">
+                                                <ul class="card-list" >
                                                      <li >Bredde: <%= prebuiltCarports.get(i).getShedWidth()%>cm
                                                      <li>Længde: <%= prebuiltCarports.get(i).getShedLength()  %>cm
                                                 </ul>
@@ -98,7 +106,7 @@
                                                 else
                                                 {
                                           %>
-                                                <h4 class="card-subtitle" style="margin-bottom: 2px"> Skur medfølger ikke </h4>
+                                                <h4 class="card-subtitle" > Skur medfølger ikke </h4>
                                           <%
                                                 }
                                           %>
@@ -136,9 +144,9 @@
 
                                       <div class="card-body ">
 
-                                          <h4 class="card-subtitle" style="margin-bottom: 2px" >Mål på carporten: </h4>
+                                          <h4 class="card-subtitle"  >Mål på carporten: </h4>
 
-                                          <ul style="padding-left: 20px">
+                                          <ul class="card-list" >
                                               <li >Bredde: <%= prebuiltCarports.get(i).getCarportWidth() %>cm
                                               <li>Længde: <%= prebuiltCarports.get(i).getCarportLength()%>cm
                                          </ul>
@@ -147,9 +155,9 @@
                                               if(prebuiltCarports.get(i).isShed() == true)
                                               {
                                           %>
-                                                <h4 class="card-subtitle" style="margin-bottom: 2px"> Mål på skuret: </h4>
+                                                <h4 class="card-subtitle" > Mål på skuret: </h4>
 
-                                                <ul style="padding-left: 20px">
+                                                <ul class="card-list" >
                                                      <li >Bredde: <%= prebuiltCarports.get(i).getShedWidth()%>cm
                                                      <li>Længde: <%= prebuiltCarports.get(i).getShedLength()  %>cm
                                                 </ul>
@@ -158,7 +166,7 @@
                                                 else
                                                 {
                                           %>
-                                                <h4 class="card-subtitle" style="margin-bottom: 2px"> Skur medfølger ikke </h4>
+                                                <h4 class="card-subtitle" > Skur medfølger ikke </h4>
                                           <%
                                                 }
                                           %>
@@ -195,9 +203,9 @@
 
                                       <div class="card-body ">
 
-                                          <h4 class="card-subtitle" style="margin-bottom: 2px" >Mål på carporten: </h4>
+                                          <h4 class="card-subtitle"  >Mål på carporten: </h4>
 
-                                          <ul style="padding-left: 20px">
+                                          <ul class="card-list" >
                                               <li >Bredde: <%= prebuiltCarports.get(i).getCarportWidth() %>cm
                                               <li>Længde: <%= prebuiltCarports.get(i).getCarportLength()%>cm
                                          </ul>
@@ -206,9 +214,9 @@
                                               if(prebuiltCarports.get(i).isShed() == true)
                                               {
                                           %>
-                                                <h4 class="card-subtitle" style="margin-bottom: 2px"> Mål på skuret: </h4>
+                                                <h4 class="card-subtitle" > Mål på skuret: </h4>
 
-                                                <ul style="padding-left: 20px">
+                                                <ul class="card-list" >
                                                      <li >Bredde: <%= prebuiltCarports.get(i).getShedWidth()%>cm
                                                      <li>Længde: <%= prebuiltCarports.get(i).getShedLength()  %>cm
                                                 </ul>
@@ -217,7 +225,7 @@
                                                 else
                                                 {
                                           %>
-                                                <h4 class="card-subtitle" style="margin-bottom: 2px"> Skur medfølger ikke </h4>
+                                                <h4 class="card-subtitle" > Skur medfølger ikke </h4>
                                           <%
                                                 }
                                           %>

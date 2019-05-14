@@ -6,6 +6,7 @@
 package Data.Mappers;
 
 import Data.Database.DBConnector;
+import Data.Database.DataSourceMysql;
 import Data.Entity.Material;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.SystemErrorException;
@@ -13,7 +14,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 /**
@@ -23,12 +27,14 @@ import javax.sql.DataSource;
 class MaterialMapper extends IMaterialMapper {
 
     private static MaterialMapper instance = null;
-    private final DBConnector connector = new DBConnector();
-    private final Connection con = connector.getConnection();
+    private static final DBConnector connector = new DBConnector();
+    private static Connection con = null;
 
     public synchronized static MaterialMapper getInstance() {
         if (instance == null) {
             instance = new MaterialMapper();
+            connector.setDataSource(new DataSourceMysql().getDataSource());
+            con = connector.getConnection();
         }
         return instance;
     }
@@ -250,7 +256,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePrice(int price, int id) throws SystemErrorException {
+    public void updatePriceWithLength(int price, int id, int length) throws SystemErrorException {
         try {
             String sql = "UPDATE `material` SET price = ? WHERE material_id = ?;";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -306,8 +312,36 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public List<Material> getMaterials() {
+    public List<Integer> getMaterialLengthPrices(int id) throws SystemErrorException {
+
+        List<Integer> prices = new ArrayList();
+        String sql = "SELECT price FROM material_lengths WHERE material_id = ?";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                prices.add(rs.getInt("price"));
+            }
+        } catch (SQLException ex) {
+            throw new SystemErrorException(ex.getMessage());
+        }
+        return prices;
+
+    }
+
+    @Override
+    public void updatePriceNoLength(int price, int id) throws SystemErrorException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void updatePriceRoof(int price, int id) throws SystemErrorException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Material> getMaterials() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

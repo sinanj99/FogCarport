@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  */
 public class DBConnector {
 
-    private DataSource ds = new DataSourceMysql().getDataSource();
+    private DataSource ds;
     private static Connection conn;
 
     public void setDataSource(DataSource ds) {

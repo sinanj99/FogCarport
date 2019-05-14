@@ -38,7 +38,37 @@ public abstract class IMaterialMapper {
     
     public abstract List<Material> getMaterials();
     
-    public abstract void updatePrice(int price, int id) throws SystemErrorException;
+    /**
+     * Returns a list of prices of all available lengths of a material with the specified id.
+     * @param id of the material type
+     * @return list of materials.
+     */
+    public abstract List<Integer> getMaterialLengthPrices(int id) throws SystemErrorException;
     
+    /**
+     * Updates price of all lengths of a material specified by id
+     * @param price the new price of the material (shortest length)
+     * @param id the id of the desired material
+     * @throws SystemErrorException 
+     */
+    
+    public abstract void updatePriceWithLength(int price, int id, int length) throws SystemErrorException;
+    
+    /**
+     * Updates price of a no-length material specified by id. 
+     * @param price the new price of the material
+     * @param id the id of the material
+     * @throws SystemErrorException 
+     */
+    public abstract void updatePriceNoLength(int price, int id) throws SystemErrorException;
+    
+    /**
+     * Updates price of all length of a specific roof specified by id.
+     * @param price new price of the roof
+     * @param id
+     * @throws SystemErrorException 
+     */
+    public abstract void updatePriceRoof(int price, int id) throws SystemErrorException;
+
     public abstract void insertMaterial(String name, int length, String unit, String description, int price);
 }

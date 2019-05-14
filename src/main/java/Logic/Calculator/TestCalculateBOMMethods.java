@@ -14,8 +14,10 @@ import Data.Entity.PersonalInfo;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
+import Data.Mappers.IMaterialMapper;
 import Data.Mappers.IUserMapper;
 import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.SystemErrorException;
 import Logic.Exceptions.UserNotFoundException;
 
 /**
@@ -24,13 +26,14 @@ import Logic.Exceptions.UserNotFoundException;
  */
 public class TestCalculateBOMMethods
 {
-    public static void main(String[] args) throws NoSuchMaterialException, UserNotFoundException
+    public static void main(String[] args) throws NoSuchMaterialException, UserNotFoundException, SystemErrorException
     {
         BOMFlatRoof f = new BOMFlatRoof();
         BOMInclineRoof i = new BOMInclineRoof();
         CalculateBOM c = new CalculateBOM();
         DBConnector con = new DBConnector();
-        System.out.println(IUserMapper.instance().getUser("test@test.dk"));
+//        System.out.println(IUserMapper.instance().getUser("test@test.dk"));
+          System.out.println(IMaterialMapper.instance().getMaterialLengthPrices(1));
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);
 //        System.out.println(c.calculateQuantityOfSpær(450));

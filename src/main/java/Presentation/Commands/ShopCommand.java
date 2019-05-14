@@ -15,14 +15,15 @@ import Logic.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Recieves request from prebuiltcarport.jsp
+ * Created a session containing ShoppingCart entity class
+ * Forward to shoppingcart.jsp
  * @author Kasper Jeppesen
  */
 public class ShopCommand implements Command
@@ -33,7 +34,8 @@ public class ShopCommand implements Command
     {
         if(request.getSession().getAttribute("shoppingcart") == null) 
         {
-            request.getSession().setAttribute("shoppingcart", 10 );
+            System.out.println("test er vi her?");
+            request.getSession().setAttribute("shoppingcart", new ShoppingCart() );
         }
         
         ArrayList<PrebuiltCarport> prebuiltCarports = null;
@@ -55,18 +57,13 @@ public class ShopCommand implements Command
             if(request.getParameter(Integer.toString(i)) != null)
             {
                 System.out.println(prebuiltCarports.get(i-1));
-                request.setAttribute("AddToShoppingCart", prebuiltCarports.get(i-1));
+                ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("shoppingcart");
+                System.out.println(cart.getPrebuiltCarports().size());
+                cart.getPrebuiltCarports().add(prebuiltCarports.get(i-1));
+                System.out.println(cart.getPrebuiltCarports());
                 break;
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
         
         return "shoppingCart.jsp";
     }

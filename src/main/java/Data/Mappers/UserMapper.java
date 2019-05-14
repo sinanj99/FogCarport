@@ -91,7 +91,7 @@ class UserMapper extends IUserMapper {
         String password = "", fname = "", lname = "", address = "", city = "", gender = "";
         boolean seller_ = false;
         try {
-            String sql = "SELECT * FROM `users` INNER JOIN `users_personalinfo` USING(user_id) WHERE email = ?;";
+            String sql = "SELECT * FROM `users` LEFT JOIN `users_personalinfo` USING(user_id) WHERE email = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();

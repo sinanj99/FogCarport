@@ -9,7 +9,7 @@ import Data.Entity.PersonalInfo;
 import Data.Entity.User;
 import Logic.Exceptions.DuplicateException;
 import Logic.Controller.LogicFacade;
-import Logic.Controller.PresentationFacade;
+import Presentation.Controller.PresentationFacade;
 import Logic.Exceptions.SystemErrorException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;

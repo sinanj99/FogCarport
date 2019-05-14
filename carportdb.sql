@@ -13,7 +13,7 @@ CREATE TABLE CarportDB.rooftype (
   	inclined INT(1) NOT NULL,
 	PRIMARY KEY (roof_id)
 );
-
+select * from material_lengths;
 insert into CarportDB.rooftype (`name`, inclined) values 
 ("Plasttrapezplader - Blåtonet", 0),
 ("Plasttrapezplader - Gråtonet", 0),
@@ -229,7 +229,7 @@ values
 (0,"test@test.dk","test"),
 (1, "seller@fog.dk","seller");
 
-
+select * from users;
 CREATE TABLE CarportDB.requests (
 	request_id INT(50) NOT NULL AUTO_INCREMENT,
 	user_id int(50) NOT NULL,
@@ -286,5 +286,3 @@ CREATE TABLE CarportDB.sheds (
 	PRIMARY KEY (shed_id),
 	CONSTRAINT `sheds_ibfk_1` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`)
 );
-
-	

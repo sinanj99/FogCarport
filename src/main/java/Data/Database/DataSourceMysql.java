@@ -29,7 +29,6 @@ public class DataSourceMysql {
         ds.setUser("root");
         ds.setPassword("prespa01");
         try {
-            ds.setAllowMultiQueries(true);
             ds.setUseSSL(false);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

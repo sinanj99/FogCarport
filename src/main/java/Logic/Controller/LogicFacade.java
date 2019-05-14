@@ -32,36 +32,35 @@ import javax.sql.DataSource;
 public class LogicFacade {
 
     private static LogicFacade instance = null;
-    private DataSource ds = new DataSourceMysql().getDataSource();
-    private IRequestMapper r = IRequestMapper.instance();
-    private IMaterialMapper m = IMaterialMapper.instance();
-    private IUserMapper u = IUserMapper.instance();
+    private static DataSource ds = new DataSourceMysql().getDataSource();
+    private static IRequestMapper r = IRequestMapper.instance();
+    private static IMaterialMapper m = IMaterialMapper.instance();
+    private static IUserMapper u = IUserMapper.instance();
 
     //prevents other classes from creating instance
     private LogicFacade() {
     }
-    
+
     //global point of access
     public static LogicFacade getInstance() {
         if (instance == null) {
             instance = new LogicFacade();
+            m.setDataSource(ds);
+            r.setDataSource(ds);
+            u.setDataSource(ds);
         }
-        return instance;
-    }
 
-    public void setDataSource() {
-        m.setDataSource(ds);
-        r.setDataSource(ds);
-        u.setDataSource(ds);
+        return instance;
     }
 
     public Material getMaterial(String name, int length) throws NoSuchMaterialException {
         return IMaterialMapper.instance().getMaterial(name, length);
     }
+
     public Material getMaterial_(String name) throws NoSuchMaterialException {
         return IMaterialMapper.instance().getMaterial_(name);
     }
-    
+
     public List<Roof> getRoofs() {
         return IRequestMapper.instance().getRoofs();
     }

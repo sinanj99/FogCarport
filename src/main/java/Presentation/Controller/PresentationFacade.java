@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Controller;
+package Presentation.Controller;
 
 import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
@@ -29,59 +29,56 @@ import javax.sql.DataSource;
 public class PresentationFacade {
 
     private static PresentationFacade instance = null;
-    private DataSource ds = new DataSourceMysql().getDataSource();
-    private IRequestMapper r = IRequestMapper.instance();
-    private IMaterialMapper m = IMaterialMapper.instance();
-    private IUserMapper u = IUserMapper.instance();
+    private static final DataSource ds = new DataSourceMysql().getDataSource();
+    private static final IRequestMapper r = IRequestMapper.instance();
+    private static final IMaterialMapper m = IMaterialMapper.instance();
+    private static final IUserMapper u = IUserMapper.instance();
 
     //prevents other classes from creating instance
     private PresentationFacade() {
     }
-    
+
     //global point of access
     public static PresentationFacade getInstance() {
         if (instance == null) {
             instance = new PresentationFacade();
+            m.setDataSource(ds);
+            u.setDataSource(ds);
+            r.setDataSource(ds);
         }
         return instance;
     }
 
-    public void setDataSource() {
-        m.setDataSource(ds);
-        r.setDataSource(ds);
-        u.setDataSource(ds);
-    }
-
     public List<Roof> getRoofs() {
-        return IRequestMapper.instance().getRoofs();
+        return r.getRoofs();
     }
 
     public void insertDimensions(int id, int length, int price) {
-        IRequestMapper.instance().insertDimensions(id, length, price);
+        r.insertDimensions(id, length, price);
     }
 
     public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException {
-        return IRequestMapper.instance().getRoofs(rooftype);
+        return r.getRoofs(rooftype);
     }
 
     public void insertUser(User user) throws DuplicateException, SystemErrorException {
-        IUserMapper.instance().insertUser(user);
+        u.insertUser(user);
     }
 
     public User getUser(String email) throws UserNotFoundException, SystemErrorException {
-        return IUserMapper.instance().getUser(email);
+        return u.getUser(email);
     }
 
     public void insertRequest(Request req) {
-        IRequestMapper.instance().insertRequest(req);
+        r.insertRequest(req);
     }
 
     public Roof getRoof(int id) throws NoSuchRoofException {
-        return IRequestMapper.instance().getRoof(id);
+        return r.getRoof(id);
     }
 
     public int getDimensionPrice(int roof_id, int length) {
-        return IRequestMapper.instance().getDimensionPrice(roof_id, length);
+        return r.getDimensionPrice(roof_id, length);
     }
 
     public Material getMaterial(String name) throws NoSuchMaterialException {
@@ -89,22 +86,22 @@ public class PresentationFacade {
     }
 
     public Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException {
-        return IMaterialMapper.instance().getMaterialWithLength(id, length);
+        return m.getMaterialWithLength(id, length);
     }
 
     public Material getMaterialNoLength(int id) throws SystemErrorException {
-        return IMaterialMapper.instance().getMaterialNoLength(id);
+        return m.getMaterialNoLength(id);
     }
 
     public List<Request> getRequests() {
-        return IRequestMapper.instance().getRequests();
+        return r.getRequests();
     }
 
     public Roof newGetRoof(int id, int length) {
-        return IRequestMapper.instance().getRoof(id, length);
+        return r.getRoof(id, length);
     }
 
     public Request getRequest(int id) {
-        return IRequestMapper.instance().getRequest(id);
+        return r.getRequest(id);
     }
 }

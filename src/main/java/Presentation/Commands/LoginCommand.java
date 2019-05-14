@@ -8,7 +8,7 @@ package Presentation.Commands;
 import Data.Entity.User;
 import Logic.Controller.LoginController;
 import Logic.Controller.LogicFacade;
-import Logic.Controller.PresentationFacade;
+import Presentation.Controller.PresentationFacade;
 import Logic.Exceptions.NoMatchException;
 import Logic.Exceptions.SystemErrorException;
 import Logic.Exceptions.UserNotFoundException;

@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sql.DataSource;
 
 /**
  *
@@ -22,7 +23,16 @@ import java.util.List;
 public class PrebuiltCarportMapper extends IPrebuiltCarportMapper
 {
     private static PrebuiltCarportMapper instance = null;
-    Connection con = DBConnector.getConnection();
+    //Connection con = DBConnector.getConnection();
+    private final DBConnector con = new DBConnector();
+    Connection conn;
+    
+    @Override
+    public void setDataSource(DataSource ds)
+    {
+        con.setDataSource(ds);
+        conn = con.getConnection();
+    }
     
     public synchronized static PrebuiltCarportMapper getInstance()
     {
@@ -49,7 +59,7 @@ public class PrebuiltCarportMapper extends IPrebuiltCarportMapper
         
         try {
             String sql = "SELECT * FROM `prebuilt_carport` ;";
-            PreparedStatement pstmt = con.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) 
             {

@@ -8,6 +8,7 @@ package Data.Mappers;
 import Data.Entity.PrebuiltCarport;
 import Logic.Exceptions.NoSuchPrebuiltCarportException;
 import java.util.List;
+import javax.sql.DataSource;
 
 /**
  *
@@ -19,6 +20,8 @@ public abstract class IPrebuiltCarportMapper
     {
         return PrebuiltCarportMapper.getInstance();
     }
+    
+    public abstract void setDataSource(DataSource ds);
     
     /** 
      * returns a list os all prebuilts carport - used to populate prebuiltcarport.jsp 

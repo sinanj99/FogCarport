@@ -6,6 +6,7 @@
 package Data.Mappers;
 
 import Data.Entity.Material;
+import Data.Entity.Roof;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
@@ -42,13 +43,17 @@ public abstract class IMaterialMapper {
     public abstract Material getMaterial(String name, int length) throws NoSuchMaterialException;
     
     public abstract Material getMaterial_(String name) throws NoSuchMaterialException;
-    
-    public abstract List<Material> getMaterials();
+    /**
+     * Fetches all materials from materials_with length and material_lengths tables in database.
+     * @return a list of all materials in the database.
+     * @throws SystemErrorException if an sql-exception occurs
+     */
+    public abstract List<Material> getMaterials() throws SystemErrorException;
     /**
      * Returns a linked hash map including all lengths and its prices.
      * @param id
      * @return linked hash map including all lengths and its prices.
-     * @throws SystemErrorException 
+     * @throws SystemErrorException if an sql-exception occurs 
      */
     public abstract LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException;
     
@@ -83,4 +88,11 @@ public abstract class IMaterialMapper {
     public abstract LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException;
     
     public abstract void insertMaterial(String name, int length, String unit, String description, int price);
+    
+    /**
+     * Fetches all roofs with shortest length from dB.
+     * @return a list of all roofs with shortest length; no id-duplicates.
+     * @throws SystemErrorException if an sql-exception is thrown.
+     */
+    public abstract List<Roof> getRoofs() throws SystemErrorException;
 }

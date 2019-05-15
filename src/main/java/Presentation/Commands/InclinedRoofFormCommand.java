@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class InclinedRoofFormCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
+    public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException {
         if (request.getSession().getAttribute("user") == null) {
             return "login.jsp";
         }

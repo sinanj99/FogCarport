@@ -22,7 +22,7 @@ public class BackCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchRoofException, SQLException {
+    public String execute(HttpServletRequest request) throws NoSuchRoofException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -21,9 +21,9 @@ public class LogoutCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, NoSuchRoofException, SQLException, IOException {
+    public String execute(HttpServletRequest request) throws ServletException, NoSuchRoofException {
         request.getSession().invalidate();
-        return "login.jsp";
+        return "jsp/login.jsp";
     }
     
 }

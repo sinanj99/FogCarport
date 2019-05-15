@@ -15,11 +15,13 @@ public class User {
     private final  String email;
     private final String password;
     private PersonalInfo info;
-
-    public User(PersonalInfo info, int id, boolean seller, String email, String password) {
+    private boolean admin;
+    
+    public User(PersonalInfo info, int id, boolean seller, boolean admin, String email, String password) {
         this.info = info;
         this.id = id;
         this.seller = seller;
+        this.admin = admin;
         this.email = email;
         this.password = password;
     }
@@ -56,12 +58,14 @@ public class User {
     public PersonalInfo getInfo() {
         return info;
     }
+
+    public boolean isAdmin() {
+        return admin;
+    }
     
     @Override
     public String toString() {
         return "User{" + "email=" + email + ", password=" + password + '}';
     }
-    
-    
     
 }

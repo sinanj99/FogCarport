@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 public class GenerateReqCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
+    public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException {
         if (request.getSession().getAttribute("user") == null) {
-            return "login.jsp";
+            return "jsp/login.jsp";
         }
         String inclined = (String) request.getSession().getAttribute("inclined");
         int inclination = 0;
@@ -76,6 +76,6 @@ public class GenerateReqCommand implements Command {
 
         LogicFacade.getInstance().insertRequest(req);
         request.getSession().removeAttribute("inclined");
-        return "reqsent.jsp";
+        return "jsp/reqsent.jsp";
     }
 }

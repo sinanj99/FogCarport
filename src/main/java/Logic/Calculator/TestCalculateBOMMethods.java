@@ -34,7 +34,8 @@ public class TestCalculateBOMMethods
         DBConnector con = new DBConnector();
 //        System.out.println(IUserMapper.instance().getUser("test@test.dk"));
           IMaterialMapper.instance().setDataSource(new DataSourceMysql().getDataSource());
-          IMaterialMapper.instance().updatePriceWithLength(1000, 1);
+//          IMaterialMapper.instance().updatePriceWithLength(1000, 1);
+          System.out.println(IMaterialMapper.instance().getMaterials());
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);
 //        System.out.println(c.calculateQuantityOfSpær(450));

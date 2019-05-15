@@ -24,7 +24,7 @@ public class RegisterCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws SQLException {
+    public String execute(HttpServletRequest request) {
 
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
@@ -39,12 +39,12 @@ public class RegisterCommand implements Command {
             PresentationFacade.getInstance().insertUser(new User(new PersonalInfo(fname, lname, adress, zip, city, gender), email, pword));
         } catch (DuplicateException e) {
             request.setAttribute("registerResult", e.getMessage());
-            return "register.jsp";
+            return "jsp/register.jsp";
         } catch(SystemErrorException e) {
             request.setAttribute("error", e.getMessage());
             return "error.jsp";
         }
-        return "frontpage.jsp";
+        return "jsp/frontpage.jsp";
     }
 
 }

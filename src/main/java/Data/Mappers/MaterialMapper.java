@@ -9,6 +9,7 @@ import Data.Controller.DataFacade;
 import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
 import Data.Entity.Material;
+import Data.Entity.Roof;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
@@ -16,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -329,14 +331,6 @@ class MaterialMapper extends IMaterialMapper {
         }
     }
 
-    public static void main(String[] args) throws SystemErrorException {
-        try {
-            System.out.println(IMaterialMapper.instance().getMaterialWithLength(1, 120));
-        } catch (NoSuchMaterialException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     /**
      * Returns a list of prices of all available lengths of a material with the
      * specified id. Is public, since it is called in test class.
@@ -362,6 +356,7 @@ class MaterialMapper extends IMaterialMapper {
         }
         return prices;
     }
+
     /**
      * Returns a list of prices of all available lengths of a material with the
      * specified id. Is public, since it is called in test class.
@@ -396,7 +391,7 @@ class MaterialMapper extends IMaterialMapper {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                
+
                 sql = "UPDATE materials_nolength SET price = ? WHERE material_id = ?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, price);
@@ -440,7 +435,71 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public List<Material> getMaterials() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Material> getMaterials() throws SystemErrorException {
+        List<Material> materials = new ArrayList();
+        int id, length, price, stock;
+        String name, unit;
+        try {
+            String sql = "WITH materials AS"
+                    + " (SELECT *, ROW_NUMBER() OVER (PARTITION BY material_id ORDER BY price ASC) AS rn"
+                    + " FROM material_lengths)"
+                    + " SELECT *"
+                    + " FROM materials INNER JOIN materials_withlength USING(material_id)"
+                    + " WHERE rn = 1;";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getInt("material_id");
+                name = rs.getString("name");
+                unit = rs.getString("unit");
+                length = rs.getInt("length");
+                price = rs.getInt("price");
+                stock = rs.getInt("stock");
+                materials.add(new Material(id, name, length, unit, price, stock));
+            }
+            sql = "SELECT * FROM materials_nolength;";
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getInt("material_id");
+                name = rs.getString("name");
+                unit = rs.getString("unit");
+                price = rs.getInt("price");
+                stock = rs.getInt("stock");
+                materials.add(new Material(id, name, unit, price, stock));
+            }
+        } catch (SQLException e) {
+            throw new SystemErrorException(e.getMessage());
+        }
+        return materials;
+    }
+    @Override
+    public List<Roof> getRoofs() throws SystemErrorException {
+        List<Roof> roofs = new ArrayList();
+        int id, price, inclined;
+        String name;
+        boolean inclined_ = false;
+        try {
+            String sql = "WITH roofs AS"
+                    + " (SELECT *, ROW_NUMBER() OVER (PARTITION BY roof_id ORDER BY price ASC) AS rn"
+                    + " FROM rooflength)"
+                    + " SELECT *"
+                    + " FROM roofs INNER JOIN rooftype USING(roof_id)"
+                    + " WHERE rn = 1;";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getInt("roof_id");
+                name = rs.getString("name");
+                inclined = rs.getInt("inclined");
+                if(inclined == 1){
+                    inclined_ = true;
+                }
+                price = rs.getInt("price");
+                roofs.add(new Roof(id, name, price, inclined_));
+            }
+        } catch (SQLException e) {
+            throw new SystemErrorException(e.getMessage());
+        }
+        return roofs;
     }
 }

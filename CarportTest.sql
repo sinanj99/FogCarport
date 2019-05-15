@@ -56,11 +56,12 @@ CREATE TABLE materials_nolength (
     (2, 270,1000),
     (2, 300,1100);
 
-    CREATE TABLE users (
-	user_id INT(10) NOT NULL AUTO_INCREMENT,
+CREATE TABLE CarportDB.users (
+	user_id INT(50) NOT NULL AUTO_INCREMENT,
     seller INT(1) NOT NULL DEFAULT 0,
-	email VARCHAR(100) NOT NULL UNIQUE,
-	password VARCHAR(50) NOT NULL,
+    `admin` INT(1) NOT NULL DEFAULT 0,
+	email VARCHAR(320) NOT NULL UNIQUE,
+	`password` VARCHAR(50) NOT NULL,
 	PRIMARY KEY (user_id)
 );
 
@@ -87,8 +88,12 @@ INSERT INTO material_lengths VALUES
 INSERT INTO materials_nolength (name, unit, price, stock) VALUES 
 ("universal 190 mm højre", "Stk.", 10,1000);
 
-INSERT INTO users (seller, email,  password) VALUES
-(0,"test@test.dk","test");
+insert into CarportDB.users (`admin`, seller, email,  `password`)
+values 
+(0, 0, "test@test.dk","test"),
+(1, 0, "admin@fog.dk","test"),
+(0, 1, "seller@fog.dk","seller");
+
 
 INSERT INTO users_personalinfo (user_id,  firstname, lastname, address, zipcode, city, gender)
 VALUES (1, "Peter","Petersen", "Tagensvej 100", 2200, "København N", "m");

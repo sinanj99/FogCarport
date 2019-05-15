@@ -15,6 +15,7 @@ import Presentation.Commands.LogoutCommand;
 import Presentation.Commands.RegisterCommand;
 import Presentation.Commands.FlatRoofFormCommand;
 import Presentation.Commands.InclinedRoofFormCommand;
+import Presentation.Commands.ShowPricesCommand;
 //import Presentation.Commands.PrebuiltCarportCommand;
 //import Presentation.Commands.ShopCommand;
 import Presentation.Commands.ShowRequestCommand;
@@ -41,6 +42,7 @@ public class CommandFactory {
         commands.put("showrequests", new ShowRequestCommand());
         commands.put("createOffer", new CreateOfferCommand());
         commands.put("change_price", new ChangePriceCommand());
+        commands.put("show_prices", new ShowPricesCommand());
 //        commands.put("prebuiltCarport", new PrebuiltCarportCommand());
 //        commands.put("shop", new ShopCommand());
     }

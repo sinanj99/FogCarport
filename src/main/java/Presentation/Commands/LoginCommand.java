@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, IOException, SQLException {
+    public String execute(HttpServletRequest request) throws ServletException {
         User user;
         String email = request.getParameter("email");
         String password = request.getParameter("pword");
@@ -37,13 +37,13 @@ public class LoginCommand implements Command {
             /*if the user doesn't exist in the database, or  
             if there is no match */
             request.setAttribute("loginResult", e.getMessage());
-            return "login.jsp";
+            return "jsp/login.jsp";
         } catch(SystemErrorException e) {
             request.setAttribute("error", e.getMessage());
-            return "error.jsp";
+            return "jsp/error.jsp";
         }
-        if(user.isSeller() == true) return "frontpage.jsp";
-        return "frontpage.jsp";
+//        if(user.isSeller() == true) return "jsp/frontpage.jsp";
+        return "jsp/frontpage.jsp";
     }
 
 }

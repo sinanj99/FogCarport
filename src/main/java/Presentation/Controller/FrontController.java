@@ -12,6 +12,7 @@ import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.UserNotFoundException;
 import Logic.Exceptions.NoSuchRoofException;
+import Logic.Exceptions.SystemErrorException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author sinanjasar
  */
-@WebServlet(name = "FrontController", urlPatterns = {"/jsp/FrontController/*"})
+@WebServlet(name = "FrontController", urlPatterns = {"/FrontController/*"})
 public class FrontController extends HttpServlet {
 
     @Override
@@ -34,7 +35,7 @@ public class FrontController extends HttpServlet {
         try {
             String target = command.execute(request);
             request.getRequestDispatcher(target).forward(request, response);
-        } catch (NoSuchMaterialException | NoSuchRoofException | ServletException | IOException | SQLException | UserNotFoundException ex) {
+        } catch (NoSuchMaterialException | NoSuchRoofException | ServletException | IOException | SystemErrorException | UserNotFoundException ex) {
             System.out.println("EXCEPTION: " + ex.getMessage());
         }
     }

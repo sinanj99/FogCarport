@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CreateOfferCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException, SQLException, IOException {
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException {
         //calculations
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
@@ -96,7 +96,7 @@ public class CreateOfferCommand implements Command {
         request.setAttribute("svg2", svg2);
 //        request.setAttribute("bandSvg", bandSvg);
 
-        return "create_offer.jsp";
+        return "jsp/create_offer.jsp";
     }
 
 }

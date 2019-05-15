@@ -87,9 +87,9 @@ class UserMapper extends IUserMapper {
      */
     @Override
     public User getUser(String email) throws UserNotFoundException, SystemErrorException {
-        int user_id = 0, zip = 0, seller = 0;
+        int user_id = 0, zip = 0, seller = 0, admin = 0;
         String password = "", fname = "", lname = "", address = "", city = "", gender = "";
-        boolean seller_ = false;
+        boolean seller_ = false, admin_ = false;
         try {
             String sql = "SELECT * FROM `users` LEFT JOIN `users_personalinfo` USING(user_id) WHERE email = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -98,6 +98,7 @@ class UserMapper extends IUserMapper {
             if (rs.next()) {
                 user_id = rs.getInt("user_id");
                 seller = rs.getInt("seller");
+                admin = rs.getInt("admin");
                 password = rs.getString("password");
                 fname = rs.getString("firstname");
                 lname = rs.getString("lastname");
@@ -113,8 +114,10 @@ class UserMapper extends IUserMapper {
         }
         if (seller == 1) {
             seller_ = true;
+        } else if(admin == 1) {
+            admin_ = true;
         }
-        return new User(new PersonalInfo(fname, lname, address, zip, city, gender), user_id, seller_, email, password);
+        return new User(new PersonalInfo(fname, lname, address, zip, city, gender), user_id, seller_, admin_, email, password);
     }
 
     /**
@@ -135,7 +138,9 @@ class UserMapper extends IUserMapper {
         String city = "";
         String gender = "";
         int seller = 0;
+        int admin = 0;
         boolean seller_ = false;
+        boolean admin_ = false;
         try {
             String sql = "SELECT * FROM `users` INNER JOIN `users_personalinfo` USING(user_id) WHERE user_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -143,6 +148,7 @@ class UserMapper extends IUserMapper {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 seller = rs.getInt("seller");
+                admin = rs.getInt("admin");
                 email_ = rs.getString("email");
                 password = rs.getString("password");
                 fname = rs.getString("firstname");
@@ -159,7 +165,9 @@ class UserMapper extends IUserMapper {
         }
         if (seller == 1) {
             seller_ = true;
+        } else if(admin == 1){
+            admin_ = true;
         }
-        return new User(new PersonalInfo(fname, lname, adress, zip, city, gender), id, seller_, email_, password);
+        return new User(new PersonalInfo(fname, lname, adress, zip, city, gender), id, seller_, admin_, email_, password);
     }
 }

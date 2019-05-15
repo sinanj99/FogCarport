@@ -70,7 +70,7 @@ public class IUserMapperTest {
     @Test
     public void testInsertUser() throws SystemErrorException, DuplicateException, UserNotFoundException {
         System.out.println("insertUser");
-        User user = new User(new PersonalInfo("Sinan", "Jasar", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), 3, false, "sinanjasar@live.dk", "adgangskode");
+        User user = new User(new PersonalInfo("Sinan", "Jasar", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), 3, false, false, "sinanjasar@live.dk", "adgangskode");
         IUserMapper instance = IUserMapper.instance();
         instance.insertUser(user);
         User result = instance.getUser("sinanjasar@live.dk");
@@ -83,7 +83,7 @@ public class IUserMapperTest {
     @Test(expected = DuplicateException.class)
     public void testInsertUserFail() throws Exception {
         System.out.println("insertUserFail");
-        User user = new User(new PersonalInfo("Peter", "Petersen", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), 2, false, "test@test.dk", "adgangskode");
+        User user = new User(new PersonalInfo("Peter", "Petersen", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), 2, false, false, "test@test.dk", "adgangskode");
         mapper.insertUser(user);
 
     }

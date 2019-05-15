@@ -53,10 +53,18 @@ public class PresentationFacade {
     public void updatePrices(int price, int id) throws SystemErrorException, NoSuchMaterialException {
         m.updatePriceWithLength(price, id);
     }
-    public List<Roof> getRoofs() {
-        return r.getRoofs();
+    public void updatePricesNoLength(int price, int id) throws SystemErrorException, NoSuchMaterialException {
+        m.updatePriceNoLength(price, id);
     }
-
+    public void updatePricesRoof(int price, int id) throws SystemErrorException, NoSuchRoofException {
+        m.updatePriceRoof(price, id);
+    }
+    public List<Roof> getRoofs() throws SystemErrorException {
+        return m.getRoofs();
+    }
+    public List<Material> getMaterials() throws SystemErrorException {
+        return m.getMaterials();
+    }
     public void insertDimensions(int id, int length, int price) {
         r.insertDimensions(id, length, price);
     }

@@ -52,6 +52,16 @@ CREATE TABLE users_personalinfo (
 	CONSTRAINT users_address_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+WITH cte AS
+(   SELECT *, ROW_NUMBER() OVER (PARTITION BY material_id ORDER BY price ASC) AS rn
+    FROM material_lengths
+)
+SELECT *
+FROM cte INNER JOIN materials_withlength USING(material_id)
+WHERE rn = 1;
+
+SELECT  DISTINCT *  from material_lengths ORDER BY material_id LIMIT 2;
+
 INSERT INTO materials_withlength VALUES 
 (1, "25x150 mm. trykimp. Bræt", "Stk.");
 

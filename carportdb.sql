@@ -219,17 +219,19 @@ values ("10x120mm brædderbolt","stk",  4),
 CREATE TABLE CarportDB.users (
 	user_id INT(50) NOT NULL AUTO_INCREMENT,
     seller INT(1) NOT NULL DEFAULT 0,
+    `admin` INT(1) NOT NULL DEFAULT 0,
 	email VARCHAR(320) NOT NULL UNIQUE,
-	password VARCHAR(50) NOT NULL,
+	`password` VARCHAR(50) NOT NULL,
 	PRIMARY KEY (user_id)
 );
 
-insert into CarportDB.users (seller, email,  password)
+insert into CarportDB.users (`admin`, seller, email,  `password`)
 values 
-(0,"test@test.dk","test"),
-(1, "seller@fog.dk","seller");
+(0, 0, "test@test.dk","test"),
+(1, 0, "admin@fog.dk","test"),
+(0, 1, "seller@fog.dk","seller");
 
-select * from users;
+
 CREATE TABLE CarportDB.requests (
 	request_id INT(50) NOT NULL AUTO_INCREMENT,
 	user_id int(50) NOT NULL,
@@ -277,6 +279,8 @@ CREATE TABLE CarportDB.carports (
     CONSTRAINT `carports_ibfk_2` FOREIGN KEY (`roof_id`) REFERENCES rooftype(`roof_id`)
 );
 
+
+SELECT * FROM materials_withlength INNER JOIN material_lengths USING(material_id);
 
 CREATE TABLE CarportDB.sheds (
 	shed_id INT(50) NOT NULL AUTO_INCREMENT,

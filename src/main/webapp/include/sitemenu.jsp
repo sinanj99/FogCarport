@@ -13,6 +13,7 @@
     <% } else { %>
     <a class="left" href="frontpage.jsp">FOG CARPORT</a>
     <a class="right d-none d-md-block" href="FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
+    <a class="right d-none d-md-block" href="FrontController?command=showresponses"> <i class="fas fa-clipboard-list"></i>    Vis tilbud</a>
     <% } %>
 </div>
 <div id="smallnav" class="d-none d-md-none smallnav">

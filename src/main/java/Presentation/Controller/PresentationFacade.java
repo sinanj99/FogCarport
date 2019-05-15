@@ -124,4 +124,8 @@ public class PresentationFacade {
     public Response getResponse(int requestId){
         return rp.getResponse(requestId);
     }
+    
+    public List<Response> getResponses(int userId){
+        return rp.getResponses(userId);
+    }
 }

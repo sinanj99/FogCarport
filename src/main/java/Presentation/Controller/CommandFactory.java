@@ -19,6 +19,7 @@ import Presentation.Commands.InsertResponseCommand;
 //import Presentation.Commands.PrebuiltCarportCommand;
 //import Presentation.Commands.ShopCommand;
 import Presentation.Commands.ShowRequestCommand;
+import Presentation.Commands.ShowResponsesCommand;
 import Presentation.Commands.UpdateResponsePriceCommand;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class CommandFactory {
         commands.put("createresponse", new CreateResponseCommand());
         commands.put("updateresponseprice", new UpdateResponsePriceCommand());
         commands.put("insertresponse", new InsertResponseCommand());
+        commands.put("showresponses", new ShowResponsesCommand());
 //        commands.put("prebuiltCarport", new PrebuiltCarportCommand());
 //        commands.put("shop", new ShopCommand());
     }

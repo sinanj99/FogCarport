@@ -19,7 +19,22 @@ public class Response {
     private String datePlaced;
     private int productionPrice;
     private int sellPrice;
+    private int status;
+    
+    public Response(int responseId, int requestId, int userId, int empId, int carportId, int shedId, String datePlaced, int productionPrice, int sellPrice, int status) {
+        this.responseId = responseId;
+        this.requestId = requestId;
+        this.userId = userId;
+        this.empId = empId;
+        this.carportId = carportId;
+        this.shedId = shedId;
+        this.datePlaced = datePlaced;
+        this.productionPrice = productionPrice;
+        this.sellPrice = sellPrice;
+        this.status = status;
+    }
 
+    
     public Response(int requestId, int userId, int empId, int carportId, int shedId, String datePlaced, int productionPrice, int sellPrice) {
         this.requestId = requestId;
         this.userId = userId;
@@ -31,18 +46,6 @@ public class Response {
         this.sellPrice = sellPrice;
     }
     
-    public Response(int responseId, int requestId, int userId, int empId, int carportId, int shedId, String datePlaced, int productionPrice, int sellPrice) {
-        this.responseId = responseId;
-        this.requestId = requestId;
-        this.userId = userId;
-        this.empId = empId;
-        this.carportId = carportId;
-        this.shedId = shedId;
-        this.datePlaced = datePlaced;
-        this.productionPrice = productionPrice;
-        this.sellPrice = sellPrice;
-    }
-
     public int getRequestId() {
         return requestId;
     }
@@ -77,6 +80,10 @@ public class Response {
 
     public int getShedId() {
         return shedId;
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     @Override

@@ -11,3 +11,4 @@
             </div>
         </div>
     </div>
+<jsp:include page='/include/sitefoot.jsp'></jsp:include>

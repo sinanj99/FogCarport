@@ -30,7 +30,8 @@
     int userId = r.getUser_id();
     int empId = user.getId();
     int carportId = r.getCarport().getCarportId();
-    int shedId = r.getCarport().getShed_().getShedId();
+    int shedId = 0;
+    if(r.getCarport().getShed_() != null) shedId = r.getCarport().getShed_().getShedId();
     
 %>
 
@@ -83,7 +84,7 @@
                         <%
                             if(status.equals("offersend")){
                                     out.print("<b>Salgspris:</b><br>"
-                                            + sellPrice);
+                                            + "kr. " + sellPrice);
                             }else{
                         %>
                         
@@ -106,14 +107,22 @@
 
                         <div class="row">
                             
-                            <div class="col-6 text-center">
+                            <div class="col text-center">
                                 <div><%= r.getCarport().getWidth() %></div>
                                 <div class="font-weight-bolder">Bredde</div>
                             </div>
-                            <div class="col-6 text-center">
+                            <div class="col text-center">
                                 <div><%= r.getCarport().getLength()%></div>
                                 <div class="font-weight-bolder">Længde</div>
                             </div>
+                            <%
+                            if(r.getCarport().getInclination() > 0){
+                            %>
+                            <div class="col text-center">
+                                <div><%= r.getCarport().getInclination()%></div>
+                                <div class="font-weight-bolder">Hældning</div>
+                            </div>
+                            <%}%>
 
                         </div>
                     </div>
@@ -133,7 +142,7 @@
                                 <div><%= r.getCarport().getShed_().getLength()%></div>
                                 <div class="font-weight-bolder">Længde</div>
                             </div>
-
+                                
                         </div>
                     </div>
                     <%}%>

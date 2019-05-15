@@ -5,10 +5,12 @@
  */
 package Data.Mappers;
 
+import Data.Controller.DataFacade;
 import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
 import Data.Entity.Material;
 import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -263,53 +265,33 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceWithLength(int price, int id) throws SystemErrorException {
+    public void updatePriceWithLength(int price, int id) throws SystemErrorException, NoSuchMaterialException {
         LinkedHashMap<Integer, Integer> prices = getMaterialLengthPrices(id);
-        String sql;
-
-        int length;
-
-        int oldPrice = prices.entrySet().iterator().next().getValue();
-        System.out.println("OLDPRICE = " + oldPrice);
-        int dif = oldPrice - price;
-        System.out.println("DIF = " + dif);
-        if (dif == 0) {
-            throw new IllegalArgumentException("Indtast venligst en ny pris!");
-        } else if (dif > 0) {
-            for (HashMap.Entry<Integer, Integer> entry : prices.entrySet()) {
-                if (entry.getValue() == oldPrice) {
-                    prices.put(entry.getKey(), price);
-                } else {
-                    prices.put(entry.getKey(), entry.getValue() - dif);
-                }
-                System.out.println("new price = " + (entry.getValue()));
-            }
-        } else {
-            for (HashMap.Entry<Integer, Integer> entry : prices.entrySet()) {
-                if (entry.getValue() == oldPrice) {
-                    prices.put(entry.getKey(), price);
-                } else {
-                    prices.put(entry.getKey(), entry.getValue() + Math.abs(dif));
-                }
-                System.out.println("new price = " + (entry.getValue()));
-            }
-        }
         try {
-            for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
-                price = entry.getValue();
-                System.out.println("PRICE = " + price);
-                length = entry.getKey();
-                System.out.println("Length = " + length);
-                sql = "UPDATE material_lengths SET price = ? WHERE material_id = ? AND length = ?";
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setInt(1, price);
-                pstmt.setInt(2, id);
-                pstmt.setInt(3, length);
-                pstmt.executeUpdate();
+            String sql = "SELECT * FROM material_lengths WHERE material_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int length;
+                prices = DataFacade.getInstance().updatePrices(price, prices);
+                for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
+                    price = entry.getValue();
+                    length = entry.getKey();
+                    sql = "UPDATE material_lengths SET price = ? WHERE material_id = ? AND length = ?";
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setInt(1, price);
+                    pstmt.setInt(2, id);
+                    pstmt.setInt(3, length);
+                    pstmt.executeUpdate();
+                }
+            } else {
+                throw new NoSuchMaterialException("Der findes ikke et materiale med id " + id);
             }
-        } catch (SQLException ex) {
-            throw new SystemErrorException(ex.getMessage());
+        } catch (SQLException e) {
+            throw new SystemErrorException(e.getMessage());
         }
+
     }
 
     @Override
@@ -355,6 +337,14 @@ class MaterialMapper extends IMaterialMapper {
         }
     }
 
+    /**
+     * Returns a list of prices of all available lengths of a material with the
+     * specified id. Is public, since it is called in test class.
+     *
+     * @param id of the material type
+     * @return list of materials.
+     * @throws Logic.Exceptions.SystemErrorException
+     */
     @Override
     public LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException {
 
@@ -371,17 +361,82 @@ class MaterialMapper extends IMaterialMapper {
             throw new SystemErrorException(ex.getMessage());
         }
         return prices;
+    }
+    /**
+     * Returns a list of prices of all available lengths of a material with the
+     * specified id. Is public, since it is called in test class.
+     *
+     * @param id of the material type
+     * @return list of materials.
+     * @throws Logic.Exceptions.SystemErrorException
+     */
+    @Override
+    public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
 
+        LinkedHashMap<Integer, Integer> prices = new LinkedHashMap();
+        String sql = "SELECT * FROM rooflength WHERE roof_id = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                prices.put(rs.getInt("roof_length"), rs.getInt("price"));
+            }
+        } catch (SQLException ex) {
+            throw new SystemErrorException(ex.getMessage());
+        }
+        return prices;
     }
 
     @Override
-    public void updatePriceNoLength(int price, int id) throws SystemErrorException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updatePriceNoLength(int price, int id) throws SystemErrorException, NoSuchMaterialException {
+        String sql = "SELECT * FROM materials_nolength WHERE material_id = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                
+                sql = "UPDATE materials_nolength SET price = ? WHERE material_id = ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, price);
+                pstmt.setInt(2, id);
+                pstmt.executeUpdate();
+            } else {
+                throw new NoSuchMaterialException("Der findes ikke et materiale med id " + id);
+            }
+        } catch (SQLException e) {
+            throw new SystemErrorException(e.getMessage());
+        }
     }
 
     @Override
-    public void updatePriceRoof(int price, int id) throws SystemErrorException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException {
+        LinkedHashMap<Integer, Integer> prices = getRoofLengthPrices(id);
+        try {
+            String sql = "SELECT * FROM rooflength WHERE roof_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int length;
+                prices = DataFacade.getInstance().updatePrices(price, prices);
+                for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
+                    price = entry.getValue();
+                    length = entry.getKey();
+                    sql = "UPDATE rooflength SET price = ? WHERE roof_id = ? AND roof_length = ?";
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setInt(1, price);
+                    pstmt.setInt(2, id);
+                    pstmt.setInt(3, length);
+                    pstmt.executeUpdate();
+                }
+            } else {
+                throw new NoSuchRoofException("Der findes ikke et tag med id " + id);
+            }
+        } catch (SQLException e) {
+            throw new SystemErrorException(e.getMessage());
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@
 package Presentation.Controller;
 
 import Presentation.Commands.BackCommand;
+import Presentation.Commands.ChangePriceCommand;
 import Presentation.Commands.GenerateReqCommand;
 import Presentation.Commands.LoginCommand;
 import Presentation.Commands.Command;
@@ -39,6 +40,7 @@ public class CommandFactory {
         commands.put("request", new GenerateReqCommand());
         commands.put("showrequests", new ShowRequestCommand());
         commands.put("createOffer", new CreateOfferCommand());
+        commands.put("change_price", new ChangePriceCommand());
 //        commands.put("prebuiltCarport", new PrebuiltCarportCommand());
 //        commands.put("shop", new ShopCommand());
     }

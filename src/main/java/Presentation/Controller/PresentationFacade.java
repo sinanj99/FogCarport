@@ -17,6 +17,7 @@ import Data.Mappers.IUserMapper;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.User;
+import Logic.Calculator.CalculatePrice;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.SystemErrorException;
 import java.util.List;
@@ -29,6 +30,7 @@ import javax.sql.DataSource;
 public class PresentationFacade {
 
     private static PresentationFacade instance = null;
+    private CalculatePrice cp = new CalculatePrice();
     private static final DataSource ds = new DataSourceMysql().getDataSource();
     private static final IRequestMapper r = IRequestMapper.instance();
     private static final IMaterialMapper m = IMaterialMapper.instance();
@@ -48,7 +50,9 @@ public class PresentationFacade {
         }
         return instance;
     }
-
+    public void updatePrices(int price, int id) throws SystemErrorException, NoSuchMaterialException {
+        m.updatePriceWithLength(price, id);
+    }
     public List<Roof> getRoofs() {
         return r.getRoofs();
     }
@@ -89,7 +93,7 @@ public class PresentationFacade {
         return m.getMaterialWithLength(id, length);
     }
 
-    public Material getMaterialNoLength(int id) throws SystemErrorException {
+    public Material getMaterialNoLength(int id) throws SystemErrorException, NoSuchMaterialException {
         return m.getMaterialNoLength(id);
     }
 

@@ -9,7 +9,7 @@ package Logic.Exceptions;
  *
  * @author sinanjasar
  */
-public class NoSuchMaterialException extends SystemErrorException {
+public class NoSuchMaterialException extends Exception {
     public NoSuchMaterialException(String message) {
         super(message);
     }

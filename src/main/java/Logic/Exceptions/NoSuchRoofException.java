@@ -9,6 +9,10 @@ package Logic.Exceptions;
  *
  * @author Obaydah Mohamad
  */
-public class NoSuchRoofException extends Throwable {
+public class NoSuchRoofException extends Exception {
+
+    public NoSuchRoofException(String message) {
+        super(message);
+    }
     
 }

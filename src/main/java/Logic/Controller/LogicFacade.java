@@ -101,7 +101,7 @@ public class LogicFacade {
         return IMaterialMapper.instance().getMaterialWithLength(id, length);
     }
 
-    public Material getMaterialNoLength(int id) throws SystemErrorException {
+    public Material getMaterialNoLength(int id) throws SystemErrorException, NoSuchMaterialException {
         return IMaterialMapper.instance().getMaterialNoLength(id);
     }
 

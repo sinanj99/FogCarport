@@ -485,12 +485,12 @@ public class BOMInclineRoof {
         return new LineItem(r, amountOfRidgeTiles(cLength), "monteres på toplægte med medfølgende beslag se tagstens vejledning", r.getPrice() * amountOfRidgeTiles(cLength));
     }
 
-    public LineItem ridgeTileBrackets(int cLength) throws SystemErrorException {
+    public LineItem ridgeTileBrackets(int cLength) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(14);
         return new LineItem(m, amountOfRidgeTileBrackets(cLength), "Til montering af rygsten", m.getPrice() * amountOfRidgeTileBrackets(cLength), Type.ROOF);
     }
 
-    public LineItem lathHolders(int carportLength, Shed shed, int shedLength) throws SystemErrorException {
+    public LineItem lathHolders(int carportLength, Shed shed, int shedLength) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(13);
         return new LineItem(m, amountOfLathHolders(carportLength, shed, shedLength), "monteres på toppen af spæret (til toplægte)", m.getPrice() * amountOfLathHolders(carportLength, shed, shedLength), Type.ROOF);
     }
@@ -520,55 +520,55 @@ public class BOMInclineRoof {
         return new LineItem(m, amountOfRainBoards(cWidth, inclination), "Vand bræt på vindskeder", m.getPrice() * amountOfRainBoards(cWidth, inclination), Type.LENGTH);
     }
 
-    public LineItem bracketInterties() throws SystemErrorException {
+    public LineItem bracketInterties() throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(5);
         return new LineItem(m, amountOfBracketsInterties(), "til montering af løsholter", m.getPrice() * amountOfBracketsInterties(), Type.NOLENGTH);
     }
 
-    public LineItem screwsInnerTimbering(int shedWidth, int shedLength) throws SystemErrorException {
+    public LineItem screwsInnerTimbering(int shedWidth, int shedLength) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(12);
         return new LineItem(m, amountOfBracketScrewsTimbering1(shedWidth, shedLength), "til montering af inderste bræt ved beklædning", m.getPrice() * amountOfBracketScrewsTimbering1(shedWidth, shedLength), Type.NOLENGTH);
     }
 
-    public LineItem screwsOuterTimbering(int shedWidth, int shedLength) throws SystemErrorException {
+    public LineItem screwsOuterTimbering(int shedWidth, int shedLength) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(11);
         return new LineItem(m, amountOfBracketScrewsTimbering2(shedWidth, shedLength), "til montering af yderste bræt ved beklædning", m.getPrice() * amountOfBracketScrewsTimbering2(shedWidth, shedLength), Type.NOLENGTH);
     }
 
-    public LineItem screwsLathHolders(int carportLength, Shed shed, int shedLength) throws SystemErrorException {
+    public LineItem screwsLathHolders(int carportLength, Shed shed, int shedLength) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(7);
         return new LineItem(m, amountOfScrewsLathHolders(carportLength, shed, shedLength), "Til montering af universalbeslag + toplægte", m.getPrice() * amountOfScrewsLathHolders(carportLength, shed, shedLength), Type.NOLENGTH);
     }
 
-    public LineItem leftBracketRafters(int carportLength, Shed shed, int shedLength) throws SystemErrorException {
+    public LineItem leftBracketRafters(int carportLength, Shed shed, int shedLength) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(2);
         return new LineItem(m, amountOfLeftBracketRafters(carportLength, shed, shedLength), "Til montering af spær på rem", m.getPrice() * amountOfLeftBracketRafters(carportLength, shed, shedLength), Type.NOLENGTH);
     }
 
-    public LineItem rigthBracketRafters(int carportLength, Shed shed, int shedLength) throws SystemErrorException {
+    public LineItem rigthBracketRafters(int carportLength, Shed shed, int shedLength) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(1);
         return new LineItem(m, amountOfRightBracketRafters(carportLength, shed, shedLength), "Til montering af spær på rem", m.getPrice() * amountOfRightBracketRafters(carportLength, shed, shedLength), Type.NOLENGTH);
     }
 
     public LineItem fasciaAndSoffitScrews(int carportLength, int carportWidth,
-            Shed shed, int shedLength, int inclination) throws SystemErrorException {
+            Shed shed, int shedLength, int inclination) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(6);
         return new LineItem(m, amountOfScrewsFasciaAndSoffits(carportLength, carportWidth,
                 shed, shedLength, inclination), "Til montering af Stern, vindskeder, vindkryds & vand bræt", m.getPrice() * amountOfScrewsFasciaAndSoffits(carportLength, carportWidth,
                 shed, shedLength, inclination), Type.NOLENGTH);
     }
 
-    public LineItem LathScrews(int carportWidth, int inclination) throws SystemErrorException {
+    public LineItem LathScrews(int carportWidth, int inclination) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(8);
         return new LineItem(m, amountOfScrewsLaths(carportWidth, inclination), "til taglægter", m.getPrice() * amountOfScrewsLaths(carportWidth, inclination), Type.NOLENGTH);
     }
 
-    public LineItem squareDiscs() throws SystemErrorException {
+    public LineItem squareDiscs() throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(10);
         return new LineItem(m, amountOfSquareDiscs(), "Til montering af rem på stolper", m.getPrice() * amountOfSquareDiscs(), Type.NOLENGTH);
     }
 
-    public LineItem roofTileBinders() throws SystemErrorException {
+    public LineItem roofTileBinders() throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(15);
         return new LineItem(m, amountOfRoofTileBinders(), "til montering af tagsten, alle ydersten + hver anden fastgøres", m.getPrice() * amountOfRoofTileBinders(), Type.ROOF);
     }

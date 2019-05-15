@@ -5,6 +5,7 @@
  */
 package Logic.Calculator;
 
+import Data.Entity.Carport;
 import Data.Mappers.IMaterialMapper;
 import Data.Entity.LineItem;
 import Data.Entity.Material;
@@ -22,198 +23,175 @@ import Logic.Exceptions.NoSuchMaterialException;
  */
 public class BOMFlatRoof {
 
+    //------------------------------- calculate methods for fittings and screws ------------------------------------------------------------------------
+    
     /**
-     *
-     * @param length
-     * @return the amount of packages of bracket screws needed for the carport.
+     * @param c
+     * @return the amount of packages of bracket screws (beslag skruer) needed for the carport.
      */
-    public int calculateQuantityOfBeslagskruer(int lengthOfCarport) {
-        //Der skal som minimum bruges 1 pakke. 
+    public int calculateQuantityOfBeslagskruer(Carport c) 
+    {
+        //At minimun one package is needed
         int packsNeeded = 1;
         int quantity = 0;
-
-        // Tre sider per beslag. 
-        int sidesOfVenstreBeslag = calculateQuantityOfVenstrebeslag(lengthOfCarport) * 3;
-        int sidesOfHøjreBeslag = calculateQuantityOfHøjreBeslag(lengthOfCarport) * 3;
-
-        //Tre beslagsskruer per side.
+        
+        //---- bracket screws (beslagskruer) used for bracket interties (beslag) -------
+        
+        // Three sides per brackets Interties (beslag)
+        int sidesOfVenstreBeslag = calculateQuantityOfVenstrebeslag(c) * 3;
+        int sidesOfHøjreBeslag = calculateQuantityOfHøjreBeslag(c) * 3;
+        
+        //Three brackes screws for each side
         quantity = (sidesOfHøjreBeslag + sidesOfVenstreBeslag) * 3;
+        
+        //--- bracket screws (beslagskruer) used for perforated band (hulbånd) -----
+        
+        //Two bracket screws (beslagskruer) for each rafter (spær) the perforated band (hulbånd) crosses
+        //The perforated band (hulb¨nd) does not cross front or back rafter (spær) therefor minus 2
+        int quantityOfSpær = calculateQuantityOfSpærIncludedBackSpær(c, 60) - 2;
 
-        //2 beslagskruer for each spær the hulbånd crosses and the hulbånd does not croos front or back spær, therefor minus 2
-        int quantityOfSpær = calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60) - 2;
-
-        //*2 fordi der er to hulbånd og *2 fordi der er to skruer per beslag. 
+        //*2 because there is two perforated bands (hulbånd) and *2 because two bracket screws (beslagskruer) for each bracket interties (beslag)
         quantity += quantityOfSpær * 2 * 2;
-
+        
         //250 is the amount of beslagskruer in a pack
-        while (quantity > 250) {
+        while (quantity > 250) 
+        {
             packsNeeded++;
             quantity -= 250;
         }
         return packsNeeded;
     }
 
-    public int calculateQuantityOfBrædderbolt(int length, int width, Shed shed) {
-        //two brædderbolte per stolpe
-        return calculateQuantityOfStolper(length, width, shed) * 2;
-    }
-
-    public int calculateQuantityOfHøjreBeslag(int lengthOfCarport) {
-        //one venstrebeslag per spær
-        return calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60);
-    }
-
-    public int calculateQuantityOfVenstrebeslag(int lengthOfCarport) {
-        //one venstrebeslag per spær
-        return calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60);
-    }
-
-    public int calculateQuantityOfUndersternbrædderForFrontAndBack(int width) {
-        int quantity = 0;
-
-        if (width < 250) {
-            // 1 is enough for each side
-            quantity = 2;
-        }
-        if (width >= 250 && width <= 500) {
-            // 2 is needed for each side
-            quantity = 4;
-        }
-        if (width > 500 && width < 750) {
-            quantity = 6;
-        }
-        return quantity;
-    }
-
     /**
-     *
-     * @param length
-     * @return
+     * 
+     * @param c
+     * @return the amount of boards bolts (brædderbolte) needed for the carport
      */
-    public int calculateQuantityOfUndersternbrædderForSides(int length) {
-        int quantity = 0;
-
-        if (length < 250) {
-            // 1 is enough for each side
-            quantity = 2;
-        }
-        if (length >= 250 && length <= 500) {
-            // 2 is needed for each side
-            quantity = 4;
-        }
-        if (length > 500 && length < 750) {
-            // 3 is needed for each side
-            quantity = 6;
-        }
-        return quantity;
-    }
-
-    public int calculateQuantityOfOversternbrædderForFront(int width) {
-        //divided by 2 because only the front is needed, not the back
-        return calculateQuantityOfUndersternbrædderForFrontAndBack(width) / 2;
-    }
-
-    public int calculateQuantityOfOversternbrædderForSides(int length) {
-        //amount of oversternbrædder is eqaul to the amount of understernbrædder
-        return calculateQuantityOfUndersternbrædderForSides(length);
-    }
-
-    public int calculateQuantityOfVandbrætForFront(int width) {
-        //divided by 2 because only the front is needed, not the back
-        return calculateQuantityOfUndersternbrædderForFrontAndBack(width) / 2;
-    }
-
-    public int calculateQuantityOfVandbrædtForSides(int length) {
-        //amount of oversternbrædder is eqaul to the amount of understernbrædder
-        return calculateQuantityOfUndersternbrædderForSides(length);
-    }
-
-    /**
-     *
-     * @param shed
-     * @param shedLength
-     * @param length
-     * @return
-     */
-    public int calculateQuantityOfStolper(int lengthOfCarport, int widthOfCarport, Shed shed) {
-
-        //Substraicing spaceBetweenSpær times 2 because stolper cant appear at the front spear and back spear
-        float lengthAvaiableForStolper = lengthOfCarport - spaceBetweenSpær(calculateQuantityOFSpærExcluedBackSpær(lengthOfCarport, 60), lengthOfCarport, 60) * 2;
-        // four corner stolper
-        int quantity = 4;
-
-        if (shed != null) {
-            lengthAvaiableForStolper -= shed.getLength();
-            
-            if(widthOfCarport - shed.getWidth() == 30)
-            {
-                //A shed consists of 6 stolper, the 2 back corner of the carport, aswell as two front stolper for the shed abd two middle stolper for the shed
-                quantity += 4;
-            }
-            else
-            {
-                //one extra stolpe is needed to function as a corner stolpe for the shed, as the top right corner stolpe for the carport can no longer be used
-                quantity += 5;
-            }
-            
-        }
-
-        //check if carport is to small to have other stolper than the corner stolpe and eventual stolper added for the shed
-        if (lengthAvaiableForStolper <= 250) {
-            //the amount of cornerStolper( & shedstolper)
-            return quantity;
-        }
-
-        float widthOfStolpe = 9.7f;
-        int numberOfSpacesBewteenStolpe = 1;
-
-        //get the space between stolpe at one of the sides (in cm)
-        float SpaceBetweenStolpe = lengthAvaiableForStolper - (widthOfStolpe * (quantity / 2));
-        //250 is the limit of how much space must be between stolper
-        while (SpaceBetweenStolpe > 250) {
-            // add a stolpe for each side
-            quantity = quantity + 2;
-            numberOfSpacesBewteenStolpe = numberOfSpacesBewteenStolpe * 2;
-
-            SpaceBetweenStolpe = (lengthAvaiableForStolper - (widthOfStolpe * (quantity / 2))) / numberOfSpacesBewteenStolpe;
-        }
-        return quantity;
-    }
-
-    /**
-     * Calcs amount of bands needed by dividing length of a single band (10m)
-     * with the square root of length^2 + width^2 (hypothesis) and multiplying
-     * this with 2 as 2 bands are needed.
-     *
-     * @param req
-     * @return the amount of peforated bands needed for the carport.
-     */
-    public double hulbåndAntal(Request req) {
-        double lengthM;
-        // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
-        if (req.getCarport().getShed_()!=null) {
-            lengthM = req.getCarport().getLength() - req.getCarport().getShed_().getLength() - spaceBetweenSpær(calculateQuantityOFSpærExcluedBackSpær(req.getCarport().getLength(), 60), req.getCarport().getLength(), 60) / 100;
-        } else {
-            //length in meters
-            lengthM = (req.getCarport().getLength() - spaceBetweenSpær(calculateQuantityOFSpærExcluedBackSpær(req.getCarport().getLength(), 60), req.getCarport().getLength(), 60)) / 100;
-        }
-        // width in meters
-        double widthM = req.getCarport().getWidth() / 100;
-        //Math.ceil = round up to nearest integer
-        //Math.sqrt = square root
-        return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2) / 10);
-    }
-
-    static int tagpladeAntal(int length) {
-        return length / 30; // widt of a single roof tile is 30 cm. 
-        
-    }
-    public int calculateQuantityOFSpærExcluedBackSpær(int lengthOfCarport, int limit)
+    public int calculateQuantityOfBrædderbolt(Carport c) 
     {
-        int quantity = lengthOfCarport / limit;
+        //two boards bolts (brædderbolte) for each post (stolpe)
+        return calculateQuantityOfStolper(c) * 2;
+    }
+
+    /**
+     * 
+     * @param c
+     * @return the amount of right bracket interties (højre beslag) needed for the carport
+     */
+    public int calculateQuantityOfHøjreBeslag(Carport c) 
+    {
+        //one right bracket interties (højre beslag) per rafter (spær)
+        return calculateQuantityOfSpærIncludedBackSpær(c, 60);
+    }
+
+    /**
+     * 
+     * @param c
+     * @return the amount of left bracket interties (venstre beslag) needed for the carport
+     */
+    public int calculateQuantityOfVenstrebeslag(Carport c) 
+    {
+        //one left bracket interties (venstre beslag) per rafter (spær)
+        return calculateQuantityOfSpærIncludedBackSpær(c, 60);
+    }
+    
+    //--------------------- methods for returning items in the category fittins and screw -----------------------------------------------------------
+
+    /**
+     * 
+     * @param c
+     * @return a LineItem of bracket screws (beslagskruer)
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem beslagskruer(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("4.0x50mm beslagskruer 250 stk");
+        return new LineItem(m, calculateQuantityOfBeslagskruer(c), "Til montering af universalbeslag + hulbånd", m.getPrice() * calculateQuantityOfBeslagskruer(c), Type.NOLENGTH);
+    }
+     
+    /**
+     * 
+     * @param c
+     * @return LineItem of boards bolts (brædderbolte) 
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem brædderbolt(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("10x120mm brædderbolt");
+        return new LineItem(m, calculateQuantityOfBrædderbolt(c), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(c), Type.NOLENGTH);
+    }
+    
+    /**
+     * 
+     * @param c
+     * @return LineItem of right bracket interties (højre beslag)
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem højrebeslag(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("universal 190mm højre");
+        return new LineItem(m, calculateQuantityOfHøjreBeslag(c), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfHøjreBeslag(c), Type.NOLENGTH);
+    }
+    
+    /**
+     * 
+     * @param c
+     * @return LineItem of left bracket interties (venstre beslag)
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem venstrebeslag(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("universal 190mm venstre");
+        return new LineItem(m, calculateQuantityOfVenstrebeslag(c), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfVenstrebeslag(c), Type.NOLENGTH);
+    }
+    
+    
+    
+    //------------------------------------- calculate methods for tree-fundament ------------------------------------------------------------
+    
+    /**
+     * 
+     * @param c
+     * @param limit - the limit of how much space must be between each rafter (spær)
+     * @return amount of rater (spær) needed for the carport
+     */
+    public int calculateQuantityOfSpærIncludedBackSpær(Carport c, int limit)
+    {
+        int quantity = calculateQuantityOFSpærExcluedBackSpær(c, limit) + 1;
+        return quantity;
+    }
+    
+    /**
+     * Used by calculateQuantityOfSpærExcludedBackSpær() and spaceBetweenSpær() to calculate the space between spær
+     * @param c
+     * @param quantityOfSpær
+     * @return 
+     */
+    private float calculateSpaceBetweenSpær(Carport c ,int quantityOfSpær)
+    {
+        float widthOfSpær = 4.5f;
         
-        float spaceBetweenSpær = calculateSpaceBetweenSpær(quantity, lengthOfCarport);
+        float spaceOfAllSpær = quantityOfSpær * widthOfSpær;
+        float spaceAviable = c.getLength() - spaceOfAllSpær;
+        float spaceBetweenSpær = spaceAviable / quantityOfSpær;
         
+        return spaceBetweenSpær;
+    }
+    
+    /**
+     * This method is used to DrawSVG as amount of raters (spær) excluded the back raft is eqaul to amount of spaces between rafter (spær)
+     * @param c
+     * @param limit - the limit of how much space must be between each rafter (spær)
+     * @return amount of rafter (spær) minus the back rafter (bagspæret) 
+     */
+    public int calculateQuantityOFSpærExcluedBackSpær(Carport c, int limit)
+    {
+        //Amount of rafter (spær) needed - Integer cut of any decimal, therefor if the division eqauls example 7,5, then the interger hold 7
+        int quantity = c.getLength() / limit;
+        
+        float spaceBetweenSpær = calculateSpaceBetweenSpær(c, quantity);
+        //Since the interget cut of any decimal, the quantity used to calculate the space between rafter (spær) could lead to a case where the space
+        // between rafter (spær) was too high, and if so the quantity get added by 1. (so in the example instead of 7, we want it to be 8)
         if(spaceBetweenSpær > limit)
         {
             quantity++;
@@ -221,36 +199,381 @@ public class BOMFlatRoof {
         
         return quantity ;
     }
-    public int calculateQuantityOfSpærIncludedBackSpær(int lengthOfCarport, int limit)
-    {
-        int quantity = calculateQuantityOFSpærExcluedBackSpær(lengthOfCarport, limit) + 1;
-        return quantity;
-    }
     
-    public float spaceBetweenSpær(int quantityOfSpærExcludedBackSpær,int lengthOfCarport, int limit)
+    /**
+     * This method is used to drawSVG 
+     * @param c
+     * @param quantityOfSpærExcludedBackSpær
+     * @param limit
+     * @return the space between spær
+     */
+    public float spaceBetweenSpær(Carport c,  int limit)
     {
-        float spaceBetweenSpær = calculateSpaceBetweenSpær(quantityOfSpærExcludedBackSpær, lengthOfCarport);
+        float spaceBetweenSpær = calculateSpaceBetweenSpær(c, calculateQuantityOFSpærExcluedBackSpær(c, limit));
+        
         
         if(spaceBetweenSpær > limit)
         {
-            quantityOfSpærExcludedBackSpær++;
-            spaceBetweenSpær = calculateSpaceBetweenSpær(quantityOfSpærExcludedBackSpær, lengthOfCarport);
+            int quantityOfSpærExcludedBackSpær = calculateQuantityOFSpærExcluedBackSpær(c, limit) + 1;
+            spaceBetweenSpær = calculateSpaceBetweenSpær(c, quantityOfSpærExcludedBackSpær);
         }
         
         return spaceBetweenSpær;
     }
-    private float calculateSpaceBetweenSpær(int quantityOfSpær, int lengthOfCarport)
+    
+    /**
+     * 
+     * @param c
+     * @return the amount of post(stolper) needed for the carport
+     */
+    public int calculateQuantityOfStolper(Carport c) 
     {
-        float widthOfSpær = 4.5f;
-        
-        float spaceOfAllSpær = quantityOfSpær * widthOfSpær;
-        float spaceAviable = lengthOfCarport - spaceOfAllSpær;
-        float spaceBetweenSpær = spaceAviable / quantityOfSpær;
-        
-        return spaceBetweenSpær;
+        //Substraicing spaceBetweenSpær times 2 because post (stolper) cant appear at the front spear and back spear
+        float lengthAvaiableForPost = c.getLength() - spaceBetweenSpær(c, 60) * 2;
+        // four corner stolper
+        int quantity = 4;
+
+        if (c.getShed_() != null) 
+        {
+            
+            lengthAvaiableForPost -= c.getShed_().getLength();
+            
+            if(c.getWidth() - c.getShed_().getWidth() == 30)
+            {
+                //A shed consists of 6 post(stolper), the 2 back corner of the carport, aswell as two front post for the shed abd two middle post for the shed
+                quantity += 4;
+            }
+            else
+            {
+                //one extra post(stolpe) is needed to function as a corner post for the shed, as the top right corner post for the carport can no longer be used
+                quantity += 5;
+            }
+            
+        }
+
+        //check if carport is to small to have other post(stolper) than the corner post and eventual post added for the shed
+        if (lengthAvaiableForPost <= 250) {
+            //the amount of cornerpost & shedpost)
+            return quantity;
+        }
+
+        float widthOfPost = 9.7f;
+        int numberOfSpacesBewteenPost = 1;
+
+        //get the space between post(stolper) at one of the sides (in cm)
+        float SpaceBetweenPost = lengthAvaiableForPost - (widthOfPost * (quantity / 2));
+        //250 is the limit of how much space must be between post (stolper)
+        while (SpaceBetweenPost > 250) {
+            // add a post(stolpe) for each side
+            quantity = quantity + 2;
+            numberOfSpacesBewteenPost = numberOfSpacesBewteenPost * 2;
+            //get the space between post(stolper) at one of the sides (in cm)
+            SpaceBetweenPost = (lengthAvaiableForPost - (widthOfPost * (quantity / 2))) / numberOfSpacesBewteenPost;
+        }
+        return quantity;
     }
     
+    /**
+     * the length of a underneath borad is 250cm?? so one board can cover up 250 of a carport width
+     * @param c
+     * @return the amount of underneath board (understern brædder) for the front, is needed for the carport
+     */
+    public int calculateQuantityOfUndersternbrædderForFrontAndBack(Carport c) 
+    {
+        int quantity = 0;
+
+        if (c.getWidth() < 250) 
+        {
+            // 1 is enough for each side
+            quantity = 2;
+        }
+        if (c.getWidth() >= 250 && c.getWidth() <= 500) 
+        {
+            // 2 is needed for each side
+            quantity = 4;
+        }
+        if (c.getWidth() > 500 && c.getWidth() < 750) 
+        {
+            //3 is needed for each side
+            quantity = 6;
+        }
+        return quantity;
+    }
+
+    /**
+     * the length of a underneath  board (understern brædt) is 250cm?? so one board can cover 250cm of the carport length
+     * @param c
+     * @return the amount of underneath boards (understern brædder) for the sides, needed for the carport
+     */
+    public int calculateQuantityOfUndersternbrædderForSides(Carport c) 
+    {
+        int quantity = 0;
+
+        if (c.getLength() < 250) 
+        {
+            // 1 is enough for each side
+            quantity = 2;
+        }
+        if (c.getLength() >= 250 && c.getLength() <= 500) 
+        {
+            // 2 is needed for each side
+            quantity = 4;
+        }
+        if (c.getLength() > 500 && c.getLength() < 750) 
+        {
+            // 3 is needed for each side
+            quantity = 6;
+        }
+        return quantity;
+    }
+
+    /**
+     * 
+     * @param c
+     * @return the amount of outer boards (overstern brædder) for the front, needed for the carport
+     */
+    public int calculateQuantityOfOversternbrædderForFront(Carport c) 
+    {
+        /*
+        The amount of outer board (overstern brædder) for the front is equal to the amount of underneath board (understern brædder) for the front and back, 
+        divided by 2 because outer board is only for the front
+        */
+        return calculateQuantityOfUndersternbrædderForFrontAndBack(c) / 2;
+    }
+
+    /**
+     * 
+     * @param c
+     * @return the amount of outer boards (overstern brædder) for the sides, needed for the carport
+     */
+    public int calculateQuantityOfOversternbrædderForSides(Carport c) 
+    {
+        //the amount of outer boards (overstern brædder) is eqaul to the amount of underneath boards (undertern brædder)
+        return calculateQuantityOfUndersternbrædderForSides(c);
+    }
+
+    /**
+     * 
+     * @param c
+     * @return the amount of water boards (vandbræt) for the front. needed for the carport
+     */
+    public int calculateQuantityOfVandbrætForFront(Carport c) 
+    {
+         /*
+        The amount of water boards (vandbræt) for the front is equal to the amount of underneath board (understern brædder) for the front and back, 
+        divided by 2 because water board (vandbræt) is only for the front
+        */
+        return calculateQuantityOfUndersternbrædderForFrontAndBack(c) / 2;
+    }
+
+    /**
+     * 
+     * @param c
+     * @return the amount of water boards (vandbræt) for the sides, needed for the carport
+     */
+    public int calculateQuantityOfVandbrædtForSides(Carport c) 
+    {
+        //amount of water boards (vandbræt) is eqaul to the amount of underneath boards (understernbrædder)
+        return calculateQuantityOfUndersternbrædderForSides(c);
+    }
     
+    //--------------- methods for returning items in the category tree-fundament -------------------------------------------------------------------
+
+    /**
+     * 
+     * @param c
+     * @return  LineItem of rafters (spær)
+     * @throws NoSuchMaterialException 
+     */
+     public LineItem spær(Carport c) throws NoSuchMaterialException 
+     {
+        LineItem l = null;
+        Material m;
+
+        String desc = "Spær, monteres på rem";
+
+        for (int i = 240; i <= 750; i += 30) 
+        {
+            if (c.getLength() == i) 
+            {
+                m = LogicFacade.getInstance().getMaterial("45x195mm spærtræ. ubh. ", i);
+                l = new LineItem(m, calculateQuantityOfSpærIncludedBackSpær(c, 60), desc, m.getPrice() * calculateQuantityOfSpærIncludedBackSpær(c, 60), Type.LENGTH);
+            }
+        }
+        return l;
+    }
+     
+     /**
+      * 
+      * @param c
+      * @return LineItem of post (stolper)
+      * @throws NoSuchMaterialException 
+      */
+    public LineItem stolpe(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("97x97mm trykimp. Stolpe");
+        return new LineItem(m, calculateQuantityOfStolper(c), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(c), Type.LENGTH);
+
+    }
+    
+    /**
+     * 
+     * @param c
+     * @return LineItem of underneath boards (understern brædder) for the front
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem understernbrædderForFrontAndBack(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("25x200mm trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfUndersternbrædderForFrontAndBack(c), "understernbrædder til forende og bagende", m.getPrice() * calculateQuantityOfUndersternbrædderForFrontAndBack(c), Type.LENGTH);
+    }
+
+    /**
+     * 
+     * @param c
+     * @return LineItem of underneath boards (understern brædder) for the sides
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem understernBrædderForSides(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("25x200mm trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfUndersternbrædderForSides(c), "understernbrædder til siderne", m.getPrice() * calculateQuantityOfUndersternbrædderForSides(c), Type.LENGTH);
+    }
+
+    /**
+     * 
+     * @param c
+     * @return LineItem of outer boards (overstern brædder) for the front
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem oversternbrædderForFront(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("25x125m trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfOversternbrædderForFront(c), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOversternbrædderForFront(c), Type.LENGTH);
+    }
+
+    /**
+     * 
+     * @param c
+     * @return LineItem of outer boards (overstern brædder) for the sides
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem oversternbrædderForSides(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("25x125m trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfOversternbrædderForSides(c), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOversternbrædderForSides(c), Type.LENGTH);
+    }
+
+    /**
+     * 
+     * @param c
+     * @return LineItem of water boards (vandbræt) for the front
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem vandbrætForFront(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("19x100mm trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfVandbrætForFront(c), "vandbrædt på stern i forenden", m.getPrice() * calculateQuantityOfVandbrætForFront(c), Type.LENGTH);
+    }
+
+    /**
+     * 
+     * @param c
+     * @return LineItem of water boards (vandbræt) for the sides
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem vandbrætForSides(Carport c) throws NoSuchMaterialException 
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("19x100mm trykimp. brædt");
+        return new LineItem(m, calculateQuantityOfVandbrædtForSides(c), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfVandbrædtForSides(c), Type.LENGTH);
+    }
+    
+    /**
+     * 
+     * @param length
+     * @return the amount of rater for strap (spær for remmen) 
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem spærForRemmen(Carport c) throws NoSuchMaterialException 
+    {
+        LineItem l = null;
+        Material m;
+
+        String desc = "Remme i sider, sadles ned i stolper";
+
+        for (int i = 240; i <= 750; i += 30) 
+        {
+            if (c.getLength() == i) 
+            {
+                m = LogicFacade.getInstance().getMaterial("45x195mm spærtræ. ubh. ", i);
+                l = new LineItem(m, 2, desc, m.getPrice() * 2, Type.LENGTH);
+            }
+        }
+        return l;
+    }
+    
+    //------------------------- -----------calculation methods for the roof ---------------------------------------------------------------------
+
+    static int tagpladeAntal(Carport c) 
+    {
+        return c.getLength() / 30; // widt of a single roof tile is 30 cm. 
+        
+    }
+    
+    //------------------------------- methods for returning items of category roof --------------------------------------------------------------
+     
+    public LineItem roof(Carport c) 
+    {
+        LineItem l = null;
+        String desc = "Tagplader monteres på spær";
+        for (int i = 260; i <= 770; i += 30) 
+        {
+            if (c.getLength() + 20 == i) 
+            {
+                l = new LineItem(c.getRoof(), tagpladeAntal(c), desc, c.getRoof().getPrice()*tagpladeAntal(c));
+            }
+        }
+        return l;
+    }
+    
+    //-------------------------------- calculation methods for other things -----------------------------
+    
+    /**
+     * Calcs amount of bands needed by dividing length of a single band (10m)
+     * with the square root of length^2 + width^2 (hypothesis) and multiplying
+     * this with 2 as 2 bands are needed.
+     *
+     * @param c
+     * @return the amount of peforated bands needed for the carport.
+     */
+    public double hulbåndAntal(Carport c) {
+        double lengthM;
+        // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
+        if (c.getShed_()!=null) {
+            lengthM = c.getLength() - c.getShed_().getLength() - spaceBetweenSpær(c, 60) / 100;
+        } else {
+            //length in meters
+            lengthM = (c.getLength() - spaceBetweenSpær(c, 60)) / 100;
+        }
+        // width in meters
+        double widthM = c.getWidth() / 100;
+        //Math.ceil = round up to nearest integer
+        //Math.sqrt = square root
+        return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2) / 10);
+    }
+    
+    //------------------------------------ methods for retuning items of -------------------------------------------------------------
+    
+    /**
+     * 
+     * @param c
+     * @return LineItem of bands (hulbånd)
+     * @throws NoSuchMaterialException 
+     */
+     public LineItem hulbånd(Carport c) throws NoSuchMaterialException {
+        Material m = LogicFacade.getInstance().getMaterial_("hulbånd 1x20 mm. 10 mtr.");
+        return new LineItem(m, (int) hulbåndAntal(c), "Til vindkryds på spær", m.getPrice() * (int) hulbåndAntal(c), Type.NOLENGTH);
+    }
 
 //    public int calculateQuantityOfSpær2(int length) {
 //        //the front and back spær
@@ -300,112 +623,5 @@ public class BOMFlatRoof {
 //        return spaceBetweenSpær;
 //    }
 
-    public int calculateQuantityOfSpærForRemmen() {
-        //1 spær is used for each side of the carport
-        return 2;
-    }
-
-    public LineItem beslagskruer(int length) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("4.0x50mm beslagskruer 250 stk");
-        return new LineItem(m, calculateQuantityOfBeslagskruer(length), "Til montering af universalbeslag + hulbånd", m.getPrice() * calculateQuantityOfBeslagskruer(length), Type.NOLENGTH);
-    }
-
-    public LineItem brædderbolt(int length, int width, Shed shed) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("10x120mm brædderbolt");
-        return new LineItem(m, calculateQuantityOfBrædderbolt(length, width, shed), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(length,width, shed), Type.NOLENGTH);
-    }
-
-    public LineItem højrebeslag(int length) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("universal 190mm højre");
-        return new LineItem(m, calculateQuantityOfHøjreBeslag(length), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfHøjreBeslag(length), Type.NOLENGTH);
-    }
-//    
-
-    public LineItem venstrebeslag(int length) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("universal 190mm venstre");
-        return new LineItem(m, calculateQuantityOfVenstrebeslag(length), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfVenstrebeslag(length), Type.NOLENGTH);
-    }
-//    
-
-    public LineItem stolpe(int length,int width, Shed shed) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("97x97mm trykimp. Stolpe");
-        return new LineItem(m, calculateQuantityOfStolper(length,width, shed), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfStolper(length,width, shed), Type.LENGTH);
-
-    }
-
-    public LineItem spær(int lengthOfCarport, int width) throws NoSuchMaterialException {
-        LineItem l = null;
-        Material m;
-
-        String desc = "Spær, monteres på rem";
-
-        for (int i = 240; i <= 750; i += 30) {
-            if (lengthOfCarport == i) {
-                m = LogicFacade.getInstance().getMaterial("45x195mm spærtræ. ubh. ", i);
-                l = new LineItem(m, calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60), desc, m.getPrice() * calculateQuantityOfSpærIncludedBackSpær(lengthOfCarport, 60), Type.LENGTH);
-            }
-        }
-        return l;
-    }
-
-    public LineItem roof(int length, Roof roof) {
-        LineItem l = null;
-        String desc = "Tagplader monteres på spær";
-        for (int i = 260; i <= 770; i += 30) {
-            if (length + 20 == i) {
-                l = new LineItem(roof, tagpladeAntal(length), desc, roof.getPrice()*tagpladeAntal(length));
-            }
-        }
-        return l;
-    }
-
-    public LineItem spærForRemmen(int length) throws NoSuchMaterialException {
-        LineItem l = null;
-        Material m;
-
-        String desc = "Remme i sider, sadles ned i stolper";
-
-        for (int i = 240; i <= 750; i += 30) {
-            if (length == i) {
-                m = LogicFacade.getInstance().getMaterial("45x195mm spærtræ. ubh. ", i);
-                l = new LineItem(m, calculateQuantityOfSpærForRemmen(), desc, m.getPrice() * calculateQuantityOfSpærForRemmen(), Type.LENGTH);
-            }
-        }
-        return l;
-    }
-
-    public LineItem understernbrædderForFrontAndBack(int width) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("25x200mm trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfUndersternbrædderForFrontAndBack(width), "understernbrædder til forende og bagende", m.getPrice() * calculateQuantityOfUndersternbrædderForFrontAndBack(width), Type.LENGTH);
-    }
-
-    public LineItem understernBrædderForSides(int length) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("25x200mm trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfUndersternbrædderForSides(length), "understernbrædder til siderne", m.getPrice() * calculateQuantityOfUndersternbrædderForSides(length), Type.LENGTH);
-    }
-
-    public LineItem oversternbrædderForFront(int width) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("25x125m trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfOversternbrædderForFront(width), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOversternbrædderForFront(width), Type.LENGTH);
-    }
-
-    public LineItem oversternbrædderForSides(int length) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("25x125m trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfOversternbrædderForSides(length), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOversternbrædderForSides(length), Type.LENGTH);
-    }
-
-    public LineItem vandbrætForFront(int width) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("19x100mm trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfVandbrætForFront(width), "vandbrædt på stern i forenden", m.getPrice() * calculateQuantityOfVandbrætForFront(width), Type.LENGTH);
-    }
-
-    public LineItem vandbrætForSides(int length) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("19x100mm trykimp. brædt");
-        return new LineItem(m, calculateQuantityOfVandbrædtForSides(length), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfVandbrædtForSides(length), Type.LENGTH);
-    }
-
-    public LineItem hulbånd(Request req) throws NoSuchMaterialException {
-        Material m = LogicFacade.getInstance().getMaterial_("hulbånd 1x20 mm. 10 mtr.");
-        return new LineItem(m, (int) hulbåndAntal(req), "Til vindkryds på spær", m.getPrice() * (int) hulbåndAntal(req), Type.NOLENGTH);
-    }
+   
 }

@@ -238,6 +238,20 @@ CREATE TABLE CarportDB.requests (
 	CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
 );
 
+CREATE TABLE CarportDB.responses (
+	response_id INT(50) NOT NULL AUTO_INCREMENT,
+	user_id int(50) NOT NULL,
+	emp_id int(50) NOT NULL,
+	dateplaced DATETIME NOT NULL,
+	carport_id int(50) NOT NULL,
+	shed_id int(50) DEFAULT NULL,
+	price int NOT NULL,
+	PRIMARY KEY (response_id),
+	CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
+	CONSTRAINT `responses_ibfk_2` FOREIGN KEY (`emp_id`) REFERENCES users(`user_id`),
+	CONSTRAINT `responses_ibfk_3` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`),
+	CONSTRAINT `responses_ibfk_4` FOREIGN KEY (`shed_id`) REFERENCES sheds(`shed_id`)
+);
 
 CREATE TABLE CarportDB.users_personalinfo (
 	user_id INT(50) NOT NULL,

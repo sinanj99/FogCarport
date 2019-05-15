@@ -10,12 +10,23 @@ package Data.Entity;
  * @author Obaydah Mohamad
  */
 public class Shed {
+    private int shedId;
     private int width;
     private int length;
 
     public Shed(int width, int length) {
         this.width = width;
         this.length = length;
+    }
+    
+    public Shed(int shedId, int width, int length) {
+        this.shedId = shedId;
+        this.width = width;
+        this.length = length;
+    }
+    
+    public int getShedId(){
+        return shedId;
     }
 
     public int getWidth() {

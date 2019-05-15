@@ -15,12 +15,16 @@ import Data.Mappers.IMaterialMapper;
 import Data.Mappers.IRequestMapper;
 import Data.Mappers.IUserMapper;
 import Data.Entity.Request;
+import Data.Entity.Response;
 import Data.Entity.Roof;
+import Data.Entity.ShippingAddress;
 import Data.Entity.User;
+import Data.Mappers.IResponseMapper;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.SystemErrorException;
 import java.util.List;
 import javax.sql.DataSource;
+import javax.xml.ws.RespectBinding;
 
 /**
  *
@@ -31,6 +35,7 @@ public class PresentationFacade {
     private static PresentationFacade instance = null;
     private static final DataSource ds = new DataSourceMysql().getDataSource();
     private static final IRequestMapper r = IRequestMapper.instance();
+    private static final IResponseMapper rp = IResponseMapper.instance();
     private static final IMaterialMapper m = IMaterialMapper.instance();
     private static final IUserMapper u = IUserMapper.instance();
 
@@ -45,6 +50,7 @@ public class PresentationFacade {
             m.setDataSource(ds);
             u.setDataSource(ds);
             r.setDataSource(ds);
+            rp.setDataSource(ds);
         }
         return instance;
     }
@@ -103,5 +109,19 @@ public class PresentationFacade {
 
     public Request getRequest(int id) {
         return r.getRequest(id);
+    }
+    
+    public ShippingAddress getRequestShippingAddress(int id){
+        return r.getRequestShippingAddress(id);
+    }
+    
+    //Response
+    
+    public void insertResponse(Response res){
+        rp.insertResponse(res);
+    }
+    
+    public Response getResponse(int requestId){
+        return rp.getResponse(requestId);
     }
 }

@@ -57,6 +57,7 @@ class RequestMapper extends IRequestMapper {
     @Override
     public Request getRequest(int id) {
         Request r = null;
+        int req_id = 0;
         int user_id = 0;
         String datePlaced = "";
         int price = 0;
@@ -69,12 +70,13 @@ class RequestMapper extends IRequestMapper {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
+                req_id = rs.getInt("request_id");
                 user_id = rs.getInt("user_id");
                 address = getRequestShippingAddress(id);
                 Carport cp = getRequestCarport(id);
                 datePlaced = rs.getString("dateplaced");
 
-                r = new Request(address, user_id, datePlaced, cp);
+                r = new Request(req_id, user_id, datePlaced, cp, address);
             }
         } catch (SQLException e) {
             System.out.println("There was an error fetching data from request table: \n" + e.getMessage());
@@ -119,7 +121,7 @@ class RequestMapper extends IRequestMapper {
             System.out.println("There was an error fetching data from carport table: \n" + e.getMessage());
         }
         
-        return new Carport(roof, inclination, width, length, shed_);
+        return new Carport(carport_id, roof, inclination, width, length, shed_);
     }
 
     /**
@@ -130,6 +132,7 @@ class RequestMapper extends IRequestMapper {
      * @return
      */
     private Shed getRequestShed(int carport_id) {
+        int shedId = 0;
         int width = 0;
         int length = 0;
         Shed shed = null;
@@ -140,9 +143,10 @@ class RequestMapper extends IRequestMapper {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
+                shedId = rs.getInt("shed_id");
                 width = rs.getInt("width");
                 length = rs.getInt("length");
-                shed = new Shed(width, length);
+                shed = new Shed(shedId, width, length);
             }
         } catch (SQLException e) {
             System.out.println("There was an error fetching data from shed table: " + e.getMessage());
@@ -157,7 +161,7 @@ class RequestMapper extends IRequestMapper {
      * @param id
      * @return
      */
-    private ShippingAddress getRequestShippingAddress(int id) {
+    public ShippingAddress getRequestShippingAddress(int id) {
         String firstname = "";
         String lastname = "";
         String address = "";

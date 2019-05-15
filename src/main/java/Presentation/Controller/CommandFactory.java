@@ -10,13 +10,16 @@ import Presentation.Commands.GenerateReqCommand;
 import Presentation.Commands.LoginCommand;
 import Presentation.Commands.Command;
 import Presentation.Commands.CreateOfferCommand;
+import Presentation.Commands.CreateResponseCommand;
 import Presentation.Commands.LogoutCommand;
 import Presentation.Commands.RegisterCommand;
 import Presentation.Commands.FlatRoofFormCommand;
 import Presentation.Commands.InclinedRoofFormCommand;
+import Presentation.Commands.InsertResponseCommand;
 //import Presentation.Commands.PrebuiltCarportCommand;
 //import Presentation.Commands.ShopCommand;
 import Presentation.Commands.ShowRequestCommand;
+import Presentation.Commands.UpdateResponsePriceCommand;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +42,9 @@ public class CommandFactory {
         commands.put("request", new GenerateReqCommand());
         commands.put("showrequests", new ShowRequestCommand());
         commands.put("createOffer", new CreateOfferCommand());
+        commands.put("createresponse", new CreateResponseCommand());
+        commands.put("updateresponseprice", new UpdateResponsePriceCommand());
+        commands.put("insertresponse", new InsertResponseCommand());
 //        commands.put("prebuiltCarport", new PrebuiltCarportCommand());
 //        commands.put("shop", new ShopCommand());
     }

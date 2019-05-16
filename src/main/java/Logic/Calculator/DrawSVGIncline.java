@@ -36,7 +36,7 @@ public class DrawSVGIncline {
         BOMInclineRoof ic = new BOMInclineRoof();
         drawing += "<svg height='100%' width='100%' viewbox='-150 100 900 900' >";
 
-        float spaceBetweenSpærVAR = f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 90), length, 90);
+        float spaceBetweenSpærVAR = f.spaceBetweenSpær(c, 90);
 
         float startingPointFirstSpærX = 50;
         float startingPointFirstSpærY = 50;
@@ -44,22 +44,22 @@ public class DrawSVGIncline {
         float xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
         float yCordinate = startingPointFirstSpærY;
 
-        int quantityOfStolper = f.calculateQuantityOfStolper(length, width, shed);
+        int quantityOfStolper = f.calculateQuantityOfStolper(c);
 
         // REM
         drawing += "<rect class='remmen' x='" + startingPointFirstSpærX + "' y='" + startingPointFirstSpærY + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
         drawing += "<rect class='remmen' x='" + startingPointFirstSpærX + "' y='" + (startingPointFirstSpærY + hypotenuse * 2 - 90) + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
 
         //SPÆR
-        int quantityOfRafters = f.calculateQuantityOFSpærExcluedBackSpær(length, 90);
-        int quantityOfRaftersPlusTheBackRafter = f.calculateQuantityOfSpærIncludedBackSpær(length, 90);
+        int quantityOfRafters = f.calculateQuantityOFSpærExcluedBackSpær(c, 90);
+        int quantityOfRaftersPlusTheBackRafter = f.calculateQuantityOfSpærIncludedBackSpær(c, 90);
 
         float frontSpærPlacementX = startingPointFirstSpærX;
         float frontSpærPlacementY = startingPointFirstSpærY - 15;
 
         for (int i = 0; i < quantityOfRaftersPlusTheBackRafter; i++) {
             drawing += "<rect x='" + frontSpærPlacementX + "' y='" + frontSpærPlacementY + "' height='" + (hypotenuse * 2 - 60) + "' width='10' fill='none' stroke='black' stroke-width='3px'/>";
-            frontSpærPlacementX += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær(length, 90), length, 90) + 3f;
+            frontSpærPlacementX += f.spaceBetweenSpær(c, 60) + 3f;
         }
         //Lægter
 

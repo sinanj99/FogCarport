@@ -5,42 +5,54 @@
     <body class="background2">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
     <%
+        String priceError = (String) request.getAttribute("priceError");
+        String idError = (String) request.getAttribute("idError");
         List<Material> materials = (List<Material>) request.getAttribute("materials");
         List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");%>
     <div class="container">
         <div class="row">
-            <form class="col-12 standarddiv" onsubmit="return checkPrice()" method="post" action="/project/FrontController">
-                <h1>Opdater pris</h1>
-                <div class="col-12 d-flex flex-column align-items-center">
-                    <div class="d-flex flex-column" style="width: 60%;">
-                        <span id="errortxt" class="d-none" style="color: red">Indtast venligst et positivt heltal mellem 1 og 4 cifre.</span>
-                        <p class="p-0">Vælg varetype</p>
-                        <br><span> <input type="radio" name="where" value="length"required> Materiale (med længde)</span>
-                        <span> <input type="radio" name="where" value="nolength"required> Materiale (uden længde)</span>
-                        <span> <input type="radio" name="where" value="roof" required> Tag</span><br>
+            <div class="col-md-12">
+                <form class="col-12 standarddiv" onsubmit="return checkPrice()" method="post" action="/project/FrontController">
+                    <h1>Opdater pris</h1>
+                    <div class="col-12 d-flex flex-column align-items-center">
+                        <div class="d-flex flex-column" style="width: 60%;">
+                            <span id="errortxt" class="d-none" style="color: red">Indtast venligst et positivt heltal mellem 1 og 4 cifre.</span>
+                            <p class="p-0">Vælg varetype</p>
+                            <br><span> <input type="radio" name="where" value="length"required> Materiale (med længde)</span>
+                            <span> <input type="radio" name="where" value="nolength"required> Materiale (uden længde)</span>
+                            <span> <input type="radio" name="where" value="roof" required> Tag</span><br>
+                        </div>
                     </div>
-                </div>
-                <div class="col-12 d-flex flex-column align-items-center">
-                    <div class="d-flex flex-column" style="width: 60%;">
-                        Varens id
-                        <input style="width:100%" class="ml-0 inputbig" id="id" name="id" placeholder="Indtast id..." type="number" max="100" required>
+                    <div class="col-12 d-flex flex-column align-items-center">
+                        <div class="d-flex flex-column" style="width: 60%;">
+                            Varens id
+                            <%if (idError == null) { %>
+                            <input style="width:100%" class="ml-0 inputbig" id="id" name="id" placeholder="Indtast id..." type="number" max="100" required>
+                            <% } else {%>
+                            <input style="width:100%; border: 1px solid red" class="ml-0 inputbig" id="id" name="id" placeholder="<%=idError%>" type="number" max="100" required>
+                            <% } %>
+                        </div>
                     </div>
-                </div>
-                <div class="col-12 d-flex flex-column align-items-center">
-                    <div class="d-flex flex-column" style="width: 60%;">
-                        Ny pris
-                        <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" required>
+                    <div class="col-12 d-flex flex-column align-items-center">
+                        <div class="d-flex flex-column" style="width: 60%;">
+                            Ny pris
+                            <%if (priceError == null) { %>
+                            <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" required>
+                            <% } else {%>
+                            <input style="width:100%; border: 1px solid red" class="ml-0 inputbig" id="price" name="price" placeholder="<%=priceError%>" type="number" required>
+                            <% } %>
+                        </div>
+                        <input style="width: 30%" class="notmemberbtn"type="submit" value="Opdater pris">
+                        <input type="hidden" name="command" value="change_price">
+                        <input type="hidden" name="manual" value="true">
                     </div>
-                    <input style="width: 30%" class="notmemberbtn"type="submit" value="Opdater pris">
-                    <input type="hidden" name="command" value="change_price">
-                    <input type="hidden" name="manual" value="true">
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="standarddiv p-0 mt-0">
-                    <form class="d-flex flex-column" onsubmit="return checkPrice()" method="get" action="/project/FrontController">
+                    <form class="d-flex flex-column" onsubmit="return checkPrice()" method="post" action="/project/FrontController">
                         <h3>Materialer (med længde)</h3>
                         <div style="max-height: 300px; overflow: auto; display:inline-block;" class="col-12">
                             <table class="table table-bordered table-striped">
@@ -58,7 +70,7 @@
                                     <tr>
                                         <td><%=m.getId()%></td>
                                         <td><%=m.getName()%></td>
-                                        <td><%=m.getPrice()%></td>
+                                        <td><%=m.getPrice()%> (<%=m.getLength()%>cm)</td>
                                         <td><input type="radio" name="id" value="<%=m.getId()%>" required></td>
                                     </tr>
                                     <% } %>
@@ -72,7 +84,11 @@
                                 Indtast den nye pris
                             </div>
                             <div style="width: 60%">
+                                <%if (priceError == null) { %>
                                 <input type="text" class="w-100 ml-0 inputbig" name="price" placeholder="Indtast ny pris...">
+                                <% } else {%>
+                                <input style="border: 1px solid red" type="number" class="w-100 ml-0 inputbig" name="price" placeholder="<%=priceError%>">
+                                <% } %>
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 60%;" value="Opdater pris">
@@ -116,7 +132,11 @@
                                 Indtast den nye pris
                             </div>
                             <div style="width: 60%">
+                                <%if (priceError == null) { %>
                                 <input type="text" class="w-100 ml-0 inputbig" name="price" placeholder="Indtast ny pris...">
+                                <% } else {%>
+                                <input style="border: 1px solid red" type="number" class="w-100 ml-0 inputbig" name="price" placeholder="<%=priceError%>">
+                                <% } %>
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 60%;" value="Opdater pris">
@@ -131,7 +151,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="standarddiv p-0 mt-0">
-                    <form class="d-flex flex-column" onsubmit="return checkPrice()" method="get" action="/project/FrontController">
+                    <form class="d-flex flex-column" onsubmit="return checkPrice()" method="post" action="/project/FrontController">
                         <h3>Tagplader/sten</h3>
                         <div style="max-height: 300px; overflow: auto; display:inline-block;" class="col-12">
                             <table class="table table-bordered table-striped">
@@ -154,7 +174,7 @@
                                         <% } else { %>
                                         <td>Uden hældning</td>
                                         <% }%>
-                                        <td><%=r.getPrice()%></td>
+                                        <td><%=r.getPrice()%> (<%=r.getLength()%>cm)</td>
                                         <td><input type="radio" name="id" value="<%=r.getRoof_id()%>" required></td>
                                     </tr>
                                     <% }%>
@@ -167,7 +187,11 @@
                                 Indtast den nye pris
                             </div>
                             <div style="width: 60%">
-                                <input type="text" class="w-100 ml-0 inputbig" name="price" placeholder="Indtast ny pris...">
+                                <%if (priceError == null) { %>
+                                <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" required>
+                                <% } else {%>
+                                <input style="width:100%; border: 1px solid red" class="ml-0 inputbig" id="price" name="price" placeholder="<%=priceError%>" type="number" required>
+                                <% }%>
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 30%;" value="Opdater pris">

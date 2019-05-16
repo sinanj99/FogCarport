@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ShowPricesCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, NoSuchRoofException, SystemErrorException {
+    public String execute(HttpServletRequest request) throws NoSuchRoofException, SystemErrorException {
         List<Roof> roofs = PresentationFacade.getInstance().getRoofs();
         List<Material> materials = PresentationFacade.getInstance().getMaterials();
 //        for (int i = 1; i < materials.size(); i++) {

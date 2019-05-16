@@ -306,7 +306,9 @@ th {
     text-align: center;
 }
 */
-
+.error {
+    border: 1px solid red;
+}
 .my-custom-scrollbar {
 position: relative;
 height: 200px;

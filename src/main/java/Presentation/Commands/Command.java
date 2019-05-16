@@ -7,9 +7,10 @@ package Presentation.Commands;
 
 import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.SystemErrorException;
-import Logic.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
+import Presentation.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.InvalidInputException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -24,5 +25,5 @@ import javax.servlet.http.HttpServletResponse;
 public interface Command {
     
     String execute(HttpServletRequest request) throws NoSuchMaterialException, 
-            UserNotFoundException, NoSuchRoofException, SystemErrorException, InvalidInputException;
+            UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException;
 }

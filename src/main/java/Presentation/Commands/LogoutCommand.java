@@ -5,7 +5,7 @@
  */
 package Presentation.Commands;
 
-import Logic.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.NoSuchRoofException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;

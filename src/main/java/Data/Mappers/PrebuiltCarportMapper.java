@@ -7,7 +7,7 @@ package Data.Mappers;
 
 import Data.Database.DBConnector;
 import Data.Entity.PrebuiltCarport;
-import Logic.Exceptions.NoSuchPrebuiltCarportException;
+import Presentation.Exceptions.NoSuchPrebuiltCarportException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

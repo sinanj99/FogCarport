@@ -1,4 +1,5 @@
-<%String res = (String) request.getAttribute("loginResult");%>
+<%String pwordError = (String) request.getAttribute("passwordError");
+String unameError = (String) request.getAttribute("emailError"); %>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
     <body class="background1">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
@@ -8,20 +9,20 @@
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 50%; color: white">Email</p>
-                    <%if (res != null && res.equals("Bruger findes ikke!")) {%>
-                    <input style="width: 50%; border: 1px solid red;" class="inputbig" name="email" type="text" placeholder="Bruger findes ikke!" required>
-                    <% } else { %>
+                    <%if (unameError == null) {%>
                     <input style="width: 50%;" class="inputbig" name="email" type="text" placeholder="Email..." required>
+                    <% } else { %>
+                    <input style="width: 50%;" class="error inputbig" name="email" type="text" placeholder="<%=unameError%>" required>
                     <% } %>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
                     <p class="p-0" style="width: 50%; color: white">Adgangskode</p>
-                    <% if (res != null && res.equals("Adgangskode passer ikke!")) { %>
-                    <input style="width: 50%; border: 1px solid red;" class="inputbig" name="pword" type="password" placeholder="Adgangskode forkert!" required>
-                    <% } else { %>
+                    <% if (pwordError == null) { %>
                     <input style="width: 50%;" class="inputbig" name="pword" type="password" placeholder="Adgangskode..." required>
+                    <% } else { %>
+                    <input style="width: 50%;" class="error inputbig" name="pword" type="password" placeholder="<%=pwordError%>" required>
                     <% }%>
                 </div>
             </div>

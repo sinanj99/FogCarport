@@ -6,7 +6,7 @@
 package Data.Database;
 
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.SystemErrorException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

@@ -8,8 +8,8 @@ package Data.Mappers;
 import Data.Entity.Material;
 import Data.Entity.Roof;
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -82,7 +82,7 @@ public abstract class IMaterialMapper {
      * @param price new price of the roof
      * @param id
      * @throws SystemErrorException 
-     * @throws Logic.Exceptions.NoSuchRoofException 
+     * @throws Presentation.Exceptions.NoSuchRoofException 
      * @throws Presentation.Exceptions.InvalidInputException 
      */
     public abstract void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException;

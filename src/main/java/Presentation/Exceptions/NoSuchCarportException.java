@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Exceptions;
+package Presentation.Exceptions;
 
 /**
  *
  * @author Obaydah Mohamad
  */
-public class NoSuchShedException extends Throwable{
+public class NoSuchCarportException extends Throwable{
     
 }

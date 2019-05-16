@@ -6,8 +6,8 @@
 package Presentation.Commands;
 
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.UserNotFoundException;
 import com.mysql.cj.util.StringUtils;
 import java.io.IOException;
 import java.sql.SQLException;

@@ -8,7 +8,8 @@
         String priceError = (String) request.getAttribute("priceError");
         String idError = (String) request.getAttribute("idError");
         List<Material> materials = (List<Material>) request.getAttribute("materials");
-        List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");%>
+        List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
+    %>
     <div class="container">
         <div class="row">
             <div class="col-md-12">

@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Exceptions;
+package Presentation.Exceptions;
 
 /**
  *
- * @author Kasper Jeppesen
+ * @author Obaydah Mohamad
  */
-public class NoSuchPrebuiltCarportException extends Throwable
-{
+public class NoSuchRoofException extends SystemErrorException {
+
+    public NoSuchRoofException(String message) {
+        super(message);
+    }
     
 }

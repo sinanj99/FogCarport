@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Exceptions;
-
-import java.sql.SQLException;
+package Presentation.Exceptions;
 
 /**
  *
- * @author sinanjasar
+ * @author Obaydah Mohamad
  */
-public class DuplicateException extends Exception{
-    public DuplicateException(String msg) {
-        super(msg);
+public class NoSuchRequestException extends SystemErrorException{
+    
+    public NoSuchRequestException(String message) {
+        super(message);
     }
     
 }

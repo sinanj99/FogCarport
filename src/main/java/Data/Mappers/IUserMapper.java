@@ -7,9 +7,9 @@ package Data.Mappers;
 
 import Data.Mappers.UserMapper;
 import Data.Entity.User;
-import Logic.Exceptions.DuplicateException;
-import Logic.Exceptions.SystemErrorException;
-import Logic.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.DuplicateException;
+import Presentation.Exceptions.SystemErrorException;
+import Presentation.Exceptions.UserNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;

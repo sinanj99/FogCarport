@@ -7,8 +7,8 @@ package Presentation.Commands;
 
 import Data.Entity.Response;
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
 import java.io.IOException;
 import java.sql.SQLException;

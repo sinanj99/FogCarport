@@ -5,7 +5,7 @@
  */
 package Data.Database;
 
-import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.SystemErrorException;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.SQLException;
 import java.util.logging.Level;

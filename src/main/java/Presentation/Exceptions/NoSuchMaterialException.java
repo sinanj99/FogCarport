@@ -6,17 +6,17 @@
 package Presentation.Exceptions;
 
 /**
- *
+ * Used in any command, when a material with specified id, doesn't exist in database. 
  * @author sinanjasar
  */
-public class NoSuchMaterialException extends CustomException {
-
+public class NoSuchMaterialException extends ClientException {
+    
     public NoSuchMaterialException(String message) {
         super(message);
     }
-
-    public NoSuchMaterialException(String message, String target, String type) {
-        super(message, target, type);
+    
+    public NoSuchMaterialException(String target, String message, String type) {
+        super(target, "Kunne ikke finde materiale med id: " + message, type);
     }
     
 }

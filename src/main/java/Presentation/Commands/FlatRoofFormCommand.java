@@ -8,7 +8,7 @@ package Presentation.Commands;
 import Data.Entity.Roof;
 import Logic.Controller.LogicFacade;
 import Presentation.Controller.PresentationFacade;
-import Logic.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.NoSuchRoofException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

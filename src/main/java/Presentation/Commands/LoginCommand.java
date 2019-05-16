@@ -9,9 +9,10 @@ import Data.Entity.User;
 import Logic.Controller.LoginController;
 import Logic.Controller.LogicFacade;
 import Presentation.Controller.PresentationFacade;
-import Logic.Exceptions.NoMatchException;
-import Logic.Exceptions.SystemErrorException;
-import Logic.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.NoMatchException;
+import Presentation.Exceptions.SystemErrorException;
+import Presentation.Exceptions.ClientException;
+import Presentation.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -24,24 +25,21 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request) throws SystemErrorException, NoMatchException, UserNotFoundException {
+
         User user;
         String email = request.getParameter("email");
         String password = request.getParameter("pword");
-        
         try {
             user = PresentationFacade.getInstance().getUser(email);
             LoginController.doesMatch(email, password);
-            request.getSession().setAttribute("user", user);
-        } catch (UserNotFoundException | NoMatchException e) {
-            /*if the user doesn't exist in the database, or  
-            if there is no match */
-            request.setAttribute("loginResult", e.getMessage());
-            return "jsp/login.jsp";
-        } catch(SystemErrorException e) {
-            request.setAttribute("error", e.getMessage());
-            return "jsp/error.jsp";
-        }
+            } catch(UserNotFoundException e) {
+                throw new UserNotFoundException("jsp/login.jsp", e.getMessage(), "emailError");
+            } catch(NoMatchException e) {
+                throw new NoMatchException("jsp/login.jsp", e.getMessage(), "passwordError");
+            }
+        request.getSession().setAttribute("user", user);
+
 //        if(user.isSeller() == true) return "jsp/frontpage.jsp";
         return "jsp/frontpage.jsp";
     }

@@ -17,8 +17,8 @@ import Data.Entity.Shed;
 import Data.Mappers.IMaterialMapper;
 import Data.Mappers.IUserMapper;
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.SystemErrorException;
-import Logic.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.SystemErrorException;
+import Presentation.Exceptions.UserNotFoundException;
 
 /**
  *

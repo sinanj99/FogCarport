@@ -14,8 +14,8 @@ import Data.Entity.Type;
 import Presentation.Exceptions.NoSuchMaterialException;
 
 import Logic.Controller.LogicFacade;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
 
 /**
  *

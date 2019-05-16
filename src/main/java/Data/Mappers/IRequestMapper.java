@@ -8,7 +8,7 @@ package Data.Mappers;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.ShippingAddress;
-import Logic.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.NoSuchRoofException;
 import java.util.List;
 import javax.sql.DataSource;
 

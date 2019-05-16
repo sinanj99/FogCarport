@@ -7,8 +7,8 @@ package Presentation.Commands;
 
 import Logic.Controller.LogicFacade;
 import Presentation.Controller.PresentationFacade;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;

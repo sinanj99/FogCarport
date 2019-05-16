@@ -6,9 +6,9 @@
 package Presentation.Commands;
 
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.SystemErrorException;
-import Logic.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
+import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.InvalidInputException;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class ChangePriceCommand implements Command {
             System.out.println(e.getMessage());
             throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst et tal!", "idError");
         }
-
+        try {
         switch (choice) {
             case "length":
                 PresentationFacade.getInstance().updatePrices(price, id);
@@ -58,6 +58,10 @@ public class ChangePriceCommand implements Command {
             default:
                 PresentationFacade.getInstance().updatePricesRoof(price, id);
                 break;
+        }
+        } catch(NoSuchMaterialException e) {
+            System.out.println(e.getMessage());
+            throw new NoSuchMaterialException("FrontController?command=show_prices", e.getMessage(), "idError");
         }
         return "jsp/frontpage.jsp";
     }

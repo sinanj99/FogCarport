@@ -6,14 +6,14 @@
 package Presentation.Controller;
 
 import Presentation.Commands.Command;
-import Logic.Exceptions.DuplicateException;
+import Presentation.Exceptions.DuplicateException;
 import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.NoSuchRequestException;
-import Logic.Exceptions.UserNotFoundException;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.SystemErrorException;
-import Presentation.Exceptions.CustomException;
+import Presentation.Exceptions.NoSuchRequestException;
+import Presentation.Exceptions.UserNotFoundException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
+import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.InvalidInputException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -39,13 +39,14 @@ public class FrontController extends HttpServlet {
         try {
             String target = command.execute(request);
             request.getRequestDispatcher(target).forward(request, response);
-        } catch (ServletException | IOException ex) {
-            System.out.println("EXCEPTION: " + ex.getMessage());
-        } catch (UserNotFoundException | NoSuchRoofException | SystemErrorException e) {
-            
-        } catch (CustomException ex) {
-            request.setAttribute(ex.getType(), ex.getMessage());
-            request.getRequestDispatcher(ex.getTarget()).forward(request, response);
+        } catch (SystemErrorException e) {
+            request.getRequestDispatcher(e.getTarget()).forward(request, response);
+        } catch (ClientException e) {
+            System.out.println("message: " + e.getMessage());
+            System.out.println("type: " + e.getType());
+            System.out.println("target: " + e.getTarget());
+            request.setAttribute(e.getType(), e.getMessage());
+            request.getRequestDispatcher(e.getTarget()).forward(request, response);
         }
     }
 

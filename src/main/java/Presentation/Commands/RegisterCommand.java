@@ -7,11 +7,14 @@ package Presentation.Commands;
 
 import Data.Entity.PersonalInfo;
 import Data.Entity.User;
-import Logic.Exceptions.DuplicateException;
+import Presentation.Exceptions.DuplicateException;
 import Logic.Controller.LogicFacade;
 import Presentation.Controller.PresentationFacade;
-import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.SystemErrorException;
+import Presentation.Exceptions.NoMatchException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,7 +27,7 @@ public class RegisterCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request) throws SystemErrorException, NoMatchException, DuplicateException {
 
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
@@ -35,15 +38,15 @@ public class RegisterCommand implements Command {
         String pword = request.getParameter("pword");
         String pword2 = request.getParameter("pword2");
         String gender = request.getParameter("gender");
+        if(!pword.equals(pword2)) {
+            throw new NoMatchException("jsp/register.jsp", "Adgangskoderne matcher ikke!", "passwordError");
+        }
         try {
             PresentationFacade.getInstance().insertUser(new User(new PersonalInfo(fname, lname, adress, zip, city, gender), email, pword));
-        } catch (DuplicateException e) {
-            request.setAttribute("registerResult", e.getMessage());
-            return "jsp/register.jsp";
-        } catch(SystemErrorException e) {
-            request.setAttribute("error", e.getMessage());
-            return "error.jsp";
+        } catch (DuplicateException ex) {
+            throw new DuplicateException("jsp/register.jsp", ex.getMessage(), "emailError");
         }
+
         return "jsp/frontpage.jsp";
     }
 

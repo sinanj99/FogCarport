@@ -11,8 +11,8 @@ import Data.Database.DataSourceMysql;
 import Data.Entity.Material;
 import Data.Entity.Roof;
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -181,7 +181,7 @@ class MaterialMapper extends IMaterialMapper {
                 price = rs.getInt("price");
                 stock = rs.getInt("stock");
             } else {
-                throw new NoSuchMaterialException("Material " + id + " could not be found");
+                throw new NoSuchMaterialException(String.valueOf(id));
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
@@ -215,7 +215,7 @@ class MaterialMapper extends IMaterialMapper {
                     stock = rs.getInt("stock");
                     System.out.println(stock);
                 } else {
-                    throw new NoSuchMaterialException("Material " + id + "not found");
+                    throw new NoSuchMaterialException(String.valueOf(id));
                 }
                 sql = "UPDATE `material_lengths` SET stock = ? WHERE material_id = ? AND length = ?;";
                 pstmt = conn.prepareStatement(sql);
@@ -255,7 +255,7 @@ class MaterialMapper extends IMaterialMapper {
                 stock = rs.getInt("stock");
                 System.out.println("stock = " + stock);
             } else {
-                throw new NoSuchMaterialException("Material with id + " + id + " could not be found");
+                throw new NoSuchMaterialException(String.valueOf(id));
             }
             sql = "UPDATE `materials_nolength` SET stock = ? WHERE material_id = ?;";
             pstmt = conn.prepareStatement(sql);
@@ -290,7 +290,7 @@ class MaterialMapper extends IMaterialMapper {
                     pstmt.executeUpdate();
                 }
             } else {
-                throw new NoSuchMaterialException("FrontController?command=show_prices", "Der findes ikke et materiale med id " + id+"!", "idError");
+                throw new NoSuchMaterialException(String.valueOf(id));
                 
             }
         } catch (SQLException e) {
@@ -340,7 +340,7 @@ class MaterialMapper extends IMaterialMapper {
      *
      * @param id of the material type
      * @return list of materials.
-     * @throws Logic.Exceptions.SystemErrorException
+     * @throws Presentation.Exceptions.SystemErrorException
      */
     @Override
     public LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException {
@@ -366,7 +366,7 @@ class MaterialMapper extends IMaterialMapper {
      *
      * @param id of the material type
      * @return list of materials.
-     * @throws Logic.Exceptions.SystemErrorException
+     * @throws Presentation.Exceptions.SystemErrorException
      */
     @Override
     public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {

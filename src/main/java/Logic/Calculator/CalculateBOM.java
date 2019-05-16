@@ -13,8 +13,8 @@ import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
 import Presentation.Exceptions.NoSuchMaterialException;
-import Logic.Exceptions.NoSuchRoofException;
-import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
 import java.util.ArrayList;
 import java.util.List;
 

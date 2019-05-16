@@ -9,7 +9,7 @@ import Data.Mappers.IMaterialMapper;
 import Data.Entity.LineItem;
 import Data.Entity.Material;
 import Data.Entity.Type;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 
 /**
  *

@@ -12,7 +12,7 @@ import Data.Mappers.IMaterialMapper;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
 import java.util.ArrayList;

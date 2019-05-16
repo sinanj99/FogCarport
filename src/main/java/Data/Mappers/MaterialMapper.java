@@ -10,7 +10,7 @@ import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
 import Data.Entity.Material;
 import Data.Entity.Roof;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;
@@ -290,7 +290,8 @@ class MaterialMapper extends IMaterialMapper {
                     pstmt.executeUpdate();
                 }
             } else {
-                throw new NoSuchMaterialException("Der findes ikke et materiale med id " + id);
+                throw new NoSuchMaterialException("FrontController?command=show_prices", "Der findes ikke et materiale med id " + id+"!", "idError");
+                
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
@@ -477,7 +478,7 @@ class MaterialMapper extends IMaterialMapper {
     @Override
     public List<Roof> getRoofs() throws SystemErrorException {
         List<Roof> roofs = new ArrayList();
-        int id, price, inclined;
+        int id, price, inclined, length;
         String name;
         boolean inclined_ = false;
         try {
@@ -493,11 +494,12 @@ class MaterialMapper extends IMaterialMapper {
                 id = rs.getInt("roof_id");
                 name = rs.getString("name");
                 inclined = rs.getInt("inclined");
+                length = rs.getInt("roof_length"); 
                 if(inclined == 1){
                     inclined_ = true;
                 }
                 price = rs.getInt("price");
-                roofs.add(new Roof(id, name, price, inclined_));
+                roofs.add(new Roof(id, name, price, inclined_, length));
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());

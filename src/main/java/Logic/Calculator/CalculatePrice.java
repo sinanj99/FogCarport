@@ -36,7 +36,9 @@ public class CalculatePrice {
      * @param price the new price of a material.
      * @param prices a linkedHashMap including all lengths as keys and its price
      * as the value.
-     * @return a linked hashmap where all the prices have been updated.
+     * @return a linked hash map including all lengths and their respective prices 
+     * where all the prices have been updated.
+     * @throws Presentation.Exceptions.InvalidInputException if there is no difference between the new and old price.
      */
     public LinkedHashMap<Integer, Integer> updatePrices(int price, LinkedHashMap<Integer, Integer> prices) throws InvalidInputException {
         //find old price
@@ -45,7 +47,7 @@ public class CalculatePrice {
         int dif = oldPrice - price;
         //if there is no change, throw exception
         if (dif == 0) {
-            throw new InvalidInputException("jsp/change_price.jsp", "Indtast venligst en ny pris!");
+            throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst en ny pris!", "priceError");
             //if the difference is positive, substract the difference from all other values
         } else if (dif > 0) {
             for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {

@@ -10,7 +10,7 @@ import Data.Entity.LineItem;
 import Data.Entity.Request;
 import Data.Entity.ShippingAddress;
 import Logic.Calculator.CalculateBOM;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
 import Logic.Exceptions.UserNotFoundException;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CreateResponseCommand implements Command{
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException {
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         ShippingAddress s = PresentationFacade.getInstance().getRequestShippingAddress(r.getReq_id());
         int productionPrice = 0;

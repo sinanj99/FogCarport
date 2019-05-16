@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException {
+    public String execute(HttpServletRequest request) {
         User user;
         String email = request.getParameter("email");
         String password = request.getParameter("pword");

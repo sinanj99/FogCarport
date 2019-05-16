@@ -503,6 +503,7 @@ class RequestMapper extends IRequestMapper {
                 roof_id = rs.getInt("roof_id");
                 name_ = rs.getString("name");
                 inclined_ = rs.getInt("inclined");
+                
                 if (inclined_ == 1) {
                     inclined = true;
                 }
@@ -520,7 +521,7 @@ class RequestMapper extends IRequestMapper {
             System.out.println("Roof exception: " + e.getMessage());
         }
 
-        return new Roof(roof_id, name_, price, inclined);
+        return new Roof(roof_id, name_, price, inclined, length);
     }
 
 }

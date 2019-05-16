@@ -23,7 +23,7 @@ import Data.Entity.User;
 import Data.Mappers.IPrebuiltCarportMapper;
 import Logic.Calculator.CalculatePrice;
 import Data.Mappers.IResponseMapper;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchPrebuiltCarportException;
 import Logic.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;

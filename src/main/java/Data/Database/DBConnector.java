@@ -5,7 +5,7 @@
  */
 package Data.Database;
 
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.SystemErrorException;
 import java.sql.Connection;
 import java.sql.DriverManager;

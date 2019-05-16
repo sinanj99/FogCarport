@@ -7,7 +7,7 @@ package Data.Mappers;
 
 import DB.DataSourceMysqlTest;
 import Data.Database.DBConnector;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;

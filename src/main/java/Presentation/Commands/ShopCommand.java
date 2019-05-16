@@ -7,7 +7,7 @@ package Presentation.Commands;
 
 import Data.Entity.PrebuiltCarport;
 import Data.Entity.ShoppingCart;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchPrebuiltCarportException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
@@ -30,7 +30,7 @@ public class ShopCommand implements Command
 {
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException
     {
         if(request.getSession().getAttribute("shoppingcart") == null) 
         {

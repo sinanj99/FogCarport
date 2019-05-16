@@ -17,7 +17,7 @@ import Data.Mappers.IUserMapper;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.User;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchShedException;
 import Logic.Exceptions.SystemErrorException;

@@ -7,7 +7,7 @@ package Data.Mappers;
 
 import Data.Entity.Material;
 import Data.Entity.Roof;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;
@@ -63,7 +63,7 @@ public abstract class IMaterialMapper {
      * @param price the new price of the material (shortest length)
      * @param id the id of the desired material
      * @throws SystemErrorException 
-     * @throws Logic.Exceptions.NoSuchMaterialException 
+     * @throws Presentation.Exceptions.NoSuchMaterialException 
      */
     
     public abstract void updatePriceWithLength(int price, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException;
@@ -73,7 +73,7 @@ public abstract class IMaterialMapper {
      * @param price the new price of the material
      * @param id the id of the material
      * @throws SystemErrorException 
-     * @throws Logic.Exceptions.NoSuchMaterialException 
+     * @throws Presentation.Exceptions.NoSuchMaterialException 
      */
     public abstract void updatePriceNoLength(int price, int id) throws SystemErrorException, NoSuchMaterialException;
     

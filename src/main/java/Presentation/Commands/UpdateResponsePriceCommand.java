@@ -5,7 +5,7 @@
  */
 package Presentation.Commands;
 
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
 import com.mysql.cj.util.StringUtils;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UpdateResponsePriceCommand implements Command{
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException{
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException{
         boolean isn = StringUtils.isStrictlyNumeric(request.getParameter("sellprice"));
         int id = (int) Integer.parseInt(request.getParameter("requestID"));
         if(isn) request.setAttribute("updatedPrice", Integer.parseInt(request.getParameter("sellprice")));

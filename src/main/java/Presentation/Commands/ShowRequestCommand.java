@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ShowRequestCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException {
         request.setAttribute("requests", PresentationFacade.getInstance().getRequests());
         System.out.println(request.getAttribute("requests"));
         return "jsp/showrequests.jsp";

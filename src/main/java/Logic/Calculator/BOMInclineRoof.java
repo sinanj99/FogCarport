@@ -11,7 +11,7 @@ import Data.Entity.Roof;
 import Data.Entity.Shed;
 import Data.Entity.Type;
 
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 
 import Logic.Controller.LogicFacade;
 import Logic.Exceptions.NoSuchRoofException;

@@ -7,7 +7,7 @@ package Presentation.Commands;
 
 import Data.Entity.PrebuiltCarport;
 import Logic.Controller.LogicFacade;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchPrebuiltCarportException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.UserNotFoundException;
@@ -28,7 +28,7 @@ public class PrebuiltCarportCommand implements Command
 {
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, ServletException, UserNotFoundException, NoSuchRoofException
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException
     {
         ArrayList<PrebuiltCarport> prebuiltCarports = new ArrayList();
         

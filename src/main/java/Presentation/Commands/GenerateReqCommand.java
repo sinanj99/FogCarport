@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GenerateReqCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException {
         if (request.getSession().getAttribute("user") == null) {
             return "jsp/login.jsp";
         }

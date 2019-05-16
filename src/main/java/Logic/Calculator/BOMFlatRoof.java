@@ -14,7 +14,7 @@ import Data.Entity.Shed;
 import Data.Entity.Type;
 import Data.Mappers.IRequestMapper;
 import Logic.Controller.LogicFacade;
-import Logic.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchMaterialException;
 
 /**
  *

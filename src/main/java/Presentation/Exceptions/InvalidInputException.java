@@ -9,15 +9,14 @@ package Presentation.Exceptions;
  *
  * @author sinanjasar
  */
-public class InvalidInputException extends Exception {
-    private String target;
-    public InvalidInputException(String target, String message) {
+public class InvalidInputException extends CustomException {
+
+    public InvalidInputException(String message) {
         super(message);
-        this.target = target;
     }
 
-    public String getTarget() {
-        return target;
+    public InvalidInputException(String message, String target, String type) {
+        super(message, target, type);
     }
     
     

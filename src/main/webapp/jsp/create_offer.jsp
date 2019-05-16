@@ -29,7 +29,9 @@
             <div class="standarddiv pb-0">
                 <div class="row">
                     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
-
+                        <div class="w-100 text-right" style="padding-right: 20px;">
+                            <a class="btn btn-primary" href="FrontController?command=createresponse&requestID=<%= r.getReq_id() %>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 5px 15px;">Opret tilbud</a>
+                        </div>
                         <h1 class="mb-0"><b>Stykliste</b></h1>
 
                         <table class="table table-striped mb-0">

@@ -10,6 +10,7 @@ package Data.Entity;
  * @author Obaydah Mohamad
  */
 public class Carport {
+    private int carportId;
     private Roof roof;
     private int inclination;
     private int width;
@@ -23,7 +24,20 @@ public class Carport {
         this.length = length;
         this.shed_ = shed_;
     }
+    
+    public Carport(int carportId, Roof roof, int inclination, int width, int length, Shed shed_) {
+        this.carportId = carportId;
+        this.roof = roof;
+        this.inclination = inclination;
+        this.width = width;
+        this.length = length;
+        this.shed_ = shed_;
+    }
 
+    public int getCarportId(){
+        return carportId;
+    }
+    
     public int getWidth() {
         return width;
     }

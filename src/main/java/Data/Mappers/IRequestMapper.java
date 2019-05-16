@@ -7,6 +7,7 @@ package Data.Mappers;
 
 import Data.Entity.Request;
 import Data.Entity.Roof;
+import Data.Entity.ShippingAddress;
 import Logic.Exceptions.NoSuchRoofException;
 import java.util.List;
 import javax.sql.DataSource;
@@ -109,4 +110,11 @@ public abstract class IRequestMapper {
      * @throws NoSuchRoofException 
      */
     public abstract void updateRoofPrice(int roof_id, int price) throws NoSuchRoofException;
+    
+    /**
+     * Returns a ShippingAddress object which contains user and user shipping info
+     * @param id
+     * @return user-info(firstname, lastname, address, zipcode and city)
+     */
+    public abstract ShippingAddress getRequestShippingAddress(int id);
 }

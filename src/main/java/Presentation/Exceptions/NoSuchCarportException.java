@@ -9,6 +9,10 @@ package Presentation.Exceptions;
  *
  * @author Obaydah Mohamad
  */
-public class NoSuchCarportException extends Throwable{
+public class NoSuchCarportException extends SystemErrorException {
+    
+    public NoSuchCarportException(String message) {
+        super(message);
+    }
     
 }

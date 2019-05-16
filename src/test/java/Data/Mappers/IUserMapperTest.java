@@ -30,7 +30,7 @@ public class IUserMapperTest {
 
     private static IUserMapper mapper;
     private static String sqlStatements = "";
-    private static DataSource ds = new DataSourceMysqlTest().getDataSource();
+    private static final DataSource ds = new DataSourceMysqlTest().getDataSource();
 
     public IUserMapperTest() {
     }

@@ -6,7 +6,7 @@
 package Data.Entity;
 
 /**
- *
+ *a
  * @author sinanjasar
  */
 public class User {

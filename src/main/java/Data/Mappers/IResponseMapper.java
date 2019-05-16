@@ -6,6 +6,7 @@
 package Data.Mappers;
 
 import Data.Entity.Response;
+import Presentation.Exceptions.NoSuchResponseException;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -19,7 +20,8 @@ public abstract class IResponseMapper {
     }
     
     public abstract void setDataSource(DataSource ds);
+    public abstract List<Response> getResponses(int userId);
     public abstract Response getResponse(int requestId);
     public abstract void insertResponse(Response res);
-    public abstract List<Response> getResponses(int userId);
+    public abstract void deleteResponse(int responseId) throws NoSuchResponseException;    
 }

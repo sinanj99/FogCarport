@@ -24,9 +24,9 @@ public class ShowResponsesCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException{
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null) return "frontpage.jsp";
+        if(user == null) return "jsp/frontpage.jsp";
         request.setAttribute("responses", PresentationFacade.getInstance().getResponses(user.getId()));
-        return "showresponses.jsp";
+        return "jsp/showresponses.jsp";
     }
     
 }

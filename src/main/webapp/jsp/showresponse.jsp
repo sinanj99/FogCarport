@@ -1,3 +1,10 @@
+<%@page import="Data.Entity.Shed"%>
+<%@page import="Data.Entity.Request"%>
+<%@page import="Data.Entity.Response"%>
+<%
+    Response r = (Response) request.getAttribute("response");
+    Request req = (Request) request.getAttribute("request");
+%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
     <body class="background2">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
@@ -10,47 +17,54 @@
                         <h6>Carport mål</h6>
                         <div class="row">
                             <div class="col text-center">
-                                <div>500</div>
+                                <div><%= req.getCarport().getWidth() %></div>
                                 <div class="font-weight-bolder">Bredde</div>
                             </div>
 
                             <div class="col text-center">
-                                <div>700</div>
+                                <div><%= req.getCarport().getLength()%></div>
                                 <div class="font-weight-bolder">Længde</div>
                             </div>
-
+                            
+                            <% 
+                            if(req.getCarport().getInclination() > 0){  
+                            %>    
                             <div class="col text-center">
-                                <div>25</div>
+                                <div><%= req.getCarport().getInclination()%></div>
                                 <div class="font-weight-bolder">Hældning</div>
                             </div>
-
+                            <%}%>
                         </div>
                     </div>
                     
+                    <% 
+                    if(req.getCarport().getShed_() != null){
+                    %>
                     <div style="border: 1px solid #ddd; border-radius: 0px 2px; padding: 10px; width: 100%; margin-top: -1px; text-align: center;">
                         <h6>Redskabsrum mål</h6>
                         <div class="row">
                             <div class="col text-center">
-                                <div>240</div>
+                                <div><%= req.getCarport().getShed_().getWidth() %></div>
                                 <div class="font-weight-bolder">Bredde</div>
                             </div>
 
                             <div class="col text-center">
-                                <div>320</div>
+                                <div><%= req.getCarport().getShed_().getLength() %></div>
                                 <div class="font-weight-bolder">Længde</div>
                             </div>
 
                         </div>
                     </div>
+                    <%}%>
 
                     <div style="border: 1px solid #ddd; border-radius: 2px; padding: 10px; width: 100%; margin-top: 10px; text-align: center;">
                         <h6>Tilbud på ønskede carport</h6>
 
                         <div>
-                            <span style="color: #8a8a8a;">Vi kan levere den ønskede carport for kr. 52000</div>
+                            <span style="color: #8a8a8a;">Vi kan levere den ønskede carport for kr. <%= r.getSellPrice() %></div>
                             <div class="row" style="margin-top: 10px;">
                                 <div class="col" style="padding-right: 5px;">
-                                    <a class="btn btn-danger w-100" style="border-radius: 2px;" href="#" role="button">Afvis tilbud</a>
+                                    <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleteresponse&responseID=<%= r.getResponseId() %>" role="button">Afvis tilbud</a>
                                 </div>
 
                                 <div class="col" style="padding-left: 5px;">

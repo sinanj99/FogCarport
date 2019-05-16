@@ -92,8 +92,8 @@
                             <label class="font-weight-bold">Salgspris:</label><br>
                             <input onChange="updatePriceBtn()" id="sellprice" style="border-radius: 2px;" type="text" name="sellprice" class="form-control text-center " min="1" value="<%= sellPrice %>">
                             <input id="sellpricebtn" style="margin-top: 5px; border-radius: 2px;" type="submit" class="w-100 btn btn-primary" value="Opdater salgspris" disabled>
-                            <input type="hidden" name="command" value="updateresponseprice">
                             <input type="hidden" name="requestID" value="<%= r.getReq_id() %>">
+                            <input type="hidden" name="command" value="updateresponseprice">
                         </form>
                         <%}%>
                     </div>

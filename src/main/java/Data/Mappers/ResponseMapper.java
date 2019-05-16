@@ -8,6 +8,7 @@ package Data.Mappers;
 import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
 import Data.Entity.Response;
+import Presentation.Exceptions.NoSuchResponseException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 /**
@@ -41,7 +44,7 @@ class ResponseMapper extends IResponseMapper{
     }
     
     @Override
-    public Response getResponse(int requestId) {
+    public Response getResponse(int requestId){
         Response r = null;
         int responseId = 0;
         int reqId = 0;
@@ -107,6 +110,20 @@ class ResponseMapper extends IResponseMapper{
         }
     }
     
+    @Override
+    public void deleteResponse(int responseId) throws NoSuchResponseException{
+        String query = "DELETE FROM responses WHERE response_id = ?";
+        
+        try{
+            PreparedStatement p = conn.prepareStatement(query);
+            p.setInt(1, responseId);
+            int deleted = p.executeUpdate();
+            if(deleted == 0) throw new NoSuchResponseException("Response with id " + responseId + " was not found. Nothing was deleted.");
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
     
     @Override
     public List<Response> getResponses(int userId) {
@@ -123,7 +140,7 @@ class ResponseMapper extends IResponseMapper{
         String datePlaced = "";
         
         try{
-            String query = "SELECT * FROM responses WHERE user_id = ?";
+            String query = "SELECT * FROM responses WHERE user_id = ? ORDER BY response_id DESC";
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, userId);
             ResultSet rs = p.executeQuery();
@@ -152,10 +169,6 @@ class ResponseMapper extends IResponseMapper{
     public static void main(String[] args) {
         IResponseMapper r = IResponseMapper.instance();
         r.setDataSource(new DataSourceMysql().getDataSource());
-        for(Response rr : r.getResponses(1)){
-            System.out.println(rr);
-        }
+        
     }
-
-    
 }

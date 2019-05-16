@@ -41,7 +41,7 @@ public class InsertResponseCommand implements Command{
         
         PresentationFacade.getInstance().insertResponse(r);
         
-        return "FrontController?command=showrequests";
+        return "FrontController?command=createresponse&requestID=" + reqId;
     }
     
 }

@@ -15,6 +15,7 @@ import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
+import Presentation.Exceptions.NoSuchResponseException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CreateResponseCommand implements Command{
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, NoSuchResponseException {
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         ShippingAddress s = PresentationFacade.getInstance().getRequestShippingAddress(r.getReq_id());
         int productionPrice = 0;
@@ -60,7 +61,7 @@ public class CreateResponseCommand implements Command{
             request.setAttribute("response", PresentationFacade.getInstance().getResponse(r.getReq_id()));
         }
         
-        return "create_response.jsp";
+        return "jsp/create_response.jsp";
     }
     
 }

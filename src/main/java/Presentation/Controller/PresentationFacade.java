@@ -27,6 +27,7 @@ import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchPrebuiltCarportException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;
+import Presentation.Exceptions.NoSuchResponseException;
 import java.util.List;
 import javax.sql.DataSource;
 import javax.xml.ws.RespectBinding;
@@ -141,6 +142,10 @@ public class PresentationFacade {
     
     public void insertResponse(Response res){
         rp.insertResponse(res);
+    }
+    
+    public void deleteResponse(int responseId) throws NoSuchResponseException{
+        rp.deleteResponse(responseId);
     }
     
     public Response getResponse(int requestId){

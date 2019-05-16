@@ -22,6 +22,7 @@ import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRequestException;
 import Logic.Exceptions.NoSuchShedException;
 import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.InvalidInputException;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -48,7 +49,7 @@ public class DataFacade {
         }
         return instance;
     }
-    public LinkedHashMap<Integer, Integer> updatePrices(int price, LinkedHashMap<Integer, Integer> prices) {
+    public LinkedHashMap<Integer, Integer> updatePrices(int price, LinkedHashMap<Integer, Integer> prices) throws InvalidInputException {
         return pc.updatePrices(price, prices);
     }
     

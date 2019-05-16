@@ -13,6 +13,7 @@ import Data.Entity.Roof;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.InvalidInputException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -267,7 +268,8 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceWithLength(int price, int id) throws SystemErrorException, NoSuchMaterialException {
+    public void updatePriceWithLength(int price, int id) throws SystemErrorException, 
+            NoSuchMaterialException, InvalidInputException {
         LinkedHashMap<Integer, Integer> prices = getMaterialLengthPrices(id);
         try {
             String sql = "SELECT * FROM material_lengths WHERE material_id = ?";
@@ -406,7 +408,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException {
+    public void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
         LinkedHashMap<Integer, Integer> prices = getRoofLengthPrices(id);
         try {
             String sql = "SELECT * FROM rooflength WHERE roof_id = ?";

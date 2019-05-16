@@ -8,6 +8,7 @@ package Presentation.Controller;
 import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
 import Data.Entity.Material;
+import Data.Entity.PrebuiltCarport;
 import Logic.Exceptions.UserNotFoundException;
 import Logic.Exceptions.DuplicateException;
 import Logic.Exceptions.NoSuchRoofException;
@@ -17,9 +18,12 @@ import Data.Mappers.IUserMapper;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.User;
+import Data.Mappers.IPrebuiltCarportMapper;
 import Logic.Calculator.CalculatePrice;
 import Logic.Exceptions.NoSuchMaterialException;
+import Logic.Exceptions.NoSuchPrebuiltCarportException;
 import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.InvalidInputException;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -35,6 +39,7 @@ public class PresentationFacade {
     private static final IRequestMapper r = IRequestMapper.instance();
     private static final IMaterialMapper m = IMaterialMapper.instance();
     private static final IUserMapper u = IUserMapper.instance();
+    private static final IPrebuiltCarportMapper p = IPrebuiltCarportMapper.instance();
 
     //prevents other classes from creating instance
     private PresentationFacade() {
@@ -47,16 +52,17 @@ public class PresentationFacade {
             m.setDataSource(ds);
             u.setDataSource(ds);
             r.setDataSource(ds);
+            p.setDataSource(ds);
         }
         return instance;
     }
-    public void updatePrices(int price, int id) throws SystemErrorException, NoSuchMaterialException {
+    public void updatePrices(int price, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
         m.updatePriceWithLength(price, id);
     }
     public void updatePricesNoLength(int price, int id) throws SystemErrorException, NoSuchMaterialException {
         m.updatePriceNoLength(price, id);
     }
-    public void updatePricesRoof(int price, int id) throws SystemErrorException, NoSuchRoofException {
+    public void updatePricesRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
         m.updatePriceRoof(price, id);
     }
     public List<Roof> getRoofs() throws SystemErrorException {
@@ -115,5 +121,8 @@ public class PresentationFacade {
 
     public Request getRequest(int id) {
         return r.getRequest(id);
+    }
+    public List<PrebuiltCarport> getAllPrebuiltCarports() throws NoSuchPrebuiltCarportException {
+        return p.getAllPrebuiltCarports();
     }
 }

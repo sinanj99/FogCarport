@@ -10,6 +10,7 @@ import Data.Entity.Roof;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.InvalidInputException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -65,7 +66,7 @@ public abstract class IMaterialMapper {
      * @throws Logic.Exceptions.NoSuchMaterialException 
      */
     
-    public abstract void updatePriceWithLength(int price, int id) throws SystemErrorException, NoSuchMaterialException;
+    public abstract void updatePriceWithLength(int price, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException;
     
     /**
      * Updates price of a no-length material specified by id. 
@@ -82,8 +83,9 @@ public abstract class IMaterialMapper {
      * @param id
      * @throws SystemErrorException 
      * @throws Logic.Exceptions.NoSuchRoofException 
+     * @throws Presentation.Exceptions.InvalidInputException 
      */
-    public abstract void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException;
+    public abstract void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException;
 
     public abstract LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException;
     

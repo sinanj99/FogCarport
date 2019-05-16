@@ -15,9 +15,9 @@
                     <div class="d-flex flex-column" style="width: 60%;">
                         <span id="errortxt" class="d-none" style="color: red">Indtast venligst et positivt heltal mellem 1 og 4 cifre.</span>
                         <p class="p-0">Vælg varetype</p>
-                        <br><span> <input type="radio" name="choice" value="length"required> Materiale (med længde)</span>
-                        <span> <input type="radio" name="choice" value="nolength"required> Materiale (uden længde)</span>
-                        <span> <input type="radio" name="choice" value="roof" required> Tag</span><br>
+                        <br><span> <input type="radio" name="where" value="length"required> Materiale (med længde)</span>
+                        <span> <input type="radio" name="where" value="nolength"required> Materiale (uden længde)</span>
+                        <span> <input type="radio" name="where" value="roof" required> Tag</span><br>
                     </div>
                 </div>
                 <div class="col-12 d-flex flex-column align-items-center">
@@ -103,7 +103,7 @@
                                         <td><%=m.getId()%></td>
                                         <td><%=m.getName()%></td>
                                         <td><%=m.getPrice()%></td>
-                                        <td><input type="radio" name="choice" name="id" value="<%=m.getId()%>" required></td>
+                                        <td><input type="radio" name="id" value="<%=m.getId()%>" required></td>
                                     </tr>
                                     <% } %>
                                     <% } %>

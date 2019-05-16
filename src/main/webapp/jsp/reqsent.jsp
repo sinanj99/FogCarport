@@ -6,7 +6,7 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-12 d-flex flex-column align-items-center justify-content-center">
                     <h1> Tillykke - Din forespørgsel er blevet sendt! </h1>
-                    <a href="frontpage.jsp"><button class="notmemberbtn" formaction="frontpage.jsp">Forside</button></a>
+                    <a href="jsp/frontpage.jsp"><button class="notmemberbtn" formaction="jsp/frontpage.jsp">Forside</button></a>
                 </div>
             </div>
         </div>

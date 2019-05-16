@@ -16,11 +16,11 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-6 d-flex flex-column align-items-center justify-content-center"><b>Fladt tag</b>
-                        <a class="d-flex flex-column align-items-center" href="FrontController?command=flatroof"><img src="/project/images/fladt.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
+                        <a class="d-flex flex-column align-items-center" href="/project/FrontController?command=flatroof"><img src="/project/images/fladt.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
                     </div>
 
                     <div class="col-sm-6 d-flex flex-column align-items-center"><b>Tag med rejsning</b>
-                        <a class="d-flex flex-column align-items-center" href="FrontController?command=inclinedroof"><img src="/project/images/rejsning.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
+                        <a class="d-flex flex-column align-items-center" href="/project/FrontController?command=inclinedroof"><img src="/project/images/rejsning.jpg" style="width: 60%; height: auto; margin-top: 20px;"></a>
                     </div>
                 </div>
                 <hr>
@@ -28,7 +28,7 @@
                     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
                         <p>Ellers er du naturligvis velkommen til at kigge på vores udvalg af pre-byggede carporte:</p>
                         <input class="btn nicebtn" type="submit" value="Se pre-byggede" style="color: black;">
-                        <a href="FrontController?command=prebuiltCarport">link til prebuiltCarport.jsp gennem frontcontroller</a>
+                        <a href="/project/FrontController?command=prebuiltCarport">link til prebuiltCarport.jsp gennem frontcontroller</a>
                         
                     </div>
                 </div>

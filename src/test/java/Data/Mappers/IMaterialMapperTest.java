@@ -10,6 +10,7 @@ import Data.Database.DBConnector;
 import Logic.Exceptions.NoSuchMaterialException;
 import Logic.Exceptions.NoSuchRoofException;
 import Logic.Exceptions.SystemErrorException;
+import Presentation.Exceptions.InvalidInputException;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -132,7 +133,7 @@ public class IMaterialMapperTest {
         mapper.updateStockNoLength(id, qty);
     }
     @Test
-    public void testUpdatePriceWithLength() throws SystemErrorException, NoSuchMaterialException {
+    public void testUpdatePriceWithLength() throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
         System.out.println("updatePriceWithLength");
         int price = 990;
         int id = 1;
@@ -153,12 +154,12 @@ public class IMaterialMapperTest {
         assertEquals(expResult, result);
     }
     @Test(expected = NoSuchMaterialException.class)
-    public void testUpdatePriceWithLengthFail1() throws SystemErrorException, NoSuchMaterialException {
+    public void testUpdatePriceWithLengthFail1() throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
         System.out.println("updatePriceWithLengthFail1");
         mapper.updatePriceWithLength(321412, 10);
     }
     @Test(expected = IllegalArgumentException.class)
-    public void testUpdatePriceWithLengthFail2() throws SystemErrorException, NoSuchMaterialException {
+    public void testUpdatePriceWithLengthFail2() throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
         System.out.println("updatePriceWithLengthFail1");
         mapper.updatePriceWithLength(0, 1);
     }
@@ -176,7 +177,7 @@ public class IMaterialMapperTest {
         assertEquals(expResult, result);
     }
     @Test
-    public void testUpdatePriceRoof() throws SystemErrorException, NoSuchRoofException {
+    public void testUpdatePriceRoof() throws SystemErrorException, NoSuchRoofException, InvalidInputException {
         System.out.println("updatePriceRoof");
         int price = 990;
         int id = 1;

@@ -23,12 +23,12 @@ public class InclinedRoofFormCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws ServletException, UserNotFoundException, NoSuchRoofException {
         if (request.getSession().getAttribute("user") == null) {
-            return "login.jsp";
+            return "jsp/login.jsp";
         }
         request.getSession().setAttribute("inclined", "true");
         
         request.setAttribute("roofs", PresentationFacade.getInstance().getRoofs(1)); // 0 for flat roofs 
-        return "inclineroof.jsp";
+        return "jsp/inclineroof.jsp";
     }
     
 }

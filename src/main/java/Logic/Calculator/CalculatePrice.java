@@ -7,6 +7,7 @@ package Logic.Calculator;
 
 import Data.Entity.BOM;
 import Data.Entity.LineItem;
+import Presentation.Exceptions.InvalidInputException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,18 +38,14 @@ public class CalculatePrice {
      * as the value.
      * @return a linked hashmap where all the prices have been updated.
      */
-    public LinkedHashMap<Integer, Integer> updatePrices(int price, LinkedHashMap<Integer, Integer> prices) {
-        //if inserted price is negative (which should not be possible), an error message is shown. 
-        if(price <= 0) {
-            throw new IllegalArgumentException("Vi skal gerne tjene penge på vores produkter :)");
-        }
+    public LinkedHashMap<Integer, Integer> updatePrices(int price, LinkedHashMap<Integer, Integer> prices) throws InvalidInputException {
         //find old price
         int oldPrice = prices.entrySet().iterator().next().getValue();
         //find difference between new and old price
         int dif = oldPrice - price;
         //if there is no change, throw exception
         if (dif == 0) {
-            throw new IllegalArgumentException("Indtast venligst en ny pris!");
+            throw new InvalidInputException("jsp/change_price.jsp", "Indtast venligst en ny pris!");
             //if the difference is positive, substract the difference from all other values
         } else if (dif > 0) {
             for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {

@@ -337,3 +337,6 @@ display: block;
 .errordiv h1 {
     color: white;
 }
+.errordiv p {
+    color: white;
+}

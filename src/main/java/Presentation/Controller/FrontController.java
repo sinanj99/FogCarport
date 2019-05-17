@@ -46,9 +46,11 @@ public class FrontController extends HttpServlet {
             if (message == null) {
                 message = "Der opstod en fejl!";
             }
+            String detail = (e.getDetail());
             System.out.println("message: " + message);
             System.out.println("target: " + e.getTarget());
             request.setAttribute("error", message);
+            request.setAttribute("detail", detail);
             request.getRequestDispatcher(e.getTarget()).forward(request, response);
         }
     }

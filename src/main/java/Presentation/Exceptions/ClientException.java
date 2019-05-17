@@ -7,17 +7,31 @@ package Presentation.Exceptions;
 
 /**
  * Super class for all client-related exceptions.
+ *
  * @author sinanjasar
  */
 public class ClientException extends Exception {
+
     /**
      * The jsp-file/command to reach.
-     */ 
+     */
     private String target = "";
-    
+
     /**
-     * Constructs a ClientException with user-specified target & message.
-     * Used in presentation package, when target & message is known.
+     * A short description of what went wrong for the client.
+     */
+    private String detail;
+
+    public ClientException(String target, String message, String detail) {
+        super(message);
+        this.target = target;
+        this.detail = detail;
+    }
+
+    /**
+     * Constructs a ClientException with user-specified target & message. Used
+     * in presentation package, when target & message is known.
+     *
      * @param target
      * @param message
      */
@@ -25,13 +39,17 @@ public class ClientException extends Exception {
         super(message);
         this.target = target;
     }
-    
+
     public ClientException() {
-        
+
+    }
+
+    public String getDetail() {
+        return detail;
     }
     
     public String getTarget() {
         return target;
     }
-    
+
 }

@@ -2,6 +2,7 @@
 <%
     User user = (User) session.getAttribute("user");
     String error = (String) request.getAttribute("error");
+    String detail = (String) request.getAttribute("detail");
 %>
 <div id="nav">
     <a class="right d-md-none" href="#" onclick="displayNav()"><i class="fas fa-bars"></i></a>
@@ -27,9 +28,12 @@
 <%if (error != null) {%>
 <!-- if request contains an error -->
 <div class="errordiv" id="errordiv">
-        <h1><%=error%></h1>
-        <button class="notmemberbtn" onclick="removeDiv()">OK</button>
-    </form>
+    <h1><%=error%></h1>
+    <%if (detail != null) {%>
+    <p><%=detail%></p>
+    <%} %>
+    <button class="notmemberbtn" onclick="removeDiv()">OK</button>
+</form>
 </div>
 <% } %>
 

@@ -10,11 +10,17 @@ import Data.Entity.User;
 import Presentation.Exceptions.DuplicateException;
 import Logic.Controller.LogicFacade;
 import Presentation.Controller.PresentationFacade;
+import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.NoMatchException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -27,24 +33,83 @@ public class RegisterCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws SystemErrorException, NoMatchException, DuplicateException {
-
+    public String execute(HttpServletRequest request) throws SystemErrorException, NoMatchException, DuplicateException, InvalidInputException {
+        String nameRegex = "[a-zA-Z \\-\\.\\']*$";
+        String addressRegex = "[A-Za-z 0-9'\\.\\-,#]{1,100}";
+        String zipRegex = "[0-9]{4}";
+        String cityRegex = "[A-Za-z \\.\\-,]{1,20}";
+        String pwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+        String target = "jsp/register.jsp";
+        HashMap<String, String> input = new HashMap();
+        
         String fname = request.getParameter("fname");
+        input.put("fornavn!", fname);
         String lname = request.getParameter("lname");
+        input.put("efternavn!", lname);
         String adress = request.getParameter("adress");
-        int zip = Integer.parseInt(request.getParameter("zip"));
+        input.put("adresse!", lname);
+        
+        int zip;
+        try {
+            zip = Integer.parseInt(request.getParameter("zip"));
+        } catch (NumberFormatException e) {
+            throw new InvalidInputException(target, "Postnummer skal være 4 cifre!");
+        }
+        
+        input.put("postnummer!", String.valueOf(zip));
         String city = request.getParameter("city");
+        input.put("by!", city);
         String email = request.getParameter("email");
+        input.put("email!", email);
         String pword = request.getParameter("pword");
+        input.put("adgangskode!", lname);
         String pword2 = request.getParameter("pword2");
         String gender = request.getParameter("gender");
-        if(!pword.equals(pword2)) {
-            throw new NoMatchException("jsp/register.jsp", "Adgangskoderne matcher ikke!");
+        input.put("køn!", lname);
+
+        //loop throug map, check for null values
+        for (Map.Entry<String, String> entry : input.entrySet()) {
+            if (entry.getValue() == null) {
+                throw new InvalidInputException(target, "Indtast venligst en værdi i feltet '" + entry.getKey() + "'");
+            }
+        }
+
+        //check if input strings live up to regex requirements
+        if (!pword.equals(pword2)) {
+            throw new NoMatchException(target, "Adgangskoderne matcher ikke!");
+        }
+        if (!Pattern.matches(nameRegex, fname)) {
+            throw new InvalidInputException(target, "Fornavn er ugyldigt!", "Fornavn skal være mellem 1 og 20 bogstaver og "
+                    + "må ikke indeholde andre specielle karakterer end ´,´ ´'´ og ´.´");
+        }
+        if (!Pattern.matches(nameRegex, lname)) {
+            throw new InvalidInputException(target, "Efternavn er ugyldigt!", "Efternavn skal være mellem 1 og 20 bogstaver og "
+                    + "må ikke indeholde andre specielle karakterer end ´,´ ´'´ og ´.´");
+        }
+        if (!Pattern.matches(addressRegex, adress)) {
+            throw new InvalidInputException(target, "Adressen er ugyldig!", "Adresse skal være mellem 1 og 100 tegn og må ikke indeholde"
+                    + "andre specielle karakterer end ´,´ ´-´ ´.´ og ´#´");
+        }
+        if (!Pattern.matches(zipRegex, String.valueOf(zip))) {
+            throw new InvalidInputException(target, "Postnummer er ugyldigt!", "Postnummer skal bestå af 4 cifre");
+        }
+        if (!Pattern.matches(cityRegex, city)) {
+            throw new InvalidInputException(target, "By er ugyldig!", "By skal være mellem 1 og 20 tegn");
+        }
+        if (!Pattern.matches(pwordRegex, pword)) {
+            throw new InvalidInputException(target, "Adgangskode er ugyldig!", "Adgangskode skal minimum være 8 karakterer"
+                    + " og skal bestå af minimum et bogstav og et tal");
+        }
+        if (!email.contains("@")) {
+            throw new InvalidInputException(target, "Email er ugyldig!");
+        }
+        if (!gender.equals("m") && !gender.equals("w")) {
+            throw new InvalidInputException(target, "Køn er ugyldigt!");
         }
         try {
             PresentationFacade.getInstance().insertUser(new User(new PersonalInfo(fname, lname, adress, zip, city, gender), email, pword));
-        } catch (DuplicateException ex) {
-            throw new DuplicateException("jsp/register.jsp", "Email optaget!");
+        } catch (DuplicateException e) {
+            throw new DuplicateException(target, "Email optaget!");
         }
 
         return "jsp/frontpage.jsp";

@@ -34,9 +34,9 @@ public class LoginCommand implements Command {
             user = PresentationFacade.getInstance().getUser(email);
             LoginController.doesMatch(email, password);
             } catch(UserNotFoundException e) {
-                throw new UserNotFoundException("jsp/login.jsp", e.getMessage(), "emailError");
+                throw new UserNotFoundException("jsp/login.jsp", "Bruger findes ikke!");
             } catch(NoMatchException e) {
-                throw new NoMatchException("jsp/login.jsp", e.getMessage(), "passwordError");
+                throw new NoMatchException("jsp/login.jsp", "Forkert adgangskode!");
             }
         request.getSession().setAttribute("user", user);
 

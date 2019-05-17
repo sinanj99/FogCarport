@@ -10,13 +10,12 @@ package Presentation.Exceptions;
  * @author sinanjasar
  */
 public class NoSuchMaterialException extends ClientException {
-    
-    public NoSuchMaterialException(String message) {
-        super(message);
+
+    public NoSuchMaterialException() {
     }
     
-    public NoSuchMaterialException(String target, String message, String type) {
-        super(target, "Kunne ikke finde materiale med id: " + message, type);
+    public NoSuchMaterialException(String target, String message) {
+        super(target, "Kunne ikke finde materiale med id: " + message);
     }
     
 }

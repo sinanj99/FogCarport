@@ -12,15 +12,14 @@ package Presentation.Exceptions;
 public class InvalidInputException extends ClientException {
 
     /**
-     * Constructs an InvalidInputException with user-specified msg, target & type.
+     * Constructs an InvalidInputException with user-specified message, target & type.
      * Is dependent on client input, and therefore, is only constructed 
      * inside of presentation-package where the parameters are known.
      * @param message
      * @param target
-     * @param type 
      */
-    public InvalidInputException(String message, String target, String type) {
-        super(message, target, type);
+    public InvalidInputException(String message, String target) {
+        super(message, target);
     }
     
     

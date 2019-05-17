@@ -71,7 +71,7 @@ class UserMapper extends IUserMapper {
                 throw new SystemErrorException(ex.getMessage());
             }
             if (e.getMessage().toLowerCase().startsWith("duplicate entry")) {
-                throw new DuplicateException("Email optaget!");
+                throw new DuplicateException();
             } else {
                 throw new SystemErrorException(e.getMessage());
             }
@@ -107,7 +107,7 @@ class UserMapper extends IUserMapper {
                 city = rs.getString("city");
                 gender = rs.getString("gender");
             } else {
-                throw new UserNotFoundException("Bruger findes ikke!");
+                throw new UserNotFoundException();
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
@@ -158,7 +158,7 @@ class UserMapper extends IUserMapper {
                 city = rs.getString("city");
                 gender = rs.getString("gender");
             } else {
-                throw new UserNotFoundException("Bruger findes ikke!");
+                throw new UserNotFoundException();
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());

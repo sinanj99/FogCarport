@@ -58,27 +58,29 @@ a:hover
 
 .smallnav
 {
-    background-color: rgba(10, 7, 38, 0.8);
+    background-color: rgb(10, 7, 38);
     position: fixed;
     top: 0;
     width: 100%;
-    margin-top: 64px;
+    margin-top: 63px;
     z-index: 10;
     color: #000;
-    padding: 20px;
+    border-bottom: 1px solid rgba(219, 222, 255, 0.5);
+    
 }
 
 .smallnav a
 {
-    margin: 20px;
-    color: #dbdeff;
+    color: white;
+    padding: 20px;
     text-decoration: none;
-    border-radius: 3px;
     text-align: center;
+    border-top: 1px solid rgba(219, 222, 255, 0.5);
 }
 
 .smallnav a:hover{
-    color: white;
+    background-color: #dbdeff;
+    color: black;
 }
 
 .left
@@ -316,4 +318,22 @@ overflow: auto;
 }
 .table-wrapper-scroll-y {
 display: block;
+}
+
+.errordiv {
+    background-color: rgb(10, 7, 38);
+    position: fixed;
+    margin-top: 63px;
+    top: 25%;
+    bottom: 25%;
+    left: 17%;
+    right: 17%;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.errordiv h1 {
+    color: white;
 }

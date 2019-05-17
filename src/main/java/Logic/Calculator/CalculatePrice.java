@@ -47,7 +47,7 @@ public class CalculatePrice {
         int dif = oldPrice - price;
         //if there is no change, throw exception
         if (dif == 0) {
-            throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst en ny pris!", "priceError");
+            throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst en ny pris!");
             //if the difference is positive, substract the difference from all other values
         } else if (dif > 0) {
             for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {

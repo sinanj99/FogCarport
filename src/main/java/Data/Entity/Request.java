@@ -8,7 +8,6 @@ package Data.Entity;
 import java.time.LocalDateTime;
 
 /**
- * Hvorfor har req price ? - sinan
  * @author Obaydah Mohamad
  */
 public class Request {

@@ -39,12 +39,12 @@ public class RegisterCommand implements Command {
         String pword2 = request.getParameter("pword2");
         String gender = request.getParameter("gender");
         if(!pword.equals(pword2)) {
-            throw new NoMatchException("jsp/register.jsp", "Adgangskoderne matcher ikke!", "passwordError");
+            throw new NoMatchException("jsp/register.jsp", "Adgangskoderne matcher ikke!");
         }
         try {
             PresentationFacade.getInstance().insertUser(new User(new PersonalInfo(fname, lname, adress, zip, city, gender), email, pword));
         } catch (DuplicateException ex) {
-            throw new DuplicateException("jsp/register.jsp", ex.getMessage(), "emailError");
+            throw new DuplicateException("jsp/register.jsp", "Email optaget!");
         }
 
         return "jsp/frontpage.jsp";

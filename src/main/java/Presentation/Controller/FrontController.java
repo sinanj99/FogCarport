@@ -42,10 +42,13 @@ public class FrontController extends HttpServlet {
         } catch (SystemErrorException e) {
             request.getRequestDispatcher(e.getTarget()).forward(request, response);
         } catch (ClientException e) {
-            System.out.println("message: " + e.getMessage());
-            System.out.println("type: " + e.getType());
+            String message = e.getMessage();
+            if (message == null) {
+                message = "Der opstod en fejl!";
+            }
+            System.out.println("message: " + message);
             System.out.println("target: " + e.getTarget());
-            request.setAttribute(e.getType(), e.getMessage());
+            request.setAttribute("error", message);
             request.getRequestDispatcher(e.getTarget()).forward(request, response);
         }
     }

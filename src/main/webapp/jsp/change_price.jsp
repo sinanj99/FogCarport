@@ -5,8 +5,6 @@
     <body class="background2">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
     <%
-        String priceError = (String) request.getAttribute("priceError");
-        String idError = (String) request.getAttribute("idError");
         List<Material> materials = (List<Material>) request.getAttribute("materials");
         List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
     %>
@@ -27,21 +25,14 @@
                     <div class="col-12 d-flex flex-column align-items-center">
                         <div class="d-flex flex-column" style="width: 60%;">
                             Varens id
-                            <%if (idError == null) { %>
+
                             <input style="width:100%" class="ml-0 inputbig" id="id" name="id" placeholder="Indtast id..." type="number" max="100" required>
-                            <% } else {%>
-                            <input style="width:100%; border: 1px solid red" class="ml-0 inputbig" id="id" name="id" placeholder="<%=idError%>" type="number" max="100" required>
-                            <% } %>
                         </div>
                     </div>
                     <div class="col-12 d-flex flex-column align-items-center">
                         <div class="d-flex flex-column" style="width: 60%;">
                             Ny pris
-                            <%if (priceError == null) { %>
                             <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" required>
-                            <% } else {%>
-                            <input style="width:100%; border: 1px solid red" class="ml-0 inputbig" id="price" name="price" placeholder="<%=priceError%>" type="number" required>
-                            <% } %>
                         </div>
                         <input style="width: 30%" class="notmemberbtn"type="submit" value="Opdater pris">
                         <input type="hidden" name="command" value="change_price">
@@ -85,11 +76,7 @@
                                 Indtast den nye pris
                             </div>
                             <div style="width: 60%">
-                                <%if (priceError == null) { %>
                                 <input type="text" class="w-100 ml-0 inputbig" name="price" placeholder="Indtast ny pris...">
-                                <% } else {%>
-                                <input style="border: 1px solid red" type="number" class="w-100 ml-0 inputbig" name="price" placeholder="<%=priceError%>">
-                                <% } %>
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 60%;" value="Opdater pris">
@@ -133,11 +120,7 @@
                                 Indtast den nye pris
                             </div>
                             <div style="width: 60%">
-                                <%if (priceError == null) { %>
                                 <input type="text" class="w-100 ml-0 inputbig" name="price" placeholder="Indtast ny pris...">
-                                <% } else {%>
-                                <input style="border: 1px solid red" type="number" class="w-100 ml-0 inputbig" name="price" placeholder="<%=priceError%>">
-                                <% } %>
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 60%;" value="Opdater pris">
@@ -188,11 +171,7 @@
                                 Indtast den nye pris
                             </div>
                             <div style="width: 60%">
-                                <%if (priceError == null) { %>
                                 <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" required>
-                                <% } else {%>
-                                <input style="width:100%; border: 1px solid red" class="ml-0 inputbig" id="price" name="price" placeholder="<%=priceError%>" type="number" required>
-                                <% }%>
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 30%;" value="Opdater pris">

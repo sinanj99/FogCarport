@@ -118,7 +118,7 @@ class ResponseMapper extends IResponseMapper{
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, responseId);
             int deleted = p.executeUpdate();
-            if(deleted == 0) throw new NoSuchResponseException("Response with id " + responseId + " was not found. Nothing was deleted.");
+            if(deleted == 0) throw new NoSuchResponseException();
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }

@@ -1,5 +1,8 @@
 <%@page import="Data.Entity.User"%>
-<% User user = (User) session.getAttribute("user"); %>
+<%
+    User user = (User) session.getAttribute("user");
+    String error = (String) request.getAttribute("error");
+%>
 <div id="nav">
     <a class="right d-md-none" href="#" onclick="displayNav()"><i class="fas fa-bars"></i></a>
         <% if (user == null) {%>
@@ -21,12 +24,19 @@
     <% }%>
 </div>
 
+<%if (error != null) {%>
+<!-- if request contains an error -->
+<div class="errordiv" id="errordiv">
+        <h1><%=error%></h1>
+        <button class="notmemberbtn" onclick="removeDiv()">OK</button>
+    </form>
+</div>
+<% } %>
 
 <div id="smallnav" class="d-none d-md-none smallnav">
     <div class="smallnavrow">
         <% if (session.getAttribute("user") == null) {%>
-        <a class="" href="jsp/register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a><br>
-        <hr style="background-color: #dbdeff;">
+        <a class="" href="jsp/register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a>
         <a class="" href="jsp/login.jsp"> <i class="fas fa-sign-in-alt"></i>    Log ind</a>
         <% } else { %>
         <a class="" href="FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
@@ -44,5 +54,9 @@
             smallnav.classList.add("d-none");
             a = 0;
         }
+    }
+    function removeDiv() {
+        var div = document.getElementById("errordiv");
+        div.classList.add("d-none");
     }
 </script>

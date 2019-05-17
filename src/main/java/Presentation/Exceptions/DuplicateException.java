@@ -12,11 +12,12 @@ package Presentation.Exceptions;
 
 public class DuplicateException extends ClientException {
 
-    public DuplicateException(String message) {
-        super(message);
+    public DuplicateException() {
     }
     
-    public DuplicateException(String target, String message, String type) {
-        super(target, message, type);
+    public DuplicateException(String target, String message) {
+        super(target, message);
     }
+    
+    
 }

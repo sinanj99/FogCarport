@@ -31,7 +31,7 @@ public class LoginController {
     public static void doesMatch(String email, String password) throws UserNotFoundException, SystemErrorException, NoMatchException {
         User user = LogicFacade.getInstance().getUser(email);
         if (!password.equals(user.getPassword())) {
-            throw new NoMatchException("Forkert adgangskode!");
+            throw new NoMatchException();
         }
     }
 }

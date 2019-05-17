@@ -11,12 +11,10 @@ package Presentation.Exceptions;
  */
 public class UserNotFoundException extends ClientException {
 
-    public UserNotFoundException(String message) {
-        super(message);
+    public UserNotFoundException() {
     }
-    
-    public UserNotFoundException(String target, String message, String type) {
-        super(target, message, type);
+    public UserNotFoundException(String target, String message) {
+        super(target, message);
     }
     
 }

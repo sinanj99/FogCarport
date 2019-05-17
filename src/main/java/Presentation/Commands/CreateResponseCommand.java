@@ -25,43 +25,38 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Obaydah Mohamad
  */
-public class CreateResponseCommand implements Command{
+public class CreateResponseCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, NoSuchResponseException {
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, NoSuchResponseException, SystemErrorException {
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         ShippingAddress s = PresentationFacade.getInstance().getRequestShippingAddress(r.getReq_id());
         int productionPrice = 0;
-        
+
         BOM bom;
         CalculateBOM b = new CalculateBOM();
-        try {
-            if (r.getCarport().getInclination() != 0) {
-                bom = b.inclineRoofBOM(r);
-            } else {
-                bom = b.generateFlatRoofCarportBOM(r);
-            }
-        } catch(SystemErrorException e) {
-            request.setAttribute("error", e.getMessage());
-            return "error.jsp";
+        if (r.getCarport().getInclination() != 0) {
+            bom = b.inclineRoofBOM(r);
+        } else {
+            bom = b.generateFlatRoofCarportBOM(r);
         }
-        
-        for(LineItem l : bom.getLineitems()){
+
+        for (LineItem l : bom.getLineitems()) {
             productionPrice += l.getPrice();
         }
-        
+
         request.setAttribute("request", r);
         request.setAttribute("shippingAddress", s);
         request.setAttribute("productionPrice", productionPrice);
-        
+
         request.setAttribute("status", "offernotsend");
-        
-        if(PresentationFacade.getInstance().getResponse(r.getReq_id()) != null){
+
+        if (PresentationFacade.getInstance().getResponse(r.getReq_id()) != null) {
             request.setAttribute("status", "offersend");
             request.setAttribute("response", PresentationFacade.getInstance().getResponse(r.getReq_id()));
         }
-        
+
         return "jsp/create_response.jsp";
     }
-    
+
 }

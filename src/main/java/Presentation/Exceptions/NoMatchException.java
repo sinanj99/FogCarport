@@ -6,17 +6,15 @@
 package Presentation.Exceptions;
 
 /**
- * Used specifically in LoginCommand, when a user's password and username 
- * does not match.
+ * Used when two input fields do not match.
  * @author sinanjasar
  */
 public class NoMatchException extends ClientException {
 
-    public NoMatchException(String message) {
-        super(message);
+    public NoMatchException() {
     }
     
-    public NoMatchException(String target, String message, String type) {
-        super(target, message, type);
+    public NoMatchException(String target, String message) {
+        super(target, message);
     }
 }

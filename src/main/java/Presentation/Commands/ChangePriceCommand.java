@@ -11,12 +11,7 @@ import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.InvalidInputException;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -28,24 +23,24 @@ public class ChangePriceCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws
             UserNotFoundException, NoSuchRoofException, InvalidInputException, SystemErrorException,
-            NoSuchMaterialException, NumberFormatException {
+            NumberFormatException, NoSuchMaterialException {
         int id, price = 0;
         String choice = request.getParameter("where");
         try {
             price = Integer.parseInt(request.getParameter("price"));
         } catch (NumberFormatException e) {
-            throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst et tal!", "priceError");
+            throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst et tal!");
         }
         if (price == 0) {
-            throw new InvalidInputException("FrontController?command=show_prices", "Ingen gratis materialer!", "priceError");
+            throw new InvalidInputException("FrontController?command=show_prices", "Ingen gratis materialer!");
         } else if (!Pattern.matches("[0-9]{1,4}", String.valueOf(price))) {
-            throw new InvalidInputException("FrontController?command=show_prices", "Ugyldig pris!", "priceError");
+            throw new InvalidInputException("FrontController?command=show_prices", "Ugyldig pris!");
         }
         try{
         id = Integer.parseInt(request.getParameter("id"));
         } catch(NumberFormatException e) {
             System.out.println(e.getMessage());
-            throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst et tal!", "idError");
+            throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst et tal!");
         }
         try {
         switch (choice) {
@@ -61,7 +56,7 @@ public class ChangePriceCommand implements Command {
         }
         } catch(NoSuchMaterialException e) {
             System.out.println(e.getMessage());
-            throw new NoSuchMaterialException("FrontController?command=show_prices", e.getMessage(), "idError");
+            throw new NoSuchMaterialException("FrontController?command=show_prices", String.valueOf(id));
         }
         return "jsp/frontpage.jsp";
     }

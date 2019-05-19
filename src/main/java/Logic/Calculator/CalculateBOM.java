@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class CalculateBOM {
     
-    public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException {
+    public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException, SystemErrorException {
         BOMFlatRoof f = new BOMFlatRoof();
         ArrayList listOfLineItems = new ArrayList();
         BOMToolshed b = new BOMToolshed();
@@ -36,6 +36,7 @@ public class CalculateBOM {
             //the fundament
             listOfLineItems.add(f.beslagskruer(c));
             listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.squareDiscs(c));
             listOfLineItems.add(f.højrebeslag(c));
             listOfLineItems.add(f.venstrebeslag(c));
             listOfLineItems.add(f.oversternbrædderForFront(c));
@@ -57,6 +58,7 @@ public class CalculateBOM {
             //The fundament
             listOfLineItems.add(f.beslagskruer(c));
             listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.squareDiscs(c));
             listOfLineItems.add(f.højrebeslag(c));
             listOfLineItems.add(f.venstrebeslag(c));
             listOfLineItems.add(f.oversternbrædderForFront(c));
@@ -112,6 +114,7 @@ public class CalculateBOM {
             //The fundament
             listOfLineItems.add(f.beslagskruer(c));
             listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.squareDiscs(c));
             listOfLineItems.add(f.højrebeslag(c));
             listOfLineItems.add(f.venstrebeslag(c));
             listOfLineItems.add(f.oversternbrædderForFront(c));
@@ -152,6 +155,7 @@ public class CalculateBOM {
             //The fundament 
             listOfLineItems.add(f.beslagskruer(c));
             listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.squareDiscs(c));
             listOfLineItems.add(f.højrebeslag(c));
             listOfLineItems.add(f.venstrebeslag(c));
             listOfLineItems.add(f.oversternbrædderForFront(c));

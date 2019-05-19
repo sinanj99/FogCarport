@@ -16,6 +16,7 @@ import Data.Entity.Type;
 import Data.Mappers.IRequestMapper;
 import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.SystemErrorException;
 
 /**
  *
@@ -72,6 +73,17 @@ public class BOMFlatRoof {
         //two boards bolts (brædderbolte) for each post (stolpe)
         return calculateQuantityOfStolper(c) * 2;
     }
+    
+    /**
+     * 
+     * @param c
+     * @return the amount of sqaure disc (firkant skiver) needed for the carport
+     */ 
+    private int CalculateQuantityOfFirkantSkiver(Carport c) 
+    {
+        //One sqaure disc (firkant skive) for each board bolt (brææder bolt)
+        return calculateQuantityOfBrædderbolt(c);
+    }
 
     /**
      * 
@@ -119,6 +131,19 @@ public class BOMFlatRoof {
     {
         Material m = LogicFacade.getInstance().getMaterial_("10x120mm brædderbolt");
         return new LineItem(m, calculateQuantityOfBrædderbolt(c), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBrædderbolt(c), Type.NOLENGTH);
+    }
+    
+    /**
+     * 
+     * @param c
+     * @return LineItem of sqaure discs (firkant skiver)
+     * @throws NoSuchMaterialException
+     * @throws SystemErrorException 
+     */
+    public LineItem squareDiscs(Carport c) throws NoSuchMaterialException, SystemErrorException 
+    {
+        Material m = LogicFacade.getInstance().getMaterialNoLength(10);
+        return new LineItem(m, CalculateQuantityOfFirkantSkiver(c), "Til montering af rem på stolper", m.getPrice() * CalculateQuantityOfFirkantSkiver(c), Type.NOLENGTH);
     }
     
     /**

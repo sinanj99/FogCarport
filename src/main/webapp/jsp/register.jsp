@@ -3,7 +3,7 @@
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
 
         <div class="container d-flex flex-column justify-content-center">
-            <form onkeyup="checkAll()" class="newform" method="post" action="/project/FrontController">
+            <form onkeyup="checkAll()" onchange="checkAll()" class="newform" method="post" action="/project/FrontController">
                 <h1 class="text-align-start">Adresseoplysninger</h1>
                 <div class="row">
                     <div class="col-sm-6 p-0 col-sm-6-l">

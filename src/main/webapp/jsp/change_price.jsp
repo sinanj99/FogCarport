@@ -11,11 +11,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <form class="col-12 standarddiv" onsubmit="return checkPrice()" method="post" action="/project/FrontController">
+                <form class="col-12 standarddiv" method="post" action="/project/FrontController">
                     <h1>Opdater pris</h1>
                     <div class="col-12 d-flex flex-column align-items-center">
                         <div class="d-flex flex-column" style="width: 60%;">
-                            <span id="errortxt" class="d-none" style="color: red">Indtast venligst et positivt heltal mellem 1 og 4 cifre.</span>
                             <p class="p-0">Vælg varetype</p>
                             <br><span> <input type="radio" name="where" value="length"required> Materiale (med længde)</span>
                             <span> <input type="radio" name="where" value="nolength"required> Materiale (uden længde)</span>
@@ -26,13 +25,13 @@
                         <div class="d-flex flex-column" style="width: 60%;">
                             Varens id
 
-                            <input style="width:100%" class="ml-0 inputbig" id="id" name="id" placeholder="Indtast id..." type="number" max="100" required>
+                            <input style="width:100%" class="ml-0 inputbig" id="id" name="id" placeholder="Indtast id..." type="number" max="99" required>
                         </div>
                     </div>
                     <div class="col-12 d-flex flex-column align-items-center">
                         <div class="d-flex flex-column" style="width: 60%;">
                             Ny pris
-                            <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" required>
+                            <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" max="9999" required>
                         </div>
                         <input style="width: 30%" class="notmemberbtn"type="submit" value="Opdater pris">
                         <input type="hidden" name="command" value="change_price">
@@ -76,7 +75,7 @@
                                 Indtast den nye pris
                             </div>
                             <div style="width: 60%">
-                                <input type="text" class="w-100 ml-0 inputbig" name="price" placeholder="Indtast ny pris...">
+                                <input type="number" max="9999" class="w-100 ml-0 inputbig" name="price" placeholder="Indtast ny pris..." required>
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 60%;" value="Opdater pris">
@@ -120,7 +119,7 @@
                                 Indtast den nye pris
                             </div>
                             <div style="width: 60%">
-                                <input type="text" class="w-100 ml-0 inputbig" name="price" placeholder="Indtast ny pris...">
+                                <input type="number" max="9999" class="w-100 ml-0 inputbig" name="price" placeholder="Indtast ny pris..." required>
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 60%;" value="Opdater pris">
@@ -171,7 +170,7 @@
                                 Indtast den nye pris
                             </div>
                             <div style="width: 60%">
-                                <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" required>
+                                <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" required max="9999">
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 30%;" value="Opdater pris">
@@ -182,19 +181,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        function checkPrice() {
-            var price = document.getElementById("price");
-            var errortxt = document.getElementById("errortxt");
-            var regex = /[1-9{1}]/g;
-            console.log(price.value);
-            var found = regex.test(price.value);
-            if (!found) {
-                console.log(found)
-                errortxt.classList.remove("d-none");
-                price.style.border = "2px solid red";
-            }
-        }
-    </script>        
+    </div>      
     <jsp:include page='/include/sitefoot.jsp'></jsp:include>

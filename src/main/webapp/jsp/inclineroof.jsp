@@ -12,9 +12,9 @@
     int a;
     int b;
 %>
-<body onload="spaceForShed();" class="background2">
+<body onload="spaceForShed(); checkAll()" class="background2">
     <div class="container">
-        <form class="standarddiv pl-0 pr-0 d-flex flex-column justify-content-center">
+        <form onkeyup="checkAll()" onchange="checkAll()" class="standarddiv pl-0 pr-0 d-flex flex-column justify-content-center">
             <h3>Tilpas din carport</h3>
             <div class="row">
                 <div class="col-sm-12 d-flex flex-column align-items-center">
@@ -49,7 +49,7 @@
                         <option value="n/a">Vælg</option>
                         <% if (roofs != null) {
                                 for (Roof r : roofs) {%>
-                        <option value="<%=r.getRoof_id()%>"><%= r.getName()%></option>
+                        <option value="<%=r.getRoof_id()%>" ><%= r.getName()%></option>
                         <% }
                             } %>
                     </select>
@@ -116,19 +116,19 @@
                         <div class="textsmallr">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input name="fname" onfocus="this.value = ''" id="fname" class="inputsmalll" type="text" value="<%=user.getInfo().getFirstname()%>" placeholder="Fornavn..." required>
+                        <input name="fname"  id="fname" class="inputsmalll check" type="text" value="<%=user.getInfo().getFirstname()%>" placeholder="Fornavn..." required onkeyup="check(this)">
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">Efternavn</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input id="lname" name="lname" onfocus="this.value = ''" class="inputsmallr" type="text" value="<%=user.getInfo().getLastname()%>" placeholder="Efternavn..." required>
+                        <input id="lname" name="lname"  class="inputsmallr check" type="text" value="<%=user.getInfo().getLastname()%>" placeholder="Efternavn..." required onkeyup="check(this)">
                     </div>
                 </div>  
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Adresse</p>
-                        <input class="inputbig" name="address" onfocus="this.value = ''" id="adresss" type="text" value="<%=user.getInfo().getAddress()%>" placeholder="Adresse..." required>
+                        <input class="inputbig check" name="address"  id="address" type="text" value="<%=user.getInfo().getAddress()%>" placeholder="Adresse..." required onkeyup="check(this)">
                     </div>
                 </div>
                 <div class="row">
@@ -139,25 +139,25 @@
                         <div class="textsmallr">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-l">
-                        <input class="inputsmalll" id="zip" name="zip" onfocus="this.value = ''" type="text" value="<%=user.getInfo().getZipcode()%>" placeholder="Postnummer..." required>
+                        <input class="inputsmalll check" id="zip" name="zip"  type="text" value="<%=user.getInfo().getZipcode()%>" placeholder="Postnummer..." required onkeyup="check(this)">
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r d-sm-none">
                         <div class="textsmall">By</div>
                     </div>
                     <div class="col-sm-6 p-0 col-sm-6-r">
-                        <input class="inputsmallr" id="city" name="city" onfocus="this.value = ''" type="text" value="<%=user.getInfo().getCity()%>" placeholder="By..." required>
+                        <input class="inputsmallr check" id="city" name="city"  type="text" value="<%=user.getInfo().getCity()%>" placeholder="By..." required onkeyup="check(this)">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%;">Email</p>
-                        <input class="inputbig" id="email" name="email" onfocus="this.value = ''" type="text" value="<%=user.getEmail()%>" placeholder="Email..." required>
+                        <input class="inputbig check" id="email" name="email"  type="text" value="<%=user.getEmail()%>" placeholder="Email..." required onkeyup="check(this)">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-12 d-flex justify-content-center">
-                    <input type="submit" class="btn notmemberbtn" value="Send forespørgsel">
+                    <input id="submit" type="submit" class="btn notmemberbtn" value="Send forespørgsel">
                     <input type="hidden" name="command" value="request">
                     <input type="hidden" name="inclined" value="true">
                 </div>
@@ -175,7 +175,7 @@
             var element = document.getElementById("rchoice");
             var text = element.options[element.selectedIndex].text;
             document.getElementById(text).classList.remove("d-none");
-            document.getElementById(text+"text").classList.remove("d-none");
+            document.getElementById(text + "text").classList.remove("d-none");
         }
 
 
@@ -247,3 +247,4 @@
             }
         }
     </script>
+    <script src="/project/include/javascript_validation.js" async></script>

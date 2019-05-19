@@ -17,4 +17,8 @@ public class NoMatchException extends ClientException {
     public NoMatchException(String target, String message) {
         super(target, message);
     }
+
+    public NoMatchException(String target, String message, String detail) {
+        super(target, message, detail);
+    }
 }

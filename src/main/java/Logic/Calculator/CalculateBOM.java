@@ -140,14 +140,16 @@ public class CalculateBOM {
             //Still missing some methods
             
             //The roof
-            listOfLineItems.add(calc.soffits(cwidth, inclination));
+            listOfLineItems.add(calc.screwsLathHolders(clength, shed, slength));
+            listOfLineItems.add(calc.LathScrews(cwidth, inclination));
             listOfLineItems.add(calc.laths(cwidth, inclination, clength, slength));
             listOfLineItems.add(calc.toplaths(clength, slength, cwidth));
-            listOfLineItems.add(calc.roofTiles(roofid, cwidth, clength, inclination));
-            listOfLineItems.add(calc.ridgeTiles(roofid, clength));
+            listOfLineItems.add(calc.soffits(cwidth, inclination));
             listOfLineItems.add(calc.lathHolders(clength, shed, slength));
-            listOfLineItems.add(calc.ridgeTileBrackets(clength));
+            listOfLineItems.add(calc.roofTiles(roofid, cwidth, clength, inclination));
             listOfLineItems.add(calc.roofTileBinders());
+            listOfLineItems.add(calc.ridgeTiles(roofid, clength));
+            listOfLineItems.add(calc.ridgeTileBrackets(clength));
             
             } 
         else 
@@ -171,14 +173,16 @@ public class CalculateBOM {
             //still mising some methods
             
             //The roof
-            listOfLineItems.add(calc.soffits(cwidth, inclination));
+            listOfLineItems.add(calc.screwsLathHolders(clength, shed, slength));
+            listOfLineItems.add(calc.LathScrews(cwidth, inclination));
             listOfLineItems.add(calc.laths(cwidth, inclination, clength, slength));
             listOfLineItems.add(calc.toplaths(clength, slength, cwidth));
-            listOfLineItems.add(calc.roofTiles(roofid, cwidth, clength, inclination));
-            listOfLineItems.add(calc.ridgeTiles(roofid, clength));
+            listOfLineItems.add(calc.soffits(cwidth, inclination));
             listOfLineItems.add(calc.lathHolders(clength, shed, slength));
-            listOfLineItems.add(calc.ridgeTileBrackets(clength));
+            listOfLineItems.add(calc.roofTiles(roofid, cwidth, clength, inclination));
             listOfLineItems.add(calc.roofTileBinders());
+            listOfLineItems.add(calc.ridgeTiles(roofid, clength));
+            listOfLineItems.add(calc.ridgeTileBrackets(clength));
             
         }
         return new BOM(listOfLineItems);

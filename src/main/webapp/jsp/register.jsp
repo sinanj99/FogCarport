@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-sm-12 d-flex flex-column align-items-center">
                         <p class="p-0" style="width: 65%; color: white">Køn</p>
-                        <select class="inputbig" id="gender" name="gender" required onkeyup="">
+                        <select class="inputbig check" id="gender" name="gender" required onchange="check(this)">
                             <option value="n/a">Vælg køn</option>
                             <option value="m">Mand</option>
                             <option value="w">Kvinde</option>
@@ -134,7 +134,7 @@
                     found = regex.test(element.value);
                 }
                 
-                if (element.value.length == 0) {
+                if (element.value.length == 0 || element.value == "n/a") {
                     element.style.border = "none";
                     return false;
                 } else if (found) {

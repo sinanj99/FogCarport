@@ -72,13 +72,14 @@ public class CalculateBOM {
             //mangler lægter, gajler, tagpplader
 
             //Adds materials related to tool shed
-            listOfLineItems.add(b.beklædning(r.getCarport().getShed_().getWidth(), r.getCarport().getShed_().getLength()));
+            listOfLineItems.add(b.beklædning(c));
+            listOfLineItems.add(b.løsholterForSides(c));
+            listOfLineItems.add(b.løsholterGalve(c));
+            listOfLineItems.add(b.vinkelbeslag());
             listOfLineItems.add(b.lægteForDoor());
-            listOfLineItems.add(b.løsholterForSides(r.getCarport().getShed_().getLength()));
-            listOfLineItems.add(b.løsholterGalve(r.getCarport().getShed_().getWidth()));
             listOfLineItems.add(b.stalddørsgreb());
             listOfLineItems.add(b.tHængsel());
-            listOfLineItems.add(b.vinkelbeslag());
+            
         }
         return new BOM(listOfLineItems);
     }
@@ -114,7 +115,7 @@ public class CalculateBOM {
             list.add(calc.intertiesSides(slength));//shed
             list.add(calc.intertiesGables(swidth));//shed
             list.add(calc.rainboards(cwidth, inclination));
-            list.add(b.beklædning(swidth, slength));//shed
+            list.add(b.beklædning(c));//shed
             list.add(b.lægteForDoor());//shed
             list.add(calc.laths(cwidth, inclination, clength, slength));
             list.add(calc.toplaths(clength, slength, cwidth));

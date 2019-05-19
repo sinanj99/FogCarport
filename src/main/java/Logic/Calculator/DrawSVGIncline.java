@@ -36,7 +36,7 @@ public class DrawSVGIncline {
         BOMInclineRoof ic = new BOMInclineRoof();
         drawing += "<svg height='100%' width='100%' viewbox='-150 100 900 900' >";
 
-        float spaceBetweenSpærVAR = f.spaceBetweenSpær(c, 90);
+        float spaceBetweenSpærVAR = f.spaceBetweenRafter(c, 90);
 
         float startingPointFirstSpærX = 50;
         float startingPointFirstSpærY = 50;
@@ -44,30 +44,30 @@ public class DrawSVGIncline {
         float xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR;
         float yCordinate = startingPointFirstSpærY;
 
-        int quantityOfStolper = f.calculateQuantityOfStolper(c);
+        int quantityOfStolper = f.calculateQuantityOfPost(c);
 
         // REM
         drawing += "<rect class='remmen' x='" + startingPointFirstSpærX + "' y='" + startingPointFirstSpærY + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
         drawing += "<rect class='remmen' x='" + startingPointFirstSpærX + "' y='" + (startingPointFirstSpærY + hypotenuse * 2 - 90) + "' height='4.5' width='" + length + "' fill='none' stroke='black' stroke-width='3px' />";
 
         //SPÆR
-        int quantityOfRafters = f.calculateQuantityOFSpærExcluedBackSpær(c, 90);
-        int quantityOfRaftersPlusTheBackRafter = f.calculateQuantityOfSpærIncludedBackSpær(c, 90);
+        int quantityOfRafters = f.calculateQuantityOFRafterExcluedBackRafter(c, 90);
+        int quantityOfRaftersPlusTheBackRafter = f.calculateQuantityOfRafterIncludedBackRafter(c, 90);
 
         float frontSpærPlacementX = startingPointFirstSpærX;
         float frontSpærPlacementY = startingPointFirstSpærY - 15;
 
         for (int i = 0; i < quantityOfRaftersPlusTheBackRafter; i++) {
             drawing += "<rect x='" + frontSpærPlacementX + "' y='" + frontSpærPlacementY + "' height='" + (hypotenuse * 2 - 60) + "' width='10' fill='none' stroke='black' stroke-width='3px'/>";
-            frontSpærPlacementX += f.spaceBetweenSpær(c, 90) + 3f;
+            frontSpærPlacementX += f.spaceBetweenRafter(c, 90) + 3f;
             
-            frontSpærPlacementX += f.spaceBetweenSpær(c, 90) + 3f;
+            frontSpærPlacementX += f.spaceBetweenRafter(c, 90) + 3f;
         }
         //Lægter
 
         //int quantityOfLathsPlusBackLath = f.calculateQuantityOfSpærIncludedBackSpær((int) hypotenuse, 40) - 1;
         //------------ KIG HER ------------------
-        int quantityOfLathsPlusBackLath = f.calculateQuantityOfSpærIncludedBackSpær(c, 40) - 1;
+        int quantityOfLathsPlusBackLath = f.calculateQuantityOfRafterIncludedBackRafter(c, 40) - 1;
         
 
         float frontLathPlacementX = 30;
@@ -77,19 +77,19 @@ public class DrawSVGIncline {
             drawing += "<rect x='" + frontLathPlacementX + "' y='" + frontLathPlacementY + "' height='" + 10 + "' width='" + (length + 40) + "' fill='lightgrey' stroke='black' stroke-width='3px'/>";
             //frontLathPlacementY += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int) hypotenuse, 40), (int) hypotenuse, 40) + 3f;
             //------------------- KIG HER ----------------------
-            frontLathPlacementY += f.spaceBetweenSpær(c, 60) + 3f;
+            frontLathPlacementY += f.spaceBetweenRafter(c, 60) + 3f;
         }
         //middle lath
         drawing += "<rect x='" + frontLathPlacementX + "' y='" + (frontLathPlacementY - 25) + "' height='" + 10 + "' width='" + (length + 40) + "' fill='grey' stroke='black' stroke-width='3px'/>";
         //frontLathPlacementY += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int) hypotenuse, 40), (int) hypotenuse, 40) + (3f - 50);
         //----------------------------- KIG HER ----------------------------------------
-        frontLathPlacementY += f.spaceBetweenSpær(c, 40) + (3f - 50);
+        frontLathPlacementY += f.spaceBetweenRafter(c, 40) + (3f - 50);
 
         for (int i = 0; i < quantityOfLathsPlusBackLath; i++) {
             drawing += "<rect x='" + frontLathPlacementX + "' y='" + frontLathPlacementY + "' height='" + 10 + "' width='" + (length + 40) + "' fill='lightgrey' stroke='black' stroke-width='3px'/>";
             //frontLathPlacementY += f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int) hypotenuse, 40), (int) hypotenuse, 40) + 3f;
             //------------------------- KIG HER -----------------------------------
-            frontLathPlacementY += f.spaceBetweenSpær(c, 40) + (3f - 50);
+            frontLathPlacementY += f.spaceBetweenRafter(c, 40) + (3f - 50);
         }
 
         //STOLPER 
@@ -222,7 +222,7 @@ public class DrawSVGIncline {
         drawing += "<line x1='20' y1='45' x2='20' y2='" + (startingPointFirstSpærY + 25) + "' style='stroke:black;stroke-width:2'/>";
         //drawing += "<text x='-80' transform='rotate(-90)' y='15' fill='black'>" + (int) f.spaceBetweenSpær(f.calculateQuantityOFSpærExcluedBackSpær((int) hypotenuse, 40), (int) hypotenuse, 40) + " cm</text>";
         //--------------------------------- KIG HER
-        drawing += "<text x='-80' transform='rotate(-90)' y='15' fill='black'>" + (int) f.spaceBetweenSpær(c, 40) + " cm</text>";
+        drawing += "<text x='-80' transform='rotate(-90)' y='15' fill='black'>" + (int) f.spaceBetweenRafter(c, 40) + " cm</text>";
         
         drawing += "<line x1='25' y1='35' x2='25' y2='" + (hypotenuse * 2 - 17) + "' style='stroke:black;stroke-width:2'/>";
         drawing += "<text x='" + (-hypotenuse * 2 + 23) + "' transform='rotate(-90)' y='20' fill='black'>" + width + " cm</text>";
@@ -230,7 +230,7 @@ public class DrawSVGIncline {
         drawing += "<line x1='25' y1='30' x2='" + (length + 70) + "' y2='30' style='stroke:black;stroke-width:2'/>";
         drawing += "<text x='25' y='25' fill='black'>" + length + " cm</text>";
         drawing += "<line x1='" + (length - 23) + "' y1='25' x2='" + (length + 40) + "' y2='25' style='stroke:black;stroke-width:2'/>";
-        drawing += "<text x='" + (length - 23) + "' y='20' fill='black'>" + (int) f.spaceBetweenSpær(c, 60) + " cm</text>";
+        drawing += "<text x='" + (length - 23) + "' y='20' fill='black'>" + (int) f.spaceBetweenRafter(c, 60) + " cm</text>";
         if (c.getShed_() != null) {
 //            drawing += "<line x1='" + (length+50 - slength) + "' y1='" + ((int) hypotenuse * 2-10) + "' x2='" + (length+50) + "' y2='" + ((int) hypotenuse * 2-10) + "' style='stroke:red;stroke-width:2'/>";
             drawing += "<text x='" + (length+50 - slength) + "' y='"+((int)hypotenuse * 2)+"' fill='red'>" + c.getShed_().getLength() + " cm</text>";

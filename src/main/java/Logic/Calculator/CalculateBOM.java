@@ -34,21 +34,21 @@ public class CalculateBOM {
         if (r.getCarport().getShed_() == null) 
         {
             //the fundament
-            listOfLineItems.add(f.beslagskruer(c));
-            listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.bracketScrews(c));
+            listOfLineItems.add(f.boardBolts(c));
             listOfLineItems.add(f.squareDiscs(c));
-            listOfLineItems.add(f.højrebeslag(c));
-            listOfLineItems.add(f.venstrebeslag(c));
-            listOfLineItems.add(f.oversternbrædderForFront(c));
-            listOfLineItems.add(f.oversternbrædderForSides(c));
-            listOfLineItems.add(f.spær(c));
-            listOfLineItems.add(f.spærForRemmen(c));
-            listOfLineItems.add(f.stolpe(c));
-            listOfLineItems.add(f.understernBrædderForSides(c));
-            listOfLineItems.add(f.understernbrædderForFrontAndBack(c));
-            listOfLineItems.add(f.vandbrætForFront(c));
-            listOfLineItems.add(f.vandbrætForSides(c));
-            listOfLineItems.add(f.hulbånd(c));
+            listOfLineItems.add(f.rightBracketInteries(c));
+            listOfLineItems.add(f.leftBracketInteries(c));
+            listOfLineItems.add(f.outerBoardForFront(c));
+            listOfLineItems.add(f.outerBoardForSides(c));
+            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(f.RafterForStrap(c));
+            listOfLineItems.add(f.post(c));
+            listOfLineItems.add(f.underneathBoardForSides(c));
+            listOfLineItems.add(f.underneathBoardForFrontAndBack(c));
+            listOfLineItems.add(f.waterBoardForFront(c));
+            listOfLineItems.add(f.waterBoardForSides(c));
+            listOfLineItems.add(f.perforatedBands(c));
             listOfLineItems.add(f.roof(c)); //this should be moved
             //Still missing some methods
 
@@ -56,21 +56,21 @@ public class CalculateBOM {
         else 
         {
             //The fundament
-            listOfLineItems.add(f.beslagskruer(c));
-            listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.bracketScrews(c));
+            listOfLineItems.add(f.boardBolts(c));
             listOfLineItems.add(f.squareDiscs(c));
-            listOfLineItems.add(f.højrebeslag(c));
-            listOfLineItems.add(f.venstrebeslag(c));
-            listOfLineItems.add(f.oversternbrædderForFront(c));
-            listOfLineItems.add(f.oversternbrædderForSides(c));
-            listOfLineItems.add(f.spær(c));
-            listOfLineItems.add(f.spærForRemmen(c));
-            listOfLineItems.add(f.stolpe(c));
-            listOfLineItems.add(f.understernBrædderForSides(c));
-            listOfLineItems.add(f.understernbrædderForFrontAndBack(c));
-            listOfLineItems.add(f.vandbrætForFront(c));
-            listOfLineItems.add(f.vandbrætForSides(c));
-            listOfLineItems.add(f.hulbånd(c));
+            listOfLineItems.add(f.rightBracketInteries(c));
+            listOfLineItems.add(f.leftBracketInteries(c));
+            listOfLineItems.add(f.outerBoardForFront(c));
+            listOfLineItems.add(f.outerBoardForSides(c));
+            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(f.RafterForStrap(c));
+            listOfLineItems.add(f.post(c));
+            listOfLineItems.add(f.underneathBoardForSides(c));
+            listOfLineItems.add(f.underneathBoardForFrontAndBack(c));
+            listOfLineItems.add(f.waterBoardForFront(c));
+            listOfLineItems.add(f.waterBoardForSides(c));
+            listOfLineItems.add(f.perforatedBands(c));
             listOfLineItems.add(f.roof(c)); //this should be moved
             //Still missing some methods
 
@@ -112,21 +112,21 @@ public class CalculateBOM {
         if (c.getShed_() != null) 
         {
             //The fundament
-            listOfLineItems.add(f.beslagskruer(c));
-            listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.bracketScrews(c));
+            listOfLineItems.add(f.boardBolts(c));
             listOfLineItems.add(f.squareDiscs(c));
-            listOfLineItems.add(f.højrebeslag(c));
-            listOfLineItems.add(f.venstrebeslag(c));
-            listOfLineItems.add(f.oversternbrædderForFront(c));
-            listOfLineItems.add(f.oversternbrædderForSides(c));
-            listOfLineItems.add(f.spær(c));
-            listOfLineItems.add(f.spærForRemmen(c));
-            listOfLineItems.add(f.stolpe(c));
-            listOfLineItems.add(f.understernBrædderForSides(c));
-            listOfLineItems.add(f.understernbrædderForFrontAndBack(c));
-            listOfLineItems.add(f.vandbrætForFront(c));
-            listOfLineItems.add(f.vandbrætForSides(c));
-            listOfLineItems.add(f.hulbånd(c)); 
+            listOfLineItems.add(f.rightBracketInteries(c));
+            listOfLineItems.add(f.leftBracketInteries(c));
+            listOfLineItems.add(f.outerBoardForFront(c));
+            listOfLineItems.add(f.outerBoardForSides(c));
+            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(f.RafterForStrap(c));
+            listOfLineItems.add(f.post(c));
+            listOfLineItems.add(f.underneathBoardForSides(c));
+            listOfLineItems.add(f.underneathBoardForFrontAndBack(c));
+            listOfLineItems.add(f.waterBoardForFront(c));
+            listOfLineItems.add(f.waterBoardForSides(c));
+            listOfLineItems.add(f.perforatedBands(c)); 
             //still mising some methods
             
             //The shed
@@ -153,21 +153,21 @@ public class CalculateBOM {
         else 
         {
             //The fundament 
-            listOfLineItems.add(f.beslagskruer(c));
-            listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.bracketScrews(c));
+            listOfLineItems.add(f.boardBolts(c));
             listOfLineItems.add(f.squareDiscs(c));
-            listOfLineItems.add(f.højrebeslag(c));
-            listOfLineItems.add(f.venstrebeslag(c));
-            listOfLineItems.add(f.oversternbrædderForFront(c));
-            listOfLineItems.add(f.oversternbrædderForSides(c));
-            listOfLineItems.add(f.spær(c));
-            listOfLineItems.add(f.spærForRemmen(c));
-            listOfLineItems.add(f.stolpe(c));
-            listOfLineItems.add(f.understernBrædderForSides(c));
-            listOfLineItems.add(f.understernbrædderForFrontAndBack(c));
-            listOfLineItems.add(f.vandbrætForFront(c));
-            listOfLineItems.add(f.vandbrætForSides(c));
-            listOfLineItems.add(f.hulbånd(c)); 
+            listOfLineItems.add(f.rightBracketInteries(c));
+            listOfLineItems.add(f.leftBracketInteries(c));
+            listOfLineItems.add(f.outerBoardForFront(c));
+            listOfLineItems.add(f.outerBoardForSides(c));
+            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(f.RafterForStrap(c));
+            listOfLineItems.add(f.post(c));
+            listOfLineItems.add(f.underneathBoardForSides(c));
+            listOfLineItems.add(f.underneathBoardForFrontAndBack(c));
+            listOfLineItems.add(f.waterBoardForFront(c));
+            listOfLineItems.add(f.waterBoardForSides(c));
+            listOfLineItems.add(f.perforatedBands(c)); 
             //still mising some methods
             
             //The roof

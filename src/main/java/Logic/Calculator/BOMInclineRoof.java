@@ -464,7 +464,7 @@ public class BOMInclineRoof {
         return new LineItem(m, amountOfFasciaBoardsShed(shedLength), "Sternbrædder til siderne Skur del ( deles )", m.getPrice() * amountOfFasciaBoardsShed(shedLength), Type.LENGTH);
     }
 
-    public LineItem roofTiles(int id, int carportWidth, int carportLength, int inclination) throws NoSuchRoofException {
+    public LineItem roofTiles(int id, int carportWidth, int carportLength, int inclination) throws NoSuchRoofException, SystemErrorException {
         Roof r = LogicFacade.getInstance().newGetRoof(id, 37);
         return new LineItem(r, amountOfRoofTiles(carportWidth, carportLength, inclination), "monteres på taglægter", r.getPrice() * amountOfRoofTiles(carportWidth, carportLength, inclination));
     }
@@ -480,7 +480,7 @@ public class BOMInclineRoof {
 
     }
 
-    public LineItem ridgeTiles(int id, int cLength) {
+    public LineItem ridgeTiles(int id, int cLength) throws SystemErrorException {
         Roof r = LogicFacade.getInstance().newGetRoof(id, 6);
         return new LineItem(r, amountOfRidgeTiles(cLength), "monteres på toplægte med medfølgende beslag se tagstens vejledning", r.getPrice() * amountOfRidgeTiles(cLength));
     }

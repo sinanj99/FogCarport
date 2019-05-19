@@ -15,6 +15,7 @@ import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.InvalidInputException;
+import Presentation.Exceptions.NoSuchShedException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -40,6 +41,9 @@ public class FrontController extends HttpServlet {
             String target = command.execute(request);
             request.getRequestDispatcher(target).forward(request, response);
         } catch (SystemErrorException e) {
+            String message = e.getMessage();
+            request.setAttribute("message", message);
+            System.out.println(message);
             request.getRequestDispatcher(e.getTarget()).forward(request, response);
         } catch (ClientException e) {
             String message = e.getMessage();
@@ -52,6 +56,8 @@ public class FrontController extends HttpServlet {
             request.setAttribute("error", message);
             request.setAttribute("detail", detail);
             request.getRequestDispatcher(e.getTarget()).forward(request, response);
+        } catch (NoSuchShedException ex) {
+            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

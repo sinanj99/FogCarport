@@ -8,6 +8,7 @@ package Presentation.Commands;
 import Logic.Controller.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 public class InclinedRoofFormCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException, SystemErrorException {
         if (request.getSession().getAttribute("user") == null) {
             return "jsp/login.jsp";
         }

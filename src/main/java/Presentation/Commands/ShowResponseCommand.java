@@ -10,7 +10,9 @@ import Data.Entity.Response;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ShowResponseCommand implements Command{
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException {
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException, NoSuchRequestException, NoSuchShedException {
         Response r = PresentationFacade.getInstance().getResponse(Integer.parseInt(request.getParameter("requestID")));
         Request req = PresentationFacade.getInstance().getRequest(r.getRequestId());
         

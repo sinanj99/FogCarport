@@ -12,6 +12,7 @@ import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.InvalidInputException;
+import Presentation.Exceptions.NoSuchShedException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -25,5 +26,5 @@ import javax.servlet.http.HttpServletResponse;
 public interface Command {
     
     String execute(HttpServletRequest request) throws NoSuchMaterialException, 
-            UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException;
+            UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException, NoSuchShedException;
 }

@@ -18,6 +18,7 @@ import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import java.io.IOException;
@@ -34,7 +35,8 @@ import javax.servlet.http.HttpServletRequest;
 public class CreateOfferCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, NoSuchRequestException,
+    NoSuchShedException {
         //calculations
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;

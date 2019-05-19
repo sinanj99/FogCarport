@@ -26,19 +26,70 @@ public abstract class IMaterialMapper {
     public static IMaterialMapper instance() {
         return MaterialMapper.getInstance();
     }
-    
+    /**
+     * Sets datasource of mapper
+     * @param ds the datasource
+     */
     public abstract void setDataSource(DataSource ds);
-    
-    public abstract String getMaterial(int id) throws NoSuchMaterialException;
-    
+    /**
+     * Fetches material from database with specified id.
+     * @param id of the material
+     * @return a material object
+     * @throws NoSuchMaterialException if the material is not found
+     * @throws SystemErrorException if an sql-exception is thrown
+     */
+    public abstract String getMaterial(int id) throws NoSuchMaterialException, SystemErrorException;
+    /**
+     * Substracts the qty parameter from material (with length) with specified
+     * id.
+     *
+     * @param id of the material to be updated
+     * @param length of the material to be updated
+     * @param qty quantity to substract
+     * @throws NoSuchMaterialException if there is no material with the
+     * specified id.
+     * @throws SystemErrorException if an sql-exception is thrown
+     */
     public abstract void updateStockWithLength(int id, int length, int qty)throws SystemErrorException, IllegalArgumentException, NoSuchMaterialException;
-    
+    /**
+     * Substracts the qty parameter from material (without length) with
+     * specified id.
+     *
+     * @param id of the material to be updated
+     * @param qty quantity to substract
+     * @throws NoSuchMaterialException if there is no material with the
+     * specified id.
+     * @throws SystemErrorException if an sql-exception is thrown.
+     */
     public abstract void updateStockNoLength(int id, int qty)throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException;
     
+    /**
+     * Fetches material with specified id from material_withlength and material_lengths tables in dB
+     * @param id of the desired material
+     * @param length of the desired material
+     * @return a material with specified id
+     * @throws NoSuchMaterialException if the material with specified id is not found
+     * @throws SystemErrorException if an sql-exception is thrown
+     */
     public abstract Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException;
-    
+    /**
+     * Fetches material with specified id from material_nolength table in dB
+     * @param id of the desired material
+     * @return a material with specified id
+     * @throws SystemErrorException if an sql-exception is thrown
+     * @throws NoSuchMaterialException if the material with specified id is not found
+     */
     public abstract Material getMaterialNoLength(int id)throws SystemErrorException, NoSuchMaterialException;
     
+    /**
+     * Inserts material length, price and stock to table 'material_lengths' in database for a material with specified id.
+     * Is used in DataInsertion.class where data is inserted to tables in a for loop.
+     * @param id of the material
+     * @param length length of the material
+     * @param price price of the material
+     * @param stock stock of the material
+     * @throws SystemErrorException if an SQL-related exception occurs
+     */
     public abstract void insertMaterialDim(int id, int length, int price, int stock)throws SystemErrorException;
     
     public abstract Material getMaterial(String name, int length) throws NoSuchMaterialException;
@@ -51,9 +102,9 @@ public abstract class IMaterialMapper {
      */
     public abstract List<Material> getMaterials() throws SystemErrorException;
     /**
-     * Returns a linked hash map including all lengths and its prices.
-     * @param id
-     * @return linked hash map including all lengths and its prices.
+     * Returns a linked hash map including all lengths and their prices for a specified material
+     * @param id of the material
+     * @return linked hash map including all lengths and their prices.
      * @throws SystemErrorException if an sql-exception occurs 
      */
     public abstract LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException;
@@ -63,7 +114,7 @@ public abstract class IMaterialMapper {
      * @param price the new price of the material (shortest length)
      * @param id the id of the desired material
      * @throws SystemErrorException 
-     * @throws Presentation.Exceptions.NoSuchMaterialException 
+     * @throws NoSuchMaterialException if there is no material with given id 
      */
     
     public abstract void updatePriceWithLength(int price, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException;
@@ -78,18 +129,21 @@ public abstract class IMaterialMapper {
     public abstract void updatePriceNoLength(int price, int id) throws SystemErrorException, NoSuchMaterialException;
     
     /**
-     * Updates price of all length of a specific roof specified by id.
+     * Updates price of all lengths of a specific roof specified by id.
      * @param price new price of the roof
-     * @param id
+     * @param id the roof
      * @throws SystemErrorException 
-     * @throws Presentation.Exceptions.NoSuchRoofException 
-     * @throws Presentation.Exceptions.InvalidInputException 
+     * @throws NoSuchRoofException 
+     * @throws InvalidInputException 
      */
     public abstract void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException;
-
+    /**
+     * Fetches all lengths and the price for each length for a material specified by id.
+     * @param id of the material whose lengths needs to be fetched
+     * @return a hash map with length as key and its respective price as value
+     * @throws SystemErrorException 
+     */
     public abstract LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException;
-    
-    public abstract void insertMaterial(String name, int length, String unit, String description, int price);
     
     /**
      * Fetches all roofs with shortest length from dB.

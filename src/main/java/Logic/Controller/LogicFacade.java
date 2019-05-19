@@ -61,15 +61,15 @@ public class LogicFacade {
         return IMaterialMapper.instance().getMaterial_(name);
     }
 
-    public List<Roof> getRoofs() {
+    public List<Roof> getRoofs() throws SystemErrorException {
         return IRequestMapper.instance().getRoofs();
     }
 
-    public void insertDimensions(int id, int length, int price) {
+    public void insertDimensions(int id, int length, int price) throws SystemErrorException {
         IRequestMapper.instance().insertDimensions(id, length, price);
     }
 
-    public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException {
+    public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException, SystemErrorException {
         return IRequestMapper.instance().getRoofs(rooftype);
     }
 
@@ -81,15 +81,15 @@ public class LogicFacade {
         return IUserMapper.instance().getUser(email);
     }
 
-    public void insertRequest(Request req) {
+    public void insertRequest(Request req) throws SystemErrorException {
         IRequestMapper.instance().insertRequest(req);
     }
 
-    public Roof getRoof(int id) throws NoSuchRoofException {
+    public Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException {
         return IRequestMapper.instance().getRoof(id);
     }
 
-    public int getDimensionPrice(int roof_id, int length) {
+    public int getDimensionPrice(int roof_id, int length) throws SystemErrorException {
         return IRequestMapper.instance().getDimensionPrice(roof_id, length);
     }
 
@@ -105,15 +105,15 @@ public class LogicFacade {
         return IMaterialMapper.instance().getMaterialNoLength(id);
     }
 
-    public List<Request> getRequests() {
+    public List<Request> getRequests() throws SystemErrorException, NoSuchShedException {
         return IRequestMapper.instance().getRequests();
     }
 
-    public Roof newGetRoof(int id, int length) {
+    public Roof newGetRoof(int id, int length) throws SystemErrorException {
         return IRequestMapper.instance().getRoof(id, length);
     }
 
-    public Request getRequest(int id) {
+    public Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException {
         return IRequestMapper.instance().getRequest(id);
     }
 }

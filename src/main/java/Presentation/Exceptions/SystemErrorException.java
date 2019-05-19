@@ -12,11 +12,20 @@ package Presentation.Exceptions;
  */
 public class SystemErrorException extends Exception {
 
-    private String target;
+    private final String target = "jsp/error.jsp";
     
+    /**
+     * Constructs a SystemErrorException with no description of the error.
+     */
+    public SystemErrorException() {
+    }
+    
+    /**
+     * Constructs a SystemErrorException with a specified message
+     * @param message a despriction of what went wrong
+     */
     public SystemErrorException(String message) {
         super(message);
-        this.target = "jsp/error.jsp";
     }
 
     public String getTarget() {

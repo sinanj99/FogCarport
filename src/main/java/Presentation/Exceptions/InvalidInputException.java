@@ -14,13 +14,6 @@ public class InvalidInputException extends ClientException {
     public InvalidInputException(String message, String target, String detail) {
         super(message, target, detail);
     }
-    /**
-     * Constructs an InvalidInputException with user-specified message, target & type.
-     * Is dependent on client input, and therefore, is only constructed 
-     * inside of presentation-package where the parameters are known.
-     * @param message
-     * @param target
-     */
     
     public InvalidInputException(String target, String message) {
         super(target, message);

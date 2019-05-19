@@ -14,5 +14,9 @@ public class NoSuchCarportException extends SystemErrorException {
     public NoSuchCarportException(String message) {
         super(message);
     }
+
+    public NoSuchCarportException() {
+    }
+    
     
 }

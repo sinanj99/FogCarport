@@ -8,7 +8,10 @@ package Data.Mappers;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.ShippingAddress;
+import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.NoSuchShedException;
+import Presentation.Exceptions.SystemErrorException;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -29,23 +32,27 @@ public abstract class IRequestMapper {
      * wants to process a request.
      * @param id
      * @return 
+     * @throws Presentation.Exceptions.SystemErrorException 
+     * @throws Presentation.Exceptions.NoSuchRequestException 
+     * @throws Presentation.Exceptions.NoSuchShedException 
      */
-    public abstract Request getRequest(int id);
+    public abstract Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException;
     
     /**
      * Returns a list of all requests in dB; used to display all requests not yet 
      * processed in jsp-file 'showrequests'.
      * @return list of all requests in dB 
      */
-    public abstract List<Request> getRequests();
+    public abstract List<Request> getRequests() throws SystemErrorException, NoSuchShedException;
     
     /**
      * Inserts a request to db-table 'request' (and all its child tables)
      * with specified user-input fetched from jsp-files 'flatroof- and incline'.
      * @param req 
+     * @throws Presentation.Exceptions.SystemErrorException 
      */
     
-    public abstract void insertRequest(Request req);
+    public abstract void insertRequest(Request req) throws SystemErrorException;
     
     /**
      * ??
@@ -53,7 +60,7 @@ public abstract class IRequestMapper {
      * @param length
      * @param price 
      */
-    public abstract void insertDimensions(int id, int length, int price);
+    public abstract void insertDimensions(int id, int length, int price) throws SystemErrorException;
 
     /**
      * Used in flatRoof calculator to find price of rooftype with specified dimensions.
@@ -61,7 +68,7 @@ public abstract class IRequestMapper {
      * @param length
      * @return 
      */
-    public abstract int getDimensionPrice(int roof_id, int length);
+    public abstract int getDimensionPrice(int roof_id, int length) throws SystemErrorException;
     
     
     /**
@@ -72,7 +79,7 @@ public abstract class IRequestMapper {
      * @return
      * @throws NoSuchRoofException 
      */
-    public abstract Roof getRoof(int id) throws NoSuchRoofException;
+    public abstract Roof getRoof(int id) throws  NoSuchRoofException, SystemErrorException;
     
     /**
      * Fetches data from rooftype-table and its child-table, rooflength,
@@ -82,7 +89,7 @@ public abstract class IRequestMapper {
      * @param length
      * @return 
      */
-    public abstract Roof getRoof(int id, int length);
+    public abstract Roof getRoof(int id, int length) throws SystemErrorException;
     
     
     /**
@@ -92,7 +99,7 @@ public abstract class IRequestMapper {
      * @return all roofs, independent on rooftype.
      */
     
-    public abstract List<Roof> getRoofs();
+    public abstract List<Roof> getRoofs() throws SystemErrorException;
     
     /**
      * Returns all roofs with specified rooftype (inclined or flat).
@@ -101,7 +108,7 @@ public abstract class IRequestMapper {
      * @throws NoSuchRoofException 
      */
     
-    public abstract List<Roof> getRoofs(int rooftype) throws NoSuchRoofException;
+    public abstract List<Roof> getRoofs(int rooftype) throws SystemErrorException;
     
     /**
      * Updates price of a roof with specified length and rooftype.
@@ -109,12 +116,13 @@ public abstract class IRequestMapper {
      * @param price
      * @throws NoSuchRoofException 
      */
-    public abstract void updateRoofPrice(int roof_id, int price) throws NoSuchRoofException;
+    public abstract void updateRoofPrice(int roof_id, int price) throws SystemErrorException;
     
     /**
      * Returns a ShippingAddress object which contains user and user shipping info
      * @param id
      * @return user-info(firstname, lastname, address, zipcode and city)
+     * @throws Presentation.Exceptions.SystemErrorException
      */
-    public abstract ShippingAddress getRequestShippingAddress(int id);
+    public abstract ShippingAddress getRequestShippingAddress(int id) throws SystemErrorException;
 }

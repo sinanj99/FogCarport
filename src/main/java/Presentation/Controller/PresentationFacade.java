@@ -27,7 +27,9 @@ import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchPrebuiltCarportException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;
+import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchResponseException;
+import Presentation.Exceptions.NoSuchShedException;
 import java.util.List;
 import javax.sql.DataSource;
 import javax.xml.ws.RespectBinding;
@@ -78,11 +80,11 @@ public class PresentationFacade {
     public List<Material> getMaterials() throws SystemErrorException {
         return m.getMaterials();
     }
-    public void insertDimensions(int id, int length, int price) {
+    public void insertDimensions(int id, int length, int price) throws SystemErrorException {
         r.insertDimensions(id, length, price);
     }
 
-    public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException {
+    public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException, SystemErrorException {
         return r.getRoofs(rooftype);
     }
 
@@ -94,15 +96,15 @@ public class PresentationFacade {
         return u.getUser(email);
     }
 
-    public void insertRequest(Request req) {
+    public void insertRequest(Request req) throws SystemErrorException {
         r.insertRequest(req);
     }
 
-    public Roof getRoof(int id) throws NoSuchRoofException {
+    public Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException {
         return r.getRoof(id);
     }
 
-    public int getDimensionPrice(int roof_id, int length) {
+    public int getDimensionPrice(int roof_id, int length) throws SystemErrorException {
         return r.getDimensionPrice(roof_id, length);
     }
 
@@ -118,15 +120,15 @@ public class PresentationFacade {
         return m.getMaterialNoLength(id);
     }
 
-    public List<Request> getRequests() {
+    public List<Request> getRequests() throws NoSuchShedException, SystemErrorException {
         return r.getRequests();
     }
 
-    public Roof newGetRoof(int id, int length) {
+    public Roof newGetRoof(int id, int length) throws SystemErrorException {
         return r.getRoof(id, length);
     }
 
-    public Request getRequest(int id) {
+    public Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException {
         return r.getRequest(id);
     }
     
@@ -134,7 +136,7 @@ public class PresentationFacade {
         return p.getAllPrebuiltCarports();
     }
     
-    public ShippingAddress getRequestShippingAddress(int id){
+    public ShippingAddress getRequestShippingAddress(int id) throws SystemErrorException{
         return r.getRequestShippingAddress(id);
     }
     

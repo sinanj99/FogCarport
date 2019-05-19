@@ -9,6 +9,7 @@ import Data.Entity.Roof;
 import Logic.Controller.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +24,7 @@ public class FlatRoofFormCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws NoSuchRoofException, SystemErrorException {
         if (request.getSession().getAttribute("user") == null) {
             return "jsp/login.jsp";
         }

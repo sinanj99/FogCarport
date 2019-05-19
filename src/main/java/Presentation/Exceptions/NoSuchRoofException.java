@@ -14,5 +14,8 @@ public class NoSuchRoofException extends SystemErrorException {
     public NoSuchRoofException(String message) {
         super(message);
     }
+
+    public NoSuchRoofException() {
+    }
     
 }

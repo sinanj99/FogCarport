@@ -78,13 +78,6 @@ class UserMapper extends IUserMapper {
         }
     }
 
-    /**
-     * Used when user logs in with specified email.
-     *
-     * @param email
-     * @return
-     * @throws UserNotFoundException
-     */
     @Override
     public User getUser(String email) throws UserNotFoundException, SystemErrorException {
         int user_id = 0, zip = 0, seller = 0, admin = 0;
@@ -120,12 +113,7 @@ class UserMapper extends IUserMapper {
         return new User(new PersonalInfo(fname, lname, address, zip, city, gender), user_id, seller_, admin_, email, password);
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     * @throws UserNotFoundException
-     */
+    
     @Override
     public User getUser(int id) throws UserNotFoundException, SystemErrorException {
 

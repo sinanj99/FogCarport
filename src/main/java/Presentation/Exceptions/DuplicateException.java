@@ -6,7 +6,7 @@
 package Presentation.Exceptions;
 
 /**
- * Used specifically in RegisterCommand, when an email is already in use.
+ * Used when the same entry appears twice in database
  * @author sinanjasar
  */
 

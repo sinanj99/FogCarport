@@ -7,7 +7,6 @@ package Data.Mappers;
 
 import Data.Entity.Carport;
 import Data.Database.DBConnector;
-import Data.Entity.ShippingAddress;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
@@ -15,6 +14,8 @@ import Data.Entity.ShippingAddress;
 import Presentation.Exceptions.NoSuchCarportException;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.NoSuchShedException;
+import Presentation.Exceptions.SystemErrorException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +42,7 @@ class RequestMapper extends IRequestMapper {
         con.setDataSource(ds);
         conn = con.getConnection();
     }
-    
+
     public synchronized static RequestMapper getInstance() {
         if (instance == null) {
             instance = new RequestMapper();
@@ -49,13 +50,8 @@ class RequestMapper extends IRequestMapper {
         return instance;
     }
 
-    public static void main(String[] args) {
-        
-        System.out.println(IRequestMapper.instance().getRequest(1));
-    }
-
     @Override
-    public Request getRequest(int id) {
+    public Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException {
         Request r = null;
         int req_id = 0;
         int user_id = 0;
@@ -77,9 +73,11 @@ class RequestMapper extends IRequestMapper {
                 datePlaced = rs.getString("dateplaced");
 
                 r = new Request(req_id, user_id, datePlaced, cp, address);
+            } else {
+                throw new NoSuchRequestException();
             }
         } catch (SQLException e) {
-            System.out.println("There was an error fetching data from request table: \n" + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
 
         return r;
@@ -93,7 +91,7 @@ class RequestMapper extends IRequestMapper {
      * @param request_id
      * @return Info about a request's carport.
      */
-    private Carport getRequestCarport(int request_id) {
+    private Carport getRequestCarport(int request_id) throws NoSuchCarportException, SystemErrorException, NoSuchShedException {
 
         Roof roof = null;
         Shed shed_ = null;
@@ -114,13 +112,14 @@ class RequestMapper extends IRequestMapper {
                 width = rs.getInt("width");
                 length = rs.getInt("length");
                 inclination = rs.getInt("inclination");
+            } else {
+                throw new NoSuchCarportException();
             }
             roof = getRoof(roof_id, width);
             shed_ = getRequestShed(request_id);
         } catch (SQLException e) {
-            System.out.println("There was an error fetching data from carport table: \n" + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
-        
         return new Carport(carport_id, roof, inclination, width, length, shed_);
     }
 
@@ -131,7 +130,7 @@ class RequestMapper extends IRequestMapper {
      * @param carport_id
      * @return
      */
-    private Shed getRequestShed(int carport_id) {
+    private Shed getRequestShed(int carport_id) throws SystemErrorException {
         int shedId = 0;
         int width = 0;
         int length = 0;
@@ -147,21 +146,15 @@ class RequestMapper extends IRequestMapper {
                 width = rs.getInt("width");
                 length = rs.getInt("length");
                 shed = new Shed(shedId, width, length);
-            }
+            } 
         } catch (SQLException e) {
-            System.out.println("There was an error fetching data from shed table: " + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
         return shed;
     }
 
-    /**
-     * Method is used in getRequest-method - fetches the needed data from
-     * personal-info table
-     *
-     * @param id
-     * @return
-     */
-    public ShippingAddress getRequestShippingAddress(int id) {
+    @Override
+    public ShippingAddress getRequestShippingAddress(int id) throws SystemErrorException {
         String firstname = "";
         String lastname = "";
         String address = "";
@@ -183,21 +176,21 @@ class RequestMapper extends IRequestMapper {
                 city = rs.getString("city");
             }
         } catch (SQLException e) {
-            System.out.println("There was an error fetching data from personal_info table:  " + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
 
         return new ShippingAddress(firstname, lastname, address, zipcode, city);
     }
 
     @Override
-    public void insertRequest(Request req) {
+    public void insertRequest(Request req) throws SystemErrorException {
         Carport cp = req.getCarport();
         Roof roof = cp.getRoof();
         Shed shed = cp.getShed_();
         int req_id = 0;
 
         try {
-
+            conn.setAutoCommit(false);
             String query = "INSERT INTO `requests` (user_id, dateplaced) VALUES (?,?);";
             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, req.getUser_id());
@@ -216,28 +209,34 @@ class RequestMapper extends IRequestMapper {
                     req_id, cp);
 
             //shed, if chosen
-            if (cp.getShed_()!=null) {
+            if (cp.getShed_() != null) {
                 insertRequestShed(pstmt, query, rs, cp_id, shed);
             }
-
+            conn.commit();
         } catch (SQLException e) {
-            System.out.println("REQUEST TABLE " + e.getMessage());
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                throw new SystemErrorException(ex.getMessage());
+            }
+            throw new SystemErrorException(e.getMessage());
         }
     }
 
     /**
-     * Called in insert request method. 
+     * Called in insert request method.
+     *
      * @param pstmt
      * @param query
      * @param rs
      * @param request_id
      * @param cp
-     * @return 
+     * @return
      */
     private int insertRequestCarport(PreparedStatement pstmt, String query, ResultSet rs,
-            int request_id, Carport cp) {
+            int request_id, Carport cp) throws SystemErrorException {
         int id = 0;
-        
+
         try {
             query = "INSERT INTO `carports` (request_id, roof_id, inclination, width, length) VALUES (?,?,?,?,?);";
             pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -252,20 +251,22 @@ class RequestMapper extends IRequestMapper {
                 id = rs.getInt(1);
             }
         } catch (SQLException e) {
-            System.out.println("INSERT REQ CARPORT " + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
         return id;
     }
+
     /**
      * Called in insert request method.
+     *
      * @param pstmt
      * @param query
      * @param rs
      * @param cp_id
-     * @param shed 
+     * @param shed
      */
     private void insertRequestShed(PreparedStatement pstmt, String query, ResultSet rs,
-            int cp_id, Shed shed) {
+            int cp_id, Shed shed) throws SystemErrorException {
         try {
             query = "INSERT INTO `sheds` (carport_id, width, length) VALUES (?,?,?);";
             pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -274,12 +275,12 @@ class RequestMapper extends IRequestMapper {
             pstmt.setInt(3, shed.getLength());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("INSERT REQ SHED: " + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
     }
 
     @Override
-    public Roof getRoof(int id) {
+    public Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException {
         int roof_id = 0;
         String name_ = "";
         boolean inclined = false;
@@ -296,16 +297,18 @@ class RequestMapper extends IRequestMapper {
                 if (rs.getInt("inclined") == 1) {
                     inclined = true;
                 }
+            } else {
+                throw new NoSuchRoofException();
             }
         } catch (SQLException e) {
-            System.out.println("ROOFEX " + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
 
         return new Roof(roof_id, name_, inclined);
     }
 
     @Override
-    public List<Roof> getRoofs() {
+    public List<Roof> getRoofs() throws SystemErrorException{
         List<Roof> roofs = new ArrayList();
         int roof_id = 0;
         String name = "";
@@ -329,14 +332,14 @@ class RequestMapper extends IRequestMapper {
                 roofs.add(new Roof(roof_id, name, inclined));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
 
         return roofs;
     }
 
     @Override
-    public List<Roof> getRoofs(int rooftype) {
+    public List<Roof> getRoofs(int rooftype) throws SystemErrorException {
         List<Roof> roofs = new ArrayList();
         int roof_id = 0;
         String name = "";
@@ -362,14 +365,14 @@ class RequestMapper extends IRequestMapper {
                 roofs.add(new Roof(roof_id, name, inclined));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
 
         return roofs;
     }
 
     @Override
-    public void updateRoofPrice(int roof_id, int price) {
+    public void updateRoofPrice(int roof_id, int price) throws SystemErrorException {
         try {
             String query = "UPDATE `rooftype` SET price = ? WHERE roof_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -377,7 +380,7 @@ class RequestMapper extends IRequestMapper {
             pstmt.setInt(1, price);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
     }
 
@@ -398,7 +401,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public void insertDimensions(int id, int length, int price) {
+    public void insertDimensions(int id, int length, int price) throws SystemErrorException{
         try {
             String query = "INSERT INTO rooflength (roof_id, roof_length, price) VALUES (?, ?, ?);";
             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -407,19 +410,20 @@ class RequestMapper extends IRequestMapper {
             pstmt.setInt(3, price);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("INSERT DIMENSIONS: " + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
     }
 
     /**
      * Called in insert request method.
+     *
      * @param pstmt
      * @param query
      * @param rs
      * @param req
-     * @param req_id 
+     * @param req_id
      */
-    private void insertRequestShippingAddress(PreparedStatement pstmt, String query, ResultSet rs, Request req, int req_id) {
+    private void insertRequestShippingAddress(PreparedStatement pstmt, String query, ResultSet rs, Request req, int req_id) throws SystemErrorException {
 
         try {
             query = "INSERT INTO shipping_address (request_id, firstname, "
@@ -433,12 +437,12 @@ class RequestMapper extends IRequestMapper {
             pstmt.setString(6, req.getAddress().getCity());
             pstmt.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println("An error occured inserting data to shipping_address table: " + ex.getMessage());
+            throw new SystemErrorException(ex.getMessage());
         }
     }
 
     @Override
-    public int getDimensionPrice(int roof_id, int length) {
+    public int getDimensionPrice(int roof_id, int length) throws SystemErrorException{
         int price = 0;
         try {
             String query = "SELECT * FROM rooflength WHERE roof_id = ? AND roof_length = ?";
@@ -450,13 +454,13 @@ class RequestMapper extends IRequestMapper {
                 price = rs.getInt("price");
             }
         } catch (SQLException ex) {
-            System.out.println("Dimension price exception: " + ex.getMessage());
+            throw new SystemErrorException(ex.getMessage());
         }
         return price;
     }
 
     @Override
-    public List<Request> getRequests() {
+    public List<Request> getRequests() throws SystemErrorException, NoSuchShedException{
         int user_id, req_id;
         String datePlaced;
         ShippingAddress address;
@@ -478,14 +482,14 @@ class RequestMapper extends IRequestMapper {
             }
             System.out.println(requests);
         } catch (SQLException e) {
-            System.out.println("REQUESTEX" + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
 
         return requests;
     }
 
     @Override
-    public Roof getRoof(int id, int length) {
+    public Roof getRoof(int id, int length) throws SystemErrorException {
         int roof_id = 0;
         String name_ = "";
         int price = 0;
@@ -503,7 +507,7 @@ class RequestMapper extends IRequestMapper {
                 roof_id = rs.getInt("roof_id");
                 name_ = rs.getString("name");
                 inclined_ = rs.getInt("inclined");
-                
+
                 if (inclined_ == 1) {
                     inclined = true;
                 }
@@ -518,7 +522,7 @@ class RequestMapper extends IRequestMapper {
                 price = rs.getInt("price");
             }
         } catch (SQLException e) {
-            System.out.println("Roof exception: " + e.getMessage());
+            throw new SystemErrorException(e.getMessage());
         }
 
         return new Roof(roof_id, name_, price, inclined, length);

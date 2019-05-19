@@ -105,9 +105,9 @@ class MaterialMapper extends IMaterialMapper {
         }
         return new Material(material_id, name, length, unit, price, stock);
     }
-
+    
     @Override
-    public String getMaterial(int id) throws NoSuchMaterialException {
+    public String getMaterial(int id) throws NoSuchMaterialException, SystemErrorException {
         String name_ = "";
         try {
             String sql = "SELECT name * `materials_withlength` WHERE material_id = ?;";
@@ -118,7 +118,7 @@ class MaterialMapper extends IMaterialMapper {
                 name_ = rs.getString("name");
             }
         } catch (SQLException ex) {
-            System.out.println(ex);
+            throw new SystemErrorException(ex.getMessage());
         }
         return name_;
     }
@@ -156,13 +156,7 @@ class MaterialMapper extends IMaterialMapper {
         return new Material(id, name, length, unit, price, stock);
     }
 
-    /**
-     * Fetches material with specified id from material_nolength table in dB
-     *
-     * @param id of the material wanted
-     * @return a desired material
-     * @throws SystemErrorException
-     */
+    
     @Override
     public Material getMaterialNoLength(int id) throws SystemErrorException, NoSuchMaterialException {
         String name = "";
@@ -188,17 +182,6 @@ class MaterialMapper extends IMaterialMapper {
         }
         return new Material(id, name, unit, price, stock);
     }
-
-    /**
-     * Substracts the qty parameter from material (with length) with specified
-     * id.
-     *
-     * @param id of the material to be updated
-     * @param qty quantity to substract
-     * @throws NoSuchMaterialException if there is no material with the
-     * specified id.
-     * @throws SystemErrorException if any other database-related error occurs.
-     */
     @Override
     public void updateStockWithLength(int id, int length, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
         if (qty <= 0) {
@@ -228,18 +211,6 @@ class MaterialMapper extends IMaterialMapper {
             }
         }
     }
-
-    /**
-     * Substracts the qty parameter from material (without length) with
-     * specified id.
-     *
-     * @param id of the material to be updated
-     * @param qty quantity to substract
-     * @throws NoSuchMaterialException if there is no material with the
-     * specified id.
-     * @throws SystemErrorException if any other database-related exception
-     * occurs.
-     */
     @Override
     public void updateStockNoLength(int id, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
         if (qty <= 0) {
@@ -299,23 +270,6 @@ class MaterialMapper extends IMaterialMapper {
 
     }
 
-    @Override
-    public void insertMaterial(String name, int length, String unit, String desc, int price) {
-        try {
-            String sql = "INSERT INTO `material`(name, length, unit, description, price) "
-                    + "VALUES(?, ?, ?, ?, ?);";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
-            pstmt.setInt(2, length);
-            pstmt.setString(3, unit);
-            pstmt.setString(4, desc);
-            pstmt.setInt(5, price);
-            pstmt.executeUpdate();
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
 
     @Override
     public void insertMaterialDim(int id, int length, int price, int stock) throws SystemErrorException {
@@ -333,15 +287,6 @@ class MaterialMapper extends IMaterialMapper {
             throw new SystemErrorException(ex.getMessage());
         }
     }
-
-    /**
-     * Returns a list of prices of all available lengths of a material with the
-     * specified id. Is public, since it is called in test class.
-     *
-     * @param id of the material type
-     * @return list of materials.
-     * @throws Presentation.Exceptions.SystemErrorException
-     */
     @Override
     public LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException {
 
@@ -359,15 +304,6 @@ class MaterialMapper extends IMaterialMapper {
         }
         return prices;
     }
-
-    /**
-     * Returns a list of prices of all available lengths of a material with the
-     * specified id. Is public, since it is called in test class.
-     *
-     * @param id of the material type
-     * @return list of materials.
-     * @throws Presentation.Exceptions.SystemErrorException
-     */
     @Override
     public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
 

@@ -14,5 +14,8 @@ public class NoSuchRequestException extends SystemErrorException{
     public NoSuchRequestException(String message) {
         super(message);
     }
+
+    public NoSuchRequestException() {
+    }
     
 }

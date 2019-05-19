@@ -15,6 +15,7 @@ import Data.Entity.ShippingAddress;
 import Data.Entity.User;
 import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GenerateReqCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException, SystemErrorException, SystemErrorException {
         if (request.getSession().getAttribute("user") == null) {
             return "jsp/login.jsp";
         }

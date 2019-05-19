@@ -39,8 +39,6 @@ public class LoginCommand implements Command {
                 throw new NoMatchException("jsp/login.jsp", "Forkert adgangskode!");
             }
         request.getSession().setAttribute("user", user);
-
-//        if(user.isSeller() == true) return "jsp/frontpage.jsp";
         return "jsp/frontpage.jsp";
     }
 

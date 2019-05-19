@@ -8,6 +8,8 @@ package Presentation.Commands;
 import Logic.Controller.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.NoSuchShedException;
+import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,7 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ShowRequestCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException {
+    public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException, SystemErrorException, NoSuchShedException {
+
         request.setAttribute("requests", PresentationFacade.getInstance().getRequests());
         System.out.println(request.getAttribute("requests"));
         return "jsp/showrequests.jsp";

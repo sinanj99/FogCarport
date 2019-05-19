@@ -33,6 +33,7 @@ public class CalculateBOM {
         
         if (r.getCarport().getShed_() == null) 
         {
+            //the fundament
             listOfLineItems.add(f.beslagskruer(c));
             listOfLineItems.add(f.brædderbolt(c));
             listOfLineItems.add(f.højrebeslag(c));
@@ -47,13 +48,13 @@ public class CalculateBOM {
             listOfLineItems.add(f.vandbrætForFront(c));
             listOfLineItems.add(f.vandbrætForSides(c));
             listOfLineItems.add(f.hulbånd(c));
-            listOfLineItems.add(f.roof(c));
+            listOfLineItems.add(f.roof(c)); //this should be moved
+            //Still missing some methods
 
-            //mangler lægter, galjer
-
-        } else {
-
-            //Adds material related to the carport
+        } 
+        else 
+        {
+            //The fundament
             listOfLineItems.add(f.beslagskruer(c));
             listOfLineItems.add(f.brædderbolt(c));
             listOfLineItems.add(f.højrebeslag(c));
@@ -68,10 +69,10 @@ public class CalculateBOM {
             listOfLineItems.add(f.vandbrætForFront(c));
             listOfLineItems.add(f.vandbrætForSides(c));
             listOfLineItems.add(f.hulbånd(c));
-            listOfLineItems.add(f.roof(c));
-            //mangler lægter, gajler, tagpplader
+            listOfLineItems.add(f.roof(c)); //this should be moved
+            //Still missing some methods
 
-            //Adds materials related to tool shed
+            //the shed
             listOfLineItems.add(b.beklædning(c));
             listOfLineItems.add(b.løsholterForSides(c));
             listOfLineItems.add(b.løsholterGalve(c));
@@ -79,17 +80,19 @@ public class CalculateBOM {
             listOfLineItems.add(b.lægteForDoor());
             listOfLineItems.add(b.stalddørsgreb());
             listOfLineItems.add(b.tHængsel());
+            //Still missing some methods
             
         }
         return new BOM(listOfLineItems);
     }
 
-    public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException, SystemErrorException {
+    public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException, SystemErrorException 
+    {
 
         BOMInclineRoof calc = new BOMInclineRoof();
         BOMFlatRoof f = new BOMFlatRoof();
         BOMToolshed b = new BOMToolshed();
-        List<LineItem> list = new ArrayList();
+        List<LineItem> listOfLineItems = new ArrayList();
         Carport c = r.getCarport();
 
         int clength = r.getCarport().getLength();
@@ -104,67 +107,76 @@ public class CalculateBOM {
         int roofid = r.getCarport().getRoof().getRoof_id();
         int inclination = (int) r.getCarport().getInclination();
 
-        if (shed != null) {
-            //with length index 0-12
-            list.add(calc.soffits(cwidth, inclination));
-            list.add(calc.fasciaCarport(clength, shed));
-            list.add(calc.fasciaShed(slength));//shed
-            list.add(f.stolpe(c));
-            list.add(calc.beamsCarport(clength, shed, slength));
-            list.add(calc.beamsShed(slength));//shed
-            list.add(calc.intertiesSides(slength));//shed
-            list.add(calc.intertiesGables(swidth));//shed
-            list.add(calc.rainboards(cwidth, inclination));
-            list.add(b.beklædning(c));//shed
-            list.add(b.lægteForDoor());//shed
-            list.add(calc.laths(cwidth, inclination, clength, slength));
-            list.add(calc.toplaths(clength, slength, cwidth));
-
-            //roof package index 13-17
-            list.add(calc.roofTiles(roofid, cwidth, clength, inclination));
-            list.add(calc.ridgeTiles(roofid, clength));
-            list.add(calc.lathHolders(clength, shed, slength));
-            list.add(calc.ridgeTileBrackets(clength));
-            list.add(calc.roofTileBinders());
-
-            //brackets&screws index 18-
-            list.add(calc.rafters(r.getCarport().getWidth(), r.getCarport().getLength(), r.getCarport().getShed_()));
-            list.add(calc.rigthBracketRafters(clength, shed, slength));
-            list.add(calc.leftBracketRafters(clength, shed, slength));
-            list.add(b.stalddørsgreb());//shed
-            list.add(b.tHængsel());//shed
-            list.add(calc.bracketInterties());//shed
-            list.add(calc.fasciaAndSoffitScrews(clength, cwidth, shed, slength, inclination));
-            list.add(calc.screwsLathHolders(clength, shed, slength));
-            list.add(calc.LathScrews(cwidth, inclination));
-            list.add(f.brædderbolt(c));
-            list.add(calc.squareDiscs());
-            list.add(calc.screwsOuterTimbering(swidth, slength));//shed
-            list.add(calc.screwsInnerTimbering(swidth, slength));//shed
-        } else {
-            list.add(calc.soffits(cwidth, inclination));
-            list.add(calc.fasciaCarport(clength, shed));
-            list.add(f.stolpe(c));
-            list.add(calc.beamsCarport(clength, shed, slength));
-            list.add(calc.rainboards(cwidth, inclination));
-            list.add(calc.laths(cwidth, inclination, clength, slength));
-            list.add(calc.toplaths(clength, slength, cwidth));
-
-            list.add(calc.roofTiles(roofid, cwidth, clength, inclination));
-            list.add(calc.ridgeTiles(roofid, clength));
-            list.add(calc.lathHolders(clength, shed, slength));
-            list.add(calc.ridgeTileBrackets(clength));
-            list.add(calc.roofTileBinders());
-
-            list.add(calc.rafters(r.getCarport().getWidth(), r.getCarport().getLength(), r.getCarport().getShed_()));
-            list.add(calc.rigthBracketRafters(clength, shed, slength));
-            list.add(calc.leftBracketRafters(clength, shed, slength));
-            list.add(calc.fasciaAndSoffitScrews(clength, cwidth, shed, slength, inclination));
-            list.add(calc.screwsLathHolders(clength, shed, slength));
-            list.add(calc.LathScrews(cwidth, inclination));
-            list.add(f.brædderbolt(c));
-            list.add(calc.squareDiscs());
+        if (c.getShed_() != null) 
+        {
+            //The fundament
+            listOfLineItems.add(f.beslagskruer(c));
+            listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.højrebeslag(c));
+            listOfLineItems.add(f.venstrebeslag(c));
+            listOfLineItems.add(f.oversternbrædderForFront(c));
+            listOfLineItems.add(f.oversternbrædderForSides(c));
+            listOfLineItems.add(f.spær(c));
+            listOfLineItems.add(f.spærForRemmen(c));
+            listOfLineItems.add(f.stolpe(c));
+            listOfLineItems.add(f.understernBrædderForSides(c));
+            listOfLineItems.add(f.understernbrædderForFrontAndBack(c));
+            listOfLineItems.add(f.vandbrætForFront(c));
+            listOfLineItems.add(f.vandbrætForSides(c));
+            listOfLineItems.add(f.hulbånd(c)); 
+            //still mising some methods
+            
+            //The shed
+            listOfLineItems.add(b.beklædning(c));
+            listOfLineItems.add(b.løsholterForSides(c));
+            listOfLineItems.add(b.løsholterGalve(c));
+            listOfLineItems.add(b.vinkelbeslag());
+            listOfLineItems.add(b.lægteForDoor());
+            listOfLineItems.add(b.stalddørsgreb());
+            listOfLineItems.add(b.tHængsel());
+            //Still missing some methods
+            
+            //The roof
+            listOfLineItems.add(calc.soffits(cwidth, inclination));
+            listOfLineItems.add(calc.laths(cwidth, inclination, clength, slength));
+            listOfLineItems.add(calc.toplaths(clength, slength, cwidth));
+            listOfLineItems.add(calc.roofTiles(roofid, cwidth, clength, inclination));
+            listOfLineItems.add(calc.ridgeTiles(roofid, clength));
+            listOfLineItems.add(calc.lathHolders(clength, shed, slength));
+            listOfLineItems.add(calc.ridgeTileBrackets(clength));
+            listOfLineItems.add(calc.roofTileBinders());
+            
+            } 
+        else 
+        {
+            //The fundament 
+            listOfLineItems.add(f.beslagskruer(c));
+            listOfLineItems.add(f.brædderbolt(c));
+            listOfLineItems.add(f.højrebeslag(c));
+            listOfLineItems.add(f.venstrebeslag(c));
+            listOfLineItems.add(f.oversternbrædderForFront(c));
+            listOfLineItems.add(f.oversternbrædderForSides(c));
+            listOfLineItems.add(f.spær(c));
+            listOfLineItems.add(f.spærForRemmen(c));
+            listOfLineItems.add(f.stolpe(c));
+            listOfLineItems.add(f.understernBrædderForSides(c));
+            listOfLineItems.add(f.understernbrædderForFrontAndBack(c));
+            listOfLineItems.add(f.vandbrætForFront(c));
+            listOfLineItems.add(f.vandbrætForSides(c));
+            listOfLineItems.add(f.hulbånd(c)); 
+            //still mising some methods
+            
+            //The roof
+            listOfLineItems.add(calc.soffits(cwidth, inclination));
+            listOfLineItems.add(calc.laths(cwidth, inclination, clength, slength));
+            listOfLineItems.add(calc.toplaths(clength, slength, cwidth));
+            listOfLineItems.add(calc.roofTiles(roofid, cwidth, clength, inclination));
+            listOfLineItems.add(calc.ridgeTiles(roofid, clength));
+            listOfLineItems.add(calc.lathHolders(clength, shed, slength));
+            listOfLineItems.add(calc.ridgeTileBrackets(clength));
+            listOfLineItems.add(calc.roofTileBinders());
+            
         }
-        return new BOM(list);
+        return new BOM(listOfLineItems);
     }
 }

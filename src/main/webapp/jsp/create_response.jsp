@@ -165,7 +165,7 @@
                             }else{
                             %>
                             <div class="col-6">
-                                <a class="btn btn-danger w-100" style="border-radius: 2px;" href="#" role="button">Slet forespørgelse</a>
+                                <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleterequest&requestID=<%= r.getReq_id() %>" role="button">Slet forespørgelse</a>
                             </div>
 
                             <div class="col-6">

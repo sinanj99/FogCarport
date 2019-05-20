@@ -227,6 +227,11 @@ public class IRequestMapperTest {
         public ShippingAddress getRequestShippingAddress(int id) throws SystemErrorException {
             return null;
         }
+
+        @Override
+        public void deleteRequest(int id) throws NoSuchRequestException {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
     
 }

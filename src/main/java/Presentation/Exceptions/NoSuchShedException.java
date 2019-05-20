@@ -20,7 +20,7 @@ public class NoSuchShedException extends SystemErrorException {
      * @param id of the request
      */
     public NoSuchShedException(int id) {
-        super("Kunne ikke finde skur tilhørende forespørgsel med id " + id + "!");
+        super("Kunne ikke finde skur tilhørende en carport med id " + id + "!");
         this.id = id;
     }
 

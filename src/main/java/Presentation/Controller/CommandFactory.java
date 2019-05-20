@@ -12,6 +12,7 @@ import Presentation.Commands.LoginCommand;
 import Presentation.Commands.Command;
 import Presentation.Commands.CreateOfferCommand;
 import Presentation.Commands.CreateResponseCommand;
+import Presentation.Commands.DeleteRequestCommand;
 import Presentation.Commands.DeleteResponseCommand;
 import Presentation.Commands.LogoutCommand;
 import Presentation.Commands.RegisterCommand;
@@ -47,6 +48,7 @@ public class CommandFactory {
         commands.put("register", new RegisterCommand());
         commands.put("logout", new LogoutCommand());
         commands.put("request", new GenerateReqCommand());
+        commands.put("deleterequest", new DeleteRequestCommand());
         commands.put("showrequests", new ShowRequestCommand());
         commands.put("createOffer", new CreateOfferCommand());
         commands.put("change_price", new ChangePriceCommand());

@@ -165,10 +165,4 @@ class ResponseMapper extends IResponseMapper{
         
         return responses;
     }
-    
-    public static void main(String[] args) {
-        IResponseMapper r = IResponseMapper.instance();
-        r.setDataSource(new DataSourceMysql().getDataSource());
-        
-    }
 }

@@ -8,6 +8,7 @@ package Data.Mappers;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.ShippingAddress;
+import Presentation.Exceptions.NoSuchCarportException;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.NoSuchShedException;
@@ -55,6 +56,15 @@ public abstract class IRequestMapper {
      */
     
     public abstract void insertRequest(Request req) throws SystemErrorException;
+    
+    /**
+     * Deletes a specific request from db-table 'request'.
+     * Calls deleteRequestCarport and deleteRequestShed, so that the carport and the shed for the given shed also gets deleted.
+     * Used when a seller wants to delete a request.
+     * @param id the request id
+     * @throws Presentation.Exceptions.NoSuchRequestException if an sql exception is thrown
+     */
+    public abstract void deleteRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchCarportException, NoSuchShedException;
     
     /**
      * Is used in data insertion class, where different dimensions of a roof is inserted.

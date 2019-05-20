@@ -31,6 +31,8 @@ import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.NoSuchShedException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 import javax.xml.ws.RespectBinding;
 
@@ -98,6 +100,19 @@ public class PresentationFacade {
 
     public void insertRequest(Request req) throws SystemErrorException {
         r.insertRequest(req);
+    }
+    
+    public void deleteRequest(int id) throws NoSuchRequestException, SystemErrorException{
+        r.deleteRequest(id);
+    }
+    
+    public static void main(String[] args) throws SystemErrorException {
+        PresentationFacade p = PresentationFacade.getInstance();
+        try {
+            p.deleteRequest(10);
+        } catch (NoSuchRequestException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException {

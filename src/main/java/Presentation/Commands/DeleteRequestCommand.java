@@ -10,6 +10,7 @@ import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
+import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,20 +19,19 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Obaydah Mohamad
  */
-public class DeleteResponseCommand implements Command{
+public class DeleteRequestCommand implements Command{
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException {
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException, NoSuchShedException {
         int id = 0;
         
         try{
-            id = Integer.parseInt(request.getParameter("responseID"));
+            id = Integer.parseInt(request.getParameter("requestID"));
         }catch(NumberFormatException e){
-            throw new InvalidInputException("FrontController?command=showresponses", "Ugyldigt id nummer!");
+            throw new InvalidInputException("FrontController?command=showrequests", "Ugyldigt id nummer!");
         }
-        
-        PresentationFacade.getInstance().deleteResponse(id);
-        return "FrontController?command=showresponses";
+        PresentationFacade.getInstance().deleteRequest(id);
+        return "FrontController?command=showrequests";
     }
     
 }

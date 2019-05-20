@@ -13,6 +13,7 @@ import Data.Entity.Shed;
 import Data.Entity.ShippingAddress;
 import Presentation.Exceptions.NoSuchCarportException;
 import Presentation.Exceptions.NoSuchRequestException;
+import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
@@ -278,7 +279,76 @@ class RequestMapper extends IRequestMapper {
             throw new SystemErrorException(e.getMessage());
         }
     }
-
+    
+    @Override
+    public void deleteRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchCarportException, NoSuchShedException {
+        String query = "DELETE FROM requests WHERE request_id = ?";
+        try{
+            deleteRequestShippingInfo(id);
+            deleteRequestCarport(id);
+            PreparedStatement p = conn.prepareStatement(query);
+            p.setInt(1, id);
+            int deleted = p.executeUpdate();
+            if(deleted == 0) throw new NoSuchRequestException(id);
+        }catch(SQLException e){
+            throw new SystemErrorException(e.getMessage());
+        }
+    }
+    
+    /**
+    * Called in  deleteRequest method.
+    *
+    * @param id the parent requests id.
+    */
+    private void deleteRequestShippingInfo(int id) throws SystemErrorException{
+        String query = "DELETE FROM shipping_address WHERE request_id = ?";
+        try{
+            PreparedStatement p = conn.prepareStatement(query);
+            p.setInt(1, id);
+            int deleted = p.executeUpdate();
+            if(deleted == 0) throw new SystemErrorException("Ingen leveringsoplysninger blev slettet!");
+        }catch(SQLException e){
+            throw new SystemErrorException(e.getMessage());
+        }
+    }
+    
+    /**
+     * Called in  deleteRequest method.
+     *
+     * @param id the parent requests id.
+     */
+    private void deleteRequestCarport(int id) throws SystemErrorException, NoSuchCarportException, NoSuchShedException{
+        Carport c = null;
+        String query = "DELETE FROM carports WHERE request_id = ?";
+        try{
+            c = getRequestCarport(id);
+            deleteRequestShed(c.getCarportId());
+            PreparedStatement p = conn.prepareStatement(query);
+            p.setInt(1, c.getCarportId());
+            int deleted = p.executeUpdate();
+            if(deleted == 0) throw new NoSuchCarportException(id);
+        }catch(SQLException | SystemErrorException e){
+            throw new SystemErrorException(e.getMessage());
+        }
+    }
+    
+    /**
+     * Called in  deleteRequest and deleteRequestCarport methods.
+     *
+     * @param carportId the parents carports id.
+     */
+    private void deleteRequestShed(int carportId) throws SystemErrorException, NoSuchShedException{
+        String query = "DELETE FROM sheds WHERE carport_id = ?";
+        try{
+            PreparedStatement p = conn.prepareStatement(query);
+            p.setInt(1, carportId);
+            int deleted = p.executeUpdate();
+            if(deleted == 0) throw new NoSuchShedException(carportId);
+        }catch(SQLException e){
+            throw new SystemErrorException(e.getMessage());
+        }
+    }
+    
     @Override
     public Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException {
         int roof_id = 0;

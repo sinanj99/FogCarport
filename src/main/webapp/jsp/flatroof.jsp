@@ -146,6 +146,7 @@
                 <div class="col-sm-12 d-flex justify-content-center">
                     <input id="submit" type="submit" class="btn notmemberbtn" value="Send forespørgsel">
                     <input type="hidden" name="command" value="request">
+                    <input type="hidden" name="inclined" value="false">
                 </div>
             </div>
         </form>

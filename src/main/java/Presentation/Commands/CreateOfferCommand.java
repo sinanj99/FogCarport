@@ -49,7 +49,7 @@ public class CreateOfferCommand implements Command {
             }
         } catch(SystemErrorException e) {
             request.setAttribute("error", e.getMessage());
-            return "error.jsp";
+            return "jsp/error.jsp";
         }
 
         List<LineItem> materialsLength = new ArrayList();

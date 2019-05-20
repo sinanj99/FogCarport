@@ -35,14 +35,15 @@ public class GenerateReqCommand implements Command {
     @Override
 
     public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException, SystemErrorException, InvalidInputException{
-        String cmd = request.getParameter("command");
+        String cmd = "flatroof";
 
         if (request.getSession().getAttribute("user") == null) {
             return "jsp/login.jsp";
         }
-        String inclined = (String) request.getSession().getAttribute("inclined");
+        String inclined = request.getParameter("inclined");
         int inclination = 0;
         if (inclined.equals("true")) {
+            cmd = "inclinedroof";
             try{
                 inclination = Integer.parseInt(request.getParameter("inclination"));
             }catch(NumberFormatException e){
@@ -87,11 +88,11 @@ public class GenerateReqCommand implements Command {
         String city = request.getParameter("city");
         int zip = Integer.parseInt(request.getParameter("zip"));
         
-        if(!Pattern.matches("[a-zA-z]", fname)) throw new InvalidInputException("FrontController?command=" + cmd, "Fornavnet må kun indeholde bogstaver!");
-        if(!Pattern.matches("[a-zA-z]", lname)) throw new InvalidInputException("FrontController?command=" + cmd, "Efternavnet må kun indeholde bogstaver!");
-        if(!Pattern.matches("[a-zA-z0-9]", address)) throw new InvalidInputException("FrontController?command=" + cmd, "Adressen må kun indeholde tal og bogstaver!");
-        if(!Pattern.matches("[a-zA-z]", city)) throw new InvalidInputException("FrontController?command=" + cmd, "By må kun indeholde bogstaver!");
-        if(!Pattern.matches("[0-9]{4}", city)) throw new InvalidInputException("FrontController?command=" + cmd, "Postnummeret skal være et 4 tegn langt tal!");
+        if(!Pattern.matches("[a-zA-Zå\\øæÜÖüö][a-zA-Z\\. å\\øæÜÖüö-]{1,20}$", fname)) throw new InvalidInputException("FrontController?command=" + cmd, "Fornavnet må kun indeholde bogstaver!");
+        if(!Pattern.matches("^[a-zA-Zå\\øæÜÖüö][a-zA-Z\\. å\\øæÜÖüö-]{1,20}$", lname)) throw new InvalidInputException("FrontController?command=" + cmd, "Efternavnet må kun indeholde bogstaver!");
+        if(!Pattern.matches("[A-Za-zÆØÅæøåÜÖüö 0-9'\\.\\-,#]{1,100}", address)) throw new InvalidInputException("FrontController?command=" + cmd, "Adressen må kun indeholde tal og bogstaver!");
+        if(!Pattern.matches("[A-Za-zÆØÅæøåÜÖöü \\.\\-,]{1,20}", city)) throw new InvalidInputException("FrontController?command=" + cmd, "By må kun indeholde bogstaver!");
+        if(!Pattern.matches("[0-9]{4}", String.valueOf(zip))) throw new InvalidInputException("FrontController?command=" + cmd, "Postnummeret skal være et 4 tegn langt tal!");
         
 
         User user = (User) request.getSession().getAttribute("user");
@@ -106,7 +107,6 @@ public class GenerateReqCommand implements Command {
         System.out.println(req.getCarport().getInclination());
 
         LogicFacade.getInstance().insertRequest(req);
-        request.getSession().removeAttribute("inclined");
         return "jsp/reqsent.jsp";
     }
 }

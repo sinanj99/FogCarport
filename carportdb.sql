@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS responses;
 DROP TABLE IF EXISTS CarportDB.sheds;
 DROP TABLE IF EXISTS CarportDB.carports;
 DROP TABLE IF EXISTS CarportDB.users_personalinfo;
@@ -14,8 +13,7 @@ CREATE TABLE CarportDB.rooftype (
   	inclined INT(1) NOT NULL,
 	PRIMARY KEY (roof_id)
 );
-
-
+select * from material_lengths;
 insert into CarportDB.rooftype (`name`, inclined) values 
 ("Plasttrapezplader - Blåtonet", 0),
 ("Plasttrapezplader - Gråtonet", 0),
@@ -90,20 +88,20 @@ INSERT INTO `materials_nolength` (`name`, `unit`, `price`, `stock`) VALUES
 ("4,5 x 50 mm. Skruer 350 stk.", "Pakke", 20,1000),
 ("Toplægteholder", "Stk.", 50, 1000),
 ("Rygstensbeslag", "Stk.", 50, 1000),
-("Tagstensbindere & nakkekroge", "Pakke", 50, 1000);
+("Tagstensbindere & nakkekroge", "Pakke", 50, 1000),
+("hulbånd 1x20 mm. 10 mtr.", "rule.", 270,1000);
 
 INSERT INTO `materials_withlength` (`name`, `unit`) VALUES 
-("25x150 mm. trykimp. Bræt", "Stk."),
-("97x97 mm. trykimp. Stolpe", "Stk."),
-("45x195 spærtræ ubh.", "Stk."),
-("45x95 Reglar ubh.", "Stk."),
-("19x100 mm. trykimp. Bræt", "Stk."),
-("25x50 mm. trykimp. Bræt", "Stk."),
-("38x73 mm. taglægte T1", "Stk."),
-("B & C Dobbelt -s sort", "Stk."),
-("25x150 mm. trykimp. Bræt", "Stk"),
-("25x150 mm. trykimp. Bræt", "Stk"),
-("25x150 mm. trykimp. Bræt", "Stk")
+("45x195mm spærtræ. ubh.", "stk"),
+("25x150mm spærtræ. ubh.", "stk"),
+("97x97mm trykimp. Stolpe", "stk"),
+("25x200mm trykimp. brædt", "stk"),
+("25x150 mm. trykimp. Bræt", "stk"),
+("25x125m trykimp. brædt", "stk"),
+("19x100mm trykimp. brædt", "stk"),
+("38x73mm lægte. ubh.", "stk"),
+("45x95mm reglar. ub.", "stk"),
+("38x73mm. taglægte T1", "stk");
 ;
 
 CREATE TABLE `material_lengths` (
@@ -113,6 +111,90 @@ CREATE TABLE `material_lengths` (
     `stock` INT NOT NULL,
     CONSTRAINT `material_lengths_ibfk_1` FOREIGN KEY (`material_id`) REFERENCES materials_withlength(`material_id`)
     );
+    
+insert into CarportDB.material_lengths(material_id,length,price,stock)
+  values (1,240,24,300),
+  (1,270,27,300),
+  (1,300,30,300),
+  (1,330,33,300),
+  (1,360,36,300),
+  (1,390,39,300),
+  (1,420,42,300),
+  (1,450,45,300),
+  (1,480,48,300),
+  (1,510,51,300),
+  (1,540,54,300),
+  (1,570,57,300),
+  (1,600,60,300),
+  (1,630,63,300),
+  (1,660,66,300),
+  (1,690,69,300),
+  (1,720,72,300),
+  (1,750,75,300),
+  (2,240,15,300),
+  (2,270,18,300),
+  (2,300,21,300),
+  (2,330,24,300),
+  (2,360,27,300),
+  (2,390,30,300),
+  (2,420,33,300),
+  (2,450,36,300),
+  (2,480,39,300),
+  (2,510,42,300),
+  (2,540,45,300),
+  (2,570,48,300),
+  (2,600,51,300),
+  (2,630,54,300),
+  (2,660,57,300),
+  (2,690,60,300),
+  (2,720,63,300),
+  (2,750,66,300),
+  (3,300,50,300),
+  (4,250,15,300),
+  (5,540,32,300),
+  (6,250,22,300),
+  (7,250,22,300),
+  (7,210,17,300),
+  (8,420,29,300),
+  (9,150,15,300),
+  (9,180,18,300),
+  (9,210,21,300),
+  (9,240,24,300),
+  (9,270,27,300),
+  (9,300,30,300),
+  (9,330,33,300),
+  (9,360,36,300),
+  (9,390,39,300),
+  (9,420,42,300),
+  (9,450,45,300),
+  (9,480,48,300),
+  (9,510,51,300),
+  (9,540,54,300),
+  (9,570,57,300),
+  (9,600,60,300),
+  (9,630,63,300),
+  (9,660,66,300),
+  (9,690,69,300),
+  (9,720,72,300),
+  (10,240,60,300),
+  (10,270,70,300),
+  (10,300,80,300),
+  (10,330,90,300),
+  (10,360,100,300),
+  (10,390,110,300),
+  (10,420,120,300),
+  (10,450,130,300),
+  (10,480,140,300),
+  (10,510,150,300),
+  (10,540,160,300),
+  (10,570,170,300),
+  (10,600,180,300),
+  (10,630,190,300),
+  (10,660,200,300),
+  (10,690,210,300),
+  (10,720,220,300),
+  (10,750,230,300),
+  (10,780,240,300);    
 
 insert into CarportDB.material (name, length, unit,  price)
 values ("45x195mm spærtræ. ubh. ",240,"stk", 20),
@@ -242,6 +324,24 @@ CREATE TABLE CarportDB.requests (
 	CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
 );
 
+CREATE TABLE CarportDB.responses (
+	response_id INT(50) NOT NULL AUTO_INCREMENT,
+	request_id int(50) NOT NULL UNIQUE, 
+	user_id int(50) NOT NULL,
+	emp_id int(50) NOT NULL,
+	dateplaced DATETIME NOT NULL,
+	carport_id int(50) NOT NULL,
+	shed_id int(50) DEFAULT NULL,
+	productionprice int NOT NULL,
+	sellprice int NOT NULL,
+    status int(1) DEFAULT 0,
+	PRIMARY KEY (response_id),
+	CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`),
+	CONSTRAINT `responses_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
+	CONSTRAINT `responses_ibfk_3` FOREIGN KEY (`emp_id`) REFERENCES users(`user_id`),
+	CONSTRAINT `responses_ibfk_4` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`),
+	CONSTRAINT `responses_ibfk_5` FOREIGN KEY (`shed_id`) REFERENCES sheds(`shed_id`)
+);
 
 CREATE TABLE CarportDB.users_personalinfo (
 	user_id INT(50) NOT NULL,
@@ -281,7 +381,8 @@ CREATE TABLE CarportDB.carports (
     CONSTRAINT `carports_ibfk_2` FOREIGN KEY (`roof_id`) REFERENCES rooftype(`roof_id`)
 );
 
-select * from material_lengths;
+
+SELECT * FROM materials_withlength INNER JOIN material_lengths USING(material_id);
 
 CREATE TABLE CarportDB.sheds (
 	shed_id INT(50) NOT NULL AUTO_INCREMENT,
@@ -291,23 +392,28 @@ CREATE TABLE CarportDB.sheds (
 	PRIMARY KEY (shed_id),
 	CONSTRAINT `sheds_ibfk_1` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`)
 );
-select * from rooflength;
 
-CREATE TABLE CarportDB.responses (
-	response_id INT(50) NOT NULL AUTO_INCREMENT,
-	request_id int(50) NOT NULL UNIQUE, 
-	user_id int(50) NOT NULL,
-	emp_id int(50) NOT NULL,
-	dateplaced DATETIME NOT NULL,
-	carport_id int(50) NOT NULL,
-	shed_id int(50) DEFAULT NULL,
-	productionprice int NOT NULL,
-	sellprice int NOT NULL,
-    status int(1) DEFAULT 0,
-	PRIMARY KEY (response_id),
-	CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`),
-	CONSTRAINT `responses_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
-	CONSTRAINT `responses_ibfk_3` FOREIGN KEY (`emp_id`) REFERENCES users(`user_id`),
-	CONSTRAINT `responses_ibfk_4` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`),
-	CONSTRAINT `responses_ibfk_5` FOREIGN KEY (`shed_id`) REFERENCES sheds(`shed_id`)
-);
+CREATE TABLE CarportDB.prebuilt_carport (
+  id INT(50) NOT NULL AUTO_INCREMENT,
+  img_path VARCHAR(1000) NOT NULL,
+  carport_width INT(10)NOT NULL,
+  carport_length int(10)  NOT NULL,
+  shed boolean,
+  shed_width int(10) NOT NULL,
+  shed_length int(10) NOT NULL,
+  price INT(10) NOT NULL,
+  PRIMARY KEY (id));
+  
+  insert into CarportDB.prebuilt_carport(img_path, carport_width, carport_length, shed, shed_width, shed_length, price)
+  values ("/project/images/abc.png",450,750,true,420,180,17779),
+  ("/project/images/carport2.png",360,540,false,0,0,13998),
+  ("/project/images/carport3.png",360,720,true,330,220,21498),
+  ("/project/images/carport4.png",390,750,true,240,330,23498),
+  ("/project/images/carport5.png",300,480,false,0,0,3998),
+  ("/project/images/carport6.png",600,750,true,210,510,31998),
+  ("/project/images/carport7.png",600,540,true,270,240,13798),
+  ("/project/images/carport8.png",600,480,false,0,0,10498),
+  ("/project/images/carport9.jpg",630,540,true,570,150,15798),
+  ("/project/images/carport10.jpg",420,480,false,0,0,5798),
+  ("/project/images/carport10.jpg",420,480,false,0,0,5798);
+

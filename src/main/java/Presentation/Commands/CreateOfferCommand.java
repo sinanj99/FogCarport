@@ -13,7 +13,7 @@ import Logic.Calculator.CalculateBOM;
 import Logic.Calculator.CalculatePrice;
 import Logic.Calculator.DrawSVGIncline;
 import Logic.Calculator.DrawSVGFlatroof;
-import Logic.Calculator.BOMInclineRoof;
+import Logic.Calculator.BOMRoofPackage;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRequestException;

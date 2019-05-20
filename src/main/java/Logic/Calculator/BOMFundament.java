@@ -22,9 +22,9 @@ import Presentation.Exceptions.SystemErrorException;
  *
  * @author Kasper Jeppesen
  */
-public class BOMFlatRoof {
+public class BOMFundament {
 
-    private BOMInclineRoof ir = new BOMInclineRoof();
+    private BOMRoofPackage ir = new BOMRoofPackage();
 
     //------------------------------- calculate methods for fittings and screws ------------------------------------------------------------------------
     /**

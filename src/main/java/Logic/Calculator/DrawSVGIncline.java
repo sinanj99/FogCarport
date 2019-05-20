@@ -35,8 +35,8 @@ public class DrawSVGIncline {
         double hypotenuse_ = triangleWidth / (double) Math.cos(inclination);
         int hypotenuse = (int) hypotenuse_;
 
-        BOMFlatRoof f = new BOMFlatRoof();
-        BOMInclineRoof ic = new BOMInclineRoof();
+        BOMFundament f = new BOMFundament();
+        BOMRoofPackage ic = new BOMRoofPackage();
         drawing += "<svg height='100%' width='100%' viewbox='-150 100 900 900' >";
 
         float spaceBetweenSpærVAR = f.spaceBetweenRafter(length, 90);
@@ -245,8 +245,8 @@ public class DrawSVGIncline {
             slength = shed.getLength();
             swidth = shed.getWidth();
         }
-        BOMFlatRoof f = new BOMFlatRoof();
-        BOMInclineRoof ic = new BOMInclineRoof();
+        BOMFundament f = new BOMFundament();
+        BOMRoofPackage ic = new BOMRoofPackage();
         double inclination = Math.toRadians(c.getInclination());
         double hypotenuse = (width / 2) / Math.cos(inclination);
         double roofHeight = Math.sin(inclination) * hypotenuse;
@@ -278,8 +278,8 @@ public class DrawSVGIncline {
             int swidth = shed.getWidth();
         }
 
-        BOMFlatRoof f = new BOMFlatRoof();
-        BOMInclineRoof ic = new BOMInclineRoof();
+        BOMFundament f = new BOMFundament();
+        BOMRoofPackage ic = new BOMRoofPackage();
         double inclination = Math.toRadians(c.getInclination());
         double hypotenuse = (width / 2) / Math.cos(inclination);
         double roofHeight = Math.sin(inclination) * hypotenuse;

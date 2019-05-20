@@ -22,9 +22,9 @@ import Presentation.Exceptions.SystemErrorException;
  *
  * @author Sinan Jasar
  */
-public class BOMInclineRoof {
+public class BOMRoofPackage {
     
-    private static final BOMFlatRoof fc = new BOMFlatRoof();
+    private static final BOMFundament fc = new BOMFundament();
 
     /**
      * Calculates the hypotenuse for the roof
@@ -192,7 +192,7 @@ public class BOMInclineRoof {
     private int amountOfLathHolders(Carport c) 
     {
         /*amount of lath-holders is the same as rafters; 1 lath-holder for each rafter*/
-        BOMFlatRoof f = new BOMFlatRoof();
+        BOMFundament f = new BOMFundament();
         return f.calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 90);
     }
      

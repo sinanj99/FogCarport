@@ -26,7 +26,7 @@ public class DrawSVGFlatroof {
         swidth = shed.getWidth();
         }
 
-        BOMFlatRoof f = new BOMFlatRoof();
+        BOMFundament f = new BOMFundament();
         drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
         //STOLPER 
         float spaceBetweenSpærVAR = f.spaceBetweenRafter(length, 60);

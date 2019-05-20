@@ -26,7 +26,7 @@ import java.util.List;
 public class CalculateBOM {
     
     public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException, SystemErrorException {
-        BOMFlatRoof f = new BOMFlatRoof();
+        BOMFundament f = new BOMFundament();
         ArrayList listOfLineItems = new ArrayList();
         BOMToolshed b = new BOMToolshed();
         Carport c = r.getCarport();
@@ -91,8 +91,8 @@ public class CalculateBOM {
     public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException, SystemErrorException 
     {
 
-        BOMInclineRoof calc = new BOMInclineRoof();
-        BOMFlatRoof f = new BOMFlatRoof();
+        BOMRoofPackage calc = new BOMRoofPackage();
+        BOMFundament f = new BOMFundament();
         BOMToolshed b = new BOMToolshed();
         List<LineItem> listOfLineItems = new ArrayList();
         Carport c = r.getCarport();

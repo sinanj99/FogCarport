@@ -23,29 +23,15 @@ import Presentation.Exceptions.SystemErrorException;
  * @author Sinan Jasar
  */
 public class BOMInclineRoof {
+    
+    private static final BOMFlatRoof fc = new BOMFlatRoof();
 
-    // contstants used in roof-calculations. 
-    private static BOMFlatRoof fc = new BOMFlatRoof();
-    private static final int TRIANGLE_WIDTH = 360 / 2;
-    private static final double INCLINATION = Math.toRadians(20);
-    private static final double HYPOTENUSE = TRIANGLE_WIDTH / Math.cos(INCLINATION);
-    private static final double TILE_W_X_H = (HYPOTENUSE * 730) / 288;
-    
-
-    private static BOMToolshed tbom = new BOMToolshed();
-
-    
-    //------------------------------------------ calculation methods for fiiting and screws ----------------------------------------------------------
-   
-    
-    private int calculateRidgeTileWidth()
-    {
-        int TILE_WIDTH = 730 / 21;; // = 37 - top lægte
-        int tileWidth = 6; // almindelig tagsten
-        return 2;
-    }
-    
-    private double calculateHypotenuseForRoof(Carport c)
+    /**
+     * Calculates the hypotenuse for the roof
+     * @param c the carport
+     * @return the hypotenuse for the roof
+     */
+   public double calculateHypotenuseForRoof(Carport c)
     {
         // calcaute the hypotenuse for the roof
         int triangleWidth = c.getWidth() / 2; // width of each triangle.
@@ -53,13 +39,11 @@ public class BOMInclineRoof {
         double hypotenuse = triangleWidth / Math.cos(inclination);
         return hypotenuse;
     }
-            
-                 
-            
-    
+   
+    //------------------------------------------ calculation methods for fiiting and screws ----------------------------------------------------------
     /**
-     * 
-     * @param c
+     * Calculates the amount of screws needed for lath holders
+     * @param c the carport
      * @return amount of screws for lath holders (skruer for lægte holder)
      */
     private int amountOfScrewsLathHolders(Carport c) 
@@ -69,7 +53,11 @@ public class BOMInclineRoof {
         return (int) Math.ceil(amount / 250); // a single pack consists of 250 screws. 
     }
     
-   
+   /**
+    * Calculates the amount of screws needed for the laths
+    * @param c
+    * @return amount of screws for laths
+    */
     private int amountOfScrewsLaths(Carport c) 
     {
         double amount = amountOfLaths(c) * 10;
@@ -82,14 +70,25 @@ public class BOMInclineRoof {
     
     
     //---------------------------------------- methods for returning item in category fitting and screws --------------------------------------------------
-    
-    
+    /**
+     * Returns line item object of screws for lath holders
+     * @param c the carport
+     * @return LineItem object of screws for lath holders
+     * @throws SystemErrorException if an sql-exception is thrown
+     * @throws NoSuchMaterialException if no materials with specified id exist
+     */
     public LineItem screwsLathHolders(Carport c) throws SystemErrorException, NoSuchMaterialException 
     {
         Material m = LogicFacade.getInstance().getMaterialNoLength(7);
         return new LineItem(m, amountOfScrewsLathHolders(c), "Til montering af universalbeslag + toplægte", m.getPrice() * amountOfScrewsLathHolders(c), Type.NOLENGTH);
     }
-     
+    /**
+     * Returns LineItem object of screws for laths
+     * @param c the carport
+     * @return LineItem object of screws for laths
+     * @throws SystemErrorException if an sql-exception is thrown
+     * @throws NoSuchMaterialException if no materials with specified id exist 
+     */
     public LineItem LathScrews(Carport c) throws SystemErrorException, NoSuchMaterialException 
     {
         Material m = LogicFacade.getInstance().getMaterialNoLength(8);
@@ -100,29 +99,26 @@ public class BOMInclineRoof {
     
     //------------------------------------- calculation methods for tree -------------------------------------------------------
     
-    
+    /**
+     * Calculates the amount of laths needed
+     * @param c the carport
+     * @return amount of alths needed
+     */
     public int amountOfLaths(Carport c) 
     {
 //        /*firstly, the roof is divided into 2 right-angled triangles,
 //        and the hypotenuse is calculated*/
-//        int triangleWidth = carportWidth / 2; // width of each triangle.
-//        inclination = Math.toRadians(inclination); //Math.cos expects radians
-//        double hypotenuse = triangleWidth / Math.cos(inclination);
-//        /*there must be a space of 35 cm between the first and secong lath, and a space
-//        of 30 cm between the last lath and the top.*/
-////      hypotenuse -= 65;
+
 //        /*the hypotenuse is now used to calculate the amount of laths*/
-//        //amount of holes or amount of rafters(excluding back rafter)
-//        return fc.calculateQuantityOfSpærIncludedBackSpær((int) hypotenuse, 40) * 2 - 2;
          
-        return fc.calculateQuantityOFRafterExcluedBackRafter(c, 40);
+        return fc.calculateQuantityOfRafterIncludedBackRafter((int) calculateHypotenuseForRoof(c), 40);
     }
     
     
     
     /**
-     * 
-     * @param c
+     * Calculates the amount of soffits needed
+     * @param c the carport
      * @return the amount of soffits (vindskeder)
      */ 
     private int amountOfSoffits(Carport c) 
@@ -147,20 +143,38 @@ public class BOMInclineRoof {
     
     //--------------------------------------- methods for retuning item in category tree ------------------------------------------------------------
     
-    
+    /**
+     * Returns a LineItem object of laths
+     * @param c the carport
+     * @return a LineItem object of laths
+     * @throws SystemErrorException if an sql-exception is thrown
+     * @throws NoSuchMaterialException if no materials with specified id exist 
+     */
     public LineItem laths(Carport c) throws NoSuchMaterialException, SystemErrorException 
     {
         Material m = LogicFacade.getInstance().getMaterialWithLength(7, c.getLength() + 30);
-        return new LineItem(m, amountOfLaths(c), "til montering på spær, 7 rækker lægter på hver skiftevis 1 hel & 1 halv lægte", m.getPrice() * amountOfLaths(c), Type.LENGTH);
+        return new LineItem(m, amountOfLaths(c)*2-2, "til montering på spær, 7 rækker lægter på hver skiftevis 1 hel & 1 halv lægte", m.getPrice() * amountOfLaths(c)*2-2, Type.LENGTH);
     }
-     
+    /**
+     * Returns a LineItem object of top laths
+     * @param c the carport
+     * @return a LineItem object of top laths
+     * @throws SystemErrorException if an sql-exception is thrown
+     * @throws NoSuchMaterialException if no materials with specified id exist 
+     */
     public LineItem toplaths(Carport c) throws NoSuchMaterialException, SystemErrorException 
     {
         Material m = LogicFacade.getInstance().getMaterialWithLength(7, c.getLength());
         return new LineItem(m, 1, "toplægte til montering af rygsten lægges i toplægte holder", m.getPrice() * 1, Type.LENGTH);
     }
     
-    
+    /**
+     * Returns a LineItem object of soffits
+     * @param c the carport
+     * @return a LineItem object of soffits
+     * @throws SystemErrorException if an sql-exception is thrown
+     * @throws NoSuchMaterialException if no materials with specified id exist 
+     */
     public LineItem soffits(Carport c) throws NoSuchMaterialException, SystemErrorException 
     {
         Material m = LogicFacade.getInstance().getMaterialWithLength(1, 480);
@@ -171,28 +185,26 @@ public class BOMInclineRoof {
     //-------------------------------------- calculation methods for roof --------------------------------------------------------------------------
     
     /**
-     * 
-     * @param c
+     * Calculates the amount of lath holders needed
+     * @param c the carport
      * @return amount of lath holders (holder for lægte)
      */
     private int amountOfLathHolders(Carport c) 
     {
         /*amount of lath-holders is the same as rafters; 1 lath-holder for each rafter*/
         BOMFlatRoof f = new BOMFlatRoof();
-        return f.calculateQuantityOfRafterIncludedBackRafter(c, 90);
+        return f.calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 90);
     }
      
      /**
-     *
-     * @param carportWidth
-     * @param carportLength
-     * @param inclination
-     * @return (tagsten)
+     * Calculates the amount of roof tiles needed
+     * @param c the carport
+     * @return the amount of roof tiles (tagsten)
      */
     private int amountOfRoofTiles(Carport c) 
     {
-       // the following lines calculate the square meter measurements for a single tile
-       // based on the example in the bill of materials
+      /* the following lines calculate the square meter measurements for a single tile,
+         based on the given example */
        int triangleWidth = 360 / 2;
        double inclination = Math.toRadians(20);
        double hypotenuse_ = triangleWidth / Math.cos(inclination);
@@ -227,7 +239,7 @@ public class BOMInclineRoof {
     } 
     
      /**
-     *
+     * Calculates the amount of ridge tiles
      * @param carportLength
      * @return (rygsten)
      */
@@ -242,9 +254,9 @@ public class BOMInclineRoof {
     }
     
      /**
-     *
-     * @param carportLength
-     * @return (rygstensbeslag)
+     * Calculates the amount of ridge tile brackets
+     * @param carportLength - length of carport
+     * @return amount of ridge tile brackets (rygstensbeslag)
      */
     private int amountOfRidgeTileBrackets(Carport c) 
     {
@@ -256,30 +268,57 @@ public class BOMInclineRoof {
     
     //-------------------------------------- methods for returning item in category roof ------------------------------------------------------------
     
-    
+    /**
+     * Returns a LineItem object of lath holders
+     * @param c the carport
+     * @return a LineItem object of lath holders
+     * @throws SystemErrorException if an sql-exception is thrown
+     * @throws NoSuchMaterialException if no materials with specified id exist 
+     */
     public LineItem lathHolders(Carport c) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(13);
         return new LineItem(m, amountOfLathHolders(c), "monteres på toppen af spæret (til toplægte)", m.getPrice() * amountOfLathHolders(c), Type.ROOF);
     }
     
+    /**
+     * Returns a LineItem object of laths
+     * @param c the carport
+     * @return a LineItem object of laths
+     * @throws Presentation.Exceptions.NoSuchRoofException if a roof with the specified id is not found
+     */
     public LineItem roofTiles(Carport c) throws NoSuchRoofException 
     {
         Roof r = LogicFacade.getInstance().newGetRoof(c.getRoof().getRoof_id(), 37);
         return new LineItem(r, amountOfRoofTiles(c), "monteres på taglægter", r.getPrice() * amountOfRoofTiles(c));
     }
-    
+    /**
+     * Returns a LineItem object of laths
+     * @return a LineItem object of laths
+     * @throws NoSuchMaterialException if no materials with specified id can be found
+     * @throws SystemErrorException an sql-exception is thrown
+     */
     public LineItem roofTileBinders() throws SystemErrorException, NoSuchMaterialException 
     {
         Material m = LogicFacade.getInstance().getMaterialNoLength(15);
         return new LineItem(m, 2, "til montering af tagsten, alle ydersten + hver anden fastgøres", m.getPrice() * 2, Type.ROOF);
     }
-    
+    /**
+     * Returns a LineItem object of ridge tiles
+     * @param c the carport
+     * @return a LineItem object of ridge tiles
+     */
     public LineItem ridgeTiles(Carport c) 
     {
         Roof r = LogicFacade.getInstance().newGetRoof(c.getRoof().getRoof_id(), 6);
         return new LineItem(r, amountOfRidgeTiles(c), "monteres på toplægte med medfølgende beslag se tagstens vejledning", r.getPrice() * amountOfRidgeTiles(c));
     }
-     
+    /**
+     * Returns a LineItem object of laths
+     * @param c the carport
+     * @return a LineItem object of laths
+     * @throws NoSuchMaterialException if no materials with specified id can be found
+     * @throws SystemErrorException an sql-exception is thrown
+     */
     public LineItem ridgeTileBrackets(Carport c) throws SystemErrorException, NoSuchMaterialException 
     {
         Material m = LogicFacade.getInstance().getMaterialNoLength(14);

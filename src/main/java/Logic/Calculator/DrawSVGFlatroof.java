@@ -29,7 +29,7 @@ public class DrawSVGFlatroof {
         BOMFlatRoof f = new BOMFlatRoof();
         drawing += "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
         //STOLPER 
-        float spaceBetweenSpærVAR = f.spaceBetweenRafter(c, 60);
+        float spaceBetweenSpærVAR = f.spaceBetweenRafter(length, 60);
 
         float startingPointFirstSpærX = 50;
         float startingPointFirstSpærY = 50;
@@ -175,8 +175,8 @@ public class DrawSVGFlatroof {
         
         
         //SPÆR
-        int quantityOfSpær = f.calculateQuantityOFRafterExcluedBackRafter(c, 60);
-        int quantityOfSpærPlusTheBackSpær = f.calculateQuantityOfRafterIncludedBackRafter(c, 60);
+        int quantityOfSpær = f.calculateQuantityOFRafterExcluedBackRafter(length, 60);
+        int quantityOfSpærPlusTheBackSpær = f.calculateQuantityOfRafterIncludedBackRafter(length, 60);
 
         float frontSpærPlacementX = startingPointFirstSpærX;
         float frontSpærPlacementY = startingPointFirstSpærY - 15;
@@ -184,7 +184,7 @@ public class DrawSVGFlatroof {
         
         for (int i = 0; i < quantityOfSpærPlusTheBackSpær; i++) {
             drawing += "<rect x='" + frontSpærPlacementX + "' y='" + frontSpærPlacementY + "' height='" + width + "' width='10' fill='none' stroke='black' stroke-width='3px'/>";
-            frontSpærPlacementX += f.spaceBetweenRafter(c, 60) + 3f;
+            frontSpærPlacementX += f.spaceBetweenRafter(length, 60) + 3f;
         }
         
         // SKUR BEKLÆDNING
@@ -235,16 +235,16 @@ public class DrawSVGFlatroof {
                         +slength+" cm</text>";
             }
             int startPointThis = 60;
-            for(int i = 0; i < f.calculateQuantityOFRafterExcluedBackRafter(c, 60); i++)
+            for(int i = 0; i < f.calculateQuantityOFRafterExcluedBackRafter(length, 60); i++)
             {
                 drawing += "<line x1='"+startPointThis+"' y1='"+40+
-                "' x2='"+(startPointThis + f.spaceBetweenRafter(c, 60) - 6)+"' y2='"+  40 +
+                "' x2='"+(startPointThis + f.spaceBetweenRafter(length, 60) - 6)+"' y2='"+  40 +
                 "' class='lineFOrSpace'  stroke='darkgrey' stroke-width='3px' fill='none'  />";
                 
                 drawing += "<text x='"+(startPointThis + 2)+"' y='"+35+ "' fill='black' font-size='12px'>"
-                    +f.spaceBetweenRafter(c, 60)+" cm</text>";
+                    +f.spaceBetweenRafter(length, 60)+" cm</text>";
                 
-                startPointThis += f.spaceBetweenRafter(c, 60) + 3;
+                startPointThis += f.spaceBetweenRafter(length, 60) + 3;
             }
             
            

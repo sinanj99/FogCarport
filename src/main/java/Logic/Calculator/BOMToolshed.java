@@ -10,6 +10,7 @@ import Data.Mappers.IMaterialMapper;
 import Data.Entity.LineItem;
 import Data.Entity.Material;
 import Data.Entity.Type;
+import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 
 /**
@@ -25,7 +26,7 @@ public class BOMToolshed
      * @param c
      * @return the amount of planks needed for shed clothing (beklædning) of the first layer of the shed
      */
-    private int calculateQuantityForBeklædning1(Carport c)
+    private int calculateQuantityForShedClothing1(Carport c)
     {
         //Width of a plank 
         int widthOfPlank = 10;
@@ -44,7 +45,7 @@ public class BOMToolshed
      * @param c
      * @return the amount of planks needed for shed clothing (beklædning) of the second layer of the shed
      */
-    private int calculateQuantityForBeklædning2(Carport c)
+    private int calculateQuantityForShedClothing2(Carport c)
     {
         //width of a plank
         int widthOfPlank = 10;
@@ -71,10 +72,12 @@ public class BOMToolshed
      * @param c
      * @return the total amount of planks needed for the shed clothing (beklædning)
      */
-    private int calculateQuantityForBeklædning(Carport c)
+    private int calculateQuantityForShedClothing(Carport c)
     {
-        return calculateQuantityForBeklædning1(c) + calculateQuantityForBeklædning2(c);
+        return calculateQuantityForShedClothing1(c) + calculateQuantityForShedClothing2(c);
     }
+    
+    
     
     
     //---------------------------------- methods for returning LineItem ----------------------------------------------------------
@@ -82,13 +85,13 @@ public class BOMToolshed
     /**
      * 
      * @param c
-     * @return LineItem of shed Clothing (beklædning)
+     * @return LineItem of shed clothing (beklædning)
      * @throws NoSuchMaterialException 
      */
-    public LineItem beklædning(Carport c) throws NoSuchMaterialException
+    public LineItem shedClothing(Carport c) throws NoSuchMaterialException
     {
-         Material m = IMaterialMapper.instance().getMaterial("19x100mm trykimp. brædt", 210);
-         return new LineItem(m, calculateQuantityForBeklædning(c), "Til beklædning af skur 1 på 2", m.getPrice()*calculateQuantityForBeklædning(c), Type.LENGTH);
+         Material m = LogicFacade.getInstance().getMaterial("19x100mm trykimp. brædt", 210);
+         return new LineItem(m, calculateQuantityForShedClothing(c), "Til beklædning af skur 1 på 2", m.getPrice()*calculateQuantityForShedClothing(c), Type.LENGTH);
     }
     
     /**
@@ -97,16 +100,16 @@ public class BOMToolshed
      * @return LineItem of end caps for gables (løsholter for gavle)
      * @throws NoSuchMaterialException 
      */
-    public LineItem løsholterGalve(Carport c) throws NoSuchMaterialException
+    public LineItem endCapsForGables(Carport c) throws NoSuchMaterialException
     {
         LineItem l = null;
         Material m;
-        
-        for(int i = 150; i <= 510; i += 30)
+        // 210 to 720 is the width dimension of a shed
+        for(int i = 210; i <= 720; i += 30)
         {
             if(c.getShed_().getWidth() == i)
             {
-                m = IMaterialMapper.instance().getMaterial("45x95mm reglar. ub.", i);
+                m = LogicFacade.getInstance().getMaterial("45x95mm reglar. ub.", i);
                 l = new LineItem(m, 12, "Løsholter til skur gavle", m.getPrice()*12, Type.LENGTH);
             }
         }
@@ -119,16 +122,16 @@ public class BOMToolshed
      * @return LineItem of end caps for sides (løsholter for siderne)
      * @throws NoSuchMaterialException 
      */
-    public LineItem løsholterForSides(Carport c) throws NoSuchMaterialException
+    public LineItem endCapsForSides(Carport c) throws NoSuchMaterialException
     {
         LineItem l = null;
         Material m;
-        
+        // 150-540 is the lenth dimension of a shed
         for(int i = 150; i < 540; i += 30)
         {
             if(c.getShed_().getLength() == i)
             {
-                m = IMaterialMapper.instance().getMaterial("45x95mm reglar. ub.", i);
+                m = LogicFacade.getInstance().getMaterial("45x95mm reglar. ub.", i);
                 l = new LineItem(m, 4, "løsholter til skur siderne", m.getPrice()*4, Type.LENGTH);
             }
         }
@@ -140,10 +143,21 @@ public class BOMToolshed
      * @return LineItem of brackets (beslag)
      * @throws NoSuchMaterialException 
      */
-    public LineItem vinkelbeslag() throws NoSuchMaterialException
+    public LineItem bracket() throws NoSuchMaterialException
     {
-        Material m = IMaterialMapper.instance().getMaterial_("vinkelbeslag 35");
+        Material m = LogicFacade.getInstance().getMaterial_("vinkelbeslag 35");
         return new LineItem(m, 32, "Til montering af løsholter til skur", m.getPrice()*32, Type.NOLENGTH);
+    }
+    
+    /**
+     * 
+     * @return LineItem of bracket screws (skruer til beslag)
+     * @throws NoSuchMaterialException 
+     */
+    public LineItem bracketScrews() throws NoSuchMaterialException
+    {
+        Material m = LogicFacade.getInstance().getMaterial_("4.0x50mm beslagskruer 250 stk");
+        return new LineItem(m, (32*3), "Til montering af vinkelbeslag til skur", m.getPrice() * (32*3), Type.NOLENGTH);
     }
     
     /**
@@ -151,9 +165,9 @@ public class BOMToolshed
      * @return LineItem of lath for door (lægte for døren)
      * @throws NoSuchMaterialException 
      */
-    public LineItem lægteForDoor() throws NoSuchMaterialException
+    public LineItem lathForDoor() throws NoSuchMaterialException
     {
-         Material m = IMaterialMapper.instance().getMaterial_("38x73mm lægte. ubh.");
+         Material m = LogicFacade.getInstance().getMaterial_("38x73mm lægte. ubh.");
          return new LineItem(m, 1, "Til z på bagside af dør", m.getPrice(), Type.LENGTH);
     }
     /**
@@ -161,9 +175,9 @@ public class BOMToolshed
      * @return LineItem of farmgate grip (stalddørsgreb)
      * @throws NoSuchMaterialException 
      */
-    public LineItem stalddørsgreb() throws NoSuchMaterialException
+    public LineItem farmgateGrip() throws NoSuchMaterialException
     {
-         Material m = IMaterialMapper.instance().getMaterial_("50x75mm stalddørsgreb");
+         Material m = LogicFacade.getInstance().getMaterial_("50x75mm stalddørsgreb");
          return new LineItem(m, 1, "Til løs på dør i skur", m.getPrice(), Type.NOLENGTH);
     }
     
@@ -172,9 +186,9 @@ public class BOMToolshed
      * @return LineItem of t-hinge (t-hængsel)
      * @throws NoSuchMaterialException 
      */
-    public LineItem tHængsel() throws NoSuchMaterialException
+    public LineItem tHinge() throws NoSuchMaterialException
     {
-         Material m = IMaterialMapper.instance().getMaterial_("390mm t-hængsel");
+         Material m = LogicFacade.getInstance().getMaterial_("390mm t-hængsel");
          return new LineItem(m, 2, "Til dør i skur", m.getPrice()*2, Type.NOLENGTH);
     }
    

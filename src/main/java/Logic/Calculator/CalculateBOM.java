@@ -75,13 +75,13 @@ public class CalculateBOM {
             //Still missing some methods
 
             //the shed
-            listOfLineItems.add(b.beklædning(c));
-            listOfLineItems.add(b.løsholterForSides(c));
-            listOfLineItems.add(b.løsholterGalve(c));
-            listOfLineItems.add(b.vinkelbeslag());
-            listOfLineItems.add(b.lægteForDoor());
-            listOfLineItems.add(b.stalddørsgreb());
-            listOfLineItems.add(b.tHængsel());
+            listOfLineItems.add(b.shedClothing(c));
+            listOfLineItems.add(b.endCapsForSides(c));
+            listOfLineItems.add(b.endCapsForGables(c));
+            listOfLineItems.add(b.bracket());
+            listOfLineItems.add(b.lathForDoor());
+            listOfLineItems.add(b.farmgateGrip());
+            listOfLineItems.add(b.tHinge());
             //Still missing some methods
             
         }
@@ -130,13 +130,13 @@ public class CalculateBOM {
             //still mising some methods
             
             //The shed
-            listOfLineItems.add(b.beklædning(c));
-            listOfLineItems.add(b.løsholterForSides(c));
-            listOfLineItems.add(b.løsholterGalve(c));
-            listOfLineItems.add(b.vinkelbeslag());
-            listOfLineItems.add(b.lægteForDoor());
-            listOfLineItems.add(b.stalddørsgreb());
-            listOfLineItems.add(b.tHængsel());
+            listOfLineItems.add(b.shedClothing(c));
+            listOfLineItems.add(b.endCapsForSides(c));
+            listOfLineItems.add(b.endCapsForGables(c));
+            listOfLineItems.add(b.bracket());
+            listOfLineItems.add(b.lathForDoor());
+            listOfLineItems.add(b.farmgateGrip());
+            listOfLineItems.add(b.tHinge());
             //Still missing some methods
             
             //The roof

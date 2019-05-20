@@ -30,7 +30,7 @@ public class BOMInclineRoof {
     private static final double INCLINATION = Math.toRadians(20);
     private static final double HYPOTENUSE = TRIANGLE_WIDTH / Math.cos(INCLINATION);
     private static final double TILE_W_X_H = (HYPOTENUSE * 730) / 288;
-    private static final int TILE_WIDTH = 730 / 21;
+    
 
     private static BOMToolshed tbom = new BOMToolshed();
 
@@ -38,34 +38,62 @@ public class BOMInclineRoof {
     //------------------------------------------ calculation methods for fiiting and screws ----------------------------------------------------------
    
     
-    private int amountOfScrewsLathHolders(int carportLength, Shed shed, int shedLength) 
+    private int calculateRidgeTileWidth()
     {
-        double amount = amountOfLathHolders(carportLength, shed, shedLength);
+        int TILE_WIDTH = 730 / 21;; // = 37 - top lægte
+        int tileWidth = 6; // almindelig tagsten
+        return 2;
+    }
+    
+    private double calculateHypotenuseForRoof(Carport c)
+    {
+        // calcaute the hypotenuse for the roof
+        int triangleWidth = c.getWidth() / 2; // width of each triangle.
+        double inclination = Math.toRadians(c.getInclination()); //Math.cos expects radians
+        double hypotenuse = triangleWidth / Math.cos(inclination);
+        return hypotenuse;
+    }
+            
+                 
+            
+    
+    /**
+     * 
+     * @param c
+     * @return amount of screws for lath holders (skruer for lægte holder)
+     */
+    private int amountOfScrewsLathHolders(Carport c) 
+    {
+        //one screw for each lath Holder
+        double amount = amountOfLathHolders(c);
         return (int) Math.ceil(amount / 250); // a single pack consists of 250 screws. 
     }
     
-    private int amountOfScrewsLaths(int carportWidth, int inclination) 
+   
+    private int amountOfScrewsLaths(Carport c) 
     {
-        double amount = amountOfLaths(carportWidth, inclination) * 10;
+        double amount = amountOfLaths(c) * 10;
         return (int) Math.ceil(amount / 100);
         /*amount of screws laths - unknown
         (random value = 10 screws for each lath.)*/
     }
     
     
+    
+    
     //---------------------------------------- methods for returning item in category fitting and screws --------------------------------------------------
     
     
-    public LineItem screwsLathHolders(int carportLength, Shed shed, int shedLength) throws SystemErrorException, NoSuchMaterialException 
+    public LineItem screwsLathHolders(Carport c) throws SystemErrorException, NoSuchMaterialException 
     {
         Material m = LogicFacade.getInstance().getMaterialNoLength(7);
-        return new LineItem(m, amountOfScrewsLathHolders(carportLength, shed, shedLength), "Til montering af universalbeslag + toplægte", m.getPrice() * amountOfScrewsLathHolders(carportLength, shed, shedLength), Type.NOLENGTH);
+        return new LineItem(m, amountOfScrewsLathHolders(c), "Til montering af universalbeslag + toplægte", m.getPrice() * amountOfScrewsLathHolders(c), Type.NOLENGTH);
     }
      
-    public LineItem LathScrews(int carportWidth, int inclination) throws SystemErrorException, NoSuchMaterialException 
+    public LineItem LathScrews(Carport c) throws SystemErrorException, NoSuchMaterialException 
     {
         Material m = LogicFacade.getInstance().getMaterialNoLength(8);
-        return new LineItem(m, amountOfScrewsLaths(carportWidth, inclination), "til taglægter", m.getPrice() * amountOfScrewsLaths(carportWidth, inclination), Type.NOLENGTH);
+        return new LineItem(m, amountOfScrewsLaths(c), "til taglægter", m.getPrice() * amountOfScrewsLaths(c), Type.NOLENGTH);
     }
     
     
@@ -73,25 +101,7 @@ public class BOMInclineRoof {
     //------------------------------------- calculation methods for tree -------------------------------------------------------
     
     
-     public int amountOfLathsDraw(int carportWidth, double inclination) 
-    {
-//        /*firstly, the roof is divided into 2 right-angled triangles,
-//        and the hypotenuse is calculated*/
-//        int triangleWidth = carportWidth / 2; // width of each triangle.
-//        inclination = Math.toRadians(inclination); //Math.cos expects radians
-//        double hypotenuse = triangleWidth / Math.cos(inclination);
-//        /*there must be a space of 35 cm between the first and secong lath, and a space
-//        of 30 cm between the last lath and the top.*/
-//        hypotenuse -= 65;
-//        /*the hypotenuse is now used to calculate the amount of laths*/
-//        //amount of holes or amount of rafters(excluding back rafter)
-//        return fc.calculateQuantityOfSpærIncludedBackSpær((int) carportWidth / 2, 35);
-        
-        //for at compileren ikke broker sig, bare fjern når metoden virker
-        return 2;
-    }
-    
-    public int amountOfLaths(int carportWidth, double inclination) 
+    public int amountOfLaths(Carport c) 
     {
 //        /*firstly, the roof is divided into 2 right-angled triangles,
 //        and the hypotenuse is calculated*/
@@ -104,84 +114,72 @@ public class BOMInclineRoof {
 //        /*the hypotenuse is now used to calculate the amount of laths*/
 //        //amount of holes or amount of rafters(excluding back rafter)
 //        return fc.calculateQuantityOfSpærIncludedBackSpær((int) hypotenuse, 40) * 2 - 2;
-
-         //for at compileren ikke broker sig, bare fjern når metoden virker
-        return 2;
+         
+        return fc.calculateQuantityOFRafterExcluedBackRafter(c, 40);
     }
     
-     /**
-     *
-     * @return (toplægte)
-     */
-    private int amountOfTopLaths() {
-        return 1;
-    }
     
-     /**
-     *
-     * @param carportWidth
-     * @param inclination
-     * @return (vindskeder)
-     */
-    private int amountOfSoffits(int carportWidth, double inclination) 
+    
+    /**
+     * 
+     * @param c
+     * @return the amount of soffits (vindskeder)
+     */ 
+    private int amountOfSoffits(Carport c) 
     {
-//        int triangleWidth = carportWidth / 2; // width of each triangle.
-//        inclination = Math.toRadians(inclination); //Math.cos expects radians
-//        double hypotenuse = triangleWidth / Math.cos(inclination);
-//        if (hypotenuse * 2 <= 240) {
-//            return 1;
-//        } else if (hypotenuse * 2 > 240 && hypotenuse <= 480) {
-//            return 2;
-//        } else if (hypotenuse * 2 > 480 && hypotenuse <= 720) {
-//            return 3;
-//        } else if (hypotenuse * 2 > 720 && hypotenuse <= 920) {
-//            return 4;
-//        } else {
-//            return 5; //max width of hypotenuse is 1060.
-//        }
-
-        //for at compileren ikke broker sig, bare fjern når metoden virker
-        return 2;
+        int triangleWidth = c.getWidth() / 2; // width of each triangle.
+        double inclination = Math.toRadians(c.getInclination()); //Math.cos expects radians
+        double hypotenuse = triangleWidth / Math.cos(inclination);
+        if (hypotenuse * 2 <= 240) {
+            return 1;
+        } else if (hypotenuse * 2 > 240 && hypotenuse <= 480) {
+            return 2;
+        } else if (hypotenuse * 2 > 480 && hypotenuse <= 720) {
+            return 3;
+        } else if (hypotenuse * 2 > 720 && hypotenuse <= 920) {
+            return 4;
+        } else {
+            return 5; //max width of hypotenuse is 1060.
+        }
+        
     }
     
     
     //--------------------------------------- methods for retuning item in category tree ------------------------------------------------------------
     
     
-    public LineItem laths(int cWidth, int inclination, int cLength, int sLength) throws NoSuchMaterialException, SystemErrorException 
+    public LineItem laths(Carport c) throws NoSuchMaterialException, SystemErrorException 
     {
-        Material m = LogicFacade.getInstance().getMaterialWithLength(7, cLength - sLength + 30);
-        return new LineItem(m, amountOfLaths(cWidth, inclination), "til montering på spær, 7 rækker lægter på hver skiftevis 1 hel & 1 halv lægte", m.getPrice() * amountOfLaths(cWidth, inclination), Type.LENGTH);
+        Material m = LogicFacade.getInstance().getMaterialWithLength(7, c.getLength() + 30);
+        return new LineItem(m, amountOfLaths(c), "til montering på spær, 7 rækker lægter på hver skiftevis 1 hel & 1 halv lægte", m.getPrice() * amountOfLaths(c), Type.LENGTH);
     }
      
-    public LineItem toplaths(int cLength, int sLength, int cWidth) throws NoSuchMaterialException, SystemErrorException 
+    public LineItem toplaths(Carport c) throws NoSuchMaterialException, SystemErrorException 
     {
-        Material m = LogicFacade.getInstance().getMaterialWithLength(7, cLength);
-        return new LineItem(m, amountOfTopLaths(), "toplægte til montering af rygsten lægges i toplægte holder", m.getPrice() * amountOfTopLaths(), Type.LENGTH);
+        Material m = LogicFacade.getInstance().getMaterialWithLength(7, c.getLength());
+        return new LineItem(m, 1, "toplægte til montering af rygsten lægges i toplægte holder", m.getPrice() * 1, Type.LENGTH);
     }
     
-     /*
-    beslagsskruer (vinkelbeslag):
-    4 skruer per vinkelbeslag
-    (står ikke i styklisten, men i beskrivelsen)
-     */
-    public LineItem soffits(int carportWidth, int inclination) throws NoSuchMaterialException, SystemErrorException 
+    
+    public LineItem soffits(Carport c) throws NoSuchMaterialException, SystemErrorException 
     {
         Material m = LogicFacade.getInstance().getMaterialWithLength(1, 480);
-        return new LineItem(m, amountOfSoffits(carportWidth, inclination), "Vindskeder på rejsning", m.getPrice() * amountOfSoffits(carportWidth, inclination), Type.LENGTH);
+        return new LineItem(m, amountOfSoffits(c), "Vindskeder på rejsning", m.getPrice() * amountOfSoffits(c), Type.LENGTH);
     }
     
     
     //-------------------------------------- calculation methods for roof --------------------------------------------------------------------------
     
-    
-    private int amountOfLathHolders(int carportLength, Shed shed, int shedLength) 
+    /**
+     * 
+     * @param c
+     * @return amount of lath holders (holder for lægte)
+     */
+    private int amountOfLathHolders(Carport c) 
     {
-//        /*amount of lath-holders is the same as rafters; 1 lath-holder for each rafter*/
-//        return amountOfRafters(carportLength);
-
-        //for at compileren ikke broker sig, bare fjern når metoden virker
-        return 2;
+        /*amount of lath-holders is the same as rafters; 1 lath-holder for each rafter*/
+        BOMFlatRoof f = new BOMFlatRoof();
+        return f.calculateQuantityOfRafterIncludedBackRafter(c, 90);
     }
      
      /**
@@ -191,59 +189,56 @@ public class BOMInclineRoof {
      * @param inclination
      * @return (tagsten)
      */
-    private int amountOfRoofTiles(int carportWidth, int carportLength, double inclination) 
+    private int amountOfRoofTiles(Carport c) 
     {
+       // the following lines calculate the square meter measurements for a single tile
+       // based on the example in the bill of materials
+       int triangleWidth = 360 / 2;
+       double inclination = Math.toRadians(20);
+       double hypotenuse_ = triangleWidth / Math.cos(inclination);
+       double TILE_W_X_H = (hypotenuse_ * 730) / 288;
+       
+       
+       double hypotenuse = calculateHypotenuseForRoof(c);
+       
+        /*for a carport with width 360 and length 730, 288 roof tiles are needed.
 
-//        /*for a carport with width 360 and length 730, 288 roof tiles are needed.
-//
-//        firstly, the roof is divided into 2 right-angled triangles,
-//        and the hypotenuse is calculated*/
-//        int triangleWidth = carportWidth / 2; // width of each triangle.
-//        inclination = Math.toRadians(inclination); //Math.cos expects radians
-//        double hypotenuse = triangleWidth / Math.cos(inclination);
-//
-//        /*the answer can be calculated by dividing the square meter measurement of the roof (hypotenuse * carportlength)
-//        with the square meter measurement of a single tile. to find the square meter measurement
-//        of a single tile the following equation can be solved:
-//        
-//        (hypotenuse*730) / x = 288
-//
-//        x = (hypotenuse * 730) / 288;
-//        
-//        x = 486
-//       
-//        since the square measurement of a single tile is now known, the total amount of tiles
-//        can be calculated.
-//         */
-//        double roofWxH = Math.ceil((hypotenuse * carportLength));
-//        double result = roofWxH / TILE_W_X_H;
-//        return (int) result;
+        firstly, the roof is divided into 2 right-angled triangles,
+        and the hypotenuse is calculated*/
+        
 
-        //for at compileren ikke broker sig, bare fjern når metoden virker
-        return 2;
+        /*the answer can be calculated by dividing the square meter measurement of the roof (hypotenuse * carportlength)
+        with the square meter measurement of a single tile. to find the square meter measurement
+        of a single tile the following equation can be solved:
+        
+        (hypotenuse*730) / x = 288
+
+        x = (hypotenuse * 730) / 288;
+        
+        x = 486
+       
+        since the square measurement of a single tile is now known, the total amount of tiles
+        can be calculated.
+         */
+        double roofWxH = Math.ceil((hypotenuse * c.getLength()));
+        double result = roofWxH / TILE_W_X_H;
+        return (int) result;
 
     } 
-    
-     private int amountOfRoofTileBinders() 
-     {
-        return 2; // 2 packs -- amount in a single pack and how many is needed is unknown. 
-    }
     
      /**
      *
      * @param carportLength
      * @return (rygsten)
      */
-    private int amountOfRidgeTiles(int carportLength) 
+    private int amountOfRidgeTiles(Carport c) 
     {
-//        /*
-//        since the width of the roof and amount of ridge tiles needed is known (21), 
-//        the width of a single tile can be calculated.
-//         */
-//        return carportLength / TILE_WIDTH;
-
-        //for at compileren ikke broker sig, bare fjern når metoden virker
-        return 2;
+        /*
+        since the width of the roof and amount of ridge tiles needed is known (21), 
+        the width of a single tile can be calculated.
+         */
+        int tileWidth = 37;
+        return c.getLength() / tileWidth;
     }
     
      /**
@@ -251,83 +246,44 @@ public class BOMInclineRoof {
      * @param carportLength
      * @return (rygstensbeslag)
      */
-    private int amountOfRidgeTileBrackets(int carportLength) 
+    private int amountOfRidgeTileBrackets(Carport c) 
     {
-//        //same amount as ridge tiles.
-//        return amountOfRidgeTiles(carportLength);
+        //same amount as ridge tiles.
+        return amountOfRidgeTiles(c);
 
-        //for at compileren ikke broker sig, bare fjern når metoden virker
-        return 2;
     }
     
     
     //-------------------------------------- methods for returning item in category roof ------------------------------------------------------------
     
     
-    public LineItem lathHolders(int carportLength, Shed shed, int shedLength) throws SystemErrorException, NoSuchMaterialException {
+    public LineItem lathHolders(Carport c) throws SystemErrorException, NoSuchMaterialException {
         Material m = LogicFacade.getInstance().getMaterialNoLength(13);
-        return new LineItem(m, amountOfLathHolders(carportLength, shed, shedLength), "monteres på toppen af spæret (til toplægte)", m.getPrice() * amountOfLathHolders(carportLength, shed, shedLength), Type.ROOF);
+        return new LineItem(m, amountOfLathHolders(c), "monteres på toppen af spæret (til toplægte)", m.getPrice() * amountOfLathHolders(c), Type.ROOF);
     }
     
-    public LineItem roofTiles(int id, int carportWidth, int carportLength, int inclination) throws NoSuchRoofException 
+    public LineItem roofTiles(Carport c) throws NoSuchRoofException 
     {
-        Roof r = LogicFacade.getInstance().newGetRoof(id, 37);
-        return new LineItem(r, amountOfRoofTiles(carportWidth, carportLength, inclination), "monteres på taglægter", r.getPrice() * amountOfRoofTiles(carportWidth, carportLength, inclination));
+        Roof r = LogicFacade.getInstance().newGetRoof(c.getRoof().getRoof_id(), 37);
+        return new LineItem(r, amountOfRoofTiles(c), "monteres på taglægter", r.getPrice() * amountOfRoofTiles(c));
     }
     
     public LineItem roofTileBinders() throws SystemErrorException, NoSuchMaterialException 
     {
         Material m = LogicFacade.getInstance().getMaterialNoLength(15);
-        return new LineItem(m, amountOfRoofTileBinders(), "til montering af tagsten, alle ydersten + hver anden fastgøres", m.getPrice() * amountOfRoofTileBinders(), Type.ROOF);
+        return new LineItem(m, 2, "til montering af tagsten, alle ydersten + hver anden fastgøres", m.getPrice() * 2, Type.ROOF);
     }
     
-    public LineItem ridgeTiles(int id, int cLength) 
+    public LineItem ridgeTiles(Carport c) 
     {
-        Roof r = LogicFacade.getInstance().newGetRoof(id, 6);
-        return new LineItem(r, amountOfRidgeTiles(cLength), "monteres på toplægte med medfølgende beslag se tagstens vejledning", r.getPrice() * amountOfRidgeTiles(cLength));
+        Roof r = LogicFacade.getInstance().newGetRoof(c.getRoof().getRoof_id(), 6);
+        return new LineItem(r, amountOfRidgeTiles(c), "monteres på toplægte med medfølgende beslag se tagstens vejledning", r.getPrice() * amountOfRidgeTiles(c));
     }
      
-    public LineItem ridgeTileBrackets(int cLength) throws SystemErrorException, NoSuchMaterialException 
+    public LineItem ridgeTileBrackets(Carport c) throws SystemErrorException, NoSuchMaterialException 
     {
         Material m = LogicFacade.getInstance().getMaterialNoLength(14);
-        return new LineItem(m, amountOfRidgeTileBrackets(cLength), "Til montering af rygsten", m.getPrice() * amountOfRidgeTileBrackets(cLength), Type.ROOF);
+        return new LineItem(m, amountOfRidgeTileBrackets(c), "Til montering af rygsten", m.getPrice() * amountOfRidgeTileBrackets(c), Type.ROOF);
     }
     
-    
-    
-    //--------------------------------------------------- other ------------------------------------------------------------------------'
-    
-     /**
-     *
-     * @param c
-     * @param inclination
-     * @return (taglægter)
-     */
-    public int spaceLength(Carport c, double inclination) 
-    {
-//        /*firstly, the roof is divided into 2 right-angled triangles,
-//        and the hypotenuse is calculated*/
-//        int triangleWidth = c.getWidth() / 2; // width of each triangle.
-//        inclination = Math.toRadians(inclination); //Math.cos expects radians
-//        double hypotenuse = triangleWidth / Math.cos(inclination);
-//        /*there must be a space of 35 cm between the first and secong lath, and a space
-//        of 30 cm between the last lath and the top.*/
-//        hypotenuse -= 65;
-//        //amount of holes or amount of rafters(excluding back rafter)
-//        int holeQty = (int) hypotenuse / 40;
-//        //the total width of all rafters together(excluding back rafter)
-//        float totalRafterWidth = holeQty * 3.8f;
-//        //the total width of all holes together
-//        float totalHoleWidth = (int) hypotenuse - totalRafterWidth;
-//        //the space between each rafter
-//        float spaceBetweenRafters = totalHoleWidth / holeQty;
-//
-//        if (spaceBetweenRafters > 40) {
-//            holeQty++;
-//        }
-//        return (int) spaceBetweenRafters;
-        
-        //for at compileren ikke broker sig, bare fjern når metoden virker
-        return 2;
-    }
 }

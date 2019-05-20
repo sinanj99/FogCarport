@@ -97,17 +97,7 @@ public class CalculateBOM {
         List<LineItem> listOfLineItems = new ArrayList();
         Carport c = r.getCarport();
 
-        int clength = r.getCarport().getLength();
-        int cwidth = r.getCarport().getWidth();
-        int slength = 0;
-        int swidth = 0;
-        if(r.getCarport().getShed_() != null) {
-        slength = r.getCarport().getShed_().getLength();
-        swidth = r.getCarport().getShed_().getWidth();
-        }
-        Shed shed = r.getCarport().getShed_();
-        int roofid = r.getCarport().getRoof().getRoof_id();
-        int inclination = (int) r.getCarport().getInclination();
+        
 
         if (c.getShed_() != null) 
         {
@@ -140,16 +130,16 @@ public class CalculateBOM {
             //Still missing some methods
             
             //The roof
-            listOfLineItems.add(calc.screwsLathHolders(clength, shed, slength));
-            listOfLineItems.add(calc.LathScrews(cwidth, inclination));
-            listOfLineItems.add(calc.laths(cwidth, inclination, clength, slength));
-            listOfLineItems.add(calc.toplaths(clength, slength, cwidth));
-            listOfLineItems.add(calc.soffits(cwidth, inclination));
-            listOfLineItems.add(calc.lathHolders(clength, shed, slength));
-            listOfLineItems.add(calc.roofTiles(roofid, cwidth, clength, inclination));
+            listOfLineItems.add(calc.screwsLathHolders(c));
+            listOfLineItems.add(calc.LathScrews(c));
+            listOfLineItems.add(calc.laths(c));
+            listOfLineItems.add(calc.toplaths(c));
+            listOfLineItems.add(calc.soffits(c));
+            listOfLineItems.add(calc.lathHolders(c));
+            listOfLineItems.add(calc.roofTiles(c));
             listOfLineItems.add(calc.roofTileBinders());
-            listOfLineItems.add(calc.ridgeTiles(roofid, clength));
-            listOfLineItems.add(calc.ridgeTileBrackets(clength));
+            listOfLineItems.add(calc.ridgeTiles(c));
+            listOfLineItems.add(calc.ridgeTileBrackets(c));
             
             } 
         else 
@@ -173,16 +163,16 @@ public class CalculateBOM {
             //still mising some methods
             
             //The roof
-            listOfLineItems.add(calc.screwsLathHolders(clength, shed, slength));
-            listOfLineItems.add(calc.LathScrews(cwidth, inclination));
-            listOfLineItems.add(calc.laths(cwidth, inclination, clength, slength));
-            listOfLineItems.add(calc.toplaths(clength, slength, cwidth));
-            listOfLineItems.add(calc.soffits(cwidth, inclination));
-            listOfLineItems.add(calc.lathHolders(clength, shed, slength));
-            listOfLineItems.add(calc.roofTiles(roofid, cwidth, clength, inclination));
-            listOfLineItems.add(calc.roofTileBinders());
-            listOfLineItems.add(calc.ridgeTiles(roofid, clength));
-            listOfLineItems.add(calc.ridgeTileBrackets(clength));
+           listOfLineItems.add(calc.screwsLathHolders(c));
+           listOfLineItems.add(calc.LathScrews(c));
+           listOfLineItems.add(calc.laths(c));
+           listOfLineItems.add(calc.toplaths(c));
+           listOfLineItems.add(calc.soffits(c));
+           listOfLineItems.add(calc.lathHolders(c));
+           listOfLineItems.add(calc.roofTiles(c));
+           listOfLineItems.add(calc.roofTileBinders());
+           listOfLineItems.add(calc.ridgeTiles(c));
+           listOfLineItems.add(calc.ridgeTileBrackets(c));
             
         }
         return new BOM(listOfLineItems);

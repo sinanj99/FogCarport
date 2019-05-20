@@ -28,8 +28,8 @@ public class TestCalculateBOMMethods
 {
     public static void main(String[] args) throws NoSuchMaterialException, UserNotFoundException, SystemErrorException
     {
-        BOMFlatRoof f = new BOMFlatRoof();
-        BOMInclineRoof i = new BOMInclineRoof();
+        BOMFundament f = new BOMFundament();
+        BOMRoofPackage i = new BOMRoofPackage();
         CalculateBOM c = new CalculateBOM();
         DBConnector con = new DBConnector();
 //        System.out.println(IUserMapper.instance().getUser("test@test.dk"));

@@ -6,6 +6,7 @@
 package Logic.Calculator;
 
 import Data.Entity.BOM;
+import Data.Entity.Carport;
 import Data.Entity.LineItem;
 import Data.Entity.Material;
 import Data.Mappers.IMaterialMapper;
@@ -23,147 +24,157 @@ import java.util.List;
  * @author Kasper Jeppesen
  */
 public class CalculateBOM {
-
-    //Dette er en test
-    //dette er en test mere
-    //en trejde test
-    public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException {
-        BOMFlatRoof f = new BOMFlatRoof();
+    
+    public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException, SystemErrorException {
+        BOMFundament f = new BOMFundament();
         ArrayList listOfLineItems = new ArrayList();
         BOMToolshed b = new BOMToolshed();
-        BOM bom;
+        Carport c = r.getCarport();
         
-        if (r.getCarport().getShed_() == null) {
-            listOfLineItems.add(f.beslagskruer(r.getCarport().getLength()));
-            listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().getWidth(), r.getCarport().getShed_()));
-            listOfLineItems.add(f.højrebeslag(r.getCarport().getLength()));
-            listOfLineItems.add(f.venstrebeslag(r.getCarport().getLength()));
-            listOfLineItems.add(f.oversternbrædderForFront(r.getCarport().getWidth()));
-            listOfLineItems.add(f.oversternbrædderForSides(r.getCarport().getLength()));
-            listOfLineItems.add(f.spær(r.getCarport().getLength(), r.getCarport().getWidth()));
-            listOfLineItems.add(f.spærForRemmen(r.getCarport().getLength()));
-            listOfLineItems.add(f.stolpe(r.getCarport().getLength(), r.getCarport().getWidth(), r.getCarport().getShed_()));
-            listOfLineItems.add(f.understernBrædderForSides(r.getCarport().getLength()));
-            listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
-            listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
-            listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
-            listOfLineItems.add(f.hulbånd(r));
-            listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));        
+        if (r.getCarport().getShed_() == null) 
+        {
+            //the fundament
+            listOfLineItems.add(f.bracketScrews(c));
+            listOfLineItems.add(f.boardBolts(c));
+            listOfLineItems.add(f.squareDiscs(c));
+            listOfLineItems.add(f.rightBracketInteries(c));
+            listOfLineItems.add(f.leftBracketInteries(c));
+            listOfLineItems.add(f.outerBoardForFront(c));
+            listOfLineItems.add(f.outerBoardForSides(c));
+            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(f.RafterForStrap(c));
+            listOfLineItems.add(f.post(c));
+            listOfLineItems.add(f.underneathBoardForSides(c));
+            listOfLineItems.add(f.underneathBoardForFrontAndBack(c));
+            listOfLineItems.add(f.waterBoardForFront(c));
+            listOfLineItems.add(f.waterBoardForSides(c));
+            listOfLineItems.add(f.perforatedBands(c));
+            listOfLineItems.add(f.roof(c)); //this should be moved
+            //Still missing some methods
 
-            //mangler lægter, galjer
+        } 
+        else 
+        {
+            //The fundament
+            listOfLineItems.add(f.bracketScrews(c));
+            listOfLineItems.add(f.boardBolts(c));
+            listOfLineItems.add(f.squareDiscs(c));
+            listOfLineItems.add(f.rightBracketInteries(c));
+            listOfLineItems.add(f.leftBracketInteries(c));
+            listOfLineItems.add(f.outerBoardForFront(c));
+            listOfLineItems.add(f.outerBoardForSides(c));
+            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(f.RafterForStrap(c));
+            listOfLineItems.add(f.post(c));
+            listOfLineItems.add(f.underneathBoardForSides(c));
+            listOfLineItems.add(f.underneathBoardForFrontAndBack(c));
+            listOfLineItems.add(f.waterBoardForFront(c));
+            listOfLineItems.add(f.waterBoardForSides(c));
+            listOfLineItems.add(f.perforatedBands(c));
+            listOfLineItems.add(f.roof(c)); //this should be moved
+            //Still missing some methods
 
-        } else {
-
-            //Adds material related to the carport
-            listOfLineItems.add(f.beslagskruer(r.getCarport().getLength()));
-            listOfLineItems.add(f.brædderbolt(r.getCarport().getLength(), r.getCarport().getWidth(), r.getCarport().getShed_()));
-            listOfLineItems.add(f.højrebeslag(r.getCarport().getLength()));
-            listOfLineItems.add(f.venstrebeslag(r.getCarport().getLength()));
-            listOfLineItems.add(f.oversternbrædderForFront(r.getCarport().getWidth()));
-            listOfLineItems.add(f.oversternbrædderForSides(r.getCarport().getLength()));
-            listOfLineItems.add(f.spær(r.getCarport().getLength(), r.getCarport().getWidth()));
-            listOfLineItems.add(f.spærForRemmen(r.getCarport().getLength()));
-            listOfLineItems.add(f.stolpe(r.getCarport().getLength(),r.getCarport().getWidth(), r.getCarport().getShed_()));
-            listOfLineItems.add(f.understernBrædderForSides(r.getCarport().getLength()));
-            listOfLineItems.add(f.understernbrædderForFrontAndBack(r.getCarport().getWidth()));
-            listOfLineItems.add(f.vandbrætForFront(r.getCarport().getWidth()));
-            listOfLineItems.add(f.vandbrætForSides(r.getCarport().getLength()));
-            listOfLineItems.add(f.hulbånd(r));
-            listOfLineItems.add(f.roof(r.getCarport().getLength(), r.getCarport().getRoof()));
-            //mangler lægter, gajler, tagpplader
-
-            //Adds materials related to tool shed
-            listOfLineItems.add(b.beklædning(r.getCarport().getShed_().getWidth(), r.getCarport().getShed_().getLength()));
-            listOfLineItems.add(b.lægteForDoor());
-            listOfLineItems.add(b.løsholterForSides(r.getCarport().getShed_().getLength()));
-            listOfLineItems.add(b.løsholterGalve(r.getCarport().getShed_().getWidth()));
-            listOfLineItems.add(b.stalddørsgreb());
-            listOfLineItems.add(b.tHængsel());
-            listOfLineItems.add(b.vinkelbeslag());
+            //the shed
+            listOfLineItems.add(b.shedClothing(c));
+            listOfLineItems.add(b.endCapsForSides(c));
+            listOfLineItems.add(b.endCapsForGables(c));
+            listOfLineItems.add(b.bracket());
+            listOfLineItems.add(b.lathForDoor());
+            listOfLineItems.add(b.farmgateGrip());
+            listOfLineItems.add(b.tHinge());
+            //Still missing some methods
+            
         }
         return new BOM(listOfLineItems);
     }
 
-    public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException, SystemErrorException {
+    public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException, SystemErrorException 
+    {
 
-        BOMInclineRoof calc = new BOMInclineRoof();
-        BOMFlatRoof f = new BOMFlatRoof();
+        BOMRoofPackage calc = new BOMRoofPackage();
+        BOMFundament f = new BOMFundament();
         BOMToolshed b = new BOMToolshed();
-        List<LineItem> list = new ArrayList();
+        List<LineItem> listOfLineItems = new ArrayList();
+        Carport c = r.getCarport();
 
-        int clength = r.getCarport().getLength();
-        int cwidth = r.getCarport().getWidth();
-        int slength = 0;
-        int swidth = 0;
-        if(r.getCarport().getShed_() != null) {
-        slength = r.getCarport().getShed_().getLength();
-        swidth = r.getCarport().getShed_().getWidth();
+        
+
+        if (c.getShed_() != null) 
+        {
+            //The fundament
+            listOfLineItems.add(f.bracketScrews(c));
+            listOfLineItems.add(f.boardBolts(c));
+            listOfLineItems.add(f.squareDiscs(c));
+            listOfLineItems.add(f.rightBracketInteries(c));
+            listOfLineItems.add(f.leftBracketInteries(c));
+            listOfLineItems.add(f.outerBoardForFront(c));
+            listOfLineItems.add(f.outerBoardForSides(c));
+            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(f.RafterForStrap(c));
+            listOfLineItems.add(f.post(c));
+            listOfLineItems.add(f.underneathBoardForSides(c));
+            listOfLineItems.add(f.underneathBoardForFrontAndBack(c));
+            listOfLineItems.add(f.waterBoardForFront(c));
+            listOfLineItems.add(f.waterBoardForSides(c));
+            listOfLineItems.add(f.perforatedBands(c)); 
+            //still mising some methods
+            
+            //The shed
+            listOfLineItems.add(b.shedClothing(c));
+            listOfLineItems.add(b.endCapsForSides(c));
+            listOfLineItems.add(b.endCapsForGables(c));
+            listOfLineItems.add(b.bracket());
+            listOfLineItems.add(b.lathForDoor());
+            listOfLineItems.add(b.farmgateGrip());
+            listOfLineItems.add(b.tHinge());
+            //Still missing some methods
+            
+            //The roof
+            listOfLineItems.add(calc.screwsLathHolders(c));
+            listOfLineItems.add(calc.LathScrews(c));
+            listOfLineItems.add(calc.laths(c));
+            listOfLineItems.add(calc.toplaths(c));
+            listOfLineItems.add(calc.soffits(c));
+            listOfLineItems.add(calc.lathHolders(c));
+            listOfLineItems.add(calc.roofTiles(c));
+            listOfLineItems.add(calc.roofTileBinders());
+            listOfLineItems.add(calc.ridgeTiles(c));
+            listOfLineItems.add(calc.ridgeTileBrackets(c));
+            
+            } 
+        else 
+        {
+            //The fundament 
+            listOfLineItems.add(f.bracketScrews(c));
+            listOfLineItems.add(f.boardBolts(c));
+            listOfLineItems.add(f.squareDiscs(c));
+            listOfLineItems.add(f.rightBracketInteries(c));
+            listOfLineItems.add(f.leftBracketInteries(c));
+            listOfLineItems.add(f.outerBoardForFront(c));
+            listOfLineItems.add(f.outerBoardForSides(c));
+            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(f.RafterForStrap(c));
+            listOfLineItems.add(f.post(c));
+            listOfLineItems.add(f.underneathBoardForSides(c));
+            listOfLineItems.add(f.underneathBoardForFrontAndBack(c));
+            listOfLineItems.add(f.waterBoardForFront(c));
+            listOfLineItems.add(f.waterBoardForSides(c));
+            listOfLineItems.add(f.perforatedBands(c)); 
+            //still mising some methods
+            
+            //The roof
+           listOfLineItems.add(calc.screwsLathHolders(c));
+           listOfLineItems.add(calc.LathScrews(c));
+           listOfLineItems.add(calc.laths(c));
+           listOfLineItems.add(calc.toplaths(c));
+           listOfLineItems.add(calc.soffits(c));
+           listOfLineItems.add(calc.lathHolders(c));
+           listOfLineItems.add(calc.roofTiles(c));
+           listOfLineItems.add(calc.roofTileBinders());
+           listOfLineItems.add(calc.ridgeTiles(c));
+           listOfLineItems.add(calc.ridgeTileBrackets(c));
+            
         }
-        Shed shed = r.getCarport().getShed_();
-        int roofid = r.getCarport().getRoof().getRoof_id();
-        int inclination = (int) r.getCarport().getInclination();
-
-        if (shed != null) {
-            //with length index 0-12
-            list.add(calc.soffits(cwidth, inclination));
-            list.add(calc.fasciaCarport(clength, shed));
-            list.add(calc.fasciaShed(slength));//shed
-            list.add(f.stolpe(clength,cwidth, shed));
-            list.add(calc.beamsCarport(clength, shed, slength));
-            list.add(calc.beamsShed(slength));//shed
-            list.add(calc.intertiesSides(slength));//shed
-            list.add(calc.intertiesGables(swidth));//shed
-            list.add(calc.rainboards(cwidth, inclination));
-            list.add(b.beklædning(swidth, slength));//shed
-            list.add(b.lægteForDoor());//shed
-            list.add(calc.laths(cwidth, inclination, clength, slength));
-            list.add(calc.toplaths(clength, slength, cwidth));
-
-            //roof package index 13-17
-            list.add(calc.roofTiles(roofid, cwidth, clength, inclination));
-            list.add(calc.ridgeTiles(roofid, clength));
-            list.add(calc.lathHolders(clength, shed, slength));
-            list.add(calc.ridgeTileBrackets(clength));
-            list.add(calc.roofTileBinders());
-
-            //brackets&screws index 18-
-            list.add(calc.rafters(r.getCarport().getWidth(), r.getCarport().getLength(), r.getCarport().getShed_()));
-            list.add(calc.rigthBracketRafters(clength, shed, slength));
-            list.add(calc.leftBracketRafters(clength, shed, slength));
-            list.add(b.stalddørsgreb());//shed
-            list.add(b.tHængsel());//shed
-            list.add(calc.bracketInterties());//shed
-            list.add(calc.fasciaAndSoffitScrews(clength, cwidth, shed, slength, inclination));
-            list.add(calc.screwsLathHolders(clength, shed, slength));
-            list.add(calc.LathScrews(cwidth, inclination));
-            list.add(f.brædderbolt(clength, cwidth, shed));
-            list.add(calc.squareDiscs());
-            list.add(calc.screwsOuterTimbering(swidth, slength));//shed
-            list.add(calc.screwsInnerTimbering(swidth, slength));//shed
-        } else {
-            list.add(calc.soffits(cwidth, inclination));
-            list.add(calc.fasciaCarport(clength, shed));
-            list.add(f.stolpe(clength, cwidth, shed));
-            list.add(calc.beamsCarport(clength, shed, slength));
-            list.add(calc.rainboards(cwidth, inclination));
-            list.add(calc.laths(cwidth, inclination, clength, slength));
-            list.add(calc.toplaths(clength, slength, cwidth));
-
-            list.add(calc.roofTiles(roofid, cwidth, clength, inclination));
-            list.add(calc.ridgeTiles(roofid, clength));
-            list.add(calc.lathHolders(clength, shed, slength));
-            list.add(calc.ridgeTileBrackets(clength));
-            list.add(calc.roofTileBinders());
-
-            list.add(calc.rafters(r.getCarport().getWidth(), r.getCarport().getLength(), r.getCarport().getShed_()));
-            list.add(calc.rigthBracketRafters(clength, shed, slength));
-            list.add(calc.leftBracketRafters(clength, shed, slength));
-            list.add(calc.fasciaAndSoffitScrews(clength, cwidth, shed, slength, inclination));
-            list.add(calc.screwsLathHolders(clength, shed, slength));
-            list.add(calc.LathScrews(cwidth, inclination));
-            list.add(f.brædderbolt(clength, cwidth, shed));
-            list.add(calc.squareDiscs());
-        }
-        return new BOM(list);
+        return new BOM(listOfLineItems);
     }
 }

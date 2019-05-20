@@ -286,7 +286,7 @@ public class BOMRoofPackage {
      * @return a LineItem object of laths
      * @throws Presentation.Exceptions.NoSuchRoofException if a roof with the specified id is not found
      */
-    public LineItem roofTiles(Carport c) throws NoSuchRoofException 
+    public LineItem roofTiles(Carport c) throws NoSuchRoofException, SystemErrorException 
     {
         Roof r = LogicFacade.getInstance().newGetRoof(c.getRoof().getRoof_id(), 37);
         return new LineItem(r, amountOfRoofTiles(c), "monteres på taglægter", r.getPrice() * amountOfRoofTiles(c));
@@ -307,7 +307,7 @@ public class BOMRoofPackage {
      * @param c the carport
      * @return a LineItem object of ridge tiles
      */
-    public LineItem ridgeTiles(Carport c) 
+    public LineItem ridgeTiles(Carport c) throws SystemErrorException 
     {
         Roof r = LogicFacade.getInstance().newGetRoof(c.getRoof().getRoof_id(), 6);
         return new LineItem(r, amountOfRidgeTiles(c), "monteres på toplægte med medfølgende beslag se tagstens vejledning", r.getPrice() * amountOfRidgeTiles(c));

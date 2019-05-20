@@ -73,7 +73,7 @@ class MaterialMapper extends IMaterialMapper {
                 stock = rs.getInt("stock");
             }
         } catch (SQLException ex) {
-//            throw new NoSuchMaterialException();
+//            throw new SystemErrorException(ex.getMessage());
         }
         return new Material(material_id, name, length, unit, price, stock);
     }
@@ -101,7 +101,7 @@ class MaterialMapper extends IMaterialMapper {
                 stock = rs.getInt("stock");
             }
         } catch (SQLException ex) {
-//            throw new NoSuchMaterialException();
+//            throw new SystemErrorException(ex.getMessage());
         }
         return new Material(material_id, name, length, unit, price, stock);
     }

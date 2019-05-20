@@ -298,7 +298,7 @@ class RequestMapper extends IRequestMapper {
                     inclined = true;
                 }
             } else {
-                throw new NoSuchRoofException();
+                throw new NoSuchRoofException(roof_id);
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());

@@ -281,6 +281,7 @@ CREATE TABLE CarportDB.carports (
     CONSTRAINT `carports_ibfk_2` FOREIGN KEY (`roof_id`) REFERENCES rooftype(`roof_id`)
 );
 
+select * from material_lengths;
 
 CREATE TABLE CarportDB.sheds (
 	shed_id INT(50) NOT NULL AUTO_INCREMENT,
@@ -290,7 +291,7 @@ CREATE TABLE CarportDB.sheds (
 	PRIMARY KEY (shed_id),
 	CONSTRAINT `sheds_ibfk_1` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`)
 );
-
+select * from rooflength;
 
 CREATE TABLE CarportDB.responses (
 	response_id INT(50) NOT NULL AUTO_INCREMENT,

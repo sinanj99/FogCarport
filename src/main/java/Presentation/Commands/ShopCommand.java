@@ -12,6 +12,7 @@ import Presentation.Exceptions.NoSuchPrebuiltCarportException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
+import Presentation.Exceptions.SystemErrorException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class ShopCommand implements Command
 {
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException
     {
         if(request.getSession().getAttribute("shoppingcart") == null) 
         {

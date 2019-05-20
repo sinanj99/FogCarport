@@ -48,7 +48,7 @@ function check(element) {
     }
 
     if (element.value.length == 0 || element.value == "n/a") {
-        element.style.border = "1px solid #7c7c7c";
+        element.style.border = "none";
         return false;
     } else if (found) {
         element.style.border = "2px solid green";

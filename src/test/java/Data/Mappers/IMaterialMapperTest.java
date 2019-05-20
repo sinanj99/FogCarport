@@ -154,14 +154,9 @@ public class IMaterialMapperTest {
         assertEquals(expResult, result);
     }
     @Test(expected = NoSuchMaterialException.class)
-    public void testUpdatePriceWithLengthFail1() throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
+    public void testUpdatePriceWithLengthFail1() throws SystemErrorException, InvalidInputException, NoSuchMaterialException {
         System.out.println("updatePriceWithLengthFail1");
         mapper.updatePriceWithLength(321412, 10);
-    }
-    @Test(expected = IllegalArgumentException.class)
-    public void testUpdatePriceWithLengthFail2() throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
-        System.out.println("updatePriceWithLengthFail1");
-        mapper.updatePriceWithLength(0, 1);
     }
     @Test
     public void testUpdatePriceNoLength() throws SystemErrorException, NoSuchMaterialException {

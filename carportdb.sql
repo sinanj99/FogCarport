@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS responses;
 DROP TABLE IF EXISTS CarportDB.sheds;
 DROP TABLE IF EXISTS CarportDB.carports;
 DROP TABLE IF EXISTS CarportDB.users_personalinfo;
@@ -13,7 +14,8 @@ CREATE TABLE CarportDB.rooftype (
   	inclined INT(1) NOT NULL,
 	PRIMARY KEY (roof_id)
 );
-select * from material_lengths;
+
+
 insert into CarportDB.rooftype (`name`, inclined) values 
 ("Plasttrapezplader - Blåtonet", 0),
 ("Plasttrapezplader - Gråtonet", 0),
@@ -240,24 +242,6 @@ CREATE TABLE CarportDB.requests (
 	CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
 );
 
-CREATE TABLE CarportDB.responses (
-	response_id INT(50) NOT NULL AUTO_INCREMENT,
-	request_id int(50) NOT NULL UNIQUE, 
-	user_id int(50) NOT NULL,
-	emp_id int(50) NOT NULL,
-	dateplaced DATETIME NOT NULL,
-	carport_id int(50) NOT NULL,
-	shed_id int(50) DEFAULT NULL,
-	productionprice int NOT NULL,
-	sellprice int NOT NULL,
-    status int(1) DEFAULT 0,
-	PRIMARY KEY (response_id),
-	CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`),
-	CONSTRAINT `responses_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
-	CONSTRAINT `responses_ibfk_3` FOREIGN KEY (`emp_id`) REFERENCES users(`user_id`),
-	CONSTRAINT `responses_ibfk_4` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`),
-	CONSTRAINT `responses_ibfk_5` FOREIGN KEY (`shed_id`) REFERENCES sheds(`shed_id`)
-);
 
 CREATE TABLE CarportDB.users_personalinfo (
 	user_id INT(50) NOT NULL,
@@ -298,8 +282,6 @@ CREATE TABLE CarportDB.carports (
 );
 
 
-SELECT * FROM materials_withlength INNER JOIN material_lengths USING(material_id);
-
 CREATE TABLE CarportDB.sheds (
 	shed_id INT(50) NOT NULL AUTO_INCREMENT,
 	carport_id INT(50) NOT NULL, -- bør shed ikke have carport_id i stedet for request id?
@@ -307,4 +289,24 @@ CREATE TABLE CarportDB.sheds (
   	length INT(50) NOT NULL,
 	PRIMARY KEY (shed_id),
 	CONSTRAINT `sheds_ibfk_1` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`)
+);
+
+
+CREATE TABLE CarportDB.responses (
+	response_id INT(50) NOT NULL AUTO_INCREMENT,
+	request_id int(50) NOT NULL UNIQUE, 
+	user_id int(50) NOT NULL,
+	emp_id int(50) NOT NULL,
+	dateplaced DATETIME NOT NULL,
+	carport_id int(50) NOT NULL,
+	shed_id int(50) DEFAULT NULL,
+	productionprice int NOT NULL,
+	sellprice int NOT NULL,
+    status int(1) DEFAULT 0,
+	PRIMARY KEY (response_id),
+	CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES requests(`request_id`),
+	CONSTRAINT `responses_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
+	CONSTRAINT `responses_ibfk_3` FOREIGN KEY (`emp_id`) REFERENCES users(`user_id`),
+	CONSTRAINT `responses_ibfk_4` FOREIGN KEY (`carport_id`) REFERENCES carports(`carport_id`),
+	CONSTRAINT `responses_ibfk_5` FOREIGN KEY (`shed_id`) REFERENCES sheds(`shed_id`)
 );

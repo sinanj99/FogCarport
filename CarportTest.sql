@@ -1,5 +1,3 @@
-DROP SCHEMA IF EXISTS CarportTest;
-CREATE SCHEMA CarportTest;
 USE CarportTest;
 DROP TABLE IF EXISTS material_lengths;
 DROP TABLE IF EXISTS materials_withlength;
@@ -56,7 +54,7 @@ CREATE TABLE materials_nolength (
     (2, 270,1000),
     (2, 300,1100);
 
-CREATE TABLE CarportDB.users (
+CREATE TABLE CarportTest.users (
 	user_id INT(50) NOT NULL AUTO_INCREMENT,
     seller INT(1) NOT NULL DEFAULT 0,
     `admin` INT(1) NOT NULL DEFAULT 0,
@@ -88,7 +86,7 @@ INSERT INTO material_lengths VALUES
 INSERT INTO materials_nolength (name, unit, price, stock) VALUES 
 ("universal 190 mm højre", "Stk.", 10,1000);
 
-insert into CarportDB.users (`admin`, seller, email,  `password`)
+insert into CarportTest.users (`admin`, seller, email,  `password`)
 values 
 (0, 0, "test@test.dk","test"),
 (1, 0, "admin@fog.dk","test"),

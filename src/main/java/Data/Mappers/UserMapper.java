@@ -103,6 +103,7 @@ class UserMapper extends IUserMapper {
                 throw new UserNotFoundException();
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new SystemErrorException(e.getMessage());
         }
         if (seller == 1) {

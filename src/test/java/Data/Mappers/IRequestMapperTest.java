@@ -65,7 +65,7 @@ public class IRequestMapperTest {
     }
 
     @Test
-    public void testGetRequest() throws Exception {
+    public void testGetRequest() throws Exception, SystemErrorException, NoSuchRequestException, NoSuchShedException {
         System.out.println("getRequest");
         int id = 0;
         IRequestMapper instance = new IRequestMapperImpl();
@@ -76,7 +76,7 @@ public class IRequestMapperTest {
     }
 
     @Test
-    public void testGetRequests() throws Exception {
+    public void testGetRequests() throws Exception, SystemErrorException, NoSuchShedException {
         System.out.println("getRequests");
         IRequestMapper instance = new IRequestMapperImpl();
         List<Request> expResult = null;

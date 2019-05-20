@@ -8,6 +8,7 @@ package Data.Mappers;
 import Data.Database.DBConnector;
 import Data.Entity.PrebuiltCarport;
 import Presentation.Exceptions.NoSuchPrebuiltCarportException;
+import Presentation.Exceptions.SystemErrorException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +45,7 @@ public class PrebuiltCarportMapper extends IPrebuiltCarportMapper
     }
 
     @Override
-    public List<PrebuiltCarport> getAllPrebuiltCarports() throws NoSuchPrebuiltCarportException 
+    public List<PrebuiltCarport> getAllPrebuiltCarports() throws SystemErrorException 
     {
         ArrayList prebuiltCarports = new ArrayList();
         
@@ -78,14 +79,14 @@ public class PrebuiltCarportMapper extends IPrebuiltCarportMapper
         } 
         catch (SQLException ex) 
         {
-            throw new NoSuchPrebuiltCarportException(ex.getMessage());
+            throw new SystemErrorException();
         }
         
         return prebuiltCarports;
     }
     
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SystemErrorException {
         try 
         {
             System.out.println(IPrebuiltCarportMapper.instance().getAllPrebuiltCarports());

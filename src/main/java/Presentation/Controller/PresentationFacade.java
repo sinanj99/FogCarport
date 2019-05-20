@@ -132,7 +132,7 @@ public class PresentationFacade {
         return r.getRequest(id);
     }
     
-    public List<PrebuiltCarport> getAllPrebuiltCarports() throws NoSuchPrebuiltCarportException {
+    public List<PrebuiltCarport> getAllPrebuiltCarports() throws SystemErrorException {
         return p.getAllPrebuiltCarports();
     }
     

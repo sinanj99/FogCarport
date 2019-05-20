@@ -56,7 +56,7 @@ public class ChangePriceCommand implements Command {
         }
         } catch(NoSuchMaterialException e) {
             System.out.println(e.getMessage());
-            throw new NoSuchMaterialException("FrontController?command=show_prices", String.valueOf(id));
+            throw new NoSuchMaterialException("FrontController?command=show_prices", e.getId());
         }
         return "jsp/frontpage.jsp";
     }

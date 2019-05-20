@@ -148,7 +148,7 @@ class MaterialMapper extends IMaterialMapper {
                 price = rs.getInt("price");
                 stock = rs.getInt("stock");
             } else {
-                throw new NoSuchMaterialException();
+                throw new NoSuchMaterialException(id);
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
@@ -175,7 +175,7 @@ class MaterialMapper extends IMaterialMapper {
                 price = rs.getInt("price");
                 stock = rs.getInt("stock");
             } else {
-                throw new NoSuchMaterialException();
+                throw new NoSuchMaterialException(id);
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
@@ -198,7 +198,7 @@ class MaterialMapper extends IMaterialMapper {
                     stock = rs.getInt("stock");
                     System.out.println(stock);
                 } else {
-                    throw new NoSuchMaterialException();
+                    throw new NoSuchMaterialException(id);
                 }
                 sql = "UPDATE `material_lengths` SET stock = ? WHERE material_id = ? AND length = ?;";
                 pstmt = conn.prepareStatement(sql);
@@ -226,7 +226,7 @@ class MaterialMapper extends IMaterialMapper {
                 stock = rs.getInt("stock");
                 System.out.println("stock = " + stock);
             } else {
-                throw new NoSuchMaterialException();
+                throw new NoSuchMaterialException(id);
             }
             sql = "UPDATE `materials_nolength` SET stock = ? WHERE material_id = ?;";
             pstmt = conn.prepareStatement(sql);
@@ -261,7 +261,7 @@ class MaterialMapper extends IMaterialMapper {
                     pstmt.executeUpdate();
                 }
             } else {
-                throw new NoSuchMaterialException();
+                throw new NoSuchMaterialException(id);
                 
             }
         } catch (SQLException e) {
@@ -337,7 +337,7 @@ class MaterialMapper extends IMaterialMapper {
                 pstmt.setInt(2, id);
                 pstmt.executeUpdate();
             } else {
-                throw new NoSuchMaterialException();
+                throw new NoSuchMaterialException(id);
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
@@ -366,7 +366,7 @@ class MaterialMapper extends IMaterialMapper {
                     pstmt.executeUpdate();
                 }
             } else {
-                throw new NoSuchRoofException("Der findes ikke et tag med id " + id);
+                throw new NoSuchRoofException(id);
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());

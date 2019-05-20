@@ -74,7 +74,7 @@ class RequestMapper extends IRequestMapper {
 
                 r = new Request(req_id, user_id, datePlaced, cp, address);
             } else {
-                throw new NoSuchRequestException();
+                throw new NoSuchRequestException(id);
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
@@ -113,7 +113,7 @@ class RequestMapper extends IRequestMapper {
                 length = rs.getInt("length");
                 inclination = rs.getInt("inclination");
             } else {
-                throw new NoSuchCarportException();
+                throw new NoSuchCarportException(request_id);
             }
             roof = getRoof(roof_id, width);
             shed_ = getRequestShed(request_id);

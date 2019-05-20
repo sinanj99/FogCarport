@@ -11,11 +11,24 @@ package Presentation.Exceptions;
  */
 public class NoSuchRequestException extends SystemErrorException{
     
-    public NoSuchRequestException(String message) {
-        super(message);
+        
+    /**
+     * Id of request.
+     */
+    private int id;
+
+    /**
+     * Used in data-layer where only id is known
+     * @param id of the carport
+     */
+    public NoSuchRequestException(int id) {
+        super("Kunne ikke finde forespørgsel med id " + id + "!");
+        this.id = id;
     }
 
-    public NoSuchRequestException() {
+    public int getId() {
+        return id;
     }
+    
     
 }

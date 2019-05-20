@@ -56,8 +56,6 @@ public class FrontController extends HttpServlet {
             request.setAttribute("error", message);
             request.setAttribute("detail", detail);
             request.getRequestDispatcher(e.getTarget()).forward(request, response);
-        } catch (NoSuchShedException ex) {
-            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

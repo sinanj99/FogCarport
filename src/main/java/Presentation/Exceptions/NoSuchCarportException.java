@@ -11,12 +11,22 @@ package Presentation.Exceptions;
  */
 public class NoSuchCarportException extends SystemErrorException {
     
-    public NoSuchCarportException(String message) {
-        super(message);
+    /**
+     * Id of carport.
+     */
+    private int id;
+
+    /**
+     * Used in data-layer where only id is known
+     * @param id of the carport
+     */
+    public NoSuchCarportException(int id) {
+        super("Kunne ikke finde carport tilhørende forespørgsel med id: " + id + "!");
+        this.id = id;
     }
 
-    public NoSuchCarportException() {
+    public int getId() {
+        return id;
     }
-    
     
 }

@@ -11,11 +11,31 @@ package Presentation.Exceptions;
  */
 public class NoSuchMaterialException extends ClientException {
 
-    public NoSuchMaterialException() {
+     /**
+     * Id of material.
+     */
+    private int id;
+
+    /**
+     * Used in data-layer where only id is known
+     * @param id of the material
+     */
+    public NoSuchMaterialException(int id) {
+        this.id = id;
+    }
+
+     /**
+     * Used in presentation layer where target is known
+     * @param target where to send client
+     * @param id id of the material
+     */
+    public NoSuchMaterialException(String target, int id) {
+        super(target, "Kunne ikke finde materiale med id " + id + "!");
     }
     
-    public NoSuchMaterialException(String target, String message) {
-        super(target, "Kunne ikke finde materiale med id: " + message);
+
+    public int getId() {
+        return id;
     }
     
 }

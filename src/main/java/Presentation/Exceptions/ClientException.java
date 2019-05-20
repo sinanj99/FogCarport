@@ -21,7 +21,7 @@ public class ClientException extends Exception {
      * A short description of what went wrong for the client.
      */
     private String detail;
-
+    
     /**
      * Constructs a ClientException with user-specified target, message & detail. 
      * Used in presentation package, where target, message & detail is known.

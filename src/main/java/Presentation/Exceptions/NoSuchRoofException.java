@@ -11,11 +11,22 @@ package Presentation.Exceptions;
  */
 public class NoSuchRoofException extends SystemErrorException {
 
-    public NoSuchRoofException(String message) {
-        super(message);
+     /**
+     * Id of roof.
+     */
+    private int id;
+
+    /**
+     * Used in data-layer where only id is known
+     * @param id of the roof
+     */
+    public NoSuchRoofException(int id) {
+        super("Kunne ikke finde tag med id " + id + "!");
+        this.id = id;
     }
 
-    public NoSuchRoofException() {
+    public int getId() {
+        return id;
     }
     
 }

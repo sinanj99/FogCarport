@@ -7,6 +7,7 @@ package Data.Mappers;
 
 import Data.Entity.PrebuiltCarport;
 import Presentation.Exceptions.NoSuchPrebuiltCarportException;
+import Presentation.Exceptions.SystemErrorException;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -27,6 +28,7 @@ public abstract class IPrebuiltCarportMapper
      * returns a list os all prebuilts carport - used to populate prebuiltcarport.jsp 
      * 
      * @return list of all prebuilts carport in database
+     * @throws Presentation.Exceptions.SystemErrorException if an sql-exception is thrown
      */
-    public abstract List<PrebuiltCarport> getAllPrebuiltCarports() throws NoSuchPrebuiltCarportException;
+    public abstract List<PrebuiltCarport> getAllPrebuiltCarports() throws SystemErrorException;
 }

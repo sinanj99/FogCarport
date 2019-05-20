@@ -33,13 +33,22 @@ public class LoginCommand implements Command {
         try {
             user = PresentationFacade.getInstance().getUser(email);
             LoginController.doesMatch(email, password);
-            } catch(UserNotFoundException e) {
-                throw new UserNotFoundException("jsp/login.jsp", "Bruger findes ikke!");
-            } catch(NoMatchException e) {
-                throw new NoMatchException("jsp/login.jsp", "Forkert adgangskode!");
-            }
+        } catch (UserNotFoundException e) {
+            throw new UserNotFoundException("jsp/login.jsp", "Bruger findes ikke!");
+        } catch (NoMatchException e) {
+            throw new NoMatchException("jsp/login.jsp", "Forkert adgangskode!");
+        }
+        
         request.getSession().setAttribute("user", user);
-        return "jsp/frontpage.jsp";
-    }
+        String target = (String) request.getSession().getAttribute("target");
+        request.getSession().removeAttribute("target");
 
+        if (target == null || target.isEmpty()) {
+            return "jsp/frontpage.jsp";
+        } else if (target.equals("flat")) {
+            return "FrontController?command=flatroof";
+        } else {
+            return "FrontController?command=inclinedroof";
+        }
+    }
 }

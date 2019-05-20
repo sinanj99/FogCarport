@@ -6,7 +6,8 @@
 package Data.Entity;
 
 /**
- *
+ * An enum, which describes a type of material. Is used in presentation layer where 
+ * lineitems in bill of material is sorted into categories based on its type.
  * @author sinanjasar
  */
 public enum Type {

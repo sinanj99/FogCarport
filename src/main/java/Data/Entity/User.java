@@ -6,7 +6,10 @@
 package Data.Entity;
 
 /**
- *a
+ * Mirrors user table in database. Is used in data mappers when users are fetched/inserted
+ * and is used in presentation layer where a user is fetched when logging in and is stored
+ * on the session. Also used when a user registers in the system, where it is inserted in through user mapper.
+ * A user log in is necessary since a user needs access to responses and orders.
  * @author sinanjasar
  */
 public class User {

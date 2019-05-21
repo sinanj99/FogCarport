@@ -52,61 +52,6 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public Material getMaterial_(String name) throws NoSuchMaterialException {
-        int material_id = 0;
-        String name_ = "";
-        int length = 0;
-        String unit = "";
-        int stock = 0;
-        int price = 0;
-        try {
-            String sql = "SELECT * FROM `material` WHERE name = ?;";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                material_id = rs.getInt("material_id");
-                name_ = rs.getString("name");
-                length = rs.getInt("length");
-                unit = rs.getString("unit");
-                price = rs.getInt("price");
-                stock = rs.getInt("stock");
-            }
-        } catch (SQLException ex) {
-//            throw new SystemErrorException(ex.getMessage());
-        }
-        return new Material(material_id, name, length, unit, price, stock);
-    }
-
-    @Override
-    public Material getMaterial(String name, int length) throws NoSuchMaterialException {
-        int material_id = 0;
-        String name_ = "";
-        //int length = 0;
-        String unit = "";
-        int stock = 0;
-        int price = 0;
-        try {
-            String sql = "SELECT * FROM `material` WHERE name = ? and length = ?;";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
-            pstmt.setInt(2, length);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                material_id = rs.getInt("material_id");
-                name_ = rs.getString("name");
-                length = rs.getInt("length");
-                unit = rs.getString("unit");
-                price = rs.getInt("price");
-                stock = rs.getInt("stock");
-            }
-        } catch (SQLException ex) {
-//            throw new SystemErrorException(ex.getMessage());
-        }
-        return new Material(material_id, name, length, unit, price, stock);
-    }
-    
-    @Override
     public String getMaterial(int id) throws NoSuchMaterialException, SystemErrorException {
         String name_ = "";
         try {

@@ -91,10 +91,6 @@ public abstract class IMaterialMapper {
      * @throws SystemErrorException if an SQL-related exception occurs
      */
     public abstract void insertMaterialDim(int id, int length, int price, int stock)throws SystemErrorException;
-    
-    public abstract Material getMaterial(String name, int length) throws NoSuchMaterialException;
-    
-    public abstract Material getMaterial_(String name) throws NoSuchMaterialException;
     /**
      * Fetches all materials from materials_with length and material_lengths tables in database.
      * @return a list of all materials in the database.

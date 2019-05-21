@@ -116,8 +116,8 @@ CREATE TABLE users (
 
 INSERT INTO users (`admin`, seller, email,  `password`)
 VALUES 
-(0, 0, "test@test.dk","test"),
-(1, 0, "admin@fog.dk","test"),
+(0, 0, "test@fog.dk","test"),
+(1, 0, "admin@fog.dk","admin"),
 (0, 1, "seller@fog.dk","seller");
 
 
@@ -153,7 +153,7 @@ CREATE TABLE shipping_address (
 
 
 INSERT INTO users_personalinfo (user_id,  firstname, lastname, address, zipcode, city, gender)
-VALUES (1, "Peter","Petersen", "Tagensvej 100", 2200, "København N", "m");
+VALUES (1, "Peter","Petersen", "Tagensvej 100", 2200, "KBH", "m");
 
 
 CREATE TABLE carports (
@@ -167,7 +167,6 @@ CREATE TABLE carports (
 	CONSTRAINT carports_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id),
     CONSTRAINT carports_ibfk_2 FOREIGN KEY (roof_id) REFERENCES rooftype(roof_id)
 );
-
 
 CREATE TABLE sheds (
 	shed_id INT(50) NOT NULL AUTO_INCREMENT,

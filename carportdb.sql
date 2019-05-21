@@ -17,7 +17,7 @@ CREATE TABLE rooftype (
 	PRIMARY KEY (roof_id)
 );
 
-insert into rooftype (name, inclined) values 
+INSERT INTO rooftype (`name`, inclined) VALUES 
 ("Plasttrapezplader - Blåtonet", 0),
 ("Plasttrapezplader - Gråtonet", 0),
 ("Plasttrapezplader - Rødbrun",  0),
@@ -213,9 +213,9 @@ CREATE TABLE prebuilt_carport (
   img_path VARCHAR(1000) NOT NULL,
   carport_width INT(10)NOT NULL,
   carport_length int(10)  NOT NULL,
-  shed boolean,
-  shed_width int(10) NOT NULL,
-  shed_length int(10) NOT NULL,
+  shed BOOLEAN,
+  shed_width INT(10) NOT NULL,
+  shed_length INT(10) NOT NULL,
   price INT(10) NOT NULL,
   PRIMARY KEY (id));
   

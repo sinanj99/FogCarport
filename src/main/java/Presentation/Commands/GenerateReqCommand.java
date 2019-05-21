@@ -107,6 +107,7 @@ public class GenerateReqCommand implements Command {
         System.out.println(req.getCarport().getInclination());
 
         LogicFacade.getInstance().insertRequest(req);
+        request.setAttribute("redirect", true);
         return "jsp/reqsent.jsp";
     }
 }

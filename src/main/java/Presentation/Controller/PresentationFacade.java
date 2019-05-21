@@ -122,11 +122,7 @@ public class PresentationFacade {
     public int getDimensionPrice(int roof_id, int length) throws SystemErrorException {
         return r.getDimensionPrice(roof_id, length);
     }
-
-    public Material getMaterial(String name) throws NoSuchMaterialException {
-        return IMaterialMapper.instance().getMaterial_(name);
-    }
-
+    
     public Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException {
         return m.getMaterialWithLength(id, length);
     }

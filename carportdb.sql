@@ -45,17 +45,6 @@ CREATE TABLE rooflength(
     CONSTRAINT rooflength_ibfk_1 FOREIGN KEY (roof_id) REFERENCES rooftype(roof_id)
     );
     
-
-DROP TABLE IF EXISTS material;
-
-CREATE TABLE material (
-  material_id INT(50) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(50) NOT NULL,
-  length INT(10),
-  unit VARCHAR(10)  NOT NULL,
-  price INT(10) NOT NULL,
-  PRIMARY KEY (material_id));
-
 DROP TABLE IF EXISTS material_lengths;
 DROP TABLE IF EXISTS materials_withlength;
 DROP TABLE IF EXISTS materials_nolength;

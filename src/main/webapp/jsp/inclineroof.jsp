@@ -6,7 +6,7 @@
 <%List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
     User user = (User) session.getAttribute("user");
     if (user == null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("jsp/login.jsp");
     }
 
     int a;

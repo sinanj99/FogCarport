@@ -42,7 +42,10 @@ public class LoginCommand implements Command {
         request.getSession().setAttribute("user", user);
         String target = (String) request.getSession().getAttribute("target");
         request.getSession().removeAttribute("target");
-
+        
+        if(user.isAdmin()) return "jsp/adminfrontpage.jsp";
+        if(user.isSeller()) return "jsp/sellerfrontpage.jsp";
+        
         if (target == null || target.isEmpty()) {
             return "jsp/frontpage.jsp";
         } else if (target.equals("flat")) {

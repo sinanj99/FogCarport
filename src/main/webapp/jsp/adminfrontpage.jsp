@@ -1,7 +1,12 @@
+<%-- 
+    Document   : adminfrontpage
+    Created on : 22-05-2019, 00:13:59
+    Author     : Obaydah Mohamad
+--%>
 <%@page import="Data.Entity.User"%>
 <%
     User user = (User) session.getAttribute("user");
-    if (user == null || user != null && !user.isSeller()) {
+    if (user == null || user != null && !user.isAdmin()) {
         response.sendRedirect("login.jsp");
     }
 %>

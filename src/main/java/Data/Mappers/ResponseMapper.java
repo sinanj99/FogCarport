@@ -129,7 +129,7 @@ class ResponseMapper extends IResponseMapper{
     
     public void insertResponse(Response res) throws SystemErrorException{
        try {
-
+            conn.setAutoCommit(false);
             String query = "INSERT INTO `responses` (request_id, user_id, emp_id, dateplaced, carport_id, shed_id, productionprice, sellprice, status) "
                         + "VALUES (?,?,?,?,?,?,?,?,?);";
             PreparedStatement p = conn.prepareStatement(query);
@@ -147,8 +147,13 @@ class ResponseMapper extends IResponseMapper{
             p.setInt(8, res.getSellPrice());
             p.setInt(9, 1);
             p.executeUpdate();
-
+            conn.commit();
         } catch (SQLException e) {
+            try{
+                conn.rollback();
+            }catch(SQLException ex){
+                throw new SystemErrorException(ex.getMessage());
+            }
             throw new SystemErrorException(e.getMessage());
         }
     }

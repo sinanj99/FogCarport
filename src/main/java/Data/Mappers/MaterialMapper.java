@@ -133,7 +133,7 @@ class MaterialMapper extends IMaterialMapper {
         }
     }
     @Override
-    public void updateStockNoLength(int id, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
+    public void updateStockFittings(int id, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
         if (qty <= 0) {
             throw new IllegalArgumentException("Quantity must be positive");
         }

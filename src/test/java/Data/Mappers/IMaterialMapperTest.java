@@ -109,7 +109,7 @@ public class IMaterialMapperTest {
         int id = 1;
         int qty = 10;
         
-        mapper.updateStockNoLength(id, qty);
+        mapper.updateStockFittings(id, qty);
         
         int expResult = 990;
         int result = mapper.getFitting(id).getStock();
@@ -123,7 +123,7 @@ public class IMaterialMapperTest {
         int id = 1;
         int qty = -10;
         
-        mapper.updateStockNoLength(id, qty);
+        mapper.updateStockFittings(id, qty);
     }
     @Test(expected = NoSuchMaterialException.class)
     public void testUpdateStockNoLengthFail() throws SystemErrorException, NoSuchMaterialException {
@@ -131,7 +131,7 @@ public class IMaterialMapperTest {
         int id = 30;
         int qty = 10;
         
-        mapper.updateStockNoLength(id, qty);
+        mapper.updateStockFittings(id, qty);
     }
     @Test
     public void testUpdatePriceWithLength() throws SystemErrorException, NoSuchMaterialException, InvalidInputException {

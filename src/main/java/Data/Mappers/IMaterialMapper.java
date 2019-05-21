@@ -54,7 +54,7 @@ public abstract class IMaterialMapper {
      * specified id.
      * @throws SystemErrorException if an sql-exception is thrown.
      */
-    public abstract void updateStockNoLength(int id, int qty)throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException;
+    public abstract void updateStockFittings(int id, int qty)throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException;
     
     /**
      * Fetches material with specified id from wood_materials and material_lengths tables in dB

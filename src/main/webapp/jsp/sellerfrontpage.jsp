@@ -1,8 +1,10 @@
 <%@page import="Data.Entity.User"%>
 <%
     User user = (User) session.getAttribute("user");
-    if (user == null || user != null && !user.isSeller()) {
-        response.sendRedirect("login.jsp");
+    if (user == null) {
+        response.sendRedirect("jsp/login.jsp");
+    } else if (user != null && !user.isSeller()) {
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
     }
 %>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>

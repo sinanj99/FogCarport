@@ -6,9 +6,11 @@
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
 <%List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
     User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("jsp/login.jsp");
-        }
+    if(user == null) {
+        response.sendRedirect("jsp/login.jsp");
+    }else if(user != null && (user.isAdmin() || user.isSeller())){
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
     request.setAttribute("inclined", "false");
     String firstname = user.getInfo().getFirstname(); %>
 

@@ -3,12 +3,15 @@
 <%@page import="Data.Entity.Request"%>
 <%@page import="Data.Entity.Response"%>
 <%
-    User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("login.jsp");
-        }
     Response r = (Response) request.getAttribute("response");
     Request req = (Request) request.getAttribute("request");
+    
+    User user = (User) session.getAttribute("user");
+    if(user == null) {
+        response.sendRedirect("jsp/login.jsp");
+    }else if(user != null && (user.isAdmin() || user.isSeller())){
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
 %>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
     <body class="background2">

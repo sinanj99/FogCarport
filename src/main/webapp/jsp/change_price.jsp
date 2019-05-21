@@ -7,8 +7,10 @@
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
     <%
         User user = (User) session.getAttribute("user");
-        if(user == null) {
+        if (user == null) {
             response.sendRedirect("jsp/login.jsp");
+        } else if (user != null && !user.isAdmin()) {
+            request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
         }
         List<Material> materials = (List<Material>) request.getAttribute("materials");
         List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");

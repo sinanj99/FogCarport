@@ -1,3 +1,10 @@
+<%@page import="Data.Entity.User"%>
+<%
+    User user = (User) session.getAttribute("user");
+    if(user != null) {
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
+%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
     <body onload="checkAll()" class="background1">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>

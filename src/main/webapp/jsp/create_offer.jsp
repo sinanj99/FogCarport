@@ -9,9 +9,11 @@
 <%@page import="Data.Entity.BOM"%>
 <%
     User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("login.jsp");
-        }
+    if (user == null) {
+        response.sendRedirect("jsp/login.jsp");
+    } else if (user != null && !user.isSeller()) {
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
     int buyPrice = (int) request.getAttribute("buyPrice");
     int sellPrice = (int) request.getAttribute("sellPrice");
     Request r = (Request) request.getAttribute("request");

@@ -26,6 +26,9 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws SystemErrorException, NoMatchException, UserNotFoundException {
+        User userLoggedIn = null;
+        userLoggedIn = (User) request.getSession().getAttribute("user");  
+        if(userLoggedIn != null) return "FrontController?command=frontpageredirect";
 
         User user;
         String email = request.getParameter("email");

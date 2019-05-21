@@ -6,9 +6,11 @@
 <%@page import="Data.Entity.Request"%>
 <%
     User user = (User) request.getSession().getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("login.jsp");
-        }
+    if (user == null) {
+        response.sendRedirect("jsp/login.jsp");
+    } else if (user != null && !user.isSeller()) {
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
     
     Request r = (Request) request.getAttribute("request");
     ShippingAddress s = (ShippingAddress) request.getAttribute("shippingAddress");

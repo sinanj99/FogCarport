@@ -1,5 +1,13 @@
-<%String pwordError = (String) request.getAttribute("passwordError");
-String unameError = (String) request.getAttribute("emailError"); %>
+<%@page import="Data.Entity.User"%>
+<%
+    String pwordError = (String) request.getAttribute("passwordError");
+    String unameError = (String) request.getAttribute("emailError");
+    
+    User user = (User) session.getAttribute("user");
+    if(user != null) {
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
+%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
     <body class="background1">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>

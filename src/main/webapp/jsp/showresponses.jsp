@@ -3,9 +3,11 @@
 <%@page import="java.util.List"%>
 <%
     User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("login.jsp");
-        }
+    if(user == null) {
+        response.sendRedirect("jsp/login.jsp");
+    }else if(user != null && (user.isAdmin() || user.isSeller())){
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
     List<Response> responses = (List) request.getAttribute("responses");
 %>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>

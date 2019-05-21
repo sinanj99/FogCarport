@@ -34,7 +34,7 @@ public class RegisterCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws SystemErrorException, NoMatchException, DuplicateException, InvalidInputException {
-        String nameRegex = "/^[a-zA-Zå\\øæÜÖüö][a-zA-Z\\. å\\øæÜÖüö-]{1,20}$/";
+        String nameRegex = "^[a-zA-Zå\\øæÜÖüö][a-zA-Z\\. å\\øæÜÖüö-]{1,20}$";
         String addressRegex = "[A-Za-zÆØÅæøåÜÖüö 0-9'\\.\\-,#]{1,100}";
         String zipRegex = "[0-9]{4}";
         String cityRegex = "[A-Za-zÆØÅæøåÜÖöü \\.\\-,]{1,20}";

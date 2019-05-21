@@ -82,8 +82,8 @@ public class PresentationFacade {
     public List<Material> getMaterials() throws SystemErrorException {
         return m.getMaterials();
     }
-    public void insertDimensions(int id, int length, int price) throws SystemErrorException {
-        r.insertDimensions(id, length, price);
+    public void insertDimensions(int id, int length, int price, int stock) throws SystemErrorException {
+        r.insertDimensions(id, length, price, stock);
     }
 
     public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException, SystemErrorException {

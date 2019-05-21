@@ -78,7 +78,7 @@ public class IMaterialMapperTest {
         mapper.updateStockWithLength(id, length, qty);
         
         int expResult = 990;
-        int result = mapper.getMaterialWithLength(id,length).getStock();
+        int result = mapper.getWoodMaterial(id,length).getStock();
         assertEquals(expResult, result); 
     }
     
@@ -111,7 +111,7 @@ public class IMaterialMapperTest {
         mapper.updateStockNoLength(id, qty);
         
         int expResult = 990;
-        int result = mapper.getMaterialNoLength(id).getStock();
+        int result = mapper.getFitting(id).getStock();
         
         assertEquals(expResult, result);
     }
@@ -164,10 +164,10 @@ public class IMaterialMapperTest {
         int price = 990;
         int id = 1;
         
-        mapper.updatePriceNoLength(price, id);
+        mapper.updatePriceFittings(price, id);
         
         int expResult = 990;
-        int result = mapper.getMaterialNoLength(id).getPrice();
+        int result = mapper.getFitting(id).getPrice();
 
         assertEquals(expResult, result);
     }

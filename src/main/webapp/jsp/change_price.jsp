@@ -8,7 +8,7 @@
     <%
         User user = (User) session.getAttribute("user");
         if(user == null) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("jsp/login.jsp");
         }
         List<Material> materials = (List<Material>) request.getAttribute("materials");
         List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");

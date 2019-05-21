@@ -48,7 +48,7 @@ public class ChangePriceCommand implements Command {
                 PresentationFacade.getInstance().updatePrices(price, id);
                 break;
             case "nolength":
-                PresentationFacade.getInstance().updatePricesNoLength(price, id);
+                PresentationFacade.getInstance().updatePriceFittings(price, id);
                 break;
             default:
                 PresentationFacade.getInstance().updatePricesRoof(price, id);

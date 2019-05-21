@@ -84,12 +84,12 @@ public class LogicFacade {
         return IRequestMapper.instance().getDimensionPrice(roof_id, length);
     }
 
-    public Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException {
-        return IMaterialMapper.instance().getMaterialWithLength(id, length);
+    public Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException {
+        return IMaterialMapper.instance().getWoodMaterial(id, length);
     }
 
-    public Material getMaterialNoLength(int id) throws SystemErrorException, NoSuchMaterialException {
-        return IMaterialMapper.instance().getMaterialNoLength(id);
+    public Material getFitting(int id) throws SystemErrorException, NoSuchMaterialException {
+        return IMaterialMapper.instance().getFitting(id);
     }
 
     public List<Request> getRequests() throws SystemErrorException, NoSuchShedException {

@@ -112,7 +112,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem bracketScrews(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialNoLength(7);
+        Material m = LogicFacade.getInstance().getFitting(7);
         return new LineItem(m, calculateQuantityOfBracketScrews(c), "Til montering af universalbeslag + hulbånd", m.getPrice() * calculateQuantityOfBracketScrews(c), Type.NOLENGTH);
     }
 
@@ -124,7 +124,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem boardBolts(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialNoLength(9);
+        Material m = LogicFacade.getInstance().getFitting(9);
         return new LineItem(m, calculateQuantityOfBordsBolts(c), "Til montering af rem på stolper", m.getPrice() * calculateQuantityOfBordsBolts(c), Type.NOLENGTH);
     }
 
@@ -136,7 +136,7 @@ public class BOMFundament {
      * @throws SystemErrorException
      */
     public LineItem squareDiscs(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialNoLength(10);
+        Material m = LogicFacade.getInstance().getFitting(10);
         return new LineItem(m, CalculateQuantityOfSqaureDisc(c), "Til montering af rem på stolper", m.getPrice() * CalculateQuantityOfSqaureDisc(c), Type.NOLENGTH);
     }
 
@@ -148,7 +148,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem rightBracketInteries(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialNoLength(1);
+        Material m = LogicFacade.getInstance().getFitting(1);
         return new LineItem(m, calculateQuantityOfRightBracketInteries(c), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfRightBracketInteries(c), Type.NOLENGTH);
     }
 
@@ -160,7 +160,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem leftBracketInteries(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialNoLength(2);
+        Material m = LogicFacade.getInstance().getFitting(2);
         return new LineItem(m, calculateQuantityOfLeftBracketInterties(c), "Til montering af spær på rem", m.getPrice() * calculateQuantityOfLeftBracketInterties(c), Type.NOLENGTH);
     }
 
@@ -403,7 +403,7 @@ public class BOMFundament {
 
         for (int i = 240; i <= 750; i += 30) {
             if (c.getLength() == i) {
-                m = LogicFacade.getInstance().getMaterialWithLength(1, i);
+                m = LogicFacade.getInstance().getWoodMaterial(1, i);
                 l = new LineItem(m, calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 60), desc, m.getPrice() * calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 60), Type.LENGTH);
             }
         }
@@ -418,7 +418,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem post(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialWithLength(3, 300);
+        Material m = LogicFacade.getInstance().getWoodMaterial(3, 300);
         return new LineItem(m, calculateQuantityOfPost(c), "Stolper, nedgraves 90cm i jord", m.getPrice() * calculateQuantityOfPost(c), Type.LENGTH);
 
     }
@@ -431,7 +431,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem underneathBoardForFrontAndBack(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialWithLength(4, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(4, 250);
         return new LineItem(m, calculateQuantityOfUnderneathBoardForFrontAndBack(c), "understernbrædder til forende og bagende", m.getPrice() * calculateQuantityOfUnderneathBoardForFrontAndBack(c), Type.LENGTH);
     }
 
@@ -443,7 +443,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem underneathBoardForSides(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialWithLength(4, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(4, 250);
         return new LineItem(m, calculateQuantityOfUnderneathBoardForSides(c), "understernbrædder til siderne", m.getPrice() * calculateQuantityOfUnderneathBoardForSides(c), Type.LENGTH);
     }
 
@@ -455,7 +455,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem outerBoardForFront(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialWithLength(6, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(6, 250);
         return new LineItem(m, calculateQuantityOfOuterBoardForFront(c), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOuterBoardForFront(c), Type.LENGTH);
     }
 
@@ -467,7 +467,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem outerBoardForSides(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialWithLength(6, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(6, 250);
         return new LineItem(m, calculateQuantityOfOuterBoardForSides(c), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOuterBoardForSides(c), Type.LENGTH);
     }
 
@@ -479,7 +479,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem waterBoardForFront(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialWithLength(7, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(7, 250);
         return new LineItem(m, calculateQuantityOfWaterBoardForFront(c), "vandbrædt på stern i forenden", m.getPrice() * calculateQuantityOfWaterBoardForFront(c), Type.LENGTH);
     }
 
@@ -491,7 +491,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem waterBoardForSides(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialWithLength(7, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(7, 250);
         return new LineItem(m, calculateQuantityOfWaterBoardForSides(c), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfWaterBoardForSides(c), Type.LENGTH);
     }
 
@@ -510,7 +510,7 @@ public class BOMFundament {
 
         for (int i = 240; i <= 750; i += 30) {
             if (c.getLength() == i) {
-                m = LogicFacade.getInstance().getMaterialWithLength(1, i);
+                m = LogicFacade.getInstance().getWoodMaterial(1, i);
                 l = new LineItem(m, 2, desc, m.getPrice() * 2, Type.LENGTH);
             }
         }
@@ -569,7 +569,7 @@ public class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem perforatedBands(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getMaterialNoLength(16);
+        Material m = LogicFacade.getInstance().getFitting(16);
         return new LineItem(m, (int) calculateQuantityOfPerforatedBands(c), "Til vindkryds på spær", m.getPrice() * (int) calculateQuantityOfPerforatedBands(c), Type.NOLENGTH);
     }
 

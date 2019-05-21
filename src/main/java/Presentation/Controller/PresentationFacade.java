@@ -70,8 +70,8 @@ public class PresentationFacade {
     public void updatePrices(int price, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
         m.updatePriceWithLength(price, id);
     }
-    public void updatePricesNoLength(int price, int id) throws SystemErrorException, NoSuchMaterialException {
-        m.updatePriceNoLength(price, id);
+    public void updatePriceFittings(int price, int id) throws SystemErrorException, NoSuchMaterialException {
+        m.updatePriceFittings(price, id);
     }
     public void updatePricesRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
         m.updatePriceRoof(price, id);
@@ -123,12 +123,12 @@ public class PresentationFacade {
         return r.getDimensionPrice(roof_id, length);
     }
     
-    public Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException {
-        return m.getMaterialWithLength(id, length);
+    public Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException {
+        return m.getWoodMaterial(id, length);
     }
 
-    public Material getMaterialNoLength(int id) throws SystemErrorException, NoSuchMaterialException {
-        return m.getMaterialNoLength(id);
+    public Material getFitting(int id) throws SystemErrorException, NoSuchMaterialException {
+        return m.getFitting(id);
     }
 
     public List<Request> getRequests() throws NoSuchShedException, SystemErrorException {

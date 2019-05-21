@@ -92,7 +92,7 @@ public class BOMToolshed
      */
     public LineItem shedClothing(Carport c) throws NoSuchMaterialException, SystemErrorException
     {
-         Material m = LogicFacade.getInstance().getMaterialWithLength(7, 210);
+         Material m = LogicFacade.getInstance().getWoodMaterial(7, 210);
          return new LineItem(m, calculateQuantityForShedClothing(c), "Til beklædning af skur 1 på 2", m.getPrice()*calculateQuantityForShedClothing(c), Type.LENGTH);
     }
     
@@ -112,7 +112,7 @@ public class BOMToolshed
         {
             if(c.getShed_().getWidth() == i)
             {
-                m = LogicFacade.getInstance().getMaterialWithLength(9, i);
+                m = LogicFacade.getInstance().getWoodMaterial(9, i);
                 l = new LineItem(m, 12, "Løsholter til skur gavle", m.getPrice()*12, Type.LENGTH);
             }
         }
@@ -135,7 +135,7 @@ public class BOMToolshed
         {
             if(c.getShed_().getLength() == i)
             {
-                m = LogicFacade.getInstance().getMaterialWithLength(9, i);
+                m = LogicFacade.getInstance().getWoodMaterial(9, i);
                 l = new LineItem(m, 4, "løsholter til skur siderne", m.getPrice()*4, Type.LENGTH);
             }
         }
@@ -150,7 +150,7 @@ public class BOMToolshed
      */
     public LineItem bracket() throws NoSuchMaterialException, SystemErrorException
     {
-        Material m = LogicFacade.getInstance().getMaterialNoLength(5);
+        Material m = LogicFacade.getInstance().getFitting(5);
         return new LineItem(m, 32, "Til montering af løsholter til skur", m.getPrice()*32, Type.NOLENGTH);
     }
     
@@ -162,7 +162,7 @@ public class BOMToolshed
      */
     public LineItem bracketScrews() throws NoSuchMaterialException, SystemErrorException
     {
-        Material m = LogicFacade.getInstance().getMaterialNoLength(7);
+        Material m = LogicFacade.getInstance().getFitting(7);
         return new LineItem(m, (32*3), "Til montering af vinkelbeslag til skur", m.getPrice() * (32*3), Type.NOLENGTH);
     }
     
@@ -174,7 +174,7 @@ public class BOMToolshed
      */
     public LineItem lathForDoor() throws NoSuchMaterialException, SystemErrorException
     {
-         Material m = LogicFacade.getInstance().getMaterialWithLength(8, 420);
+         Material m = LogicFacade.getInstance().getWoodMaterial(8, 420);
          return new LineItem(m, 1, "Til z på bagside af dør", m.getPrice(), Type.LENGTH);
     }
     /**
@@ -185,7 +185,7 @@ public class BOMToolshed
      */
     public LineItem farmgateGrip() throws NoSuchMaterialException, SystemErrorException
     {
-         Material m = LogicFacade.getInstance().getMaterialNoLength(3);
+         Material m = LogicFacade.getInstance().getFitting(3);
          return new LineItem(m, 1, "Til løs på dør i skur", m.getPrice(), Type.NOLENGTH);
     }
     
@@ -197,7 +197,7 @@ public class BOMToolshed
      */
     public LineItem tHinge() throws NoSuchMaterialException, SystemErrorException
     {
-         Material m = LogicFacade.getInstance().getMaterialNoLength(4);
+         Material m = LogicFacade.getInstance().getFitting(4);
          return new LineItem(m, 2, "Til dør i skur", m.getPrice()*2, Type.NOLENGTH);
     }
    

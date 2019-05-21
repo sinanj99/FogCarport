@@ -164,7 +164,7 @@ class RequestMapper extends IRequestMapper {
         String gender = "";
 
         try {
-            String query = "SELECT * FROM shipping_address WHERE request_id = ?;";
+            String query = "SELECT * FROM shipping_addresses WHERE request_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -301,7 +301,7 @@ class RequestMapper extends IRequestMapper {
     * @param id the parent requests id.
     */
     private void deleteRequestShippingInfo(int id) throws SystemErrorException{
-        String query = "DELETE FROM shipping_address WHERE request_id = ?";
+        String query = "DELETE FROM shipping_addresses WHERE request_id = ?";
         try{
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, id);
@@ -356,7 +356,7 @@ class RequestMapper extends IRequestMapper {
         boolean inclined = false;
 
         try {
-            String query = "SELECT * FROM rooftype WHERE roof_id = ?";
+            String query = "SELECT * FROM roofs WHERE roof_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -385,7 +385,7 @@ class RequestMapper extends IRequestMapper {
         int inclined_ = 0;
         boolean inclined = false;
 
-        String query = "SELECT * FROM rooftype";
+        String query = "SELECT * FROM roofs";
 
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -416,12 +416,12 @@ class RequestMapper extends IRequestMapper {
         int price = 0;
         boolean inclined = false;
 
-        String query = "SELECT * FROM rooftype";
+        String query = "SELECT * FROM roofs";
         if (rooftype == 0) {
-            query = "SELECT * FROM rooftype WHERE inclined = 0";
+            query = "SELECT * FROM roofs WHERE inclined = 0";
         }
         if (rooftype == 1) {
-            query = "SELECT * FROM rooftype WHERE inclined = 1";
+            query = "SELECT * FROM roofs WHERE inclined = 1";
             inclined = true;
         }
 
@@ -444,7 +444,7 @@ class RequestMapper extends IRequestMapper {
     @Override
     public void updateRoofPrice(int roof_id, int price) throws SystemErrorException {
         try {
-            String query = "UPDATE `rooftype` SET price = ? WHERE roof_id = ?;";
+            String query = "UPDATE `roofs` SET price = ? WHERE roof_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(2, roof_id);
             pstmt.setInt(1, price);
@@ -461,7 +461,7 @@ class RequestMapper extends IRequestMapper {
         }
 
         try {
-            query = "INSERT INTO rooftype (name, inclined) VALUES (?, ?, ?);";
+            query = "INSERT INTO roofs (name, inclined) VALUES (?, ?, ?);";
             pstmt.setString(1, roof.getName());
             pstmt.setInt(3, inclined_);
             pstmt.executeUpdate();
@@ -473,7 +473,7 @@ class RequestMapper extends IRequestMapper {
     @Override
     public void insertDimensions(int id, int length, int price) throws SystemErrorException{
         try {
-            String query = "INSERT INTO rooflength (roof_id, roof_length, price) VALUES (?, ?, ?);";
+            String query = "INSERT INTO roof_lengths (roof_id, length, price) VALUES (?, ?, ?);";
             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);
@@ -496,7 +496,7 @@ class RequestMapper extends IRequestMapper {
     private void insertRequestShippingAddress(PreparedStatement pstmt, String query, ResultSet rs, Request req, int req_id) throws SystemErrorException {
 
         try {
-            query = "INSERT INTO shipping_address (request_id, firstname, "
+            query = "INSERT INTO shipping_addresses (request_id, firstname, "
                     + "lastname, address, zipcode, city) VALUES (?, ?, ?, ?, ?, ?);";
             pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, req_id);
@@ -515,7 +515,7 @@ class RequestMapper extends IRequestMapper {
     public int getDimensionPrice(int roof_id, int length) throws SystemErrorException{
         int price = 0;
         try {
-            String query = "SELECT * FROM rooflength WHERE roof_id = ? AND roof_length = ?";
+            String query = "SELECT * FROM roof_lengths WHERE roof_id = ? AND length = ?";
             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, roof_id);
             pstmt.setInt(2, length);
@@ -536,7 +536,6 @@ class RequestMapper extends IRequestMapper {
         ShippingAddress address;
         List<Request> requests = new ArrayList();
         Carport cp;
-        System.out.println("TEST TEST");
         try {
             String query = "SELECT * FROM requests ORDER BY `request_id` DESC;";
             Statement stmt = conn.prepareStatement(query);
@@ -547,10 +546,8 @@ class RequestMapper extends IRequestMapper {
                 datePlaced = rs.getString("dateplaced");
                 address = getRequestShippingAddress(req_id);
                 cp = getRequestCarport(req_id);
-                System.out.println("CARPORT = " + cp);
                 requests.add(new Request(req_id, user_id, datePlaced, cp, address));
             }
-            System.out.println(requests);
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
         }
@@ -568,7 +565,7 @@ class RequestMapper extends IRequestMapper {
 
         try {
 
-            String query = "SELECT * FROM rooftype WHERE roof_id = ?";
+            String query = "SELECT * FROM roofs WHERE roof_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -583,7 +580,7 @@ class RequestMapper extends IRequestMapper {
                 }
             }
 
-            query = "SELECT * FROM rooflength WHERE roof_id = ? AND roof_length = ?;";
+            query = "SELECT * FROM roof_lengths WHERE roof_id = ? AND length = ?;";
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);

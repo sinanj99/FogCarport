@@ -22,8 +22,11 @@ public class ShowPricesCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws NoSuchRoofException, SystemErrorException {
+        System.out.println("A TEST");
         List<Roof> roofs = PresentationFacade.getInstance().getRoofs();
+        System.out.println("A TEST");
         List<Material> materials = PresentationFacade.getInstance().getMaterials();
+        System.out.println("A TEST 2");
 //        for (int i = 1; i < materials.size(); i++) {
 //            if (materials.get(i).getName().equals(materials.get(i - 1).getName())) {
 //                materials.remove(i);

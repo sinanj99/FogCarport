@@ -52,7 +52,7 @@ class UserMapper extends IUserMapper {
             pstmt.setString(2, user.getPassword());
             pstmt.executeUpdate();
 
-            sql = "INSERT INTO `users_personalinfo`(user_id, firstname, lastname, address, zipcode, city, gender) "
+            sql = "INSERT INTO `personal_info`(user_id, firstname, lastname, address, zipcode, city, gender) "
                     + "values ((SELECT user_id FROM `users` WHERE email = '" + user.getEmail() + "' ORDER BY user_id DESC LIMIT 1),?,?,?,?,?,?);";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user.getInfo().getFirstname());
@@ -84,7 +84,7 @@ class UserMapper extends IUserMapper {
         String password = "", fname = "", lname = "", address = "", city = "", gender = "";
         boolean seller_ = false, admin_ = false;
         try {
-            String sql = "SELECT * FROM `users` LEFT JOIN `users_personalinfo` USING(user_id) WHERE email = ?;";
+            String sql = "SELECT * FROM `users` LEFT JOIN `personal_info` USING(user_id) WHERE email = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();
@@ -131,7 +131,7 @@ class UserMapper extends IUserMapper {
         boolean seller_ = false;
         boolean admin_ = false;
         try {
-            String sql = "SELECT * FROM `users` INNER JOIN `users_personalinfo` USING(user_id) WHERE user_id = ?;";
+            String sql = "SELECT * FROM `users` INNER JOIN `personal_info` USING(user_id) WHERE user_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();

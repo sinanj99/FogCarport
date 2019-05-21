@@ -31,14 +31,7 @@ public abstract class IMaterialMapper {
      * @param ds the datasource
      */
     public abstract void setDataSource(DataSource ds);
-    /**
-     * Fetches material from database with specified id.
-     * @param id of the material
-     * @return a material object
-     * @throws NoSuchMaterialException if the material is not found
-     * @throws SystemErrorException if an sql-exception is thrown
-     */
-    public abstract String getMaterial(int id) throws NoSuchMaterialException, SystemErrorException;
+
     /**
      * Substracts the qty parameter from material (with length) with specified
      * id.
@@ -64,14 +57,14 @@ public abstract class IMaterialMapper {
     public abstract void updateStockNoLength(int id, int qty)throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException;
     
     /**
-     * Fetches material with specified id from material_withlength and material_lengths tables in dB
+     * Fetches material with specified id from wood_materials and material_lengths tables in dB
      * @param id of the desired material
      * @param length of the desired material
      * @return a material with specified id
      * @throws NoSuchMaterialException if the material with specified id is not found
      * @throws SystemErrorException if an sql-exception is thrown
      */
-    public abstract Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException;
+    public abstract Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException;
     /**
      * Fetches material with specified id from material_nolength table in dB
      * @param id of the desired material
@@ -79,7 +72,7 @@ public abstract class IMaterialMapper {
      * @throws SystemErrorException if an sql-exception is thrown
      * @throws NoSuchMaterialException if the material with specified id is not found
      */
-    public abstract Material getMaterialNoLength(int id)throws SystemErrorException, NoSuchMaterialException;
+    public abstract Material getFitting(int id)throws SystemErrorException, NoSuchMaterialException;
     
     /**
      * Inserts material length, price and stock to table 'material_lengths' in database for a material with specified id.
@@ -122,7 +115,7 @@ public abstract class IMaterialMapper {
      * @throws SystemErrorException 
      * @throws Presentation.Exceptions.NoSuchMaterialException 
      */
-    public abstract void updatePriceNoLength(int price, int id) throws SystemErrorException, NoSuchMaterialException;
+    public abstract void updatePriceFittings(int price, int id) throws SystemErrorException, NoSuchMaterialException;
     
     /**
      * Updates price of all lengths of a specific roof specified by id.

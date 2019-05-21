@@ -52,43 +52,19 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public String getMaterial(int id) throws NoSuchMaterialException, SystemErrorException {
-        String name_ = "";
-        try {
-            String sql = "SELECT name * `materials_withlength` WHERE material_id = ?;";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, id);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                name_ = rs.getString("name");
-            }
-        } catch (SQLException ex) {
-            throw new SystemErrorException(ex.getMessage());
-        }
-        return name_;
-    }
-
-    @Override
-    public Material getMaterialWithLength(int id, int length) throws NoSuchMaterialException, SystemErrorException {
+    public Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException {
         String name = "";
         String unit = "";
         int price = 0;
         int stock = 0;
         try {
-            String sql = "SELECT * FROM `materials_withlength` WHERE material_id = ?;";
+            String sql = "SELECT * FROM `wood_materials` INNER JOIN material_lengths USING(material_id)  WHERE material_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 name = rs.getString("name");
                 unit = rs.getString("unit");
-            }
-            sql = "SELECT * FROM `material_lengths` WHERE material_id = ? AND length = ?;";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, id);
-            pstmt.setInt(2, length);
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
                 length = rs.getInt("length");
                 price = rs.getInt("price");
                 stock = rs.getInt("stock");
@@ -103,14 +79,14 @@ class MaterialMapper extends IMaterialMapper {
 
     
     @Override
-    public Material getMaterialNoLength(int id) throws SystemErrorException, NoSuchMaterialException {
+    public Material getFitting(int id) throws SystemErrorException, NoSuchMaterialException {
         String name = "";
         String unit = "";
         int length = 0;
         int price = 0;
         int stock = 0;
         try {
-            String sql = "SELECT * FROM `materials_nolength` WHERE material_id = ?;";
+            String sql = "SELECT * FROM `fittings_and_screws` WHERE fitting_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -163,7 +139,7 @@ class MaterialMapper extends IMaterialMapper {
         }
         int stock = 0;
         try {
-            String sql = "SELECT stock FROM `materials_nolength` WHERE material_id = ?;";
+            String sql = "SELECT stock FROM `fittings_and_screws` WHERE material_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -173,7 +149,7 @@ class MaterialMapper extends IMaterialMapper {
             } else {
                 throw new NoSuchMaterialException(id);
             }
-            sql = "UPDATE `materials_nolength` SET stock = ? WHERE material_id = ?;";
+            sql = "UPDATE `fittings_and_screws` SET stock = ? WHERE material_id = ?;";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, stock -= qty);
             pstmt.setInt(2, id);
@@ -253,13 +229,13 @@ class MaterialMapper extends IMaterialMapper {
     public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
 
         LinkedHashMap<Integer, Integer> prices = new LinkedHashMap();
-        String sql = "SELECT * FROM rooflength WHERE roof_id = ?";
+        String sql = "SELECT * FROM roof_lengths WHERE roof_id = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                prices.put(rs.getInt("roof_length"), rs.getInt("price"));
+                prices.put(rs.getInt("length"), rs.getInt("price"));
             }
         } catch (SQLException ex) {
             throw new SystemErrorException(ex.getMessage());
@@ -268,15 +244,15 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceNoLength(int price, int id) throws SystemErrorException, NoSuchMaterialException {
-        String sql = "SELECT * FROM materials_nolength WHERE material_id = ?";
+    public void updatePriceFittings(int price, int id) throws SystemErrorException, NoSuchMaterialException {
+        String sql = "SELECT * FROM fittings_and_screws WHERE fitting_id = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
 
-                sql = "UPDATE materials_nolength SET price = ? WHERE material_id = ?";
+                sql = "UPDATE fittings_and_screws SET price = ? WHERE fitting_id = ?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, price);
                 pstmt.setInt(2, id);
@@ -293,7 +269,7 @@ class MaterialMapper extends IMaterialMapper {
     public void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
         LinkedHashMap<Integer, Integer> prices = getRoofLengthPrices(id);
         try {
-            String sql = "SELECT * FROM rooflength WHERE roof_id = ?";
+            String sql = "SELECT * FROM roof_lengths WHERE roof_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -303,7 +279,7 @@ class MaterialMapper extends IMaterialMapper {
                 for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
                     price = entry.getValue();
                     length = entry.getKey();
-                    sql = "UPDATE rooflength SET price = ? WHERE roof_id = ? AND roof_length = ?";
+                    sql = "UPDATE roof_lengths SET price = ? WHERE roof_id = ? AND length = ?";
                     pstmt = conn.prepareStatement(sql);
                     pstmt.setInt(1, price);
                     pstmt.setInt(2, id);
@@ -328,7 +304,7 @@ class MaterialMapper extends IMaterialMapper {
                     + " (SELECT *, ROW_NUMBER() OVER (PARTITION BY material_id ORDER BY price ASC) AS rn"
                     + " FROM material_lengths)"
                     + " SELECT *"
-                    + " FROM materials INNER JOIN materials_withlength USING(material_id)"
+                    + " FROM materials INNER JOIN wood_materials USING(material_id)"
                     + " WHERE rn = 1;";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -341,10 +317,10 @@ class MaterialMapper extends IMaterialMapper {
                 stock = rs.getInt("stock");
                 materials.add(new Material(id, name, length, unit, price, stock));
             }
-            sql = "SELECT * FROM materials_nolength;";
+            sql = "SELECT * FROM fittings_and_screws;";
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                id = rs.getInt("material_id");
+                id = rs.getInt("fitting_id");
                 name = rs.getString("name");
                 unit = rs.getString("unit");
                 price = rs.getInt("price");
@@ -363,11 +339,11 @@ class MaterialMapper extends IMaterialMapper {
         String name;
         boolean inclined_ = false;
         try {
-            String sql = "WITH roofs AS"
+            String sql = "WITH roof AS"
                     + " (SELECT *, ROW_NUMBER() OVER (PARTITION BY roof_id ORDER BY price ASC) AS rn"
-                    + " FROM rooflength)"
+                    + " FROM roof_lengths)"
                     + " SELECT *"
-                    + " FROM roofs INNER JOIN rooftype USING(roof_id)"
+                    + " FROM roof INNER JOIN roofs USING(roof_id)"
                     + " WHERE rn = 1;";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -375,7 +351,7 @@ class MaterialMapper extends IMaterialMapper {
                 id = rs.getInt("roof_id");
                 name = rs.getString("name");
                 inclined = rs.getInt("inclined");
-                length = rs.getInt("roof_length"); 
+                length = rs.getInt("length"); 
                 if(inclined == 1){
                     inclined_ = true;
                 }

@@ -7,6 +7,7 @@ package Data.Mappers;
 
 import Data.Entity.Response;
 import Presentation.Exceptions.NoSuchResponseException;
+import Presentation.Exceptions.SystemErrorException;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -20,8 +21,34 @@ public abstract class IResponseMapper {
     }
     
     public abstract void setDataSource(DataSource ds);
-    public abstract List<Response> getResponses(int userId);
-    public abstract Response getResponse(int requestId);
-    public abstract void insertResponse(Response res);
-    public abstract void deleteResponse(int responseId) throws NoSuchResponseException;    
+    
+    /**
+     * Returns a list of all response in dB associated with a given user(client); 
+     * used to display all response which has not yet
+     * been answered by the user(client)
+     * @return list from the database, of a users open responses
+     */
+    public abstract List<Response> getResponses(int userId) throws SystemErrorException;
+    
+    /**
+     * Returns a specific response object - used when logged in as a user
+     * @param id of the request
+     * @return Request
+     * @throws Presentation.Exceptions.NoSuchResponseException if no response with specified id could be found
+     */
+    public abstract Response getResponse(int requestId) throws NoSuchResponseException, SystemErrorException;
+    
+    /**
+     * Inserts a response to db-table 'response'
+     * @param res the response
+     * @throws Presentation.Exceptions.SystemErrorException if an sql exception is thrown
+     */
+    public abstract void insertResponse(Response res) throws SystemErrorException;
+    /**
+     * Deletes a specific response object - used when a user(client) declines an 
+     * offer(response) on a request
+     * @param id of the response
+     * @throws Presentation.Exceptions.NoSuchResponseException if no response with specified id could be found and deleted
+     */
+    public abstract void deleteResponse(int responseId) throws NoSuchResponseException, SystemErrorException;    
 }

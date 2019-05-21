@@ -11,10 +11,9 @@ package Presentation.Exceptions;
  */
 public class NoSuchResponseException extends ClientException{
 
-    public NoSuchResponseException() {
-    }
+    public NoSuchResponseException(){}
     
     public NoSuchResponseException (String target, String message) {
-        super(target, "Kunne ikke finde materiale med id: " + message);
+        super(target, message);
     }
 }

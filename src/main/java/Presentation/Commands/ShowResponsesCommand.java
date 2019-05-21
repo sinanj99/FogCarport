@@ -10,6 +10,7 @@ import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
+import Presentation.Exceptions.SystemErrorException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ShowResponsesCommand implements Command{
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException{
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException{
         User user = (User) request.getSession().getAttribute("user");
         if(user == null) return "jsp/frontpage.jsp";
         request.setAttribute("responses", PresentationFacade.getInstance().getResponses(user.getId()));

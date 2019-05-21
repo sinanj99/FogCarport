@@ -10,6 +10,7 @@ import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
+import Presentation.Exceptions.SystemErrorException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public class InsertResponseCommand implements Command{
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException{
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException{
         int reqId = Integer.parseInt(request.getParameter("requestID"));
         int userId = Integer.parseInt(request.getParameter("userID"));
         int empId = Integer.parseInt(request.getParameter("empID"));

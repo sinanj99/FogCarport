@@ -157,19 +157,19 @@ public class PresentationFacade {
     
     //Response
     
-    public void insertResponse(Response res){
+    public void insertResponse(Response res) throws SystemErrorException{
         rp.insertResponse(res);
     }
     
-    public void deleteResponse(int responseId) throws NoSuchResponseException{
+    public void deleteResponse(int responseId) throws NoSuchResponseException, SystemErrorException{
         rp.deleteResponse(responseId);
     }
     
-    public Response getResponse(int requestId){
+    public Response getResponse(int requestId) throws NoSuchResponseException{
         return rp.getResponse(requestId);
     }
     
-    public List<Response> getResponses(int userId){
+    public List<Response> getResponses(int userId) throws SystemErrorException{
         return rp.getResponses(userId);
     }
 }

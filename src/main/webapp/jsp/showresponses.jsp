@@ -1,6 +1,11 @@
+<%@page import="Data.Entity.User"%>
 <%@page import="Data.Entity.Response"%>
 <%@page import="java.util.List"%>
 <%
+    User user = (User) session.getAttribute("user");
+        if(user == null) {
+            response.sendRedirect("login.jsp");
+        }
     List<Response> responses = (List) request.getAttribute("responses");
 %>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>

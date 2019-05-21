@@ -6,6 +6,10 @@
 <%@page import="Data.Entity.Request"%>
 <%
     User user = (User) request.getSession().getAttribute("user");
+        if(user == null) {
+            response.sendRedirect("login.jsp");
+        }
+    
     Request r = (Request) request.getAttribute("request");
     ShippingAddress s = (ShippingAddress) request.getAttribute("shippingAddress");
     

@@ -1,3 +1,4 @@
+<%@page import="Data.Entity.User"%>
 <%@page import="Data.Entity.Roof"%>
 <%@page import="java.util.List"%>
 <%@page import="Data.Entity.Material"%>
@@ -5,6 +6,10 @@
     <body class="background2">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
     <%
+        User user = (User) session.getAttribute("user");
+        if(user == null) {
+            response.sendRedirect("login.jsp");
+        }
         List<Material> materials = (List<Material>) request.getAttribute("materials");
         List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
     %>

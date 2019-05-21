@@ -165,7 +165,7 @@ public class PresentationFacade {
         rp.deleteResponse(responseId);
     }
     
-    public Response getResponse(int requestId) throws NoSuchResponseException{
+    public Response getResponse(int requestId) throws NoSuchResponseException, SystemErrorException{
         return rp.getResponse(requestId);
     }
     

@@ -39,12 +39,19 @@
 
 <div id="smallnav" class="d-none d-md-none smallnav">
     <div class="smallnavrow">
-        <% if (session.getAttribute("user") == null) {%>
-        <a class="" href="jsp/register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a>
-        <a class="" href="jsp/login.jsp"> <i class="fas fa-sign-in-alt"></i>    Log ind</a>
-        <% } else { %>
-        <a class="" href="FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
-        <% }%> 
+        <% if (user == null) {%>
+        <a href="/project/jsp/register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a>
+        <a href="/project/jsp/login.jsp"> <i class="fas fa-sign-in-alt"></i>    Log ind</a>
+        <% } else if (user != null && user.isSeller()) { %>
+        <a href="/project/FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
+        <a href="/project/FrontController?command=showrequests"> <i class="fas fa-clipboard-list"></i>    Vis forespørgsler</a>
+        <% } else if (user != null && user.isAdmin()) { %>
+        <a href="/project/FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
+        <a href="/project/FrontController?command=show_prices"> <i class="fas fa-clipboard-list"></i>    Opdater priser</a>
+        <% } else {%>
+        <a href="/project/FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
+        <a href="/project/FrontController?command=showresponses"> <i class="fas fa-clipboard-list"></i>    Vis tilbud</a>
+        <% }%>
     </div>
 </div>
 <script type="text/javascript">

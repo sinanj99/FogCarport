@@ -8,7 +8,10 @@
 <%@page import="Data.Entity.LineItem"%>
 <%@page import="Data.Entity.BOM"%>
 <%
-
+    User user = (User) session.getAttribute("user");
+        if(user == null) {
+            response.sendRedirect("login.jsp");
+        }
     int buyPrice = (int) request.getAttribute("buyPrice");
     int sellPrice = (int) request.getAttribute("sellPrice");
     Request r = (Request) request.getAttribute("request");

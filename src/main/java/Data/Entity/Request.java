@@ -5,8 +5,6 @@
  */
 package Data.Entity;
 
-import java.time.LocalDateTime;
-
 /**
  * Mirrors requests table in database.
  * Is used in data mappers where a request is inserted/fetched. Is also used in presentation layer

@@ -1,7 +1,12 @@
+<%@page import="Data.Entity.User"%>
 <%@page import="Data.Entity.Shed"%>
 <%@page import="Data.Entity.Request"%>
 <%@page import="Data.Entity.Response"%>
 <%
+    User user = (User) session.getAttribute("user");
+        if(user == null) {
+            response.sendRedirect("login.jsp");
+        }
     Response r = (Response) request.getAttribute("response");
     Request req = (Request) request.getAttribute("request");
 %>

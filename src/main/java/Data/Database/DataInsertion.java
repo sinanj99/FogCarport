@@ -21,65 +21,64 @@ public class DataInsertion {
 
     public static void main(String[] args) throws NoSuchRoofException, SystemErrorException {
         
-        //KØR IKKE DETTE SCRIPT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! det vigtigt
+        /* insertion of materials */
+        IRequestMapper r = IRequestMapper.instance();
+        IMaterialMapper m = IMaterialMapper.instance();
+        r.setDataSource(new DataSourceMysql().getDataSource());
+        m.setDataSource(new DataSourceMysql().getDataSource());
+        
+        int price1 = 30, price2 = 15;
+        for(int i = 240; i <= 750; i+= 30) {
+            m.insertMaterialDim(1, i, price1, 300);
+            price1+=3;
+        }
+        
+        for(int i = 240; i <= 750; i+= 30) {
+            m.insertMaterialDim(2, i, price2, 300);
+            price2+=3;
+        }
+        
+        m.insertMaterialDim(3, 300, 50, 300);
+        m.insertMaterialDim(4, 250, 15, 300);
+        m.insertMaterialDim(5, 540, 32, 300);
+        m.insertMaterialDim(6, 250, 22, 300);
+        m.insertMaterialDim(7, 210, 17, 300);
+        m.insertMaterialDim(7, 250, 22, 300);
+        m.insertMaterialDim(8, 420, 29, 300);
+        
+        price2 = 15;
+        for(int i = 150; i <= 720; i+= 30) {
+            m.insertMaterialDim(9, i, price2, 300);
+            price2+=3;
+        }
+        
+        
+        price2 = 60;
+        for(int i = 240; i <= 780; i+= 30) {
+            m.insertMaterialDim(10, i, price2, 300);
+            price2+=10;
+        }
+        
+        
+        /* insertion of roofs */
 
-//        /* insertion of roofs */
-//        IRequestMapper rmapper = IRequestMapper.instance();
-//        IMaterialMapper mmapper = IMaterialMapper.instance();
-//        rmapper.setDataSource(new DataSourceMysql().getDataSource());
-//        mmapper.setDataSource(new DataSourceMysql().getDataSource());
-//        
-//        List<Roof> roofs = IRequestMapper.instance().getRoofs();
-//        
-//        for (Roof r : roofs) {
-//            int price = 50;
-//            if (r.isInclined() == false) {
-//                for (int i = 240; i <= 750; i += 30) {
-//
-//                    rmapper.insertDimensions(r.getRoof_id(), i, price);
-//                    price += 50;
-//
-//                }
-//            } else if (r.isInclined() == true){
-//                price = 50;
-//                rmapper.insertDimensions(r.getRoof_id(), 37, price);
-//                price = 30;
-//                rmapper.insertDimensions(r.getRoof_id(), 6, price);
-//            }
-//        }
-//        
-//        /* insertion of materials */
-//        int price = 40;
-//        for (int i = 270; i <= 780; i += 30) {
-//
-//            mmapper.insertMaterialDim(1, i, price, 1000);
-//            price += 40;
-//        }
-//        mmapper.insertMaterialDim(2, 300, 40, 1000);
-//        price = 40;
-//        for (int i = 210; i <= 750; i += 30) {
-//            mmapper.insertMaterialDim(3, i, price, 1000);
-//            price += 40;
-//        }
-//        price = 20;
-//        for (int i = 150; i <= 720; i += 30) {
-//            mmapper.insertMaterialDim(4, i, price, 1000);
-//            price += 40;
-//        }
-//        price = 40;
-//        for (int i = 210; i <= 780; i += 30) {
-//
-//            mmapper.insertMaterialDim(5, i, price, 1000);
-//            price += 40;
-//        }
-//        price = 80;
-//        mmapper.insertMaterialDim(6, 540, price, 1000);
-//        price = 40;
-//        for (int i = 240; i <= 810; i += 30) {
-//
-//            mmapper.insertMaterialDim(7, i, price, 1000);
-//            price += 40;
-//        }
-//
+        List<Roof> roofs = IRequestMapper.instance().getRoofs();
+        
+        for (Roof roof : roofs) {
+            int price = 50;
+            if (roof.isInclined() == false) {
+                for (int i = 240; i <= 750; i += 30) {
+
+                    r.insertDimensions(roof.getRoof_id(), i, price);
+                    price += 50;
+
+                }
+            } else if (roof.isInclined() == true){
+                price = 50;
+                r.insertDimensions(roof.getRoof_id(), 37, price);
+                price = 30;
+                r.insertDimensions(roof.getRoof_id(), 6, price);
+            }
+        }
    }
 }

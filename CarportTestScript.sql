@@ -207,14 +207,12 @@ INSERT INTO wood_materials (name, unit) VALUES
 ("38x73mm lægte. ubh.", "stk"),
 ("45x95mm reglar. ub.", "stk"),
 ("38x73mm. taglægte T1", "stk");
-;
 
 INSERT INTO users (`admin`, seller, email,  `password`)
 VALUES 
 (0, 0, "test@fog.dk","test"),
 (1, 0, "admin@fog.dk","admin"),
 (0, 1, "seller@fog.dk","seller");
-
 
 INSERT INTO personal_info (user_id,  firstname, lastname, address, zipcode, city, gender)
 VALUES (1, "Peter","Petersen", "Tagensvej 100", 2200, "KBH", "m");
@@ -230,3 +228,4 @@ INSERT INTO roof_lengths(roof_id, length, price, stock) VALUES
 (1, 300,1100, 300),
 (2, 270,1000, 300),
 (2, 300,1100, 300);
+select * from users;

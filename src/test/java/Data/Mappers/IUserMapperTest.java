@@ -42,7 +42,7 @@ public class IUserMapperTest {
         BufferedReader sqlScript;
         try {
             //indlæser scriptet
-            sqlScript = new BufferedReader(new InputStreamReader(new FileInputStream("CarportTest.sql"), "UTF-8"));
+            sqlScript = new BufferedReader(new InputStreamReader(new FileInputStream("CarportTestScript.sql"), "UTF-8"));
             System.out.println("test");
 
             String sqlStatement;
@@ -70,11 +70,11 @@ public class IUserMapperTest {
     @Test
     public void testInsertUser() throws SystemErrorException, DuplicateException, UserNotFoundException {
         System.out.println("insertUser");
-        User user = new User(new PersonalInfo("Sinan", "Jasar", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), 5, false, false, "sinanjasar@live.dk", "adgangskode");
+        User user = new User(new PersonalInfo("Sinan", "Jasar", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), "sinanjasar@live.dk", "adgangskode");
         IUserMapper instance = IUserMapper.instance();
         instance.insertUser(user);
         User result = instance.getUser("sinanjasar@live.dk");
-        assertEquals(result.getId(), user.getId());
+        assertEquals(result.getId(), 4);
         assertEquals(result.getInfo().getFirstname(), user.getInfo().getFirstname());
         assertEquals(result.getInfo().getLastname(), user.getInfo().getLastname());
         assertEquals(result.getPassword(), user.getPassword());
@@ -83,7 +83,7 @@ public class IUserMapperTest {
     @Test(expected = DuplicateException.class)
     public void testInsertUserFail() throws Exception {
         System.out.println("insertUserFail");
-        User user = new User(new PersonalInfo("Peter", "Petersen", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), 2, false, false, "test@test.dk", "adgangskode");
+        User user = new User(new PersonalInfo("Peter", "Petersen", "Lillemosevej 27", 2800, "Kgs. Lyngby", "m"), "test@fog.dk", "adgangskode");
         mapper.insertUser(user);
 
     }
@@ -91,7 +91,7 @@ public class IUserMapperTest {
     @Test
     public void testGetUser_String() throws SystemErrorException, UserNotFoundException {
         System.out.println("getUser");
-        String email = "test@test.dk";
+        String email = "test@fog.dk";
 
         User user = mapper.getUser(email);
         String expResult = "1 Peter Petersen test";

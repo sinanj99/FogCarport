@@ -43,7 +43,8 @@ public class IMaterialMapperTest {
         BufferedReader sqlScript;
         try {
             //indlæser scriptet
-            sqlScript = new BufferedReader(new InputStreamReader(new FileInputStream("CarportTest.sql"), "UTF-8"));
+            System.out.println("test");
+            sqlScript = new BufferedReader(new InputStreamReader(new FileInputStream("CarportTestScript.sql"), "UTF-8"));
             System.out.println("test");
 
             String sqlStatement;
@@ -127,7 +128,7 @@ public class IMaterialMapperTest {
     @Test(expected = NoSuchMaterialException.class)
     public void testUpdateStockNoLengthFail() throws SystemErrorException, NoSuchMaterialException {
         System.out.println("updateStockNoLength");
-        int id = 2;
+        int id = 30;
         int qty = 10;
         
         mapper.updateStockNoLength(id, qty);

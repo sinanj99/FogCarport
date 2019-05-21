@@ -28,12 +28,11 @@ class UserMapper extends IUserMapper {
     Connection conn;
 
     @Override
-    public void setDataSource(DataSource ds)
-    {
+    public void setDataSource(DataSource ds) {
         con.setDataSource(ds);
         conn = con.getConnection();
     }
-    
+
     public static UserMapper getInstance() {
         if (instance == null) {
             instance = new UserMapper();
@@ -45,9 +44,20 @@ class UserMapper extends IUserMapper {
     public void insertUser(User user) throws DuplicateException, SystemErrorException {
         try {
             conn.setAutoCommit(false);
-            String sql = "INSERT INTO `users`(email, password) "
-                    + "VALUES(?, ?);";
+
+            String sql = "SELECT * FROM `users` WHERE email = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user.getEmail());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                if (rs.getString("email").equals(user.getEmail())) {
+                    throw new DuplicateException();
+                }
+            }
+
+            sql = "INSERT INTO `users`(email, password) "
+                    + "VALUES(?, ?);";
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user.getEmail());
             pstmt.setString(2, user.getPassword());
             pstmt.executeUpdate();
@@ -70,16 +80,12 @@ class UserMapper extends IUserMapper {
             } catch (SQLException ex) {
                 throw new SystemErrorException(ex.getMessage());
             }
-            if (e.getMessage().toLowerCase().startsWith("duplicate entry")) {
-                throw new DuplicateException();
-            } else {
-                throw new SystemErrorException(e.getMessage());
-            }
+            throw new SystemErrorException(e.getMessage());
         }
     }
 
-    @Override
-    public User getUser(String email) throws UserNotFoundException, SystemErrorException {
+@Override
+        public User getUser(String email) throws UserNotFoundException, SystemErrorException {
         int user_id = 0, zip = 0, seller = 0, admin = 0;
         String password = "", fname = "", lname = "", address = "", city = "", gender = "";
         boolean seller_ = false, admin_ = false;
@@ -108,15 +114,14 @@ class UserMapper extends IUserMapper {
         }
         if (seller == 1) {
             seller_ = true;
-        } else if(admin == 1) {
+        } else if (admin == 1) {
             admin_ = true;
         }
         return new User(new PersonalInfo(fname, lname, address, zip, city, gender), user_id, seller_, admin_, email, password);
     }
 
-    
     @Override
-    public User getUser(int id) throws UserNotFoundException, SystemErrorException {
+        public User getUser(int id) throws UserNotFoundException, SystemErrorException {
 
         int zip = 0;
         String email_ = "";
@@ -154,7 +159,7 @@ class UserMapper extends IUserMapper {
         }
         if (seller == 1) {
             seller_ = true;
-        } else if(admin == 1){
+        } else if (admin == 1) {
             admin_ = true;
         }
         return new User(new PersonalInfo(fname, lname, adress, zip, city, gender), id, seller_, admin_, email_, password);

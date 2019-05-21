@@ -139,7 +139,7 @@ class MaterialMapper extends IMaterialMapper {
         }
         int stock = 0;
         try {
-            String sql = "SELECT stock FROM `fittings_and_screws` WHERE material_id = ?;";
+            String sql = "SELECT stock FROM `fittings_and_screws` WHERE fitting_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -149,7 +149,7 @@ class MaterialMapper extends IMaterialMapper {
             } else {
                 throw new NoSuchMaterialException(id);
             }
-            sql = "UPDATE `fittings_and_screws` SET stock = ? WHERE material_id = ?;";
+            sql = "UPDATE `fittings_and_screws` SET stock = ? WHERE fitting_id = ?;";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, stock -= qty);
             pstmt.setInt(2, id);

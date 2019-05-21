@@ -471,13 +471,14 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public void insertDimensions(int id, int length, int price) throws SystemErrorException{
+    public void insertDimensions(int id, int length, int price, int stock) throws SystemErrorException{
         try {
-            String query = "INSERT INTO roof_lengths (roof_id, length, price) VALUES (?, ?, ?);";
+            String query = "INSERT INTO roof_lengths (roof_id, length, price, stock) VALUES (?, ?, ?, ?);";
             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, id);
             pstmt.setInt(2, length);
             pstmt.setInt(3, price);
+            pstmt.setInt(4, stock);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());

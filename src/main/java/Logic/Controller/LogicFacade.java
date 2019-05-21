@@ -56,8 +56,8 @@ public class LogicFacade {
         return IRequestMapper.instance().getRoofs();
     }
 
-    public void insertDimensions(int id, int length, int price) throws SystemErrorException {
-        IRequestMapper.instance().insertDimensions(id, length, price);
+    public void insertDimensions(int id, int length, int price, int stock) throws SystemErrorException {
+        IRequestMapper.instance().insertDimensions(id, length, price, stock);
     }
 
     public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException, SystemErrorException {

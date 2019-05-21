@@ -69,15 +69,15 @@ public class DataInsertion {
             if (roof.isInclined() == false) {
                 for (int i = 240; i <= 750; i += 30) {
 
-                    r.insertDimensions(roof.getRoof_id(), i, price);
+                    r.insertDimensions(roof.getRoof_id(), i, price, 300);
                     price += 50;
 
                 }
             } else if (roof.isInclined() == true){
                 price = 50;
-                r.insertDimensions(roof.getRoof_id(), 37, price);
+                r.insertDimensions(roof.getRoof_id(), 37, price, 300);
                 price = 30;
-                r.insertDimensions(roof.getRoof_id(), 6, price);
+                r.insertDimensions(roof.getRoof_id(), 6, price, 300);
             }
         }
    }

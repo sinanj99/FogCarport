@@ -71,9 +71,10 @@ public abstract class IRequestMapper {
      * @param id of the roof
      * @param length of the roof
      * @param price of the roof
+     * @param stock of the roof
      * @throws Presentation.Exceptions.SystemErrorException if an sql exception is thrown
      */
-    public abstract void insertDimensions(int id, int length, int price) throws SystemErrorException;
+    public abstract void insertDimensions(int id, int length, int price, int stock) throws SystemErrorException;
 
     /**
      * Used in flatRoof calculator to find price of rooftype with specified dimensions.

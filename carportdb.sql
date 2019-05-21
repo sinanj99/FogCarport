@@ -1,3 +1,4 @@
+USE CarportDB;
 DROP TABLE IF EXISTS prebuilt_carport;
 DROP TABLE IF EXISTS responses;
 DROP TABLE IF EXISTS sheds;

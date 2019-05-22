@@ -48,18 +48,19 @@ class ResponseMapper extends IResponseMapper{
     
     
     @Override
-    public List<Response> getResponses(int requestId) throws SystemErrorException{
+    public List<Response> getResponses(int userId) throws SystemErrorException{
         List<Response> responses = new ArrayList<Response>();
         
+        int requestId = 0;
         int sellerId = 0;
         int sellPrice = 0;
         int status = 0;
         String datePlaced = "";
         
         try{
-            String query = "SELECT * FROM responses WHERE request_id = ? ORDER BY dateplaced DESC";
+            String query = "SELECT * FROM responses WHERE user_Id = ? ORDER BY dateplaced DESC";
             PreparedStatement p = conn.prepareStatement(query);
-            p.setInt(1, requestId);
+            p.setInt(1, userId);
             ResultSet rs = p.executeQuery();
             
             while(rs.next()){
@@ -68,7 +69,7 @@ class ResponseMapper extends IResponseMapper{
                 sellPrice = rs.getInt("sell_price");
                 datePlaced = rs.getString("dateplaced");
                 status = rs.getInt("status");
-                responses.add(new Response(null, sellerId, datePlaced, sellPrice));
+                responses.add(new Response(DataFacade.getInstance().getRequest(requestId), sellerId, datePlaced, sellPrice));
             }
             
         }catch(SQLException e){
@@ -99,7 +100,7 @@ class ResponseMapper extends IResponseMapper{
                 datePlaced = rs.getString("dateplaced");
                 status = rs.getInt("status");
                 
-                r = new Response(null, sellerId, datePlaced, sellPrice);
+                r = new Response(DataFacade.getInstance().getRequest(requestId), sellerId, datePlaced, sellPrice);
             }
         }catch(SQLException e){
             throw new SystemErrorException(e.getMessage());

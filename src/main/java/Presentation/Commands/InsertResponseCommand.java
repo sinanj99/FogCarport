@@ -26,7 +26,7 @@ public class InsertResponseCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException{
-        int reqId = Integer.parseInt(request.getParameter("requestID"));
+        int requestId = Integer.parseInt(request.getParameter("requestID"));
         int sellerId = Integer.parseInt(request.getParameter("sellerID"));
         int sellPrice = Integer.parseInt(request.getParameter("sellprice").trim());
         
@@ -34,11 +34,11 @@ public class InsertResponseCommand implements Command{
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String datePlaced = String.valueOf(date.format(dateFormat));
         
-        Response r = new Response(null, sellerId, datePlaced, sellPrice);
+        Response r = new Response(PresentationFacade.getInstance().getRequest(requestId), sellerId, datePlaced, sellPrice);
         
         PresentationFacade.getInstance().insertResponse(r);
         
-        return "FrontController?command=createresponse&requestID=" + reqId;
+        return "FrontController?command=createresponse&requestID=" + requestId;
     }
     
 }

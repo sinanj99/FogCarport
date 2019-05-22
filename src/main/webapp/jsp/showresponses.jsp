@@ -51,7 +51,7 @@
                                     </td>
 
                                     <td class="text-right">
-                                        <a class="btn btn-primary" href="FrontController?command=showresponse&requestID=<%= r.getRequestId() %>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 0px 5px;">SE TILBUD</a>
+                                        <a class="btn btn-primary" href="FrontController?command=showresponse&requestID=<%= r.getRequest().getRequestId() %>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 0px 5px;">SE TILBUD</a>
                                     </td>
                                 </tr>
                             <%}%>

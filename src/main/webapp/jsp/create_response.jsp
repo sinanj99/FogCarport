@@ -32,7 +32,7 @@
     Date date = formatter.parse(stringDate);   
     String date_ = new SimpleDateFormat("d-MM-y").format(date);
     
-    int reqId = r.getReqId();
+    int reqId = r.getRequestId();
     int sellerId = user.getId();
     int carportId = r.getCarport().getCarportId();
     int shedId = 0;
@@ -55,7 +55,7 @@
 
                                 <tr>
                                     <th>Ordrenr.:</th>
-                                    <td><b>#</b><%= r.getReqId() %></td>
+                                    <td><b>#</b><%= r.getRequestId()%></td>
                                 </tr>
 
                                 <tr>
@@ -97,7 +97,7 @@
                             <label class="font-weight-bold">Salgspris:</label><br>
                             <input onChange="updatePriceBtn()" id="sellprice" style="border-radius: 2px;" type="text" name="sellprice" class="form-control text-center " min="1" value="<%= sellPrice %>">
                             <input id="sellpricebtn" style="margin-top: 5px; border-radius: 2px;" type="submit" class="w-100 btn btn-primary" value="Opdater salgspris" disabled>
-                            <input type="hidden" name="requestID" value="<%= r.getReqId() %>">
+                            <input type="hidden" name="requestID" value="<%= r.getRequestId()%>">
                             <input type="hidden" name="command" value="updateresponseprice">
                         </form>
                         <%}%>
@@ -170,7 +170,7 @@
                             }else{
                             %>
                             <div class="col-6">
-                                <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleterequest&requestID=<%= r.getReqId() %>" role="button">Slet forespørgelse</a>
+                                <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleterequest&requestID=<%= r.getRequestId()%>" role="button">Slet forespørgelse</a>
                             </div>
 
                             <div class="col-6">

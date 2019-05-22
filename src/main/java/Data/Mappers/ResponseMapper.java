@@ -55,10 +55,10 @@ class ResponseMapper extends IResponseMapper{
         int sellerId = 0;
         int sellPrice = 0;
         int status = 0;
-        String datePlaced = "";
+        String dateAccepted = "";
         
         try{
-            String query = "SELECT * FROM responses WHERE user_Id = ? ORDER BY dateplaced DESC";
+            String query = "SELECT * FROM responses INNER JOIN requests USING(request_id) WHERE user_id = ? ORDER BY date_accepted DESC";
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, userId);
             ResultSet rs = p.executeQuery();
@@ -67,9 +67,9 @@ class ResponseMapper extends IResponseMapper{
                 requestId = rs.getInt("request_id");
                 sellerId = rs.getInt("seller_id");
                 sellPrice = rs.getInt("sell_price");
-                datePlaced = rs.getString("dateplaced");
+                dateAccepted = rs.getString("dateplaced");
                 status = rs.getInt("status");
-                responses.add(new Response(DataFacade.getInstance().getRequest(requestId), sellerId, datePlaced, sellPrice));
+                responses.add(new Response(DataFacade.getInstance().getRequest(requestId), sellerId, dateAccepted, sellPrice));
             }
             
         }catch(SQLException e){
@@ -111,9 +111,10 @@ class ResponseMapper extends IResponseMapper{
         return r;
     }
     
+    @Override
     public void insertResponse(Response res) throws SystemErrorException{
        try {
-            String query = "INSERT INTO `responses` (request_id, seller_id, dateplaced, sell_price) "
+            String query = "INSERT INTO `responses` (request_id, seller_id, date_accepted, sell_price) "
                         + "VALUES (?,?,?,?);";
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, res.getRequest().getRequestId());

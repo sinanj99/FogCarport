@@ -23,9 +23,9 @@ public class DataSourceMysql {
      * Constructs datasource that works with remote dB
      */
     public DataSourceMysql() {
-        ds.setServerName("157.230.97.70");
+        ds.setServerName("localhost");
         ds.setPort(3306);
-        ds.setDatabaseName("CarportDB");
+        ds.setDatabaseName("FogCarport");
         ds.setUser("root");
         ds.setPassword("prespa01");
         try {

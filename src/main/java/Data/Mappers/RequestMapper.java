@@ -71,7 +71,7 @@ class RequestMapper extends IRequestMapper {
                 userId = rs.getInt("user_id");
                 address = getRequestShippingAddress(id);
                 Carport cp = getRequestCarport(id);
-                datePlaced = rs.getString("dateplaced");
+                datePlaced = rs.getString("date_placed");
 
                 r = new Request(reqId, userId, datePlaced, cp, address);
             } else {
@@ -191,7 +191,7 @@ class RequestMapper extends IRequestMapper {
 
         try {
             conn.setAutoCommit(false);
-            String query = "INSERT INTO `requests` (user_id, dateplaced) VALUES (?,?);";
+            String query = "INSERT INTO `requests` (user_id, date_placed) VALUES (?,?);";
             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, req.getUserId());
             pstmt.setString(2, req.getDatePlaced());
@@ -543,7 +543,7 @@ class RequestMapper extends IRequestMapper {
             while (rs.next()) {
                 req_id = rs.getInt("request_id");
                 user_id = rs.getInt("user_id");
-                datePlaced = rs.getString("dateplaced");
+                datePlaced = rs.getString("date_placed");
                 address = getRequestShippingAddress(req_id);
                 cp = getRequestCarport(req_id);
                 requests.add(new Request(req_id, user_id, datePlaced, cp, address));

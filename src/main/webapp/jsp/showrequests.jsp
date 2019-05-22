@@ -33,7 +33,7 @@
                         <tbody>
                             <% for (Request r : requests) {%>
                             <tr class="showorders-tr">
-                                <td><%=r.getReqId()%></td>
+                                <td><%=r.getRequestId()%></td>
                                 <td><%=r.getAddress().getFirstname() + " " + r.getAddress().getLastname()%></td>
                                 <td><%=r.getDatePlaced()%></td>
                                 <td>
@@ -53,7 +53,7 @@
                                     <span class="badge badge-secondary">Tilbud ej sendt</span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary" href="FrontController?command=createOffer&requestID=<%=r.getReqId()%>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 0px 5px;">SE ORDRE</a>
+                                    <a class="btn btn-primary" href="FrontController?command=createOffer&requestID=<%=r.getRequestId()%>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 0px 5px;">SE ORDRE</a>
                                 </td>
                             </tr>
                             <%}%>

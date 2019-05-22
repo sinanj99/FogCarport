@@ -11,11 +11,11 @@
     <a class="right d-none d-md-block" href="/project/jsp/register.jsp"> <i class="fas fa-user-plus"></i>    Opret bruger</a>
     <a class="right d-none d-md-block" href="/project/jsp/login.jsp"> <i class="fas fa-sign-in-alt"></i>    Log ind</a>
     <% } else if (user != null && user.isSeller()) { %>
-    <a class="left" href="/project/jsp/frontpage.jsp">FORSIDE</a>
+    <a class="left" href="/project/jsp/sellerfrontpage.jsp">FORSIDE</a>
     <a class="right d-none d-md-block" href="/project/FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
     <a class="right d-none d-md-block" href="/project/FrontController?command=showrequests"> <i class="fas fa-clipboard-list"></i>    Vis forespørgsler</a>
     <% } else if (user != null && user.isAdmin()) { %>
-    <a class="left" href="/project/jsp/frontpage.jsp">FORSIDE</a>
+    <a class="left" href="/project/jsp/adminfrontpage.jsp">FORSIDE</a>
     <a class="right d-none d-md-block" href="/project/FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
     <a class="right d-none d-md-block" href="/project/FrontController?command=show_prices"> <i class="fas fa-clipboard-list"></i>    Opdater priser</a>
     <% } else {%>

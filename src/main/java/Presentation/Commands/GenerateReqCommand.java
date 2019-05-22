@@ -14,6 +14,7 @@ import Data.Entity.Shed;
 import Data.Entity.ShippingAddress;
 import Data.Entity.User;
 import Logic.Controller.LogicFacade;
+import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
@@ -106,7 +107,7 @@ public class GenerateReqCommand implements Command {
         Request req = new Request(sAddress, user_id, datePlaced, cp);
         System.out.println(req.getCarport().getInclination());
 
-        LogicFacade.getInstance().insertRequest(req);
+        PresentationFacade.getInstance().insertRequest(req);
         request.setAttribute("redirect", true);
         return "jsp/reqsent.jsp";
     }

@@ -5,7 +5,6 @@
  */
 package Presentation.Controller;
 
-import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
 import Data.Entity.Material;
 import Data.Entity.PrebuiltCarport;
@@ -24,17 +23,13 @@ import Data.Mappers.IPrebuiltCarportMapper;
 import Logic.Calculator.CalculatePrice;
 import Data.Mappers.IResponseMapper;
 import Presentation.Exceptions.NoSuchMaterialException;
-import Presentation.Exceptions.NoSuchPrebuiltCarportException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.NoSuchShedException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sql.DataSource;
-import javax.xml.ws.RespectBinding;
 
 /**
  *
@@ -82,10 +77,6 @@ public class PresentationFacade {
     public List<Material> getMaterials() throws SystemErrorException {
         return m.getMaterials();
     }
-    public void insertDimensions(int id, int length, int price, int stock) throws SystemErrorException {
-        r.insertDimensions(id, length, price, stock);
-    }
-
     public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException, SystemErrorException {
         return r.getRoofs(rooftype);
     }
@@ -106,23 +97,6 @@ public class PresentationFacade {
         r.deleteRequest(id);
     }
     
-    public static void main(String[] args) throws SystemErrorException {
-        PresentationFacade p = PresentationFacade.getInstance();
-        try {
-            p.deleteRequest(10);
-        } catch (NoSuchRequestException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException {
-        return r.getRoof(id);
-    }
-
-    public int getDimensionPrice(int roof_id, int length) throws SystemErrorException {
-        return r.getDimensionPrice(roof_id, length);
-    }
-    
     public Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException {
         return m.getWoodMaterial(id, length);
     }
@@ -133,10 +107,6 @@ public class PresentationFacade {
 
     public List<Request> getRequests() throws NoSuchShedException, SystemErrorException {
         return r.getRequests();
-    }
-
-    public Roof newGetRoof(int id, int length) throws SystemErrorException {
-        return r.getRoof(id, length);
     }
 
     public Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException {

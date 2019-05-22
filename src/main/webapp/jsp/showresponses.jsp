@@ -28,8 +28,8 @@
                         <table class="table showorders-table">
                             <thead class="showorders-thead">
                                 <tr>
-                                    <th class="showorders-th" scope="col">Ordrenr.:</th>
                                     <th class="showorders-th" scope="col">Dato</th>
+                                    <th class="showorders-th" scope="col">Pris</th>
                                     <th class="showorders-th" scope="col">Status</th>
                                 </tr>
                             </thead>
@@ -38,8 +38,8 @@
                                 for(Response r : responses){
                             %>
                                 <tr class="showorders-tr">
-                                    <td><%= r.getResponseId() %></td>
-                                    <td><%= r.getDatePlaced()%></td>                                
+                                    <td><%= r.getDatePlaced()%></td>
+                                    <td><%= r.getSellPrice()%></td>                                
                                     <td>
                                         <%
                                             if(r.getStatus() == 1){

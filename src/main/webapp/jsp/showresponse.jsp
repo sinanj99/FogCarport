@@ -46,18 +46,18 @@
                     </div>
                     
                     <% 
-                    if(req.getCarport().getShed_() != null){
+                    if(req.getCarport().getShed() != null){
                     %>
                     <div style="border: 1px solid #ddd; border-radius: 0px 2px; padding: 10px; width: 100%; margin-top: -1px; text-align: center;">
                         <h6>Redskabsrum mål</h6>
                         <div class="row">
                             <div class="col text-center">
-                                <div><%= req.getCarport().getShed_().getWidth() %></div>
+                                <div><%= req.getCarport().getShed().getWidth() %></div>
                                 <div class="font-weight-bolder">Bredde</div>
                             </div>
 
                             <div class="col text-center">
-                                <div><%= req.getCarport().getShed_().getLength() %></div>
+                                <div><%= req.getCarport().getShed().getLength() %></div>
                                 <div class="font-weight-bolder">Længde</div>
                             </div>
 
@@ -72,7 +72,7 @@
                             <span style="color: #8a8a8a;">Vi kan levere den ønskede carport for kr. <%= r.getSellPrice() %></div>
                             <div class="row" style="margin-top: 10px;">
                                 <div class="col" style="padding-right: 5px;">
-                                    <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleteresponse&responseID=<%= r.getResponseId() %>" role="button">Afvis tilbud</a>
+                                    <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleteresponse&responseID=<%= r.getRequestId()%>" role="button">Afvis tilbud</a>
                                 </div>
 
                                 <div class="col" style="padding-left: 5px;">

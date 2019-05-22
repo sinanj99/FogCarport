@@ -7,8 +7,10 @@ package Data.Mappers;
 
 import DB.DataSourceMysqlTest;
 import Data.Database.DBConnector;
+import Data.Entity.Carport;
 import Data.Entity.Request;
 import Data.Entity.Roof;
+import Data.Entity.Shed;
 import Data.Entity.ShippingAddress;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchRoofException;
@@ -89,19 +91,25 @@ public class IRequestMapperTest {
     public void testGetRequests() throws Exception, SystemErrorException, NoSuchShedException {
         System.out.println("getRequests");
         IRequestMapper instance = IRequestMapper.instance();
-        List<Request> expResult = null;
+        int expResult = 5;
         List<Request> result = instance.getRequests();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result.size());
     }
 
     @Test
     public void testInsertRequest() throws Exception {
         System.out.println("insertRequest");
-        Request req = null;
         IRequestMapper instance = IRequestMapper.instance();
+        ShippingAddress sa = new ShippingAddress("Jimmy", "Johnson", "Tagensvej", 2200, "Koebenhavn n");
+        Shed s = new Shed(210, 210);
+        Carport c = new Carport(instance.getRoof(1), 0, 300, 300, s);
+        Request req = new Request(sa, 1, "2019-05-22 18:10:36", c);
         instance.insertRequest(req);
-        fail("The test case is a prototype.");
+        Request r = instance.getRequest(6);
+        
+        assertEquals(r.getRequestId(), 6);
+        assertEquals(r.getUserId(), 1);
+        assertEquals(r.getDatePlaced(), "2019-05-22 18:10:36");
     }
 
     @Test
@@ -128,47 +136,14 @@ public class IRequestMapperTest {
     }
 
     @Test
-    public void testGetRoof_int() throws Exception {
+    public void testGetRoof() throws Exception {
         System.out.println("getRoof");
-        int id = 0;
         IRequestMapper instance = IRequestMapper.instance();
-        Roof expResult = null;
-        Roof result = instance.getRoof(id);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
 
-    @Test
-    public void testGetRoof_int_int() throws Exception {
-        System.out.println("getRoof");
-        int id = 0;
-        int length = 0;
-        IRequestMapper instance = IRequestMapper.instance();
-        Roof expResult = null;
-        Roof result = instance.getRoof(id, length);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetRoofs_0args() throws Exception {
-        System.out.println("getRoofs");
-        IRequestMapper instance = IRequestMapper.instance();
-        List<Roof> expResult = null;
-        List<Roof> result = instance.getRoofs();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetRoofs_int() throws Exception {
-        System.out.println("getRoofs");
-        int rooftype = 0;
-        IRequestMapper instance = IRequestMapper.instance();
-        List<Roof> expResult = null;
-        List<Roof> result = instance.getRoofs(rooftype);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        int id = 6;
+        Roof r = instance.getRoof(id);
+        assertEquals(r.getRoof_id(), 6);
+        assertEquals(r.getName(), "Betonstagsten - Teglrød");
     }
 
     @Test
@@ -184,12 +159,15 @@ public class IRequestMapperTest {
     @Test
     public void testGetRequestShippingAddress() throws Exception {
         System.out.println("getRequestShippingAddress");
-        int id = 0;
         IRequestMapper instance = IRequestMapper.instance();
-        ShippingAddress expResult = null;
-        ShippingAddress result = instance.getRequestShippingAddress(id);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        int id = 3;
+        ShippingAddress sa = instance.getRequestShippingAddress(id);
+        assertEquals(sa.getFirstname(), "Michael");
+        assertEquals(sa.getLastname(), "Jackson");
+        assertEquals(sa.getAddress(), "Aaboulevarden");
+        assertEquals(sa.getZipcode(), 2200);
+        assertEquals(sa.getCity(), "Koebenhavn N");
+        
     }
 }
    

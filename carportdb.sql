@@ -1,20 +1,9 @@
-USE CarportDB;
-DROP TABLE IF EXISTS prebuilt_carport;
-DROP TABLE IF EXISTS responses;
-DROP TABLE IF EXISTS sheds;
-DROP TABLE IF EXISTS carports;
-DROP TABLE IF EXISTS personal_info;
-DROP TABLE IF EXISTS shipping_addresses;
-DROP TABLE IF EXISTS requests;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS roof_lengths;
-DROP TABLE IF EXISTS roofs;
-DROP TABLE IF EXISTS material_lengths;
-DROP TABLE IF EXISTS wood_materials;
-DROP TABLE IF EXISTS fittings_and_screws;
+DROP SCHEMA IF EXISTS FogCarport;
+CREATE SCHEMA FogCarport;
+USE FogCarport;
 
 CREATE TABLE roofs (
-	roof_id INT(50) NOT NULL AUTO_INCREMENT,
+	roof_id INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(50) NOT NULL,
   	inclined INT(1) NOT NULL,
 	PRIMARY KEY (roof_id)
@@ -34,6 +23,7 @@ CREATE TABLE wood_materials (
     unit VARCHAR(10) NOT NULL,
     PRIMARY KEY (material_id)
     );
+    
 CREATE TABLE fittings_and_screws (
 	fitting_id INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
@@ -42,7 +32,7 @@ CREATE TABLE fittings_and_screws (
     stock INT NOT NULL,
     PRIMARY KEY (fitting_id)
     );
-    
+
 CREATE TABLE material_lengths (
 	material_id INT NOT NULL,
     length INT NOT NULL, 
@@ -53,33 +43,51 @@ CREATE TABLE material_lengths (
 	
 
 CREATE TABLE users (
-	user_id INT(50) NOT NULL AUTO_INCREMENT,
+	user_id INT NOT NULL AUTO_INCREMENT,
     seller INT(1) NOT NULL DEFAULT 0,
     `admin` INT(1) NOT NULL DEFAULT 0,
 	email VARCHAR(320) NOT NULL UNIQUE,
-	password VARCHAR(50) NOT NULL,
+	`password` VARCHAR(50) NOT NULL,
 	PRIMARY KEY (user_id)
 );
 
-
-CREATE TABLE requests (
-	request_id INT(50) NOT NULL AUTO_INCREMENT,
-	user_id int(50) NOT NULL,
-	dateplaced DATETIME NOT NULL,
-	PRIMARY KEY (request_id),
-	CONSTRAINT requests_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
-
 CREATE TABLE personal_info (
-	user_id INT(50) NOT NULL,
+	user_id INT NOT NULL,
 	firstname VARCHAR(50) NOT NULL,
 	lastname VARCHAR(50) NOT NULL,
 	address VARCHAR(50) NOT NULL,
   	zipcode INT(4) NOT NULL,
 	city VARCHAR(50) NOT NULL,
-	gender VARCHAR(1) NOT NULL, /* M/Y */
+	gender VARCHAR(1) NOT NULL,
 	CONSTRAINT personal_info_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE requests (
+	request_id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+	dateplaced DATETIME NOT NULL,
+	PRIMARY KEY (request_id),
+    CONSTRAINT requests_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE carports (
+	carport_id INT NOT NULL AUTO_INCREMENT,
+    request_id INT NOT NULL,
+	roof_id INT NOT NULL, 
+	inclination INT(1) NOT NULL,
+  	width INT(3) NOT NULL,
+  	length INT(3) NOT NULL,
+	PRIMARY KEY (carport_id),
+    CONSTRAINT carports_ibfk_1 FOREIGN KEY (roof_id) REFERENCES roofs(roof_id),
+    CONSTRAINT carports_ibfk_2 FOREIGN KEY (request_id) REFERENCES requests(request_id)
+);
+
+
+CREATE TABLE sheds (
+	carport_id INT NOT NULL, 
+  	width INT(3) NOT NULL,
+  	length INT(3) NOT NULL,
+	CONSTRAINT sheds_ibfk_1 FOREIGN KEY (carport_id) REFERENCES carports(carport_id)
 );
 
 CREATE TABLE shipping_addresses (
@@ -92,71 +100,53 @@ CREATE TABLE shipping_addresses (
     CONSTRAINT shipping_addresses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id)
 );
 
-
-CREATE TABLE carports (
-	carport_id INT(50) NOT NULL AUTO_INCREMENT,
-	request_id INT(50) NOT NULL,
-	roof_id INT(50) NOT NULL, 
-	inclination INT(1) NOT NULL,
-  	width INT(50) NOT NULL,
-  	length INT(50) NOT NULL,
-	PRIMARY KEY (carport_id),
-	CONSTRAINT carports_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id),
-    CONSTRAINT carports_ibfk_2 FOREIGN KEY (roof_id) REFERENCES roofs(roof_id)
-);
-
-CREATE TABLE sheds (
-	shed_id INT(50) NOT NULL AUTO_INCREMENT,
-	carport_id INT(50) NOT NULL, 
-  	width INT(50) NOT NULL,
-  	length INT(50) NOT NULL,
-	PRIMARY KEY (shed_id),
-	CONSTRAINT sheds_ibfk_1 FOREIGN KEY (carport_id) REFERENCES carports(carport_id)
-);
-
 CREATE TABLE responses (
-	response_id INT(50) NOT NULL AUTO_INCREMENT,
-	request_id INT(50) NOT NULL UNIQUE, 
-	user_id INT(50) NOT NULL,
-	emp_id INT(50) NOT NULL,
+	request_id INT NOT NULL UNIQUE,
+    seller_id INT NOT NULL,
 	dateplaced DATETIME NOT NULL,
-	carport_id INT(50) NOT NULL,
-	shed_id INT(50) DEFAULT NULL,
-	productionprice int NOT NULL,
-	sellprice INT NOT NULL,
+    sell_price INT NOT NULL,
     `status` INT(1) DEFAULT 0,
-	PRIMARY KEY (response_id),
-	CONSTRAINT responses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id),
-	CONSTRAINT responses_ibfk_2 FOREIGN KEY (user_id) REFERENCES users(user_id),
-	CONSTRAINT responses_ibfk_3 FOREIGN KEY (emp_id) REFERENCES users(user_id),
-	CONSTRAINT responses_ibfk_4 FOREIGN KEY (carport_id) REFERENCES carports(carport_id),
-	CONSTRAINT responses_ibfk_5 FOREIGN KEY (shed_id) REFERENCES sheds(shed_id)
+	CONSTRAINT responses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id)
 );
 
-CREATE TABLE prebuilt_carport (
-  id INT(50) NOT NULL AUTO_INCREMENT,
+CREATE TABLE prebuilt_carports (
+  prebuilt_carport_id INT NOT NULL AUTO_INCREMENT,
   img_path VARCHAR(1000) NOT NULL,
-  carport_width INT(10)NOT NULL,
-  carport_length int(10)  NOT NULL,
-  shed BOOLEAN,
-  shed_width INT(10) NOT NULL,
-  shed_length INT(10) NOT NULL,
+  carport_width INT(3)NOT NULL,
+  carport_length INT(3)  NOT NULL,
   price INT(10) NOT NULL,
-  PRIMARY KEY (id));
-  
-  INSERT INTO prebuilt_carport(img_path, carport_width, carport_length, shed, shed_width, shed_length, price)
-  VALUES ("/project/images/abc.png",450,750,true,420,180,17779),
-  ("/project/images/carport2.png",360,540,false,0,0,13998),
-  ("/project/images/carport3.png",360,720,true,330,220,21498),
-  ("/project/images/carport4.png",390,750,true,240,330,23498),
-  ("/project/images/carport5.png",300,480,false,0,0,3998),
-  ("/project/images/carport6.png",600,750,true,210,510,31998),
-  ("/project/images/carport7.png",600,540,true,270,240,13798),
-  ("/project/images/carport8.png",600,480,false,0,0,10498),
-  ("/project/images/carport9.jpg",630,540,true,570,150,15798),
-  ("/project/images/carport10.jpg",420,480,false,0,0,5798),
-  ("/project/images/carport10.jpg",420,480,false,0,0,5798);
+  PRIMARY KEY (prebuilt_carport_id)
+  );
 
+CREATE TABLE prebuilt_sheds (
+  prebuilt_carport_id INT NOT NULL,
+  shed_width INT(3)NOT NULL,
+  shed_length int(3)  NOT NULL,
+  CONSTRAINT prebuilt_sheds_ibfk1 FOREIGN KEY (prebuilt_carport_id) REFERENCES prebuilt_carports(prebuilt_carport_id)
+  );
+
+  
+  INSERT INTO prebuilt_carports(img_path, carport_width, carport_length, price)
+  VALUES ("/project/images/abc.png",450,750,17779),
+  ("/project/images/carport2.png",360,540,13998),
+  ("/project/images/carport3.png",360,720,21498),
+  ("/project/images/carport4.png",390,750,23498),
+  ("/project/images/carport5.png",300,480,3998),
+  ("/project/images/carport6.png",600,750,31998),
+  ("/project/images/carport7.png",600,540,13798),
+  ("/project/images/carport8.png",600,480,10498),
+  ("/project/images/carport9.jpg",630,540,15798),
+  ("/project/images/carport10.jpg",420,480,5798),
+  ("/project/images/carport10.jpg",420,480,5798);
+  
+
+ INSERT INTO prebuilt_sheds(prebuilt_carport_id,shed_width, shed_length)
+  VALUES (1,420,180),
+  (3,330,220),
+  (4,240,330),
+  (6,210,510),
+  (7,270,240),
+  (9,570,150);
 
 INSERT INTO roofs (`name`, inclined) VALUES 
 ("Plasttrapezplader - Blåtonet", 0),

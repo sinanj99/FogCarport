@@ -59,8 +59,8 @@ class ResponseMapper extends IResponseMapper{
 
         try{
 
-            String query = "SELECT * "
-                        + "FROM responses INNER JOIN requests USING(request_id) "
+            String query = "SELECT responses.request_id, seller_id, responses.dateplaced, sell_price, status "
+                        + "FROM responses LEFT JOIN requests USING(request_id) "
                         + "WHERE user_id = ? "
                         + "ORDER BY responses.dateplaced DESC";
             PreparedStatement p = conn.prepareStatement(query);

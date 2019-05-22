@@ -7,7 +7,9 @@ package Data.Mappers;
 
 import DB.DataSourceMysqlTest;
 import Data.Database.DBConnector;
+import Data.Entity.Request;
 import Data.Entity.Response;
+import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.SystemErrorException;
 import java.io.BufferedReader;
@@ -91,21 +93,28 @@ public class IResponseMapperTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    
     @Test
-    public void testSetDataSource() {
-        System.out.println("setDataSource");
-        DataSource ds = null;
-        IResponseMapper instance = new IResponseMapperImpl();
-        instance.setDataSource(ds);
-        fail("The test case is a prototype.");
+    public void testGetResponses_Size() {
+        System.out.println("getResponses_Size");
+        int userId = 1;
+        IResponseMapper instance = IResponseMapper.instance();
+        int expResult = 4;
+        int result = 0;
+        
+        try {
+            result = instance.getResponses(userId).size();
+        } catch (SystemErrorException ex) {
+            System.out.println(ex.getMessage());
+        }
+        assertEquals(expResult, result);
     }
-
+    
     @Test
     public void testGetResponses() {
         System.out.println("getResponses");
         int userId = 0;
-        IResponseMapper instance = new IResponseMapperImpl();
+        IResponseMapper instance = IResponseMapper.instance();
         List<Response> expResult = null;
         List<Response> result = null;
         try {
@@ -118,63 +127,60 @@ public class IResponseMapperTest {
     }
 
     @Test
-    public void testGetResponse() {
-        System.out.println("getResponse");
-        int requestId = 0;
-        IResponseMapper instance = new IResponseMapperImpl();
-        Response expResult = null;
-        Response result = null;
+    public void testGetResponse_String() {
+        System.out.println("getResponse_String");
+        int requestId = 3;
+        IResponseMapper instance = IResponseMapper.instance();
+        String expResult = "3 3 2019-05-22 15:20:00 69850 0";
+        String result = "";
+        
+        Response r = null;
         try {
-            result = instance.getResponse(requestId);
+            r = instance.getResponse(requestId);
+            result =    String.valueOf(r.getRequest().getRequestId()) + " " +
+                        String.valueOf(r.getSellerId()) + " " +
+                        r.getDatePlaced() + " " +
+                        String.valueOf(r.getSellPrice()) + " " +
+                        String.valueOf(r.getStatus());
         } catch (NoSuchResponseException ex) {
-            Logger.getLogger(IResponseMapperTest.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         } catch (SystemErrorException ex) {
-            Logger.getLogger(IResponseMapperTest.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
-
+    //(5, 3, "2019-05-22 15:40:00", 40000, 0);
     @Test
-    public void testInsertResponse() {
+    public void testInsertResponse() throws SystemErrorException, NoSuchResponseException{
         System.out.println("insertResponse");
-        Response res = null;
-        IResponseMapper instance = new IResponseMapperImpl();
-        try {
-            instance.insertResponse(res);
-        } catch (SystemErrorException ex) {
-            Logger.getLogger(IResponseMapperTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        fail("The test case is a prototype.");
-    }
 
-    @Test
-    public void testDeleteResponse() throws Exception {
+        IResponseMapper instance = IResponseMapper.instance();
+        
+        Request request = new Request(5, 1, "2019-05-22 12:40:00", null, null);
+        Response r = new Response(request, 3, "2019-05-22 15:40:00", 50505);
+        instance.insertResponse(r);
+        
+        Response result = instance.getResponse(5);
+        assertEquals(result.getRequest().getRequestId(), 5);
+        assertEquals(result.getSellerId(), 3);
+        assertEquals(result.getDatePlaced(), "2019-05-22 15:40:00");
+        assertEquals(result.getSellPrice(), 50505);
+        assertEquals(result.getStatus(), 0);
+    }
+    
+    /*
+    Forventer NoSuchRequestException fordi, at getResponse
+    kalder getRequest(RequestMapper), hvis den ingen request finder,
+    så betyder det at der heller ingen response eksisterer
+    */
+    @Test (expected = NoSuchRequestException.class)
+    public void testDeleteResponse() throws NoSuchResponseException, SystemErrorException {
         System.out.println("deleteResponse");
-        int responseId = 0;
-        IResponseMapper instance = new IResponseMapperImpl();
+        int responseId = 1;
+        IResponseMapper instance = IResponseMapper.instance();
         instance.deleteResponse(responseId);
-        fail("The test case is a prototype.");
+        instance.getResponse(responseId);
     }
 
-    public class IResponseMapperImpl extends IResponseMapper {
-
-        public void setDataSource(DataSource ds) {
-        }
-
-        public List<Response> getResponses(int userId) {
-            return null;
-        }
-
-        public Response getResponse(int requestId) {
-            return null;
-        }
-
-        public void insertResponse(Response res) {
-        }
-
-        public void deleteResponse(int responseId) throws NoSuchResponseException {
-        }
-    }
     
 }

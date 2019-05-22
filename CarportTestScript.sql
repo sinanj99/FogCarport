@@ -220,7 +220,6 @@ INSERT INTO roof_lengths(roof_id, length, price, stock) VALUES
 (1, 300,1100, 300),
 (2, 270,1000, 300),
 (2, 300,1100, 300);
-select * from users;
 
 /* POPULATE REQUEST TEST-TABLE */
 INSERT INTO requests (user_id, dateplaced) VALUES
@@ -256,6 +255,5 @@ INSERT INTO sheds VALUES
 INSERT INTO responses VALUES
 (1, 3, "2019-05-22 15:00:00", 40000, 0),
 (2, 3, "2019-05-22 15:10:00", 40000, 0),
-(3, 3, "2019-05-22 15:20:00", 40000, 0),
-(4, 3, "2019-05-22 15:30:00", 40000, 0),
-(5, 3, "2019-05-22 15:40:00", 40000, 0);
+(3, 3, "2019-05-22 15:20:00", 69850, 0),
+(4, 3, "2019-05-22 15:30:00", 40000, 0);

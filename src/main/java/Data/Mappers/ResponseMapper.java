@@ -5,6 +5,7 @@
  */
 package Data.Mappers;
 
+import Data.Controller.DataFacade;
 import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
 import Data.Entity.Response;
@@ -29,6 +30,7 @@ class ResponseMapper extends IResponseMapper{
 
     private static ResponseMapper instance = null;
     private final DBConnector con = new DBConnector();
+    
     private Connection conn;
 
     @Override
@@ -66,7 +68,7 @@ class ResponseMapper extends IResponseMapper{
                 sellPrice = rs.getInt("sell_price");
                 datePlaced = rs.getString("dateplaced");
                 status = rs.getInt("status");
-                responses.add(new Response(requestId, sellerId, datePlaced, sellPrice));
+                responses.add(new Response(null, sellerId, datePlaced, sellPrice));
             }
             
         }catch(SQLException e){
@@ -96,7 +98,8 @@ class ResponseMapper extends IResponseMapper{
                 sellPrice = rs.getInt("sell_price");
                 datePlaced = rs.getString("dateplaced");
                 status = rs.getInt("status");
-                r = new Response(requestId, sellerId, datePlaced, sellPrice);
+                
+                r = new Response(null, sellerId, datePlaced, sellPrice);
             }
         }catch(SQLException e){
             throw new SystemErrorException(e.getMessage());
@@ -112,7 +115,7 @@ class ResponseMapper extends IResponseMapper{
             String query = "INSERT INTO `responses` (request_id, seller_id, dateplaced, sell_price) "
                         + "VALUES (?,?,?,?);";
             PreparedStatement p = conn.prepareStatement(query);
-            p.setInt(1, res.getRequestId());
+            p.setInt(1, res.getRequest().getRequestId());
             p.setInt(2, res.getSellerId());
             p.setString(3, res.getDatePlaced());
             p.setInt(4, res.getSellPrice());

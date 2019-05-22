@@ -19,21 +19,21 @@ package Data.Entity;
 );
  */
 public class Response {
-    private int requestId;
+    private Request request;
     private int sellerId;
     private String datePlaced;
     private int sellPrice;
     private int status;
     
-    public Response(int requestId, int sellerId, String datePlaced, int sellPrice) {
-        this.requestId = requestId;
+    public Response(Request request, int sellerId, String datePlaced, int sellPrice) {
+        this.request = request;
         this.sellerId = sellerId;
         this.datePlaced = datePlaced;
         this.sellPrice = sellPrice;
     }
 
-    public int getRequestId() {
-        return requestId;
+    public Request getRequest() {
+        return request;
     }
 
     public int getSellerId() {

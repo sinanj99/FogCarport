@@ -12,7 +12,7 @@ package Data.Entity;
  * @author Obaydah Mohamad
  */
 public class Request {
-    private int reqId;
+    private int requestId;
     private int userId;
     private String datePlaced;
     private Carport carport;
@@ -27,16 +27,16 @@ public class Request {
     }
 
     // for when a request is received from the database. 
-    public Request(int reqId, int userId, String datePlaced, Carport carport, ShippingAddress address) {
-        this.reqId = reqId;
+    public Request(int requestId, int userId, String datePlaced, Carport carport, ShippingAddress address) {
+        this.requestId = requestId;
         this.userId = userId;
         this.datePlaced = datePlaced;
         this.carport = carport;
         this.address = address;
     }
 
-    public int getReqId() {
-        return reqId;
+    public int getRequestId() {
+        return requestId;
     }
     
     

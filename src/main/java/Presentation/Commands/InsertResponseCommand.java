@@ -34,7 +34,7 @@ public class InsertResponseCommand implements Command{
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String datePlaced = String.valueOf(date.format(dateFormat));
         
-        Response r = new Response(reqId, sellerId, datePlaced, sellPrice);
+        Response r = new Response(null, sellerId, datePlaced, sellPrice);
         
         PresentationFacade.getInstance().insertResponse(r);
         

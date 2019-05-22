@@ -26,7 +26,7 @@ public class ShowResponseCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException, NoSuchRequestException, NoSuchShedException {
         Response r = PresentationFacade.getInstance().getResponse(Integer.parseInt(request.getParameter("requestID")));
-        Request req = PresentationFacade.getInstance().getRequest(r.getRequestId());
+        Request req = PresentationFacade.getInstance().getRequest(r.getRequest().getRequestId());
         
         request.setAttribute("response", r);
         request.setAttribute("request", req);

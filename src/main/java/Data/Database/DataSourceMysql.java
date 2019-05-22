@@ -23,9 +23,19 @@ public class DataSourceMysql {
      * Constructs datasource that works with remote dB
      */
     public DataSourceMysql() {
+        /*
+        Kasper, Sinan og jeg kører på lokale databaser.
+        Hvis du ikke har lyst til det, så erstat koden nedenunder med det her:
+        
+        ds.setServerName("157.230.97.70");
+        ds.setPort(3306);
+        ds.setDatabaseName("fogcarport");
+        ds.setUser("root");
+        ds.setPassword("prespa01");
+        */
         ds.setServerName("localhost");
         ds.setPort(3308);
-        ds.setDatabaseName("fogcarportdb");
+        ds.setDatabaseName("fogcarport");
         ds.setUser("root");
         ds.setPassword("12qwaszx");
         try {

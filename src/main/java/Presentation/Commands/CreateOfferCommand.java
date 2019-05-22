@@ -37,6 +37,10 @@ public class CreateOfferCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, NoSuchRequestException,
     NoSuchShedException {
+        
+        try{
+            
+        
         //calculations
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
@@ -97,7 +101,9 @@ public class CreateOfferCommand implements Command {
         request.setAttribute("svg1", svg1);
         request.setAttribute("svg2", svg2);
 //        request.setAttribute("bandSvg", bandSvg);
-
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         return "jsp/create_offer.jsp";
     }
 

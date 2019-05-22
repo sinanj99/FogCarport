@@ -31,7 +31,7 @@ public class CalculateBOM {
         BOMToolshed b = new BOMToolshed();
         Carport c = r.getCarport();
         
-        if (r.getCarport().getShed_() == null) 
+        if (r.getCarport().getShed() == null) 
         {
             //the fundament
             listOfLineItems.add(f.bracketScrews(c));
@@ -99,7 +99,7 @@ public class CalculateBOM {
 
         
 
-        if (c.getShed_() != null) 
+        if (c.getShed() != null) 
         {
             //The fundament
             listOfLineItems.add(f.bracketScrews(c));

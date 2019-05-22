@@ -54,8 +54,8 @@ class RequestMapper extends IRequestMapper {
     @Override
     public Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException {
         Request r = null;
-        int req_id = 0;
-        int user_id = 0;
+        int reqId = 0;
+        int userId = 0;
         String datePlaced = "";
         int price = 0;
         ShippingAddress address;
@@ -67,13 +67,13 @@ class RequestMapper extends IRequestMapper {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                req_id = rs.getInt("request_id");
-                user_id = rs.getInt("user_id");
+                reqId = rs.getInt("request_id");
+                userId = rs.getInt("user_id");
                 address = getRequestShippingAddress(id);
                 Carport cp = getRequestCarport(id);
                 datePlaced = rs.getString("dateplaced");
 
-                r = new Request(req_id, user_id, datePlaced, cp, address);
+                r = new Request(reqId, userId, datePlaced, cp, address);
             } else {
                 throw new NoSuchRequestException(id);
             }
@@ -96,11 +96,11 @@ class RequestMapper extends IRequestMapper {
 
         Roof roof = null;
         Shed shed_ = null;
-        int roof_id = 0;
+        int roofId = 0;
         int inclination = 0;
         int width = 0;
         int length = 0;
-        int carport_id = 0;
+        int carportId = 0;
 
         String query = "SELECT * FROM carports WHERE request_id = ?;";
         try {
@@ -108,20 +108,20 @@ class RequestMapper extends IRequestMapper {
             pstmt.setInt(1, request_id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                carport_id = rs.getInt("carport_id");
-                roof_id = rs.getInt("roof_id");
+                carportId = rs.getInt("carport_id");
+                roofId = rs.getInt("roof_id");
                 width = rs.getInt("width");
                 length = rs.getInt("length");
                 inclination = rs.getInt("inclination");
             } else {
                 throw new NoSuchCarportException(request_id);
             }
-            roof = getRoof(roof_id, width);
+            roof = getRoof(roofId, width);
             shed_ = getRequestShed(request_id);
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
         }
-        return new Carport(carport_id, roof, inclination, width, length, shed_);
+        return new Carport(carportId, roof, inclination, width, length, shed_);
     }
 
     /**
@@ -131,7 +131,7 @@ class RequestMapper extends IRequestMapper {
      * @param carport_id
      * @return
      */
-    private Shed getRequestShed(int carport_id) throws SystemErrorException {
+    private Shed getRequestShed(int carportId) throws SystemErrorException {
         int shedId = 0;
         int width = 0;
         int length = 0;
@@ -139,14 +139,14 @@ class RequestMapper extends IRequestMapper {
         try {
             String query = "SELECT * FROM sheds WHERE carport_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, carport_id);
+            pstmt.setInt(1, carportId);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                shedId = rs.getInt("shed_id");
+                carportId = rs.getInt("carport_id");
                 width = rs.getInt("width");
                 length = rs.getInt("length");
-                shed = new Shed(shedId, width, length);
+                shed = new Shed(carportId, width, length);
             } 
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
@@ -161,7 +161,6 @@ class RequestMapper extends IRequestMapper {
         String address = "";
         int zipcode = 0;
         String city = "";
-        String gender = "";
 
         try {
             String query = "SELECT * FROM shipping_addresses WHERE request_id = ?;";
@@ -187,14 +186,14 @@ class RequestMapper extends IRequestMapper {
     public void insertRequest(Request req) throws SystemErrorException {
         Carport cp = req.getCarport();
         Roof roof = cp.getRoof();
-        Shed shed = cp.getShed_();
+        Shed shed = cp.getShed();
         int req_id = 0;
 
         try {
             conn.setAutoCommit(false);
             String query = "INSERT INTO `requests` (user_id, dateplaced) VALUES (?,?);";
             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, req.getUser_id());
+            pstmt.setInt(1, req.getUserId());
             pstmt.setString(2, req.getDatePlaced());
             pstmt.executeUpdate();
 
@@ -210,7 +209,7 @@ class RequestMapper extends IRequestMapper {
                     req_id, cp);
 
             //shed, if chosen
-            if (cp.getShed_() != null) {
+            if (cp.getShed() != null) {
                 insertRequestShed(pstmt, query, rs, cp_id, shed);
             }
             conn.commit();

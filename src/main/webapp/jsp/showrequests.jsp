@@ -33,16 +33,16 @@
                         <tbody>
                             <% for (Request r : requests) {%>
                             <tr class="showorders-tr">
-                                <td><%=r.getReq_id()%></td>
+                                <td><%=r.getReqId()%></td>
                                 <td><%=r.getAddress().getFirstname() + " " + r.getAddress().getLastname()%></td>
                                 <td><%=r.getDatePlaced()%></td>
                                 <td>
                                 <%
-                                    if (r.getCarport().getInclination() != 0 && r.getCarport().getShed_() == null) {
+                                    if (r.getCarport().getInclination() != 0 && r.getCarport().getShed() == null) {
                                         out.println("Carport med rejsning");
-                                    } else if (r.getCarport().getInclination() != 0 && r.getCarport().getShed_() != null) {
+                                    } else if (r.getCarport().getInclination() != 0 && r.getCarport().getShed() != null) {
                                         out.println("Carport med rejsning & skur");
-                                    } else if (r.getCarport().getInclination() == 0 && r.getCarport().getShed_() != null) {
+                                    } else if (r.getCarport().getInclination() == 0 && r.getCarport().getShed() != null) {
                                         out.println("Carport uden rejsning, men med skur");
                                     }else{
                                         out.println("Carport uden rejsning");
@@ -53,7 +53,7 @@
                                     <span class="badge badge-secondary">Tilbud ej sendt</span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary" href="FrontController?command=createOffer&requestID=<%=r.getReq_id()%>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 0px 5px;">SE ORDRE</a>
+                                    <a class="btn btn-primary" href="FrontController?command=createOffer&requestID=<%=r.getReqId()%>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 0px 5px;">SE ORDRE</a>
                                 </td>
                             </tr>
                             <%}%>

@@ -18,23 +18,23 @@ public class Carport {
     private int inclination;
     private int width;
     private int length;
-    private Shed shed_;
+    private Shed shed;
 
-    public Carport(Roof roof, int inclination, int width, int length, Shed shed_) {
+    public Carport(Roof roof, int inclination, int width, int length, Shed shed) {
         this.roof = roof;
         this.inclination = inclination;
         this.width = width;
         this.length = length;
-        this.shed_ = shed_;
+        this.shed = shed;
     }
     
-    public Carport(int carportId, Roof roof, int inclination, int width, int length, Shed shed_) {
+    public Carport(int carportId, Roof roof, int inclination, int width, int length, Shed shed) {
         this.carportId = carportId;
         this.roof = roof;
         this.inclination = inclination;
         this.width = width;
         this.length = length;
-        this.shed_ = shed_;
+        this.shed = shed;
     }
 
     public int getCarportId(){
@@ -52,8 +52,8 @@ public class Carport {
         return length;
     }
 
-    public Shed getShed_() {
-        return shed_;
+    public Shed getShed() {
+        return shed;
     }
 
     public Roof getRoof() {
@@ -62,7 +62,7 @@ public class Carport {
     
     @Override
     public String toString() {
-        return "Carport{" + "roof=" + roof + ", inclination=" + inclination + ", width=" + width + ", length=" + length + ", shed_=" + shed_ + '}';
+        return "Carport{" + "roof=" + roof + ", inclination=" + inclination + ", width=" + width + ", length=" + length + ", shed=" + shed + '}';
     } 
     
 }

@@ -8,88 +8,50 @@ package Data.Entity;
 /**
  *
  * @author Obaydah Mohamad
+ * 
+ * CREATE TABLE responses (
+	request_id INT NOT NULL UNIQUE,
+        seller_id INT NOT NULL,
+	dateplaced DATETIME NOT NULL,
+	sell_price INT NOT NULL,
+        status INT(1) DEFAULT 0,
+	CONSTRAINT responses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id)
+);
  */
 public class Response {
-    private int responseId;
     private int requestId;
-    private int userId;
-    private int empId;
-    private int carportId;
-    private int shedId;
+    private int sellerId;
     private String datePlaced;
-    private int productionPrice;
     private int sellPrice;
     private int status;
     
-    public Response(int responseId, int requestId, int userId, int empId, int carportId, int shedId, String datePlaced, int productionPrice, int sellPrice, int status) {
-        this.responseId = responseId;
+    public Response(int requestId, int sellerId, String datePlaced, int sellPrice) {
         this.requestId = requestId;
-        this.userId = userId;
-        this.empId = empId;
-        this.carportId = carportId;
-        this.shedId = shedId;
+        this.sellerId = sellerId;
         this.datePlaced = datePlaced;
-        this.productionPrice = productionPrice;
         this.sellPrice = sellPrice;
-        this.status = status;
     }
 
-    
-    public Response(int requestId, int userId, int empId, int carportId, int shedId, String datePlaced, int productionPrice, int sellPrice) {
-        this.requestId = requestId;
-        this.userId = userId;
-        this.empId = empId;
-        this.carportId = carportId;
-        this.shedId = shedId;
-        this.datePlaced = datePlaced;
-        this.productionPrice = productionPrice;
-        this.sellPrice = sellPrice;
-    }
-    
     public int getRequestId() {
         return requestId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public int getEmpId() {
-        return empId;
+    public int getSellerId() {
+        return sellerId;
     }
 
     public String getDatePlaced() {
         return datePlaced;
     }
 
-    public int getProductionPrice() {
-        return productionPrice;
-    }
-
     public int getSellPrice() {
         return sellPrice;
-    }
-
-    public int getResponseId() {
-        return responseId;
-    }
-
-    public int getCarportId() {
-        return carportId;
-    }
-
-    public int getShedId() {
-        return shedId;
     }
 
     public int getStatus() {
         return status;
     }
-
-    @Override
-    public String toString() {
-        return "Response{" + "responseId=" + responseId + ", requestId=" + requestId + ", userId=" + userId + ", empId=" + empId + ", carportId=" + carportId + ", shedId=" + shedId + ", datePlaced=" + datePlaced + ", productionPrice=" + productionPrice + ", sellPrice=" + sellPrice + '}';
-    }
+    
     
     
 }

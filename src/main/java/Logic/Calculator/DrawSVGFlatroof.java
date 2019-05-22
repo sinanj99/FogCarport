@@ -18,7 +18,7 @@ public class DrawSVGFlatroof {
         String drawing = "";
         int length = c.getLength();
         int width = c.getWidth();
-        Shed shed = c.getShed_();
+        Shed shed = c.getShed();
         int slength = 0;
         int swidth = 0;
         if(shed!=null) {

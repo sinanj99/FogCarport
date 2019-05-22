@@ -19,7 +19,7 @@ public class DrawSVGIncline {
         String drawing = "";
         int length = c.getLength();
         int width = c.getWidth();
-        Shed shed = c.getShed_();
+        Shed shed = c.getShed();
         int slength = 0;
         int swidth = 0;
 
@@ -220,11 +220,11 @@ public class DrawSVGIncline {
         drawing += "<text x='25' y='25' fill='black'>" + length + " cm</text>";
         drawing += "<line x1='" + (length - 23) + "' y1='25' x2='" + (length + 40) + "' y2='25' style='stroke:black;stroke-width:2'/>";
         drawing += "<text x='" + (length - 23) + "' y='20' fill='black'>" + (int) f.spaceBetweenRafter(length, 60) + " cm</text>";
-        if (c.getShed_() != null) {
+        if (c.getShed() != null) {
 //            drawing += "<line x1='" + (length+50 - slength) + "' y1='" + ((int) hypotenuse * 2-10) + "' x2='" + (length+50) + "' y2='" + ((int) hypotenuse * 2-10) + "' style='stroke:red;stroke-width:2'/>";
-            drawing += "<text x='" + (length + 50 - slength) + "' y='" + ((int) hypotenuse * 2) + "' fill='red'>" + c.getShed_().getLength() + " cm</text>";
+            drawing += "<text x='" + (length + 50 - slength) + "' y='" + ((int) hypotenuse * 2) + "' fill='red'>" + c.getShed().getLength() + " cm</text>";
 //            drawing += "<line x1='" + (length+75) + "' y1='" + ((int) hypotenuse * 2-40) + "' x2='" + (length+75) + "' y2='" + ((int) hypotenuse * 2-10-c.getWidth()) + "' style='stroke:red;stroke-width:2'/>";
-            drawing += "<text transform='rotate(90)' x='" + ((int) hypotenuse * 2 - 80) + "' y='" + (-length - 75) + "' fill='red'>" + c.getShed_().getWidth() + " cm</text>";
+            drawing += "<text transform='rotate(90)' x='" + ((int) hypotenuse * 2 - 80) + "' y='" + (-length - 75) + "' fill='red'>" + c.getShed().getWidth() + " cm</text>";
         }
         //beklædning
         drawing += "<line x1='" + (length - slength + 47) + "' y1='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 81) + "' x2='" + (startingPointFirstSpærX + length + 3) + "' y2='" + (startingPointFirstSpærY + (int) hypotenuse * 2 - 80) + "' style='stroke:red;stroke-width:2'/>";
@@ -239,7 +239,7 @@ public class DrawSVGIncline {
         String drawing = "";
         int length = c.getLength();
         int width = c.getWidth();
-        Shed shed = c.getShed_();
+        Shed shed = c.getShed();
         int slength, swidth = 0;
         if (shed != null) {
             slength = shed.getLength();
@@ -272,7 +272,7 @@ public class DrawSVGIncline {
         height *= 2;
         int length = c.getLength();
         int width = c.getWidth();
-        Shed shed = c.getShed_();
+        Shed shed = c.getShed();
         if (shed != null) {
             int slength = shed.getLength();
             int swidth = shed.getWidth();

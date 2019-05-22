@@ -32,12 +32,11 @@
     Date date = formatter.parse(stringDate);   
     String date_ = new SimpleDateFormat("d-MM-y").format(date);
     
-    int reqId = r.getReq_id();
-    int userId = r.getUser_id();
-    int empId = user.getId();
+    int reqId = r.getReqId();
+    int sellerId = user.getId();
     int carportId = r.getCarport().getCarportId();
     int shedId = 0;
-    if(r.getCarport().getShed_() != null) shedId = r.getCarport().getShed_().getShedId();
+    if(r.getCarport().getShed() != null) shedId = r.getCarport().getShed().getShedId();
     
 %>
 
@@ -56,7 +55,7 @@
 
                                 <tr>
                                     <th>Ordrenr.:</th>
-                                    <td><b>#</b><%= r.getReq_id() %></td>
+                                    <td><b>#</b><%= r.getReqId() %></td>
                                 </tr>
 
                                 <tr>
@@ -98,7 +97,7 @@
                             <label class="font-weight-bold">Salgspris:</label><br>
                             <input onChange="updatePriceBtn()" id="sellprice" style="border-radius: 2px;" type="text" name="sellprice" class="form-control text-center " min="1" value="<%= sellPrice %>">
                             <input id="sellpricebtn" style="margin-top: 5px; border-radius: 2px;" type="submit" class="w-100 btn btn-primary" value="Opdater salgspris" disabled>
-                            <input type="hidden" name="requestID" value="<%= r.getReq_id() %>">
+                            <input type="hidden" name="requestID" value="<%= r.getReqId() %>">
                             <input type="hidden" name="command" value="updateresponseprice">
                         </form>
                         <%}%>
@@ -134,18 +133,18 @@
                     </div>
                     
                     <%
-                       if(r.getCarport().getShed_() != null){             
+                       if(r.getCarport().getShed() != null){             
                     %>
                     <div class="w-100" style="margin-top: 20px; border-radius: 2px; border: 1px solid #dddddd; padding: 10px;">
                         <h6>Redskabsrum mål</h6>
                         <div class="row">
                             
                             <div class="col-6 text-center">
-                                <div><%= r.getCarport().getShed_().getWidth()%></div>
+                                <div><%= r.getCarport().getShed().getWidth()%></div>
                                 <div class="font-weight-bolder">Bredde</div>
                             </div>
                             <div class="col-6 text-center">
-                                <div><%= r.getCarport().getShed_().getLength()%></div>
+                                <div><%= r.getCarport().getShed().getLength()%></div>
                                 <div class="font-weight-bolder">Længde</div>
                             </div>
                                 
@@ -171,18 +170,14 @@
                             }else{
                             %>
                             <div class="col-6">
-                                <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleterequest&requestID=<%= r.getReq_id() %>" role="button">Slet forespørgelse</a>
+                                <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleterequest&requestID=<%= r.getReqId() %>" role="button">Slet forespørgelse</a>
                             </div>
 
                             <div class="col-6">
                                 <form action="FrontController" method="GET" class="w-100">
                                     <input type="hidden" name="command" value="insertresponse"> 
                                     <input type="hidden" name="requestID" value="<%= reqId %>">
-                                    <input type="hidden" name="userID" value="<%= userId %>">
-                                    <input type="hidden" name="empID" value="<%= empId %>">
-                                    <input type="hidden" name="carportID" value="<%= carportId %>">
-                                    <input type="hidden" name="shedID" value="<%= shedId %>">
-                                    <input type="hidden" name="productionprice" value="<%= productionPrice %>">
+                                    <input type="hidden" name="sellerID" value="<%= sellerId %>">                                   
                                     <input type="hidden" name="sellprice" value="<%= sellPrice %> ">
                                     <input type="submit" class="btn btn-primary w-100" style="border-radius: 2px;" value="Send tilbud">
                                 </form>

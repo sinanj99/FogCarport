@@ -46,37 +46,27 @@ class ResponseMapper extends IResponseMapper{
     
     
     @Override
-    public List<Response> getResponses(int userId) throws SystemErrorException{
+    public List<Response> getResponses(int requestId) throws SystemErrorException{
         List<Response> responses = new ArrayList<Response>();
         
-        int responseId = 0;
-        int reqId = 0;
-        int empId = 0;
-        int carportId = 0;
-        int shedId = 0;
-        int productionPrice = 0;
+        int sellerId = 0;
         int sellPrice = 0;
         int status = 0;
         String datePlaced = "";
         
         try{
-            String query = "SELECT * FROM responses WHERE user_id = ? ORDER BY response_id DESC";
+            String query = "SELECT * FROM responses WHERE request_id = ? ORDER BY dateplaced DESC";
             PreparedStatement p = conn.prepareStatement(query);
-            p.setInt(1, userId);
+            p.setInt(1, requestId);
             ResultSet rs = p.executeQuery();
             
             while(rs.next()){
-                responseId = rs.getInt("response_id");
-                reqId = rs.getInt("request_id");
-                userId = rs.getInt("user_id");
-                empId = rs.getInt("emp_id");
-                carportId = rs.getInt("carport_id");
-                shedId = rs.getInt("shed_id");
-                productionPrice = rs.getInt("productionprice");
-                sellPrice = rs.getInt("sellprice");
+                requestId = rs.getInt("request_id");
+                sellerId = rs.getInt("seller_id");
+                sellPrice = rs.getInt("sell_price");
                 datePlaced = rs.getString("dateplaced");
                 status = rs.getInt("status");
-                responses.add(new Response(responseId, reqId, userId, empId, carportId, shedId, datePlaced, productionPrice, sellPrice, status));
+                responses.add(new Response(requestId, sellerId, datePlaced, sellPrice));
             }
             
         }catch(SQLException e){
@@ -89,16 +79,10 @@ class ResponseMapper extends IResponseMapper{
     @Override
     public Response getResponse(int requestId) throws NoSuchResponseException, SystemErrorException{
         Response r = null;
-        int responseId = 0;
-        int reqId = 0;
-        int userId = 0;
-        int empId = 0;
-        int carportId = 0;
-        int shedId = 0;
-        int productionPrice = 0;
+        int sellerId = 0;
         int sellPrice = 0;
-        String datePlaced = "";
         int status = 0;
+        String datePlaced = "";
         
         try {
             String query = "SELECT * FROM responses WHERE request_id = ?;";
@@ -106,17 +90,13 @@ class ResponseMapper extends IResponseMapper{
             p.setInt(1, requestId);
             ResultSet rs = p.executeQuery();
             if(rs.next()){
-                responseId = rs.getInt("response_id");
-                reqId = rs.getInt("request_id");
-                userId = rs.getInt("user_id");
-                empId = rs.getInt("emp_id");
-                carportId = rs.getInt("carport_id");
-                shedId = rs.getInt("shed_id");
-                productionPrice = rs.getInt("productionprice");
-                sellPrice = rs.getInt("sellprice");
+                
+                requestId = rs.getInt("request_id");
+                sellerId = rs.getInt("seller_id");
+                sellPrice = rs.getInt("sell_price");
                 datePlaced = rs.getString("dateplaced");
                 status = rs.getInt("status");
-                r = new Response(responseId, requestId, userId, empId, carportId, shedId, datePlaced, productionPrice, sellPrice, status);
+                r = new Response(requestId, sellerId, datePlaced, sellPrice);
             }
         }catch(SQLException e){
             throw new SystemErrorException(e.getMessage());
@@ -129,42 +109,26 @@ class ResponseMapper extends IResponseMapper{
     
     public void insertResponse(Response res) throws SystemErrorException{
        try {
-            conn.setAutoCommit(false);
-            String query = "INSERT INTO `responses` (request_id, user_id, emp_id, dateplaced, carport_id, shed_id, productionprice, sellprice, status) "
-                        + "VALUES (?,?,?,?,?,?,?,?,?);";
+            String query = "INSERT INTO `responses` (request_id, seller_id, dateplaced, sell_price) "
+                        + "VALUES (?,?,?,?);";
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, res.getRequestId());
-            p.setInt(2, res.getUserId());
-            p.setInt(3, res.getEmpId());
-            p.setString(4, res.getDatePlaced());
-            p.setInt(5, res.getCarportId());
-            if(res.getShedId() == 0){
-                p.setNull(6, java.sql.Types.INTEGER);
-            }else{
-                p.setInt(6, res.getShedId());
-            }
-            p.setInt(7, res.getProductionPrice());
-            p.setInt(8, res.getSellPrice());
-            p.setInt(9, 1);
+            p.setInt(2, res.getSellerId());
+            p.setString(3, res.getDatePlaced());
+            p.setInt(4, res.getSellPrice());
             p.executeUpdate();
-            conn.commit();
         } catch (SQLException e) {
-            try{
-                conn.rollback();
-            }catch(SQLException ex){
-                throw new SystemErrorException(ex.getMessage());
-            }
             throw new SystemErrorException(e.getMessage());
         }
     }
     
     @Override
-    public void deleteResponse(int responseId) throws NoSuchResponseException, SystemErrorException{
-        String query = "DELETE FROM responses WHERE response_id = ?";
+    public void deleteResponse(int requestId) throws NoSuchResponseException, SystemErrorException{
+        String query = "DELETE FROM responses WHERE request_id = ?";
         
         try{
             PreparedStatement p = conn.prepareStatement(query);
-            p.setInt(1, responseId);
+            p.setInt(1, requestId);
             int deleted = p.executeUpdate();
             if(deleted == 0) throw new NoSuchResponseException();
         }catch(SQLException e){

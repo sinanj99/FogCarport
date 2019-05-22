@@ -56,9 +56,18 @@ class ResponseMapper extends IResponseMapper{
         int sellPrice = 0;
         int status = 0;
         String datePlaced = "";
+        /*
         
+        SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+        FROM Orders
+        INNER JOIN Customers
+        ON Orders.CustomerID=Customers.CustomerID;
+        */
         try{
-            String query = "SELECT * FROM responses WHERE user_Id = ? ORDER BY dateplaced DESC";
+            String query = "SELECT responses.request_id, seller_id, responses.dateplaced, sell_price, status "
+                        + "FROM responses LEFT JOIN requests ON responses.request_id = requests.request_id "
+                        + "WHERE requests.user_Id = ? "
+                        + "ORDER BY dateplaced DESC";
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, userId);
             ResultSet rs = p.executeQuery();

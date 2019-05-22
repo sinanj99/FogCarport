@@ -25,7 +25,7 @@ public class DataSourceMysql {
     public DataSourceMysql() {
         ds.setServerName("localhost");
         ds.setPort(3308);
-        ds.setDatabaseName("CarportDB");
+        ds.setDatabaseName("fogcarportdb");
         ds.setUser("root");
         ds.setPassword("12qwaszx");
         try {

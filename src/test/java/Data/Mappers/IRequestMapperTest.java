@@ -76,6 +76,22 @@ public class IRequestMapperTest {
     }
 
     @Test
+    public void testInsertRequest() throws SystemErrorException {
+        System.out.println("insertRequest");
+        IRequestMapper instance = IRequestMapper.instance();
+        ShippingAddress sa = new ShippingAddress("Jimmy", "Johnson", "Tagensvej", 2200, "Koebenhavn n");
+        Shed s = new Shed(210, 210);
+        Carport c = new Carport(instance.getRoof(1), 0, 300, 300, s);
+        Request req = new Request(sa, 1, "2019-05-22 18:10:36", c);
+        instance.insertRequest(req);
+        Request r = instance.getRequest(6);
+        
+        assertEquals(r.getRequestId(), 6);
+        assertEquals(r.getUserId(), 1);
+        assertEquals(r.getDatePlaced(), "2019-05-22 18:10:36");
+    }
+    
+    @Test
     public void testGetRequest() throws Exception, SystemErrorException, NoSuchRequestException, NoSuchShedException {
         System.out.println("getRequest");
         int id = 2;
@@ -91,27 +107,12 @@ public class IRequestMapperTest {
     public void testGetRequests() throws Exception, SystemErrorException, NoSuchShedException {
         System.out.println("getRequests");
         IRequestMapper instance = IRequestMapper.instance();
-        int expResult = 5;
+        int expResult = 6;
         List<Request> result = instance.getRequests();
         assertEquals(expResult, result.size());
     }
 
-    @Test
-    public void testInsertRequest() throws Exception {
-        System.out.println("insertRequest");
-        IRequestMapper instance = IRequestMapper.instance();
-        ShippingAddress sa = new ShippingAddress("Jimmy", "Johnson", "Tagensvej", 2200, "Koebenhavn n");
-        Shed s = new Shed(210, 210);
-        Carport c = new Carport(instance.getRoof(1), 0, 300, 300, s);
-        Request req = new Request(sa, 1, "2019-05-22 18:10:36", c);
-        instance.insertRequest(req);
-        Request r = instance.getRequest(6);
-        
-        assertEquals(r.getRequestId(), 6);
-        assertEquals(r.getUserId(), 1);
-        assertEquals(r.getDatePlaced(), "2019-05-22 18:10:36");
-    }
-
+    /*
     @Test
     public void testInsertDimensions() throws Exception {
         System.out.println("insertDimensions");
@@ -134,9 +135,19 @@ public class IRequestMapperTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    
     @Test
-    public void testGetRoof() throws Exception {
+    public void testUpdateRoofPrice() throws SystemErrorException {
+        System.out.println("updateRoofPrice");
+        int roof_id = 0;
+        int price = 0;
+        IRequestMapper instance = IRequestMapper.instance();
+        instance.updateRoofPrice(roof_id, price);
+        fail("The test case is a prototype.");
+    }
+    */
+    @Test
+    public void testGetRoof() throws SystemErrorException {
         System.out.println("getRoof");
         IRequestMapper instance = IRequestMapper.instance();
 
@@ -147,17 +158,7 @@ public class IRequestMapperTest {
     }
 
     @Test
-    public void testUpdateRoofPrice() throws Exception {
-        System.out.println("updateRoofPrice");
-        int roof_id = 0;
-        int price = 0;
-        IRequestMapper instance = IRequestMapper.instance();
-        instance.updateRoofPrice(roof_id, price);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetRequestShippingAddress() throws Exception {
+    public void testGetRequestShippingAddress() throws SystemErrorException {
         System.out.println("getRequestShippingAddress");
         IRequestMapper instance = IRequestMapper.instance();
         int id = 3;

@@ -55,10 +55,14 @@ class ResponseMapper extends IResponseMapper{
         int sellerId = 0;
         int sellPrice = 0;
         int status = 0;
-        String dateAccepted = "";
-        
+        String datePlaced = "";
+
         try{
-            String query = "SELECT * FROM responses INNER JOIN requests USING(request_id) WHERE user_id = ? ORDER BY date_accepted DESC";
+
+            String query = "SELECT * "
+                        + "FROM responses INNER JOIN requests USING(request_id) "
+                        + "WHERE user_id = ? "
+                        + "ORDER BY responses.dateplaced DESC";
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, userId);
             ResultSet rs = p.executeQuery();
@@ -67,9 +71,9 @@ class ResponseMapper extends IResponseMapper{
                 requestId = rs.getInt("request_id");
                 sellerId = rs.getInt("seller_id");
                 sellPrice = rs.getInt("sell_price");
-                dateAccepted = rs.getString("dateplaced");
+                datePlaced = rs.getString("dateplaced");
                 status = rs.getInt("status");
-                responses.add(new Response(DataFacade.getInstance().getRequest(requestId), sellerId, dateAccepted, sellPrice));
+                responses.add(new Response(DataFacade.getInstance().getRequest(requestId), sellerId, datePlaced, sellPrice));
             }
             
         }catch(SQLException e){

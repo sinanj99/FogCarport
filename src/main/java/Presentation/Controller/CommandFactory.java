@@ -17,6 +17,7 @@ import Presentation.Commands.DeleteResponseCommand;
 import Presentation.Commands.LogoutCommand;
 import Presentation.Commands.RegisterCommand;
 import Presentation.Commands.FlatRoofFormCommand;
+import Presentation.Commands.FrontpageRedirectCommand;
 import Presentation.Commands.InclinedRoofFormCommand;
 import Presentation.Commands.PrebuiltCarportCommand;
 import Presentation.Commands.ShopCommand;
@@ -41,6 +42,7 @@ public class CommandFactory {
     private static CommandFactory instance = null;
 
     private CommandFactory() {
+        commands.put("frontpageredirect", new FrontpageRedirectCommand());
         commands.put("login", new LoginCommand());
         commands.put("register", new RegisterCommand());
         commands.put("flatroof", new FlatRoofFormCommand());

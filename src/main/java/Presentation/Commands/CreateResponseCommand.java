@@ -32,7 +32,7 @@ public class CreateResponseCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, NoSuchResponseException, SystemErrorException, NoSuchRequestException, NoSuchShedException {
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
-        ShippingAddress s = PresentationFacade.getInstance().getRequestShippingAddress(r.getReq_id());
+        ShippingAddress s = PresentationFacade.getInstance().getRequestShippingAddress(r.getRequestId());
         int productionPrice = 0;
 
         BOM bom;
@@ -53,9 +53,9 @@ public class CreateResponseCommand implements Command {
 
         request.setAttribute("status", "offernotsend");
 
-        if (PresentationFacade.getInstance().getResponse(r.getReq_id()) != null) {
+        if (PresentationFacade.getInstance().getResponse(r.getRequestId()) != null) {
             request.setAttribute("status", "offersend");
-            request.setAttribute("response", PresentationFacade.getInstance().getResponse(r.getReq_id()));
+            request.setAttribute("response", PresentationFacade.getInstance().getResponse(r.getRequestId()));
         }
 
         return "jsp/create_response.jsp";

@@ -1,3 +1,4 @@
+<%@page import="Data.Entity.User"%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
     <body class="background2">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>

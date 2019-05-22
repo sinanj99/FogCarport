@@ -9,9 +9,11 @@
 <%@page import="Data.Entity.BOM"%>
 <%
     User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("login.jsp");
-        }
+    if (user == null) {
+        response.sendRedirect("jsp/login.jsp");
+    } else if (user != null && !user.isSeller()) {
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
     int buyPrice = (int) request.getAttribute("buyPrice");
     int sellPrice = (int) request.getAttribute("sellPrice");
     Request r = (Request) request.getAttribute("request");
@@ -33,7 +35,7 @@
                 <div class="row">
                     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
                         <div class="w-100 text-right" style="padding-right: 20px;">
-                            <a class="btn btn-primary" href="FrontController?command=createresponse&requestID=<%= r.getReq_id() %>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 5px 15px;">Opret tilbud</a>
+                            <a class="btn btn-primary" href="FrontController?command=createresponse&requestID=<%= r.getReqId() %>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 5px 15px;">Opret tilbud</a>
                         </div>
                         <h1 class="mb-0"><b>Stykliste</b></h1>
 
@@ -124,11 +126,11 @@
                             <p>Længde: <%=r.getCarport().getLength()%></p>
                         </div>
 
-                        <%if (r.getCarport().getShed_() != null) {%>
+                        <%if (r.getCarport().getShed() != null) {%>
                         <div class="d-flex flex-column align-items-center">
                             <h3 class="">Redskabsrum: </h3>
-                            <p>Bredde: <%=r.getCarport().getShed_().getWidth()%></p>
-                            <p>Længde: <%=r.getCarport().getShed_().getLength()%></p>
+                            <p>Bredde: <%=r.getCarport().getShed().getWidth()%></p>
+                            <p>Længde: <%=r.getCarport().getShed().getLength()%></p>
                         </div>
 
                         <% }%>

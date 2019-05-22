@@ -26,23 +26,19 @@ public class InsertResponseCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException{
-        int reqId = Integer.parseInt(request.getParameter("requestID"));
-        int userId = Integer.parseInt(request.getParameter("userID"));
-        int empId = Integer.parseInt(request.getParameter("empID"));
-        int carportId = Integer.parseInt(request.getParameter("carportID"));
-        int shedId = Integer.parseInt(request.getParameter("shedID"));
-        int productionPrice = Integer.parseInt(request.getParameter("productionprice").trim());
+        int requestId = Integer.parseInt(request.getParameter("requestID"));
+        int sellerId = Integer.parseInt(request.getParameter("sellerID"));
         int sellPrice = Integer.parseInt(request.getParameter("sellprice").trim());
         
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String datePlaced = String.valueOf(date.format(dateFormat));
         
-        Response r = new Response(reqId, userId, empId, carportId, shedId, datePlaced, productionPrice, sellPrice);
+        Response r = new Response(PresentationFacade.getInstance().getRequest(requestId), sellerId, datePlaced, sellPrice);
         
         PresentationFacade.getInstance().insertResponse(r);
         
-        return "FrontController?command=createresponse&requestID=" + reqId;
+        return "FrontController?command=createresponse&requestID=" + requestId;
     }
     
 }

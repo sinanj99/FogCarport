@@ -5,12 +5,9 @@
  */
 package Presentation.Commands;
 
-import Data.Entity.Request;
-import Data.Entity.Response;
-import Presentation.Controller.PresentationFacade;
+import Data.Entity.User;
 import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.NoSuchMaterialException;
-import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
@@ -21,13 +18,19 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Obaydah Mohamad
  */
-public class ShowResponseCommand implements Command{
+public class FrontpageRedirectCommand implements Command{
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException, NoSuchRequestException, NoSuchShedException {
-        Response r = PresentationFacade.getInstance().getResponse(Integer.parseInt(request.getParameter("requestID")));
-        request.setAttribute("response", r);
-        return "jsp/showresponse.jsp";
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException, NoSuchShedException {
+        User user = null;
+        user = (User) request.getSession().getAttribute("user");
+        
+        if(user == null) return "jsp/login";
+        if(user.isAdmin()) return "jsp/adminfrontpage.jsp";
+        if(user.isSeller()) return "jsp/sellerfrontpage.jsp";
+        
+        
+        return "jsp/frontpage.jsp";
     }
     
 }

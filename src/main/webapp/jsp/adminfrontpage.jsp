@@ -1,9 +1,14 @@
+<%-- 
+    Document   : adminfrontpage
+    Created on : 22-05-2019, 00:13:59
+    Author     : Obaydah Mohamad
+--%>
 <%@page import="Data.Entity.User"%>
 <%
     User user = (User) session.getAttribute("user");
     if (user == null) {
         response.sendRedirect("jsp/login.jsp");
-    } else if (user != null && !user.isSeller()) {
+    } else if (user != null && !user.isAdmin()) {
         request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
     }
 %>

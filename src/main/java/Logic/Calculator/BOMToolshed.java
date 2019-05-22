@@ -35,8 +35,8 @@ public class BOMToolshed
         int spaceBetweenPlank = 5;
         
         // one plank for every 15cm for each side (a plank is placed, then there must be a space on 5 before next plank is placed)
-        int planksNeededForWidth = (c.getShed_().getWidth() / (widthOfPlank + spaceBetweenPlank)) * 2;
-        int planksNeededForLength = (c.getShed_().getLength() / (widthOfPlank + spaceBetweenPlank)) * 2;
+        int planksNeededForWidth = (c.getShed().getWidth() / (widthOfPlank + spaceBetweenPlank)) * 2;
+        int planksNeededForLength = (c.getShed().getLength() / (widthOfPlank + spaceBetweenPlank)) * 2;
         
         return planksNeededForWidth + planksNeededForLength;
     }
@@ -58,8 +58,8 @@ public class BOMToolshed
             the first plank for this layer start at (widthOfPlank + spaceBetweenPlank) / 2, AKA. 7,50 from the corner of the shed and,
             the last plank for this layer stops at (widthOfPlank + spaceBetweenPæank / 2. AKA 7,50 from the end corner of the shed.
         */
-        int widthOfSecondLayer = c.getShed_().getWidth() - (widthOfPlank + spaceBetweenPlank); 
-        int lengthOfSecondLayer = c.getShed_().getLength() - (widthOfPlank + spaceBetweenPlank); 
+        int widthOfSecondLayer = c.getShed().getWidth() - (widthOfPlank + spaceBetweenPlank); 
+        int lengthOfSecondLayer = c.getShed().getLength() - (widthOfPlank + spaceBetweenPlank); 
         
         // one plank for every 15cm for each side (a plank is placed, then there must be a space on 5 before next plank is placed)
         int planksNeededForSecondLayerWidth = (widthOfSecondLayer / (widthOfPlank + spaceBetweenPlank)) * 2;
@@ -110,7 +110,7 @@ public class BOMToolshed
         // 210 to 720 is the width dimension of a shed
         for(int i = 210; i <= 720; i += 30)
         {
-            if(c.getShed_().getWidth() == i)
+            if(c.getShed().getWidth() == i)
             {
                 m = LogicFacade.getInstance().getWoodMaterial(9, i);
                 l = new LineItem(m, 12, "Løsholter til skur gavle", m.getPrice()*12, Type.LENGTH);
@@ -133,7 +133,7 @@ public class BOMToolshed
         // 150-540 is the lenth dimension of a shed
         for(int i = 150; i < 540; i += 30)
         {
-            if(c.getShed_().getLength() == i)
+            if(c.getShed().getLength() == i)
             {
                 m = LogicFacade.getInstance().getWoodMaterial(9, i);
                 l = new LineItem(m, 4, "løsholter til skur siderne", m.getPrice()*4, Type.LENGTH);

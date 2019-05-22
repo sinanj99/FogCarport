@@ -12,37 +12,37 @@ package Data.Entity;
  * @author Obaydah Mohamad
  */
 public class Request {
-    private int req_id;
-    private int user_id;
+    private int requestId;
+    private int userId;
     private String datePlaced;
     private Carport carport;
     private ShippingAddress address;
     
     // for when a request is being created with specified input.
-    public Request(ShippingAddress address, int user_id, String datePlaced, Carport carport) {
+    public Request(ShippingAddress address, int userId, String datePlaced, Carport carport) {
         this.address = address;
-        this.user_id = user_id;
+        this.userId = userId;
         this.carport = carport;
         this.datePlaced = datePlaced;
     }
 
     // for when a request is received from the database. 
-    public Request(int req_id, int user_id, String datePlaced, Carport carport, ShippingAddress address) {
-        this.req_id = req_id;
-        this.user_id = user_id;
+    public Request(int requestId, int userId, String datePlaced, Carport carport, ShippingAddress address) {
+        this.requestId = requestId;
+        this.userId = userId;
         this.datePlaced = datePlaced;
         this.carport = carport;
         this.address = address;
     }
 
-    public int getReq_id() {
-        return req_id;
+    public int getRequestId() {
+        return requestId;
     }
     
     
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
     public Carport getCarport() {
@@ -60,7 +60,7 @@ public class Request {
 
     @Override
     public String toString() {
-        return "Request{" + "user_id=" + user_id + ", datePlaced=" + datePlaced + ", carport=" + carport + '}';
+        return "Request{" + "user_id=" + userId + ", datePlaced=" + datePlaced + ", carport=" + carport + '}';
     }
     
     

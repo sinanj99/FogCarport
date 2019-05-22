@@ -249,11 +249,11 @@ public class BOMFundament {
         // four corner stolper
         int quantity = 4;
 
-        if (c.getShed_() != null) {
+        if (c.getShed() != null) {
 
-            lengthAvaiableForPost -= c.getShed_().getLength();
+            lengthAvaiableForPost -= c.getShed().getLength();
 
-            if (c.getWidth() - c.getShed_().getWidth() == 30) {
+            if (c.getWidth() - c.getShed().getWidth() == 30) {
                 //A shed consists of 6 post(stolper), the 2 back corner of the carport, aswell as two front post for the shed abd two middle post for the shed
                 quantity += 4;
             } else {
@@ -547,8 +547,8 @@ public class BOMFundament {
     public double calculateQuantityOfPerforatedBands(Carport c) {
         double lengthM;
         // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
-        if (c.getShed_() != null) {
-            lengthM = c.getLength() - c.getShed_().getLength() - spaceBetweenRafter(c.getLength(), 60) / 100;
+        if (c.getShed() != null) {
+            lengthM = c.getLength() - c.getShed().getLength() - spaceBetweenRafter(c.getLength(), 60) / 100;
         } else {
             //length in meters
             lengthM = (c.getLength() - spaceBetweenRafter(c.getLength(), 60)) / 100;

@@ -25,7 +25,7 @@ public class DeleteResponseCommand implements Command{
         int id = 0;
         
         try{
-            id = Integer.parseInt(request.getParameter("responseID"));
+            id = Integer.parseInt(request.getParameter("requestID"));
         }catch(NumberFormatException e){
             throw new InvalidInputException("FrontController?command=showresponses", "Ugyldigt id nummer!");
         }

@@ -3,12 +3,14 @@
 <%@page import="Data.Entity.Request"%>
 <%@page import="Data.Entity.Response"%>
 <%
-    User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("login.jsp");
-        }
     Response r = (Response) request.getAttribute("response");
-    Request req = (Request) request.getAttribute("request");
+    
+    User user = (User) session.getAttribute("user");
+    if(user == null) {
+        response.sendRedirect("jsp/login.jsp");
+    }else if(user != null && (user.isAdmin() || user.isSeller())){
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
 %>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
     <body class="background2">
@@ -22,20 +24,20 @@
                         <h6>Carport mål</h6>
                         <div class="row">
                             <div class="col text-center">
-                                <div><%= req.getCarport().getWidth() %></div>
+                                <div><%= r.getRequest().getCarport().getWidth() %></div>
                                 <div class="font-weight-bolder">Bredde</div>
                             </div>
 
                             <div class="col text-center">
-                                <div><%= req.getCarport().getLength()%></div>
+                                <div><%= r.getRequest().getCarport().getLength()%></div>
                                 <div class="font-weight-bolder">Længde</div>
                             </div>
                             
                             <% 
-                            if(req.getCarport().getInclination() > 0){  
+                            if(r.getRequest().getCarport().getInclination() > 0){  
                             %>    
                             <div class="col text-center">
-                                <div><%= req.getCarport().getInclination()%></div>
+                                <div><%= r.getRequest().getCarport().getInclination()%></div>
                                 <div class="font-weight-bolder">Hældning</div>
                             </div>
                             <%}%>
@@ -43,18 +45,18 @@
                     </div>
                     
                     <% 
-                    if(req.getCarport().getShed_() != null){
+                    if(r.getRequest().getCarport().getShed() != null){
                     %>
                     <div style="border: 1px solid #ddd; border-radius: 0px 2px; padding: 10px; width: 100%; margin-top: -1px; text-align: center;">
                         <h6>Redskabsrum mål</h6>
                         <div class="row">
                             <div class="col text-center">
-                                <div><%= req.getCarport().getShed_().getWidth() %></div>
+                                <div><%= r.getRequest().getCarport().getShed().getWidth() %></div>
                                 <div class="font-weight-bolder">Bredde</div>
                             </div>
 
                             <div class="col text-center">
-                                <div><%= req.getCarport().getShed_().getLength() %></div>
+                                <div><%= r.getRequest().getCarport().getShed().getLength() %></div>
                                 <div class="font-weight-bolder">Længde</div>
                             </div>
 
@@ -69,7 +71,7 @@
                             <span style="color: #8a8a8a;">Vi kan levere den ønskede carport for kr. <%= r.getSellPrice() %></div>
                             <div class="row" style="margin-top: 10px;">
                                 <div class="col" style="padding-right: 5px;">
-                                    <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleteresponse&responseID=<%= r.getResponseId() %>" role="button">Afvis tilbud</a>
+                                    <a class="btn btn-danger w-100" style="border-radius: 2px;" href="FrontController?command=deleteresponse&requestID=<%= r.getRequest().getRequestId() %>" role="button">Afvis tilbud</a>
                                 </div>
 
                                 <div class="col" style="padding-left: 5px;">

@@ -26,6 +26,9 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws SystemErrorException, NoMatchException, UserNotFoundException {
+        User userLoggedIn = null;
+        userLoggedIn = (User) request.getSession().getAttribute("user");  
+        if(userLoggedIn != null) return "FrontController?command=frontpageredirect";
 
         User user;
         String email = request.getParameter("email");
@@ -42,7 +45,10 @@ public class LoginCommand implements Command {
         request.getSession().setAttribute("user", user);
         String target = (String) request.getSession().getAttribute("target");
         request.getSession().removeAttribute("target");
-
+        
+        if(user.isAdmin()) return "jsp/adminfrontpage.jsp";
+        if(user.isSeller()) return "jsp/sellerfrontpage.jsp";
+        
         if (target == null || target.isEmpty()) {
             return "jsp/frontpage.jsp";
         } else if (target.equals("flat")) {

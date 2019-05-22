@@ -3,9 +3,11 @@
 <%@page import="java.util.List"%>
 <%
     User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("login.jsp");
-        }
+    if(user == null) {
+        response.sendRedirect("jsp/login.jsp");
+    }else if(user != null && (user.isAdmin() || user.isSeller())){
+        request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
+    }
     List<Response> responses = (List) request.getAttribute("responses");
 %>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
@@ -26,8 +28,8 @@
                         <table class="table showorders-table">
                             <thead class="showorders-thead">
                                 <tr>
-                                    <th class="showorders-th" scope="col">Ordrenr.:</th>
                                     <th class="showorders-th" scope="col">Dato</th>
+                                    <th class="showorders-th" scope="col">Pris</th>
                                     <th class="showorders-th" scope="col">Status</th>
                                 </tr>
                             </thead>
@@ -36,8 +38,8 @@
                                 for(Response r : responses){
                             %>
                                 <tr class="showorders-tr">
-                                    <td><%= r.getResponseId() %></td>
-                                    <td><%= r.getDatePlaced()%></td>                                
+                                    <td><%= r.getDatePlaced()%></td>
+                                    <td><%= r.getSellPrice()%></td>                                
                                     <td>
                                         <%
                                             if(r.getStatus() == 1){
@@ -49,7 +51,7 @@
                                     </td>
 
                                     <td class="text-right">
-                                        <a class="btn btn-primary" href="FrontController?command=showresponse&requestID=<%= r.getRequestId() %>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 0px 5px;">SE TILBUD</a>
+                                        <a class="btn btn-primary" href="FrontController?command=showresponse&requestID=<%= r.getRequest().getRequestId() %>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 0px 5px;">SE TILBUD</a>
                                     </td>
                                 </tr>
                             <%}%>

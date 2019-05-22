@@ -5,9 +5,16 @@
  */
 package Data.Mappers;
 
+import DB.DataSourceMysqlTest;
+import Data.Database.DBConnector;
 import Data.Entity.Response;
 import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.SystemErrorException;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,11 +32,43 @@ import static org.junit.Assert.*;
  */
 public class IResponseMapperTest {
     
+    private static IResponseMapper mapper;
+    private static String sqlStatements = "";
+    private static final DataSource ds = new DataSourceMysqlTest().getDataSource();
+    
     public IResponseMapperTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
+        System.out.println("MYSQL Tests...");
+
+        BufferedReader sqlScript;
+        try {
+            //indlæser scriptet
+            sqlScript = new BufferedReader(new InputStreamReader(new FileInputStream("CarportTestScript.sql"), "UTF-8"));
+            System.out.println("test");
+
+            String sqlStatement;
+            //henter alle sql statements fra scriptet
+            while ((sqlStatement = sqlScript.readLine()) != null) {
+                sqlStatements += sqlStatement + "\n";
+            }
+            System.out.println(sqlStatements);
+
+            //henter DBCOnnector, ændrer URL til testDB
+            DBConnector con = new DBConnector();
+            //udfører alle statements (genstarter db-data)
+            con.setDataSource(new DataSourceMysqlTest().getDataSource());
+            con.getConnection();
+            con.preparedStatement(sqlStatements).executeUpdate();
+
+        } catch (SQLException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        mapper = IResponseMapper.instance();
+        mapper.setDataSource(ds);
     }
     
     @AfterClass

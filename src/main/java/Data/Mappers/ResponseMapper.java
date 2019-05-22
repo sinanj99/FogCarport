@@ -118,7 +118,7 @@ class ResponseMapper extends IResponseMapper{
     @Override
     public void insertResponse(Response res) throws SystemErrorException{
        try {
-            String query = "INSERT INTO `responses` (request_id, seller_id, date_accepted, sell_price) "
+            String query = "INSERT INTO `responses` (request_id, seller_id, dateplaced, sell_price) "
                         + "VALUES (?,?,?,?);";
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, res.getRequest().getRequestId());

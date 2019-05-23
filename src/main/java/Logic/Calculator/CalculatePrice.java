@@ -7,7 +7,10 @@ package Logic.Calculator;
 
 import Data.Entity.BOM;
 import Data.Entity.LineItem;
+import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.InvalidInputException;
+import Presentation.Exceptions.NoSuchMaterialException;
+import Presentation.Exceptions.SystemErrorException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -34,13 +37,25 @@ public class CalculatePrice {
      * Updates prices of all lengths of a specific material type.
      *
      * @param price the new price of a material.
+     * @param id
      * @param prices a linkedHashMap including all lengths as keys and its price
      * as the value.
-     * @return a linked hash map including all lengths and their respective prices 
-     * where all the prices have been updated.
-     * @throws Presentation.Exceptions.InvalidInputException if there is no difference between the new and old price.
+     * @param type
+     * @return a linked hash map including all lengths and their respective
+     * prices where all the prices have been updated.
+     * @throws Presentation.Exceptions.InvalidInputException if there is no
+     * difference between the new and old price.
+     * @throws Presentation.Exceptions.SystemErrorException
+     * @throws Presentation.Exceptions.NoSuchMaterialException
      */
-    public LinkedHashMap<Integer, Integer> updatePrices(int price, LinkedHashMap<Integer, Integer> prices) throws InvalidInputException {
+    public void updatePrices(int price, int id, String type) throws InvalidInputException, SystemErrorException, NoSuchMaterialException {
+        LinkedHashMap<Integer, Integer> prices;
+        if (type.equals("length")) {
+            prices = LogicFacade.getInstance().getPricesWithLength(id);
+        } else {
+            prices = LogicFacade.getInstance().getRoofLengthPrices(id);
+        }
+
         //find old price
         int oldPrice = prices.entrySet().iterator().next().getValue();
         //find difference between new and old price
@@ -67,6 +82,10 @@ public class CalculatePrice {
                 }
             }
         }
-        return prices;
+        if (type.equals("length")) {
+            LogicFacade.getInstance().updatePriceWithLength(prices, id);
+        } else {
+            LogicFacade.getInstance().updatePricesRoof(prices, id);
+        }
     }
 }

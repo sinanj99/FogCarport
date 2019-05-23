@@ -1,6 +1,6 @@
-DROP SCHEMA IF EXISTS FogCarport;
-CREATE SCHEMA FogCarport;
-USE FogCarport;
+DROP SCHEMA IF EXISTS FogCarportDB;
+CREATE SCHEMA FogCarportDB;
+USE FogCarportDB;
 
 CREATE TABLE roofs (
 	roof_id INT NOT NULL AUTO_INCREMENT,
@@ -15,6 +15,7 @@ CREATE TABLE roof_lengths(
     price INT NOT NULL,
     stock INT NOT NULL,
     CONSTRAINT roof_lengths_ibfk_1 FOREIGN KEY (roof_id) REFERENCES roofs(roof_id)
+    ON DELETE CASCADE
     );
 
 CREATE TABLE wood_materials (
@@ -39,14 +40,16 @@ CREATE TABLE material_lengths (
     price INT NOT NULL,
     stock INT NOT NULL,
     CONSTRAINT material_lengths_ibfk_1 FOREIGN KEY (material_id) REFERENCES wood_materials(material_id)
+    ON DELETE CASCADE
     );
 	
+select * from roof_lengths where roof_id = 1;
 
 CREATE TABLE users (
 	user_id INT NOT NULL AUTO_INCREMENT,
-    seller INT(1) NOT NULL DEFAULT 0,
-    `admin` INT(1) NOT NULL DEFAULT 0,
-	email VARCHAR(320) NOT NULL UNIQUE,
+    seller INT(1) DEFAULT 0,
+    `admin` INT(1) DEFAULT 0,
+	email VARCHAR(100) NOT NULL UNIQUE,
 	`password` VARCHAR(50) NOT NULL,
 	PRIMARY KEY (user_id)
 );
@@ -60,6 +63,7 @@ CREATE TABLE personal_info (
 	city VARCHAR(50) NOT NULL,
 	gender VARCHAR(1) NOT NULL,
 	CONSTRAINT personal_info_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE requests (
@@ -68,26 +72,30 @@ CREATE TABLE requests (
 	dateplaced DATETIME NOT NULL,
 	PRIMARY KEY (request_id),
     CONSTRAINT requests_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE carports (
 	carport_id INT NOT NULL AUTO_INCREMENT,
     request_id INT NOT NULL,
 	roof_id INT NOT NULL, 
-	inclination INT(1) NOT NULL,
-  	width INT(3) NOT NULL,
-  	length INT(3) NOT NULL,
+	inclination INT(2) NOT NULL,
+  	width INT(4) NOT NULL,
+  	length INT(4) NOT NULL,
 	PRIMARY KEY (carport_id),
-    CONSTRAINT carports_ibfk_1 FOREIGN KEY (roof_id) REFERENCES roofs(roof_id),
+    CONSTRAINT carports_ibfk_1 FOREIGN KEY (roof_id) REFERENCES roofs(roof_id)
+    ON DELETE NO ACTION,
     CONSTRAINT carports_ibfk_2 FOREIGN KEY (request_id) REFERENCES requests(request_id)
+    ON DELETE CASCADE
 );
 
 
 CREATE TABLE sheds (
 	carport_id INT NOT NULL, 
-  	width INT(3) NOT NULL,
-  	length INT(3) NOT NULL,
+  	width INT(4) NOT NULL,
+  	length INT(4) NOT NULL,
 	CONSTRAINT sheds_ibfk_1 FOREIGN KEY (carport_id) REFERENCES carports(carport_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE shipping_addresses (
@@ -98,6 +106,7 @@ CREATE TABLE shipping_addresses (
 	zipcode INT(4) NOT NULL,
 	city VARCHAR(50) NOT NULL,
     CONSTRAINT shipping_addresses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE responses (
@@ -107,13 +116,14 @@ CREATE TABLE responses (
     sell_price INT NOT NULL,
     `status` INT(1) DEFAULT 0,
 	CONSTRAINT responses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE prebuilt_carports (
   prebuilt_carport_id INT NOT NULL AUTO_INCREMENT,
-  img_path VARCHAR(1000) NOT NULL,
-  carport_width INT(3)NOT NULL,
-  carport_length INT(3)  NOT NULL,
+  img_path VARCHAR(500) NOT NULL,
+  carport_width INT(4)NOT NULL,
+  carport_length INT(4)  NOT NULL,
   price INT(10) NOT NULL,
   PRIMARY KEY (prebuilt_carport_id)
   );
@@ -123,6 +133,7 @@ CREATE TABLE prebuilt_sheds (
   shed_width INT(3)NOT NULL,
   shed_length int(3)  NOT NULL,
   CONSTRAINT prebuilt_sheds_ibfk1 FOREIGN KEY (prebuilt_carport_id) REFERENCES prebuilt_carports(prebuilt_carport_id)
+  ON DELETE CASCADE
   );
 
   
@@ -199,7 +210,7 @@ INSERT INTO wood_materials (name, unit) VALUES
 ("45x95mm reglar. ub.", "stk"),
 ("38x73mm. taglægte T1", "stk");
 ;
-
+select * from material_lengths where material_id = 7;
 INSERT INTO users (`admin`, seller, email,  `password`)
 VALUES 
 (0, 0, "test@fog.dk","test"),

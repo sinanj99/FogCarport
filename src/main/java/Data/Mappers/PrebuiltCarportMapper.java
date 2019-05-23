@@ -84,16 +84,4 @@ public class PrebuiltCarportMapper extends IPrebuiltCarportMapper
         
         return prebuiltCarports;
     }
-    
-    
-    public static void main(String[] args) throws SystemErrorException {
-        try 
-        {
-            System.out.println(IPrebuiltCarportMapper.instance().getAllPrebuiltCarports());
-        } 
-        catch (NoSuchPrebuiltCarportException ex) 
-        {
-            System.out.println(ex.getMessage());
-        }
-    }
 }

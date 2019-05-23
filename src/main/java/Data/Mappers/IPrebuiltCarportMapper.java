@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  *
  * @author Kasper Jeppesen
  */
-public abstract class IPrebuiltCarportMapper
+ abstract class IPrebuiltCarportMapper
 {
     public static IPrebuiltCarportMapper instance()
     {

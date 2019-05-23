@@ -5,12 +5,14 @@
  */
 package Presentation.Commands;
 
+import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.InvalidInputException;
+import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,15 +45,21 @@ public class ChangePriceCommand implements Command {
             throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst et tal!");
         }
         try {
+            LinkedHashMap<Integer, Integer> prices;
+            String type;
         switch (choice) {
             case "length":
-                PresentationFacade.getInstance().updatePrices(price, id);
+                type = "length";
+                prices = PresentationFacade.getInstance().getPricesWithLength(id);
+                PresentationFacade.getInstance().updatePrices(price, id, type);
                 break;
             case "nolength":
                 PresentationFacade.getInstance().updatePriceFittings(price, id);
                 break;
             default:
-                PresentationFacade.getInstance().updatePricesRoof(price, id);
+                type = "roof";
+                prices = PresentationFacade.getInstance().getRoofLengthPrices(id);
+                PresentationFacade.getInstance().updatePrices(price, id, type);
                 break;
         }
         } catch(NoSuchMaterialException e) {

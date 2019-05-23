@@ -20,7 +20,7 @@ import javax.sql.DataSource;
  *
  * @author sinanjasar
  */
-public abstract class IMaterialMapper {
+ abstract class IMaterialMapper {
     
     
     public static IMaterialMapper instance() {
@@ -106,7 +106,7 @@ public abstract class IMaterialMapper {
      * @throws NoSuchMaterialException if there is no material with given id 
      */
     
-    public abstract void updatePriceWithLength(int price, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException;
+    public abstract void updatePriceWithLength(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException;
     
     /**
      * Updates price of a no-length material specified by id. 
@@ -125,7 +125,7 @@ public abstract class IMaterialMapper {
      * @throws NoSuchRoofException 
      * @throws InvalidInputException 
      */
-    public abstract void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException;
+    public abstract void updatePriceRoof(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException;
     /**
      * Fetches all lengths and the price for each length for a material specified by id.
      * @param id of the material whose lengths needs to be fetched

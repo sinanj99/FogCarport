@@ -7,7 +7,6 @@ package Logic.Controller;
 
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Exceptions.NoMatchException;
-import Data.Mappers.IUserMapper;
 import Data.Entity.User;
 import Presentation.Exceptions.SystemErrorException;
 import java.sql.SQLException;

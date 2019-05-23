@@ -5,7 +5,6 @@
  */
 package Data.Mappers;
 
-import Data.Controller.DataFacade;
 import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
 import Data.Entity.Material;
@@ -161,17 +160,21 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceWithLength(int price, int id) throws SystemErrorException,
-            NoSuchMaterialException, InvalidInputException {
-        LinkedHashMap<Integer, Integer> prices = getMaterialLengthPrices(id);
+    public void updatePriceWithLength(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException,
+            NoSuchMaterialException {
         try {
+            String sql = "SELECT * FROM material_lengths WHERE material_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if(!rs.next()) throw new NoSuchMaterialException(id); 
             int length;
-            prices = DataFacade.getInstance().updatePrices(price, prices);
+            int price;
             for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
                 price = entry.getValue();
                 length = entry.getKey();
-                String sql = "UPDATE material_lengths SET price = ? WHERE material_id = ? AND length = ?";
-                PreparedStatement pstmt = conn.prepareStatement(sql);
+                sql = "UPDATE material_lengths SET price = ? WHERE material_id = ? AND length = ?";
+                pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, price);
                 pstmt.setInt(2, id);
                 pstmt.setInt(3, length);
@@ -209,13 +212,11 @@ class MaterialMapper extends IMaterialMapper {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                while (rs.next()) {
-                    prices.put(rs.getInt("length"), rs.getInt("price"));
-                }
-            } else {
-                throw new NoSuchMaterialException(id);
-            }
+            if(!rs.next()) throw new NoSuchMaterialException(id); 
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                prices.put(rs.getInt("length"), rs.getInt("price"));
+            }          
         } catch (SQLException ex) {
             throw new SystemErrorException(ex.getMessage());
         }
@@ -263,34 +264,25 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
-        LinkedHashMap<Integer, Integer> prices = getRoofLengthPrices(id);
-        try {
-            String sql = "SELECT * FROM roof_lengths WHERE roof_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, id);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                int length;
-                prices = DataFacade.getInstance().updatePrices(price, prices);
-                for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
-                    price = entry.getValue();
-                    length = entry.getKey();
-                    sql = "UPDATE roof_lengths SET price = ? WHERE roof_id = ? AND length = ?";
-                    pstmt = conn.prepareStatement(sql);
-                    pstmt.setInt(1, price);
-                    pstmt.setInt(2, id);
-                    pstmt.setInt(3, length);
-                    pstmt.executeUpdate();
-                }
-            } else {
-                throw new NoSuchRoofException(id);
+    public void updatePriceRoof(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
+          try {
+            int length;
+            int price;
+            for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
+                price = entry.getValue();
+                length = entry.getKey();
+                String sql = "UPDATE roof_lengths SET price = ? WHERE roof_id = ? AND length = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, price);
+                pstmt.setInt(2, id);
+                pstmt.setInt(3, length);
+                pstmt.executeUpdate();
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
         }
-    }
 
+    }
     @Override
     public List<Material> getMaterials() throws SystemErrorException {
         List<Material> materials = new ArrayList();

@@ -14,8 +14,6 @@ import Data.Entity.PersonalInfo;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
-import Data.Mappers.IMaterialMapper;
-import Data.Mappers.IUserMapper;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
@@ -33,9 +31,9 @@ public class TestCalculateBOMMethods
         CalculateBOM c = new CalculateBOM();
         DBConnector con = new DBConnector();
 //        System.out.println(IUserMapper.instance().getUser("test@test.dk"));
-          IMaterialMapper.instance().setDataSource(new DataSourceMysql().getDataSource());
+//          IMaterialMapper.instance().setDataSource(new DataSourceMysql().getDataSource());
 //          IMaterialMapper.instance().updatePriceWithLength(1000, 1);
-          System.out.println(IMaterialMapper.instance().getFitting(1));
+//          System.out.println(IMaterialMapper.instance().getFitting(1));
         
 //        int quan = f.calculateQuantityOfBeslagskruer(450);
 //        System.out.println(c.calculateQuantityOfSpær(450));

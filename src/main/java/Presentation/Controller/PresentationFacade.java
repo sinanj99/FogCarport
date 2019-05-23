@@ -11,23 +11,21 @@ import Data.Entity.PrebuiltCarport;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Exceptions.DuplicateException;
 import Presentation.Exceptions.NoSuchRoofException;
-import Data.Mappers.IMaterialMapper;
-import Data.Mappers.IRequestMapper;
-import Data.Mappers.IUserMapper;
 import Data.Entity.Request;
 import Data.Entity.Response;
 import Data.Entity.Roof;
 import Data.Entity.ShippingAddress;
 import Data.Entity.User;
-import Data.Mappers.IPrebuiltCarportMapper;
+import Data.Mappers.DataFacade;
 import Logic.Calculator.CalculatePrice;
-import Data.Mappers.IResponseMapper;
+import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.NoSuchShedException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -38,13 +36,6 @@ import javax.sql.DataSource;
 public class PresentationFacade {
 
     private static PresentationFacade instance = null;
-    private CalculatePrice cp = new CalculatePrice();
-    private static final DataSource ds = new DataSourceMysql().getDataSource();
-    private static final IRequestMapper r = IRequestMapper.instance();
-    private static final IResponseMapper rp = IResponseMapper.instance();
-    private static final IMaterialMapper m = IMaterialMapper.instance();
-    private static final IUserMapper u = IUserMapper.instance();
-    private static final IPrebuiltCarportMapper p = IPrebuiltCarportMapper.instance();
 
     //prevents other classes from creating instance
     private PresentationFacade() {
@@ -54,88 +45,87 @@ public class PresentationFacade {
     public static PresentationFacade getInstance() {
         if (instance == null) {
             instance = new PresentationFacade();
-            m.setDataSource(ds);
-            u.setDataSource(ds);
-            r.setDataSource(ds);
-            p.setDataSource(ds);
-            rp.setDataSource(ds);
         }
         return instance;
     }
-    public void updatePrices(int price, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
-        m.updatePriceWithLength(price, id);
+    public void updatePrices(int price, int id, String type) throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
+        LogicFacade.getInstance().calcPrices(price, id, type);
     }
     public void updatePriceFittings(int price, int id) throws SystemErrorException, NoSuchMaterialException {
-        m.updatePriceFittings(price, id);
+        LogicFacade.getInstance().updatePriceFittings(price, id);
     }
-    public void updatePricesRoof(int price, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
-        m.updatePriceRoof(price, id);
+    public LinkedHashMap<Integer, Integer> getPricesWithLength(int id) throws SystemErrorException, NoSuchMaterialException {
+        return LogicFacade.getInstance().getPricesWithLength(id);
+    }
+    
+    public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
+        return LogicFacade.getInstance().getRoofLengthPrices(id);
     }
     public List<Roof> getRoofs() throws SystemErrorException {
-        return m.getRoofs();
+        return LogicFacade.getInstance().getRoofs();
     }
     public List<Material> getMaterials() throws SystemErrorException {
-        return m.getMaterials();
+        return LogicFacade.getInstance().getMaterials();
     }
     public List<Roof> getRoofs(int rooftype) throws NoSuchRoofException, NoSuchRoofException, SystemErrorException {
-        return r.getRoofs(rooftype);
+        return LogicFacade.getInstance().getRoofs(rooftype);
     }
 
     public void insertUser(User user) throws DuplicateException, SystemErrorException {
-        u.insertUser(user);
+        LogicFacade.getInstance().insertUser(user);
     }
 
     public User getUser(String email) throws UserNotFoundException, SystemErrorException {
-        return u.getUser(email);
+        return LogicFacade.getInstance().getUser(email);
     }
 
     public void insertRequest(Request req) throws SystemErrorException {
-        r.insertRequest(req);
+        LogicFacade.getInstance().insertRequest(req);
     }
     
     public void deleteRequest(int id) throws NoSuchRequestException, SystemErrorException{
-        r.deleteRequest(id);
+        LogicFacade.getInstance().deleteRequest(id);
     }
     
     public Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException {
-        return m.getWoodMaterial(id, length);
+        return LogicFacade.getInstance().getWoodMaterial(id, length);
     }
 
     public Material getFitting(int id) throws SystemErrorException, NoSuchMaterialException {
-        return m.getFitting(id);
+        return LogicFacade.getInstance().getFitting(id);
     }
 
     public List<Request> getRequests() throws NoSuchShedException, SystemErrorException {
-        return r.getRequests();
+        return LogicFacade.getInstance().getRequests();
     }
 
     public Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException {
-        return r.getRequest(id);
+        return LogicFacade.getInstance().getRequest(id);
     }
     
     public List<PrebuiltCarport> getAllPrebuiltCarports() throws SystemErrorException {
-        return p.getAllPrebuiltCarports();
+        return LogicFacade.getInstance().getAllPrebuiltCarports();
     }
     
     public ShippingAddress getRequestShippingAddress(int id) throws SystemErrorException{
-        return r.getRequestShippingAddress(id);
+        return LogicFacade.getInstance().getRequestShippingAddress(id);
     }
     
     //Response
     
     public void insertResponse(Response res) throws SystemErrorException{
-        rp.insertResponse(res);
+        LogicFacade.getInstance().insertResponse(res);
     }
     
     public void deleteResponse(int responseId) throws NoSuchResponseException, SystemErrorException{
-        rp.deleteResponse(responseId);
+        LogicFacade.getInstance().deleteResponse(responseId);
     }
     
     public Response getResponse(int requestId) throws NoSuchResponseException, SystemErrorException{
-        return rp.getResponse(requestId);
+        return LogicFacade.getInstance().getResponse(requestId);
     }
     
     public List<Response> getResponses(int userId) throws SystemErrorException{
-        return rp.getResponses(userId);
+        return LogicFacade.getInstance().getResponses(userId);
     }
 }

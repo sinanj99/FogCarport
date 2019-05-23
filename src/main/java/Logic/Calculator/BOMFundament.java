@@ -6,14 +6,12 @@
 package Logic.Calculator;
 
 import Data.Entity.Carport;
-import Data.Mappers.IMaterialMapper;
 import Data.Entity.LineItem;
 import Data.Entity.Material;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
 import Data.Entity.Type;
-import Data.Mappers.IRequestMapper;
 import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.SystemErrorException;

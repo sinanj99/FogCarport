@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  *
  * @author Obaydah Mohamad
  */
-public abstract class IResponseMapper {
+abstract class IResponseMapper {
      public static IResponseMapper instance() {
         return ResponseMapper.getInstance();
     }

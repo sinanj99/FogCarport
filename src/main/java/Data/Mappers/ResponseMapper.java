@@ -5,7 +5,6 @@
  */
 package Data.Mappers;
 
-import Data.Controller.DataFacade;
 import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
 import Data.Entity.Response;

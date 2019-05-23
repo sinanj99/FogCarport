@@ -1,3 +1,7 @@
+DROP SCHEMA IF EXISTS CarportTest;
+CREATE SCHEMA CarportTest;
+USE CarportTest;
+
 DROP TABLE IF EXISTS prebuilt_carport;
 DROP TABLE IF EXISTS responses;
 DROP TABLE IF EXISTS sheds;
@@ -52,84 +56,72 @@ CREATE TABLE material_lengths (
 	
 
 CREATE TABLE users (
-	user_id INT(50) NOT NULL AUTO_INCREMENT,
-    seller INT(1) NOT NULL DEFAULT 0,
-    `admin` INT(1) NOT NULL DEFAULT 0,
-	email VARCHAR(320) NOT NULL UNIQUE,
-	password VARCHAR(50) NOT NULL,
-	PRIMARY KEY (user_id)
+  	user_id INT NOT NULL AUTO_INCREMENT,
+  	seller INT(1) NOT NULL DEFAULT 0,
+  	admin INT(1) NOT NULL DEFAULT 0,
+  	email VARCHAR(320) NOT NULL UNIQUE,
+  	password VARCHAR(50) NOT NULL,
+  	PRIMARY KEY (user_id)
 );
+
+CREATE TABLE personal_info (
+  	user_id INT NOT NULL,
+  	firstname VARCHAR(50) NOT NULL,
+  	lastname VARCHAR(50) NOT NULL,
+  	address VARCHAR(50) NOT NULL,
+  	zipcode INT(4) NOT NULL,
+  	city VARCHAR(50) NOT NULL,
+  	gender VARCHAR(1) NOT NULL,
+  	CONSTRAINT personal_info_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
 
 
 CREATE TABLE requests (
-	request_id INT(50) NOT NULL AUTO_INCREMENT,
-	user_id int(50) NOT NULL,
-	dateplaced DATETIME NOT NULL,
-	PRIMARY KEY (request_id),
-	CONSTRAINT requests_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
+  	request_id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+  	dateplaced DATETIME NOT NULL,
+  	PRIMARY KEY (request_id),
+    CONSTRAINT requests_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+CREATE TABLE carports (
+  	carport_id INT NOT NULL AUTO_INCREMENT,
+    request_id INT NOT NULL,
+  	roof_id INT NOT NULL, 
+  	inclination INT(1) NOT NULL,
+    width INT(3) NOT NULL,
+    length INT(3) NOT NULL,
+  	PRIMARY KEY (carport_id),
+    CONSTRAINT carports_ibfk_1 FOREIGN KEY (roof_id) REFERENCES roofs(roof_id),
+    CONSTRAINT carports_ibfk_2 FOREIGN KEY (request_id) REFERENCES requests(request_id)
+);
 
-CREATE TABLE personal_info (
-	user_id INT(50) NOT NULL,
-	firstname VARCHAR(50) NOT NULL,
-	lastname VARCHAR(50) NOT NULL,
-	address VARCHAR(50) NOT NULL,
-  	zipcode INT(4) NOT NULL,
-	city VARCHAR(50) NOT NULL,
-	gender VARCHAR(1) NOT NULL, /* M/Y */
-	CONSTRAINT personal_info_ibfk_1 FOREIGN KEY (user_id) REFERENCES users(user_id)
+CREATE TABLE sheds (
+    carport_id INT NOT NULL, 
+    width INT(3) NOT NULL,
+    length INT(3) NOT NULL,
+  	CONSTRAINT sheds_ibfk_1 FOREIGN KEY (carport_id) REFERENCES carports(carport_id)
 );
 
 CREATE TABLE shipping_addresses (
-	request_id INT NOT NULL,
-	firstname VARCHAR(50) NOT NULL,
-	lastname VARCHAR(50) NOT NULL,
-	address VARCHAR(50) NOT NULL,
-	zipcode INT(4) NOT NULL,
-	city VARCHAR(50) NOT NULL,
+  	request_id INT NOT NULL,
+  	firstname VARCHAR(50) NOT NULL,
+  	lastname VARCHAR(50) NOT NULL,
+  	address VARCHAR(50) NOT NULL,
+  	zipcode INT(4) NOT NULL,
+  	city VARCHAR(50) NOT NULL,
     CONSTRAINT shipping_addresses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id)
 );
 
 
-CREATE TABLE carports (
-	carport_id INT(50) NOT NULL AUTO_INCREMENT,
-	request_id INT(50) NOT NULL,
-	roof_id INT(50) NOT NULL, 
-	inclination INT(1) NOT NULL,
-  	width INT(50) NOT NULL,
-  	length INT(50) NOT NULL,
-	PRIMARY KEY (carport_id),
-	CONSTRAINT carports_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id),
-    CONSTRAINT carports_ibfk_2 FOREIGN KEY (roof_id) REFERENCES roofs(roof_id)
-);
-
-CREATE TABLE sheds (
-	shed_id INT(50) NOT NULL AUTO_INCREMENT,
-	carport_id INT(50) NOT NULL, 
-  	width INT(50) NOT NULL,
-  	length INT(50) NOT NULL,
-	PRIMARY KEY (shed_id),
-	CONSTRAINT sheds_ibfk_1 FOREIGN KEY (carport_id) REFERENCES carports(carport_id)
-);
-
 CREATE TABLE responses (
-	response_id INT(50) NOT NULL AUTO_INCREMENT,
-	request_id INT(50) NOT NULL UNIQUE, 
-	user_id INT(50) NOT NULL,
-	emp_id INT(50) NOT NULL,
-	dateplaced DATETIME NOT NULL,
-	carport_id INT(50) NOT NULL,
-	shed_id INT(50) DEFAULT NULL,
-	productionprice int NOT NULL,
-	sellprice INT NOT NULL,
-    `status` INT(1) DEFAULT 0,
-	PRIMARY KEY (response_id),
-	CONSTRAINT responses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id),
-	CONSTRAINT responses_ibfk_2 FOREIGN KEY (user_id) REFERENCES users(user_id),
-	CONSTRAINT responses_ibfk_3 FOREIGN KEY (emp_id) REFERENCES users(user_id),
-	CONSTRAINT responses_ibfk_4 FOREIGN KEY (carport_id) REFERENCES carports(carport_id),
-	CONSTRAINT responses_ibfk_5 FOREIGN KEY (shed_id) REFERENCES sheds(shed_id)
+  	request_id INT NOT NULL UNIQUE,
+    seller_id INT NOT NULL,
+  	dateplaced DATETIME NOT NULL,
+    sell_price INT NOT NULL,
+    status INT(1) DEFAULT 0,
+  	CONSTRAINT responses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id)
 );
 
 CREATE TABLE prebuilt_carport (
@@ -228,4 +220,40 @@ INSERT INTO roof_lengths(roof_id, length, price, stock) VALUES
 (1, 300,1100, 300),
 (2, 270,1000, 300),
 (2, 300,1100, 300);
-select * from users;
+
+/* POPULATE REQUEST TEST-TABLE */
+INSERT INTO requests (user_id, dateplaced) VALUES
+(1, "2019-05-22 12:00:00"),
+(1, "2019-05-22 12:10:00"),
+(1, "2019-05-22 12:20:00"),
+(1, "2019-05-22 12:30:00"),
+(1, "2019-05-22 12:40:00");
+
+/* POPULATE CARPORT TEST-TABLE */
+INSERT INTO carports (request_id, roof_id, inclination, width, length) VALUES
+(1, 1, 0, 600, 600),
+(2, 2, 0, 450, 600),
+(3, 3, 0, 480, 630),
+(4, 4, 0, 510, 660),
+(5, 5, 0, 540, 690);
+
+/* POPULATE SHIPPINGADDRESS TEST-TABLE */
+INSERT INTO shipping_addresses (request_id, firstname, lastname, address, zipcode, city) VALUES
+(1, "Billy", "Russo", "Tagensvej 24", "2200", "Koebenhavn N"),
+(2, "Obaydah", "Mohamad", "Ringertoften", "2400", "Koebenhavn NV"),
+(3, "Michael", "Jackson", "Aaboulevarden", "2200", "Koebenhavn N"),
+(4, "Michael", "Jensen", "Victor Bendix Gade", "2100", "Koebenhavn OE"),
+(5, "Mathias", "Pedersen", "Nørrebrogade 183", "2200", "Koebenhavn N");
+
+/* POPULATE SHED TEST-TABLE */
+INSERT INTO sheds VALUES
+(1, 240, 330),
+(3, 360, 270),
+(5, 240, 300);
+
+/* POPULATE RESPONSE TEST-TABLE */
+INSERT INTO responses VALUES
+(1, 3, "2019-05-22 15:00:00", 40000, 0),
+(2, 3, "2019-05-22 15:10:00", 40000, 0),
+(3, 3, "2019-05-22 15:20:00", 69850, 0),
+(4, 3, "2019-05-22 15:30:00", 40000, 0);

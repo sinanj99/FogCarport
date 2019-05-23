@@ -440,19 +440,6 @@ class RequestMapper extends IRequestMapper {
         return roofs;
     }
 
-    @Override
-    public void updateRoofPrice(int roof_id, int price) throws SystemErrorException {
-        try {
-            String query = "UPDATE `roofs` SET price = ? WHERE roof_id = ?;";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(2, roof_id);
-            pstmt.setInt(1, price);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new SystemErrorException(e.getMessage());
-        }
-    }
-
     public void insertRoof(PreparedStatement pstmt, String query, ResultSet rs, Roof roof) {
         int inclined_ = 0;
         if (roof.isInclined()) {

@@ -201,7 +201,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException {
+    public LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException {
 
         LinkedHashMap<Integer, Integer> prices = new LinkedHashMap();
         String sql = "SELECT * FROM material_lengths WHERE material_id = ?";
@@ -209,8 +209,12 @@ class MaterialMapper extends IMaterialMapper {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                prices.put(rs.getInt("length"), rs.getInt("price"));
+            if (rs.next()) {
+                while (rs.next()) {
+                    prices.put(rs.getInt("length"), rs.getInt("price"));
+                }
+            } else {
+                throw new NoSuchMaterialException(id);
             }
         } catch (SQLException ex) {
             throw new SystemErrorException(ex.getMessage());

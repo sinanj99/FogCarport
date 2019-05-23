@@ -96,7 +96,7 @@ public abstract class IMaterialMapper {
      * @return linked hash map including all lengths and their prices.
      * @throws SystemErrorException if an sql-exception occurs 
      */
-    public abstract LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException;
+    public abstract LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException;
     
     /**
      * Updates price of all lengths of a material specified by id

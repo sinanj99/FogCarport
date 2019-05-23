@@ -77,7 +77,6 @@ class MaterialMapper extends IMaterialMapper {
         return new Material(id, name, length, unit, price, stock);
     }
 
-    
     @Override
     public Material getFitting(int id) throws SystemErrorException, NoSuchMaterialException {
         String name = "";
@@ -103,6 +102,7 @@ class MaterialMapper extends IMaterialMapper {
         }
         return new Material(id, name, unit, price, stock);
     }
+
     @Override
     public void updateStockWithLength(int id, int length, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
         if (qty <= 0) {
@@ -132,6 +132,7 @@ class MaterialMapper extends IMaterialMapper {
             }
         }
     }
+
     @Override
     public void updateStockFittings(int id, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
         if (qty <= 0) {
@@ -160,37 +161,27 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceWithLength(int price, int id) throws SystemErrorException, 
+    public void updatePriceWithLength(int price, int id) throws SystemErrorException,
             NoSuchMaterialException, InvalidInputException {
         LinkedHashMap<Integer, Integer> prices = getMaterialLengthPrices(id);
         try {
-            String sql = "SELECT * FROM material_lengths WHERE material_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, id);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                int length;
-                prices = DataFacade.getInstance().updatePrices(price, prices);
-                for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
-                    price = entry.getValue();
-                    length = entry.getKey();
-                    sql = "UPDATE material_lengths SET price = ? WHERE material_id = ? AND length = ?";
-                    pstmt = conn.prepareStatement(sql);
-                    pstmt.setInt(1, price);
-                    pstmt.setInt(2, id);
-                    pstmt.setInt(3, length);
-                    pstmt.executeUpdate();
-                }
-            } else {
-                throw new NoSuchMaterialException(id);
-                
+            int length;
+            prices = DataFacade.getInstance().updatePrices(price, prices);
+            for (Map.Entry<Integer, Integer> entry : prices.entrySet()) {
+                price = entry.getValue();
+                length = entry.getKey();
+                String sql = "UPDATE material_lengths SET price = ? WHERE material_id = ? AND length = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, price);
+                pstmt.setInt(2, id);
+                pstmt.setInt(3, length);
+                pstmt.executeUpdate();
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());
         }
 
     }
-
 
     @Override
     public void insertMaterialDim(int id, int length, int price, int stock) throws SystemErrorException {
@@ -208,6 +199,7 @@ class MaterialMapper extends IMaterialMapper {
             throw new SystemErrorException(ex.getMessage());
         }
     }
+
     @Override
     public LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException {
 
@@ -225,6 +217,7 @@ class MaterialMapper extends IMaterialMapper {
         }
         return prices;
     }
+
     @Override
     public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
 
@@ -332,6 +325,7 @@ class MaterialMapper extends IMaterialMapper {
         }
         return materials;
     }
+
     @Override
     public List<Roof> getRoofs() throws SystemErrorException {
         List<Roof> roofs = new ArrayList();
@@ -351,8 +345,8 @@ class MaterialMapper extends IMaterialMapper {
                 id = rs.getInt("roof_id");
                 name = rs.getString("name");
                 inclined = rs.getInt("inclined");
-                length = rs.getInt("length"); 
-                if(inclined == 1){
+                length = rs.getInt("length");
+                if (inclined == 1) {
                     inclined_ = true;
                 }
                 price = rs.getInt("price");

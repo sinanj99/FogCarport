@@ -49,7 +49,7 @@ public class PresentationFacade {
         return instance;
     }
     public void updatePrices(int price, int id, String type) throws SystemErrorException, NoSuchMaterialException, InvalidInputException {
-        LogicFacade.getInstance().calcPrices(price, id, type);
+        LogicFacade.getInstance().updatePrices(price, id, type);
     }
     public void updatePriceFittings(int price, int id) throws SystemErrorException, NoSuchMaterialException {
         LogicFacade.getInstance().updatePriceFittings(price, id);

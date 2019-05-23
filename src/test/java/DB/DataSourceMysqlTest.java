@@ -20,7 +20,7 @@ public class DataSourceMysqlTest {
      * Constructs datasource that works with remote dB
      */
     public DataSourceMysqlTest() {
-        ds.setServerName("localhost");
+        ds.setServerName("157.230.97.70");
         ds.setPort(3306);
         ds.setDatabaseName("CarportTest");
         ds.setUser("root");

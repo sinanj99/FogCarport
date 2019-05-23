@@ -52,12 +52,16 @@ public class FrontController extends HttpServlet {
             request.getRequestDispatcher(e.getTarget()).forward(request, response);
         } catch (ClientException e) {
             String message = e.getMessage();
+            String target = e.getTarget();
             if (message == null) {
                 message = "Der opstod en fejl!";
             }
+            if(e.getTarget() == null) {
+                target = "jsp/error.jsp";
+            }
             String detail = (e.getDetail());
             System.out.println("message: " + message);
-            System.out.println("target: " + e.getTarget());
+            System.out.println("target: " + target);
             request.setAttribute("error", message);
             request.setAttribute("detail", detail);
             request.getRequestDispatcher(e.getTarget()).forward(request, response);

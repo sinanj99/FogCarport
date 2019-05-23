@@ -48,7 +48,7 @@ public class LogicFacade {
         }
         return instance;
     }
-    public void calcPrices(int price, int id, String type) throws InvalidInputException, NoSuchMaterialException, SystemErrorException {
+    public void updatePrices(int price, int id, String type) throws InvalidInputException, NoSuchMaterialException, SystemErrorException {
         cp.updatePrices(price, id, type);
     }
     public User getUser(String email) throws UserNotFoundException, SystemErrorException {

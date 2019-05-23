@@ -60,17 +60,14 @@ function check(element) {
 }
 
 function checkAll() {
-    console.log("test");
-    var condition = true;
+    var valid = true;
     var inputs = document.getElementsByClassName("check");
     for (var i = 0; i < inputs.length; i++) {
-        console.log("test1");
         if (check(inputs[i]) == false) {
-            console.log("check false!");
-            condition = false;
+            valid = false;
         }
     }
-    if (condition == false) {
+    if (valid == false) {
         document.getElementById("submit").disabled = true;
     } else {
         document.getElementById("submit").disabled = false;

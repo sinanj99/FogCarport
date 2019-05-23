@@ -73,83 +73,71 @@ public class IResponseMapperTest {
         mapper.setDataSource(ds);
     }
     
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     @Test
-    public void testInstance() {
-        System.out.println("instance");
-        IResponseMapper expResult = null;
-        IResponseMapper result = IResponseMapper.instance();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-    
-    @Test
-    public void testGetResponses_Size() {
-        System.out.println("getResponses_Size");
+    public void testGetResponses() throws SystemErrorException {
+        System.out.println("getResponses");
         int userId = 1;
         IResponseMapper instance = IResponseMapper.instance();
+        List<Response> list = instance.getResponses(userId);
+        
         int expResult = 4;
         int result = 0;
+        result = list.size();
+        assertEquals(expResult, result);
         
-        try {
-            result = instance.getResponses(userId).size();
-        } catch (SystemErrorException ex) {
-            System.out.println(ex.getMessage());
-        }
-        assertEquals(expResult, result);
-    }
-    
-    @Test
-    public void testGetResponses() {
-        System.out.println("getResponses");
-        int userId = 0;
-        IResponseMapper instance = IResponseMapper.instance();
-        List<Response> expResult = null;
-        List<Response> result = null;
-        try {
-            result = instance.getResponses(userId);
-        } catch (SystemErrorException ex) {
-            Logger.getLogger(IResponseMapperTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        Response firstResponse = list.get(3);
+        assertEquals(1, firstResponse.getRequest().getRequestId());
+        assertEquals(3, firstResponse.getSellerId());
+        assertEquals("2019-05-22 15:00:00", firstResponse.getDatePlaced());
+        assertEquals(40000, firstResponse.getSellPrice());
+        assertEquals(0, firstResponse.getStatus());
+        
+        Response secondResponse = list.get(2);
+        assertEquals(2, secondResponse.getRequest().getRequestId());
+        assertEquals(3, secondResponse.getSellerId());
+        assertEquals("2019-05-22 15:10:00", secondResponse.getDatePlaced());
+        assertEquals(40000, secondResponse.getSellPrice());
+        assertEquals(0, secondResponse.getStatus());
+        
+        Response thirdResponse = list.get(1);
+        assertEquals(3, thirdResponse.getRequest().getRequestId());
+        assertEquals(3, thirdResponse.getSellerId());
+        assertEquals("2019-05-22 15:20:00", thirdResponse.getDatePlaced());
+        assertEquals(69850, thirdResponse.getSellPrice());
+        assertEquals(0, thirdResponse.getStatus());
+        
+        Response fourthResponse = list.get(0);
+        assertEquals(4, fourthResponse.getRequest().getRequestId());
+        assertEquals(3, fourthResponse.getSellerId());
+        assertEquals("2019-05-22 15:30:00", fourthResponse.getDatePlaced());
+        assertEquals(40000, fourthResponse.getSellPrice());
+        assertEquals(0, fourthResponse.getStatus());
+
     }
 
     @Test
-    public void testGetResponse_String() {
-        System.out.println("getResponse_String");
+    public void testGetResponse() throws NoSuchResponseException, SystemErrorException {
+        System.out.println("getResponse");
         int requestId = 3;
         IResponseMapper instance = IResponseMapper.instance();
-        String expResult = "3 3 2019-05-22 15:20:00 69850 0";
-        String result = "";
         
         Response r = null;
-        try {
-            r = instance.getResponse(requestId);
-            result =    String.valueOf(r.getRequest().getRequestId()) + " " +
-                        String.valueOf(r.getSellerId()) + " " +
-                        r.getDatePlaced() + " " +
-                        String.valueOf(r.getSellPrice()) + " " +
-                        String.valueOf(r.getStatus());
-        } catch (NoSuchResponseException ex) {
-            System.out.println(ex.getMessage());
-        } catch (SystemErrorException ex) {
-            System.out.println(ex.getMessage());
-        }
-        assertEquals(expResult, result);
+        r = instance.getResponse(requestId);
+        assertEquals(3, r.getRequest().getRequestId());
+        assertEquals(3, r.getSellerId());
+        assertEquals("2019-05-22 15:20:00", r.getDatePlaced());
+        assertEquals(69850, r.getSellPrice());
+        assertEquals(0, r.getStatus());
     }
-    //(5, 3, "2019-05-22 15:40:00", 40000, 0);
+    
+    @Test (expected = NoSuchResponseException.class)
+    public void testGetResponseFail() throws NoSuchResponseException, SystemErrorException{
+        System.out.println("getResponseFail");
+        int responseId = 124;
+        IResponseMapper instance = IResponseMapper.instance();
+        instance.getResponse(responseId);
+    }
+    
     @Test
     public void testInsertResponse() throws SystemErrorException, NoSuchResponseException{
         System.out.println("insertResponse");
@@ -168,12 +156,7 @@ public class IResponseMapperTest {
         assertEquals(result.getStatus(), 0);
     }
     
-    /*
-    Forventer NoSuchRequestException fordi, at getResponse
-    kalder getRequest(RequestMapper), hvis den ingen request finder,
-    så betyder det at der heller ingen response eksisterer
-    */
-    @Test (expected = NoSuchRequestException.class)
+    @Test (expected = NoSuchResponseException.class)
     public void testDeleteResponse() throws NoSuchResponseException, SystemErrorException {
         System.out.println("deleteResponse");
         int responseId = 1;

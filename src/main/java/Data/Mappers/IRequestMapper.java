@@ -129,14 +129,6 @@ public abstract class IRequestMapper {
     public abstract List<Roof> getRoofs(int rooftype) throws SystemErrorException;
     
     /**
-     * Updates price of a roof with specified length and rooftype.
-     * @param roof_id id of roof
-     * @param price of roof
-     * @throws NoSuchRoofException if no roof with specified id can be found
-     */
-    public abstract void updateRoofPrice(int roof_id, int price) throws SystemErrorException;
-    
-    /**
      * Returns a ShippingAddress object which contains user and user shipping info, specified by
      * request id.
      * @param id of request with the shipping address

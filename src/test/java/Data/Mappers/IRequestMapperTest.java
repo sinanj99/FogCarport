@@ -102,6 +102,14 @@ public class IRequestMapperTest {
         assertEquals(r.getUserId(), 1);
         assertEquals(r.getDatePlaced(), "2019-05-22 12:10:00");
     }
+    
+    @Test (expected = NoSuchRequestException.class)
+    public void testGetRequestFail() throws Exception, SystemErrorException, NoSuchRequestException, NoSuchShedException {
+        System.out.println("getRequestFail");
+        int id = 22;
+        IRequestMapper instance = IRequestMapper.instance();
+        instance.getRequest(id);
+    }
 
     @Test
     public void testGetRequests() throws Exception, SystemErrorException, NoSuchShedException {
@@ -112,40 +120,33 @@ public class IRequestMapperTest {
         assertEquals(expResult, result.size());
     }
 
-    /*
     @Test
     public void testInsertDimensions() throws Exception {
         System.out.println("insertDimensions");
-        int id = 0;
-        int length = 0;
-        int price = 0;
+        int id = 2;
+        int length = 500;
+        int price = 22000;
+        int stock = 1;
         IRequestMapper instance = IRequestMapper.instance();
-        //instance.insertDimensions(id, length, price);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetDimensionPrice() throws Exception {
-        System.out.println("getDimensionPrice");
-        int roof_id = 0;
-        int length = 0;
-        IRequestMapper instance = IRequestMapper.instance();
-        int expResult = 0;
-        int result = instance.getDimensionPrice(roof_id, length);
+        instance.insertDimensions(id, length, price, stock);
+        
+        int expResult = price;
+        int result = IRequestMapper.instance().getDimensionPrice(2, 500);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
     
+    
     @Test
-    public void testUpdateRoofPrice() throws SystemErrorException {
-        System.out.println("updateRoofPrice");
-        int roof_id = 0;
-        int price = 0;
+    public void testGetDimensionPrice() throws SystemErrorException {
+        System.out.println("getDimensionPrice");
+        int roof_id = 1;
+        int length = 300;
         IRequestMapper instance = IRequestMapper.instance();
-        instance.updateRoofPrice(roof_id, price);
-        fail("The test case is a prototype.");
+        int expResult = 1100;
+        int result = instance.getDimensionPrice(roof_id, length);
+        assertEquals(expResult, result);
     }
-    */
+    
     @Test
     public void testGetRoof() throws SystemErrorException {
         System.out.println("getRoof");
@@ -155,6 +156,14 @@ public class IRequestMapperTest {
         Roof r = instance.getRoof(id);
         assertEquals(r.getRoof_id(), 6);
         assertEquals(r.getName(), "Betonstagsten - Teglrød");
+    }
+    
+    @Test (expected = NoSuchRoofException.class)
+    public void testGetRoofFail() throws SystemErrorException, NoSuchRequestException, NoSuchShedException {
+        System.out.println("getRoofFail");
+        int id = 425;
+        IRequestMapper instance = IRequestMapper.instance();
+        instance.getRoof(id);
     }
 
     @Test

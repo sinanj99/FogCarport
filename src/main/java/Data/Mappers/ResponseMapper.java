@@ -104,6 +104,8 @@ class ResponseMapper extends IResponseMapper{
                 status = rs.getInt("status");
                 
                 r = new Response(DataFacade.getInstance().getRequest(requestId), sellerId, datePlaced, sellPrice);
+            }else{
+                throw new NoSuchResponseException();
             }
         }catch(SQLException e){
             throw new SystemErrorException(e.getMessage());

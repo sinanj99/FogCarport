@@ -5,8 +5,15 @@
  */
 package Data.Mappers;
 
+import DB.DataSourceMysqlTest;
+import Data.Database.DBConnector;
 import Data.Entity.PrebuiltCarport;
 import Presentation.Exceptions.SystemErrorException;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;
@@ -22,61 +29,52 @@ import static org.junit.Assert.*;
  */
 public class IPrebuiltCarportMapperTest {
     
+    private static IPrebuiltCarportMapper mapper;
+    private static String sqlStatements = "";
+    private static final DataSource ds = new DataSourceMysqlTest().getDataSource();
+    
     public IPrebuiltCarportMapperTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
+        System.out.println("MYSQL Tests...");
+
+        BufferedReader sqlScript;
+        try {
+            //indlæser scriptet
+            sqlScript = new BufferedReader(new InputStreamReader(new FileInputStream("CarportTestScript.sql"), "UTF-8"));
+            System.out.println("test");
+
+            String sqlStatement;
+            //henter alle sql statements fra scriptet
+            while ((sqlStatement = sqlScript.readLine()) != null) {
+                sqlStatements += sqlStatement + "\n";
+            }
+            System.out.println(sqlStatements);
+
+            //henter DBCOnnector, ændrer URL til testDB
+            DBConnector con = new DBConnector();
+            //udfører alle statements (genstarter db-data)
+            con.setDataSource(new DataSourceMysqlTest().getDataSource());
+            con.getConnection();
+            con.preparedStatement(sqlStatements).executeUpdate();
+
+        } catch (SQLException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        mapper = IPrebuiltCarportMapper.instance();
+        mapper.setDataSource(ds);
     }
     
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     @Test
-    public void testInstance() {
-        System.out.println("instance");
-        IPrebuiltCarportMapper expResult = null;
-        IPrebuiltCarportMapper result = IPrebuiltCarportMapper.instance();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testSetDataSource() {
-        System.out.println("setDataSource");
-        DataSource ds = null;
-        IPrebuiltCarportMapper instance = new IPrebuiltCarportMapperImpl();
-        instance.setDataSource(ds);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetAllPrebuiltCarports() throws Exception {
+    public void testGetAllPrebuiltCarports() throws SystemErrorException {
         System.out.println("getAllPrebuiltCarports");
-        IPrebuiltCarportMapper instance = new IPrebuiltCarportMapperImpl();
-        List<PrebuiltCarport> expResult = null;
-        List<PrebuiltCarport> result = instance.getAllPrebuiltCarports();
+        IPrebuiltCarportMapper instance = IPrebuiltCarportMapper.instance();
+        List<PrebuiltCarport> list  = instance.getAllPrebuiltCarports();
+        int expResult = 11;
+        int result = list.size();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
-
-    public class IPrebuiltCarportMapperImpl extends IPrebuiltCarportMapper {
-
-        public void setDataSource(DataSource ds) {
-        }
-
-        public List<PrebuiltCarport> getAllPrebuiltCarports() throws SystemErrorException {
-            return null;
-        }
-    }
-    
 }

@@ -21,10 +21,10 @@ public class DataSourceMysqlTest {
      */
     public DataSourceMysqlTest() {
         ds.setServerName("localhost");
-        ds.setPort(3306);
-        ds.setDatabaseName("CarportTest");
+        ds.setPort(3308);
+        ds.setDatabaseName("carporttest");
         ds.setUser("root");
-        ds.setPassword("prespa01");
+        ds.setPassword("12qwaszx");
         try {
             ds.setAllowMultiQueries(true);
             ds.setUseSSL(false);

@@ -5,7 +5,7 @@
  */
 package Presentation.Commands;
 
-import Logic.Controller.LogicFacade;
+import Logic.Logic.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
@@ -66,7 +66,7 @@ public class ChangePriceCommand implements Command {
             System.out.println(e.getMessage());
             throw new NoSuchMaterialException("FrontController?command=show_prices", e.getId());
         }
-        return "jsp/frontpage.jsp";
+        return "FrontController?command=show_prices";
     }
 
 }

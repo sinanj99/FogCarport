@@ -24,7 +24,6 @@ import javax.sql.DataSource;
 public class PrebuiltCarportMapper extends IPrebuiltCarportMapper
 {
     private static PrebuiltCarportMapper instance = null;
-    //Connection con = DBConnector.getConnection();
     private final DBConnector con = new DBConnector();
     Connection conn;
     
@@ -59,16 +58,15 @@ public class PrebuiltCarportMapper extends IPrebuiltCarportMapper
         int price = 0;
         
         try {
-            String sql = "SELECT * FROM `prebuilt_carport` ;";
+            String sql = "SELECT * FROM `prebuilt_carports` LEFT JOIN prebuilt_sheds USING(prebuilt_carport_id);";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) 
             {
-                id = rs.getInt("id");
+                id = rs.getInt("prebuilt_carport_id");
                 imgPath = rs.getString("img_path");
                 carportWidth = rs.getInt("carport_width");
                 carportLength = rs.getInt("carport_length");
-                shed = rs.getBoolean("shed");
                 shedWidth = rs.getInt("shed_width");
                 shedLength = rs.getInt("shed_length");
                 price = rs.getInt("price");
@@ -79,7 +77,7 @@ public class PrebuiltCarportMapper extends IPrebuiltCarportMapper
         } 
         catch (SQLException ex) 
         {
-            throw new SystemErrorException();
+            throw new SystemErrorException(ex.getMessage());
         }
         
         return prebuiltCarports;

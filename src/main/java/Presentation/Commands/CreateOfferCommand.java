@@ -9,11 +9,6 @@ import Data.Entity.BOM;
 import Data.Entity.LineItem;
 import Data.Entity.Request;
 import Data.Entity.Type;
-import Logic.Calculator.CalculateBOM;
-import Logic.Calculator.CalculatePrice;
-import Logic.Calculator.DrawSVGIncline;
-import Logic.Calculator.DrawSVGFlatroof;
-import Logic.Calculator.BOMRoofPackage;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRequestException;
@@ -41,12 +36,11 @@ public class CreateOfferCommand implements Command {
         //calculations
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
-        CalculateBOM b = new CalculateBOM();
         try {
             if (r.getCarport().getInclination() != 0) {
-                bom = b.inclineRoofBOM(r);
+                bom = PresentationFacade.getInstance().inclineRoofBOM(r);
             } else {
-                bom = b.generateFlatRoofCarportBOM(r);
+                bom = PresentationFacade.getInstance().generateFlatRoofCarportBOM(r);
             }
         } catch(SystemErrorException e) {
             request.setAttribute("error", e.getMessage());
@@ -81,18 +75,16 @@ public class CreateOfferCommand implements Command {
         request.setAttribute("materialsNoLength", materialsNoLength);
 
         // drawing
-        DrawSVGIncline d = new DrawSVGIncline();
-        DrawSVGFlatroof df = new DrawSVGFlatroof();
 
         String svg1 = "";
         String svg2 = "";
 
         if (r.getCarport().getInclination() == 0) {
-            svg1 = df.drawFlat(r.getCarport());
+            svg1 = PresentationFacade.getInstance().drawFlat(r.getCarport());
             System.out.println(svg1);
         } else {
-            svg1 = d.drawTopIncline(r.getCarport());
-            svg2 = d.drawFrontIncline(r.getCarport());
+            svg1 = PresentationFacade.getInstance().drawTopIncline(r.getCarport());
+            svg2 = PresentationFacade.getInstance().drawFrontIncline(r.getCarport());
         }
 //        String bandSvg = d.drawPerforatedBand(r.getCarport());
         request.setAttribute("svg1", svg1);

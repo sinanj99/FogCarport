@@ -89,14 +89,12 @@ class ResponseMapper extends IResponseMapper{
         int sellPrice = 0;
         int status = 0;
         String datePlaced = "";
-        
         try {
             String query = "SELECT * FROM responses WHERE request_id = ?;";
             PreparedStatement p = conn.prepareStatement(query);
             p.setInt(1, requestId);
             ResultSet rs = p.executeQuery();
             if(rs.next()){
-                
                 requestId = rs.getInt("request_id");
                 sellerId = rs.getInt("seller_id");
                 sellPrice = rs.getInt("sell_price");
@@ -105,7 +103,7 @@ class ResponseMapper extends IResponseMapper{
                 
                 r = new Response(DataFacade.getInstance().getRequest(requestId), sellerId, datePlaced, sellPrice);
             }else{
-                throw new NoSuchResponseException();
+                return null;
             }
         }catch(SQLException e){
             throw new SystemErrorException(e.getMessage());

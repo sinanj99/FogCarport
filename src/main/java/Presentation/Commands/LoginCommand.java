@@ -6,8 +6,7 @@
 package Presentation.Commands;
 
 import Data.Entity.User;
-import Logic.Controller.LoginController;
-import Logic.Controller.LogicFacade;
+import Logic.Logic.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoMatchException;
 import Presentation.Exceptions.SystemErrorException;
@@ -35,7 +34,7 @@ public class LoginCommand implements Command {
         String password = request.getParameter("pword");
         try {
             user = PresentationFacade.getInstance().getUser(email);
-            LoginController.doesMatch(email, password);
+            PresentationFacade.getInstance().doesMatch(email, password, user);
         } catch (UserNotFoundException e) {
             throw new UserNotFoundException("jsp/login.jsp", "Bruger findes ikke!");
         } catch (NoMatchException e) {

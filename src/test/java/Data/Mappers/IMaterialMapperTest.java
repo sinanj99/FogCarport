@@ -7,7 +7,6 @@ package Data.Mappers;
 
 import DB.DataSourceMysqlTest;
 import Data.Database.DBConnector;
-import Logic.Calculator.CalculatePrice;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;

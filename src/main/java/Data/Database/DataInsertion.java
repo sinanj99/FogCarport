@@ -7,7 +7,7 @@ package Data.Database;
 
 import Data.Entity.Roof;
 import Data.Mappers.DataFacade;
-import Logic.Controller.LogicFacade;
+import Logic.Logic.LogicFacade;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 import java.util.List;

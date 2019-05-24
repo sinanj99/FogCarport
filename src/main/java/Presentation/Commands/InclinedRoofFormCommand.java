@@ -5,7 +5,7 @@
  */
 package Presentation.Commands;
 
-import Logic.Controller.LogicFacade;
+import Logic.Logic.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Calculator;
+package Logic.Logic;
 
 import Data.Entity.Carport;
 import Data.Entity.Shed;
@@ -12,7 +12,7 @@ import Data.Entity.Shed;
  *
  * @author Kasper Jeppesen
  */
-public class DrawSVGFlatroof {
+class DrawSVGFlatroof {
 
     public String drawFlat(Carport c) {
         String drawing = "";

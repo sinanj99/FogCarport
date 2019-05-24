@@ -9,7 +9,6 @@ import Data.Entity.BOM;
 import Data.Entity.LineItem;
 import Data.Entity.Request;
 import Data.Entity.ShippingAddress;
-import Logic.Calculator.CalculateBOM;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
@@ -36,11 +35,10 @@ public class CreateResponseCommand implements Command {
         int productionPrice = 0;
 
         BOM bom;
-        CalculateBOM b = new CalculateBOM();
         if (r.getCarport().getInclination() != 0) {
-            bom = b.inclineRoofBOM(r);
+            bom = PresentationFacade.getInstance().inclineRoofBOM(r);
         } else {
-            bom = b.generateFlatRoofCarportBOM(r);
+            bom = PresentationFacade.getInstance().generateFlatRoofCarportBOM(r);
         }
 
         for (LineItem l : bom.getLineitems()) {
@@ -52,12 +50,11 @@ public class CreateResponseCommand implements Command {
         request.setAttribute("productionPrice", productionPrice);
 
         request.setAttribute("status", "offernotsend");
-
+        
         if (PresentationFacade.getInstance().getResponse(r.getRequestId()) != null) {
             request.setAttribute("status", "offersend");
             request.setAttribute("response", PresentationFacade.getInstance().getResponse(r.getRequestId()));
         }
-
         return "jsp/create_response.jsp";
     }
 

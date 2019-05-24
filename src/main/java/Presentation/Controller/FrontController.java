@@ -7,7 +7,7 @@ package Presentation.Controller;
 
 import Presentation.Commands.Command;
 import Presentation.Exceptions.DuplicateException;
-import Logic.Controller.LogicFacade;
+import Logic.Logic.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.UserNotFoundException;
@@ -53,18 +53,17 @@ public class FrontController extends HttpServlet {
         } catch (ClientException e) {
             String message = e.getMessage();
             String target = e.getTarget();
-            if (message == null) {
-                message = "Der opstod en fejl!";
-            }
-            if(e.getTarget() == null) {
+            if(target == null || target.isEmpty()) {
                 target = "jsp/error.jsp";
+            } else if (message == null) {
+                message = "Der opstod en fejl!";
             }
             String detail = (e.getDetail());
             System.out.println("message: " + message);
             System.out.println("target: " + target);
             request.setAttribute("error", message);
             request.setAttribute("detail", detail);
-            request.getRequestDispatcher(e.getTarget()).forward(request, response);
+            request.getRequestDispatcher(target).forward(request, response);
         }
     }
 

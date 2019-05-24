@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Calculator;
+package Logic.Logic;
 
 import Data.Entity.Carport;
 import Data.Entity.LineItem;
@@ -14,7 +14,6 @@ import Data.Entity.Type;
 
 import Presentation.Exceptions.NoSuchMaterialException;
 
-import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 
@@ -22,7 +21,7 @@ import Presentation.Exceptions.SystemErrorException;
  *
  * @author Sinan Jasar
  */
-public class BOMRoofPackage {
+class BOMRoofPackage {
     
     private static final BOMFundament fc = new BOMFundament();
 

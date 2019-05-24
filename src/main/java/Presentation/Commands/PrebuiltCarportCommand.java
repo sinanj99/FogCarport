@@ -6,7 +6,7 @@
 package Presentation.Commands;
 
 import Data.Entity.PrebuiltCarport;
-import Logic.Controller.LogicFacade;
+import Logic.Logic.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchPrebuiltCarportException;
 import Presentation.Exceptions.NoSuchRoofException;

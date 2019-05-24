@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Calculator;
+package Logic.Logic;
 
 import Data.Entity.Carport;
 import Data.Entity.LineItem;
 import Data.Entity.Material;
 import Data.Entity.Type;
-import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.SystemErrorException;
 
@@ -17,7 +16,7 @@ import Presentation.Exceptions.SystemErrorException;
  *
  * @author Kasper Jeppesen
  */
-public class BOMToolshed
+class BOMToolshed
 {
     //---------------------------------------------- calculation methods ----------------------------------------------------------------------
     

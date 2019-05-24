@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Calculator;
+package Logic.Logic;
 
 import Data.Database.DBConnector;
 import Data.Database.DataSourceMysql;
@@ -28,7 +28,7 @@ public class TestCalculateBOMMethods
     {
         BOMFundament f = new BOMFundament();
         BOMRoofPackage i = new BOMRoofPackage();
-        CalculateBOM c = new CalculateBOM();
+        BOMCalculator c = new BOMCalculator();
         DBConnector con = new DBConnector();
 //        System.out.println(IUserMapper.instance().getUser("test@test.dk"));
 //          IMaterialMapper.instance().setDataSource(new DataSourceMysql().getDataSource());

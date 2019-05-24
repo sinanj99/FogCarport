@@ -12,7 +12,7 @@ import Data.Entity.Roof;
 import Data.Entity.Shed;
 import Data.Entity.ShippingAddress;
 import Data.Entity.User;
-import Logic.Controller.LogicFacade;
+import Logic.Logic.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoSuchRoofException;

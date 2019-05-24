@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Controller;
+package Logic.Logic;
 
 import Data.Mappers.DataFacade;
 import Data.Database.DataSourceMysql;
+import Data.Entity.BOM;
+import Data.Entity.Carport;
 import Data.Entity.Material;
 import Data.Entity.PrebuiltCarport;
 import Data.Entity.Request;
@@ -16,9 +18,10 @@ import Presentation.Exceptions.NoSuchRoofException;
 import Data.Entity.Roof;
 import Data.Entity.ShippingAddress;
 import Data.Entity.User;
-import Logic.Calculator.CalculatePrice;
+import Logic.Logic.PriceCalculator;
 import Presentation.Exceptions.DuplicateException;
 import Presentation.Exceptions.InvalidInputException;
+import Presentation.Exceptions.NoMatchException;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchResponseException;
@@ -35,7 +38,11 @@ import javax.sql.DataSource;
 public class LogicFacade {
 
     private static LogicFacade instance = null;
-    private static CalculatePrice cp = new CalculatePrice();
+    private static PriceCalculator cp = new PriceCalculator();
+    BOMCalculator bom = new BOMCalculator();
+    DrawSVGFlatroof fsvg = new DrawSVGFlatroof();
+    DrawSVGIncline isvg = new DrawSVGIncline();
+    
 
     //prevents other classes from creating instance
     private LogicFacade() {
@@ -87,7 +94,9 @@ public class LogicFacade {
     public List<Roof> getRoofs() throws SystemErrorException {
         return DataFacade.getInstance().getRoofs();
     }
-    
+    public List<Roof> getRoofsSorted() throws SystemErrorException {
+        return DataFacade.getInstance().getRoofsSorted();
+    }
     public List<Material> getMaterials() throws SystemErrorException {
         return DataFacade.getInstance().getMaterials();
     }
@@ -133,5 +142,28 @@ public class LogicFacade {
     
     public List<Response> getResponses(int userId) throws SystemErrorException{
         return DataFacade.getInstance().getResponses(userId);
+    }
+    public void doesMatch(String email, String password, User user) throws UserNotFoundException, SystemErrorException, NoMatchException {
+        LoginController.doesMatch(email, password, user);
+    }
+
+    public String drawFlat(Carport carport) {
+        return fsvg.drawFlat(carport);
+    }
+
+    public String drawTopIncline(Carport carport) {
+        return isvg.drawTopIncline(carport);
+    }
+
+    public String drawFrontIncline(Carport carport) {
+        return isvg.drawFrontIncline(carport);
+    }
+
+    public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException, SystemErrorException {
+        return bom.generateFlatRoofCarportBOM(r);
+    }
+
+    public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, SystemErrorException {
+        return bom.inclineRoofBOM(r);
     }
 }

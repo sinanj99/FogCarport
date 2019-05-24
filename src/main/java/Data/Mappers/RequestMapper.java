@@ -382,9 +382,11 @@ class RequestMapper extends IRequestMapper {
         int roof_id = 0;
         String name = "";
         int inclined_ = 0;
+        int price = 0;
+        int length = 0;
         boolean inclined = false;
 
-        String query = "SELECT * FROM roofs";
+        String query = "SELECT * FROM roofs LEFT JOIN roof_lengths USING(roof_id)";
 
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -394,11 +396,14 @@ class RequestMapper extends IRequestMapper {
                 roof_id = rs.getInt("roof_id");
                 name = rs.getString("name");
                 inclined_ = rs.getInt("inclined");
+                price = rs.getInt("price");
+                length = rs.getInt("length");
+                
                 if (inclined_ == 1) {
                     inclined = true;
                 }
-
-                roofs.add(new Roof(roof_id, name, inclined));
+                System.out.println(new Roof(roof_id, name, price, inclined, length));
+                
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());

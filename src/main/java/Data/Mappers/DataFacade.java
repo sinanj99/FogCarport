@@ -15,7 +15,6 @@ import Data.Entity.Response;
 import Data.Entity.Roof;
 import Data.Entity.ShippingAddress;
 import Data.Entity.User;
-import Logic.Calculator.CalculatePrice;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoSuchCarportException;
@@ -35,7 +34,6 @@ import javax.sql.DataSource;
 public class DataFacade {
 
     private static DataFacade instance = null;
-    CalculatePrice pc = new CalculatePrice();
     private static final DataSource ds = new DataSourceMysql().getDataSource();
     private static final IRequestMapper r = IRequestMapper.instance();
     private static final IResponseMapper rp = IResponseMapper.instance();
@@ -112,12 +110,17 @@ public class DataFacade {
     public void updatePriceRoof(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
         m.updatePriceRoof(prices, id);
     }
-
+    
+    public List<Roof> getRoofsSorted() throws SystemErrorException {
+        return m.getRoofs();
+    }
+    // Request mapper
+    
     public List<Roof> getRoofs() throws SystemErrorException {
         return r.getRoofs();
     }
 
-    // Request mapper
+    
     public Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException {
         return r.getRequest(id);
     }

@@ -8,7 +8,7 @@ package Presentation.Commands;
 import Data.Entity.PersonalInfo;
 import Data.Entity.User;
 import Presentation.Exceptions.DuplicateException;
-import Logic.Controller.LogicFacade;
+import Logic.Logic.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.SystemErrorException;

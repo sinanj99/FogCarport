@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Calculator;
+package Logic.Logic;
 
 import Data.Entity.BOM;
 import Data.Entity.LineItem;
-import Logic.Controller.LogicFacade;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.SystemErrorException;
@@ -19,7 +18,7 @@ import java.util.Map;
  *
  * @author sinanjasar
  */
-public class CalculatePrice {
+class PriceCalculator {
 
     public static int buyPrice(BOM bom) {
         int fullPrice = 0;

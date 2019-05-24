@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Calculator;
+package Logic.Logic;
 
 import Data.Entity.BOM;
 import Data.Entity.Carport;
@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author Kasper Jeppesen
  */
-public class CalculateBOM {
+class BOMCalculator {
     
     public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException, SystemErrorException {
         BOMFundament f = new BOMFundament();

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Calculator;
+package Logic.Logic;
 
 import Data.Entity.Carport;
 import Data.Entity.Request;
@@ -13,7 +13,7 @@ import Data.Entity.Shed;
  *
  * @author sinanjasar
  */
-public class DrawSVGIncline {
+class DrawSVGIncline {
 
     public String drawTopIncline(Carport c) {
         String drawing = "";

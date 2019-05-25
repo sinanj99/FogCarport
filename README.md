@@ -1,12 +1,12 @@
 # FogCarport
-Admin:
+Admin: <br>
 admin@fog.dk<br>
-admin
-Seller:
-seller@fog.dk
-seller
-Customer:
-test@fog.dk
-test
+admin<br>
+Seller: <br>
+seller@fog.dk <br>
+seller<br>
+Customer:<br>
+test@fog.dk<br>
+test<br>
 
 

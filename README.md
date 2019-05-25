@@ -1,6 +1,6 @@
 # FogCarport
 Admin:
-admin@fog.dk
+admin@fog.dk<br>
 admin
 Seller:
 seller@fog.dk

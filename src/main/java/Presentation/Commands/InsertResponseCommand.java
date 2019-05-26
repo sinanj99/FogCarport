@@ -44,6 +44,7 @@ public class InsertResponseCommand implements Command{
         int sellPrice = 0;
         try{
             sellPrice = Integer.parseInt(request.getParameter("sellprice").trim());
+            if(sellPrice < 1) throw new InvalidInputException("FrontController?command=createresponse&requestID=" + requestId, "Ugyldig pris!");
         }catch(NumberFormatException e){
             throw new InvalidInputException("FrontController?command=createresponse&requestID=" + requestId, "Ugyldig pris!");
         }

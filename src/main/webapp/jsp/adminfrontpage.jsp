@@ -20,7 +20,7 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-12 d-flex flex-column align-items-center justify-content-center">
                     <h1>Velkommen <i class="fas fa-smile" style="color: yellow;"></i></h1>
-                    
+                    <p>Du er logget på som en administrator</p>
                 </div>
             </div>
         </div>

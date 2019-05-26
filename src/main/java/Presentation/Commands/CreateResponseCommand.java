@@ -9,11 +9,13 @@ import Data.Entity.BOM;
 import Data.Entity.LineItem;
 import Data.Entity.Request;
 import Data.Entity.ShippingAddress;
+import Data.Entity.User;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
+import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.NoSuchShedException;
@@ -29,7 +31,11 @@ import javax.servlet.http.HttpServletRequest;
 public class CreateResponseCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, NoSuchResponseException, SystemErrorException, NoSuchRequestException, NoSuchShedException {
+    public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, NoSuchResponseException, SystemErrorException, NoSuchRequestException, NoSuchShedException, ClientException {
+        User user = (User) request.getSession().getAttribute("user");
+        if(user == null) throw new ClientException("jsp/frontpage.jsp", "Log venligst ind for at tilgå denne side!"); 
+        if(!user.isSeller()) throw new ClientException("jsp/frontpage.jsp", "Du har ikke adgang til denne funktion!"); 
+        
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         ShippingAddress s = PresentationFacade.getInstance().getRequestShippingAddress(r.getRequestId());
         int productionPrice = 0;

@@ -6,7 +6,7 @@
 package Presentation.Exceptions;
 
 /**
- *
+ * Used in any command, when a request with specified id, doesn't exist in database.
  * @author Obaydah Mohamad
  */
 public class NoSuchRequestException extends SystemErrorException{

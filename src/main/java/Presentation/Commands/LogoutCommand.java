@@ -6,13 +6,10 @@
 package Presentation.Commands;
 
 import Presentation.Exceptions.NoSuchRoofException;
-import java.io.IOException;
-import java.sql.SQLException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command that logs a user out
  * @author sinanjasar
  */
 public class LogoutCommand implements Command {

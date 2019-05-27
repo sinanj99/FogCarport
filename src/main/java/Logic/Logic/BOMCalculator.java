@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Adds all line items to a list of line items, and returns it.
  * @author Kasper Jeppesen
  */
 class BOMCalculator {

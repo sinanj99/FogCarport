@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Presentation.Controller;
-
 import Presentation.Commands.BackCommand;
 import Presentation.Commands.ChangePriceCommand;
 import Presentation.Commands.GenerateReqCommand;
@@ -23,8 +22,6 @@ import Presentation.Commands.PrebuiltCarportCommand;
 import Presentation.Commands.ShopCommand;
 import Presentation.Commands.ShowPricesCommand;
 import Presentation.Commands.InsertResponseCommand;
-//import Presentation.Commands.PrebuiltCarportCommand;
-//import Presentation.Commands.ShopCommand;
 import Presentation.Commands.ShowRequestCommand;
 import Presentation.Commands.ShowResponseCommand;
 import Presentation.Commands.ShowResponsesCommand;
@@ -63,8 +60,6 @@ public class CommandFactory {
         commands.put("showresponses", new ShowResponsesCommand());
         commands.put("showresponse", new ShowResponseCommand());
         commands.put("deleteresponse", new DeleteResponseCommand());
-//        commands.put("prebuiltCarport", new PrebuiltCarportCommand());
-//        commands.put("shop", new ShopCommand());
     }
 
     static Command from(String key) {

@@ -28,7 +28,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 /**
- *
+ * Purpose is to call methods in datalayer, mainly mappers.
  * @author sinanjasar
  */
 public class DataFacade {
@@ -58,7 +58,9 @@ public class DataFacade {
         return instance;
     }
 
+    
     // Material mapper 
+    
     public void updatePricesRoof(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
         m.updatePriceRoof(prices, id);
     }

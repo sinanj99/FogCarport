@@ -16,15 +16,13 @@ import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command that handles creation of BOM, SVG and total sell/buy-price after pressing
+ * show request.
  * @author sinanjasar
  */
 public class CreateOfferCommand implements Command {

@@ -5,15 +5,13 @@
  */
 package Presentation.Commands;
 
-import Logic.Logic.LogicFacade;
+import Data.Entity.User;
 import Presentation.Exceptions.NoSuchRoofException;
-import Presentation.Exceptions.UserNotFoundException;
-import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Command, that sends user back to front page if a command value of the specified string key
+ * cannot be found.
  * @author sinanjasar
  */
 public class BackCommand implements Command {
@@ -23,8 +21,13 @@ public class BackCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws NoSuchRoofException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        User user = (User) request.getSession().getAttribute("user");
+        if (user.isAdmin() == true) {
+            return "jsp/adminfrontpage.jsp";
+        } else if(user.isSeller() == true) {
+            return "jsp/sellerfrontpage.jsp";
+        } else {
+            return "jsp/frontpage.jsp";
+        }
     }
-
-    
 }

@@ -5,14 +5,10 @@
  */
 package Presentation.Commands;
 
-import Data.Entity.Roof;
-import Logic.Logic.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *

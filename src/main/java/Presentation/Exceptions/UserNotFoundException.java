@@ -6,7 +6,7 @@
 package Presentation.Exceptions;
 
 /**
- *
+ * Used in any command, when a user with specified id, doesn't exist in database.
  * @author sinanjasar
  */
 public class UserNotFoundException extends ClientException {

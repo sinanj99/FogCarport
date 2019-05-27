@@ -7,6 +7,7 @@ package Data.Mappers;
 
 import DB.DataSourceMysqlTest;
 import Data.Database.DBConnector;
+import Data.Entity.Material;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
@@ -211,5 +212,27 @@ public class IMaterialMapperTest {
         expResult = 1090;
         result = it.next().getValue();
         assertEquals(expResult, result);
+    }
+    @Test
+    public void testGetWoodMaterial() throws SystemErrorException, NoSuchMaterialException{ 
+        Material material = mapper.getWoodMaterial(1, 270);
+        String result = material.getName();
+        String expResult = "45x195mm spærtræ. ubh.";
+        assertEquals(expResult, result);
+    }
+    @Test(expected = NoSuchMaterialException.class)
+    public void testGetWoodMaterialFail() throws SystemErrorException, NoSuchMaterialException{ 
+        mapper.getWoodMaterial(42104, 270);
+    }
+    @Test
+    public void testGetFitting() throws SystemErrorException, NoSuchMaterialException{ 
+        Material material = mapper.getFitting(1);
+        String result = material.getName();
+        String expResult = "universal 190 mm højre";
+        assertEquals(expResult, result);
+    }
+    @Test(expected = NoSuchMaterialException.class)
+    public void testGetFittingFail() throws SystemErrorException, NoSuchMaterialException{ 
+        mapper.getFitting(42104);
     }
 }

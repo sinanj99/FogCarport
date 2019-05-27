@@ -10,16 +10,19 @@ import Data.Entity.LineItem;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.SystemErrorException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- *
+ * Contains methods that calculate things related to prices.
  * @author sinanjasar
  */
 class PriceCalculator {
-
+    /**
+     * Calculates buy price of a carport
+     * @param bom bill of materials of carport
+     * @return the buy price of the carport
+     */
     public static int buyPrice(BOM bom) {
         int fullPrice = 0;
         for (LineItem l : bom.getLineitems()) {
@@ -27,7 +30,11 @@ class PriceCalculator {
         }
         return fullPrice;
     }
-
+    /**
+     * Calculates sell price of a carport
+     * @param bom bill of materials of carport
+     * @return the sell price of the carport
+     */
     public static int sellPrice(BOM bom, int profit) {
         return buyPrice(bom) * profit;
     }
@@ -36,16 +43,14 @@ class PriceCalculator {
      * Updates prices of all lengths of a specific material type.
      *
      * @param price the new price of a material.
-     * @param id
+     * @param id of the roof/material
      * @param prices a linkedHashMap including all lengths as keys and its price
      * as the value.
-     * @param type
-     * @return a linked hash map including all lengths and their respective
-     * prices where all the prices have been updated.
+     * @param type roof or material with/without length
      * @throws Presentation.Exceptions.InvalidInputException if there is no
      * difference between the new and old price.
-     * @throws Presentation.Exceptions.SystemErrorException
-     * @throws Presentation.Exceptions.NoSuchMaterialException
+     * @throws Presentation.Exceptions.SystemErrorException if an sql exception is thrown 
+     * @throws Presentation.Exceptions.NoSuchMaterialException if there's no materials with given id
      */
     public void updatePrices(int price, int id, String type) throws InvalidInputException, SystemErrorException, NoSuchMaterialException {
         LinkedHashMap<Integer, Integer> prices;

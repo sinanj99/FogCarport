@@ -13,12 +13,9 @@ import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.SystemErrorException;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**

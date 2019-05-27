@@ -5,7 +5,6 @@
  */
 package Presentation.Commands;
 
-import Logic.Logic.LogicFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
@@ -17,7 +16,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command that validates and handles admin change of price functionality
  * @author sinanjasar
  */
 public class ChangePriceCommand implements Command {

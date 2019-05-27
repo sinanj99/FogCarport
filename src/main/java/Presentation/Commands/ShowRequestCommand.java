@@ -5,19 +5,15 @@
  */
 package Presentation.Commands;
 
-import Logic.Logic.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command that shows a list of all requests
  * @author sinanjasar
  */
 public class ShowRequestCommand implements Command {

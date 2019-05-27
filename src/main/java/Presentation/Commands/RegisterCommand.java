@@ -8,23 +8,17 @@ package Presentation.Commands;
 import Data.Entity.PersonalInfo;
 import Data.Entity.User;
 import Presentation.Exceptions.DuplicateException;
-import Logic.Logic.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.NoMatchException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command that validates user input and registers user with the specified input
  * @author sinanjasar
  */
 public class RegisterCommand implements Command {

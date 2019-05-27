@@ -12,7 +12,7 @@ import Presentation.Exceptions.SystemErrorException;
 import java.sql.SQLException;
 
 /**
- *
+ * Handles login-related validation
  * @author sinanjasar
  */
 class LoginController {

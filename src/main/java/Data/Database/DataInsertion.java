@@ -62,15 +62,16 @@ public class DataInsertion {
         for (Roof roof : roofs) {
             int price = 50;
             if (roof.isInclined() == false) {
-                for (int i = 240; i <= 750; i += 30) {
-
-                    d.insertDimensions(roof.getRoof_id(), i, price, 300);
-                    price += 50;
-
-                }
+//                for (int i = 240; i <= 750; i += 30) {
+//
+//                    d.insertDimensions(roof.getRoof_id(), i, price, 300);
+//                    price += 50;
+//
+//                }
+            d.insertDimensions(roof.getRoof_id(), 30, price, 300);
             } else if (roof.isInclined() == true){
                 price = 50;
-                d.insertDimensions(roof.getRoof_id(), 37, price, 300);
+                d.insertDimensions(roof.getRoof_id(), 34, price, 300);
                 price = 30;
                 d.insertDimensions(roof.getRoof_id(), 6, price, 300);
             }

@@ -8,7 +8,7 @@ package Data.Entity;
 import java.util.List;
 
 /**
- *
+ * Bill of materials class.
  * @author sinanjasar
  */
 public class BOM {

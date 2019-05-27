@@ -11,11 +11,11 @@ import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Controller.PresentationFacade;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command that fetches all available roofs and materials 
+ * so they can be displayed on jsp page
  * @author sinanjasar
  */
 public class ShowPricesCommand implements Command {

@@ -8,11 +8,6 @@ package Presentation.Commands;
 import Data.Entity.User;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.UserNotFoundException;
-import com.mysql.cj.util.StringUtils;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.regex.Pattern;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**

@@ -6,7 +6,8 @@
 package Data.Entity;
 
 /**
- * This class represents a line item in the bill of materials; is used in the logic layer
+ * This class represents a line item in the bill of materials. 
+ * Is used in the logic layer
  * where an instance is returned and later fetched and added to a list of lineitems (BOM).
  * @author sinanjasar
  */

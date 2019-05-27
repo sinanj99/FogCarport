@@ -16,7 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command for loading inclined roof form jsp including a list of available roofs
  * @author Obaydah Mohamad
  */
 public class InclinedRoofFormCommand implements Command {

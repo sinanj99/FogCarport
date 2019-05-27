@@ -6,7 +6,7 @@
 package Presentation.Exceptions;
 
 /**
- *
+ * Used in any command, when a roof with specified id, doesn't exist in database.
  * @author Obaydah Mohamad
  */
 public class NoSuchRoofException extends SystemErrorException {

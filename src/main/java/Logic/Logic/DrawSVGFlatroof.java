@@ -9,11 +9,16 @@ import Data.Entity.Carport;
 import Data.Entity.Shed;
 
 /**
- *
+ * Draws SVGs for flat roof carport
  * @author Kasper Jeppesen
  */
 class DrawSVGFlatroof {
-
+ 
+    /**
+     * Draws SVG for flat roof carport from the top
+     * @param c the carport
+     * @return a string representation of svg
+     */
     public String drawFlat(Carport c) {
         String drawing = "";
         int length = c.getLength();

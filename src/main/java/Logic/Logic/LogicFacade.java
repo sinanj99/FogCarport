@@ -6,7 +6,6 @@
 package Logic.Logic;
 
 import Data.Mappers.DataFacade;
-import Data.Database.DataSourceMysql;
 import Data.Entity.BOM;
 import Data.Entity.Carport;
 import Data.Entity.Material;
@@ -18,7 +17,6 @@ import Presentation.Exceptions.NoSuchRoofException;
 import Data.Entity.Roof;
 import Data.Entity.ShippingAddress;
 import Data.Entity.User;
-import Logic.Logic.PriceCalculator;
 import Presentation.Exceptions.DuplicateException;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoMatchException;
@@ -29,10 +27,9 @@ import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
 import java.util.LinkedHashMap;
 import java.util.List;
-import javax.sql.DataSource;
 
 /**
- *
+ * Calls all methods in logic layer, and all methods in datafacade. 
  * @author sinanjasar
  */
 public class LogicFacade {

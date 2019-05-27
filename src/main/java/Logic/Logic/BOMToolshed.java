@@ -13,7 +13,8 @@ import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.SystemErrorException;
 
 /**
- *
+ * Calculations regarding the tool shed of a carport. Calculates the amount of 
+ * materials needed and returns a lineitem for the specific material.
  * @author Kasper Jeppesen
  */
 class BOMToolshed

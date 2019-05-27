@@ -6,7 +6,6 @@
 package Presentation.Commands;
 
 import Data.Entity.Carport;
-import Data.Entity.PersonalInfo;
 import Data.Entity.Request;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
@@ -18,16 +17,13 @@ import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command handling generation of request based on user input
  * @author sinanjasar
  */
 public class GenerateReqCommand implements Command {
@@ -107,7 +103,7 @@ public class GenerateReqCommand implements Command {
         System.out.println(req.getCarport().getInclination());
 
         PresentationFacade.getInstance().insertRequest(req);
-        request.setAttribute("redirect", true);
+        request.setAttribute("redirect", "true");
         return "jsp/reqsent.jsp";
     }
 }

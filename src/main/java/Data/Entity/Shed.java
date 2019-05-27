@@ -6,7 +6,8 @@
 package Data.Entity;
 
 /**
- * Mirrors shed table in database. Is used in data mappers where it is fetched/inserted
+ * Mirrors shed table in database. 
+ * Is used in data mappers where it is fetched/inserted
  * and is used in presentation layer in connection with requests.
  * @author Obaydah Mohamad
  */

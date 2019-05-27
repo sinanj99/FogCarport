@@ -5,7 +5,6 @@
  */
 package Presentation.Commands;
 
-import Data.Entity.Request;
 import Data.Entity.Response;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.ClientException;
@@ -18,7 +17,7 @@ import Presentation.Exceptions.UserNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * 
  * @author Obaydah Mohamad
  */
 public class ShowResponseCommand implements Command{

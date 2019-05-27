@@ -6,15 +6,10 @@
 package Presentation.Commands;
 
 import Data.Entity.User;
-import Logic.Logic.LogicFacade;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoMatchException;
 import Presentation.Exceptions.SystemErrorException;
-import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.UserNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**

@@ -42,8 +42,8 @@ CREATE TABLE material_lengths (
     CONSTRAINT material_lengths_ibfk_1 FOREIGN KEY (material_id) REFERENCES wood_materials(material_id)
     ON DELETE CASCADE
     );
-	
-select * from roof_lengths where roof_id = 1;
+    
+SELECT * FROM `prebuilt_carports` RIGHT JOIN prebuilt_sheds USING(prebuilt_carport_id);
 
 CREATE TABLE users (
 	user_id INT NOT NULL AUTO_INCREMENT,

@@ -9,16 +9,14 @@ import Data.Entity.Carport;
 import Data.Entity.LineItem;
 import Data.Entity.Material;
 import Data.Entity.Roof;
-import Data.Entity.Shed;
 import Data.Entity.Type;
-
 import Presentation.Exceptions.NoSuchMaterialException;
-
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 
 /**
- *
+ * Calculations regarding the roof of a carport. Calculates the amount of 
+ * materials needed and returns a lineitem for the specific material.
  * @author Sinan Jasar
  */
 class BOMRoofPackage {
@@ -45,7 +43,7 @@ class BOMRoofPackage {
      * @param c the carport
      * @return amount of screws for lath holders (skruer for lægte holder)
      */
-    private int amountOfScrewsLathHolders(Carport c) 
+    int amountOfScrewsLathHolders(Carport c) 
     {
         //one screw for each lath Holder
         double amount = amountOfLathHolders(c);
@@ -57,7 +55,7 @@ class BOMRoofPackage {
     * @param c
     * @return amount of screws for laths
     */
-    private int amountOfScrewsLaths(Carport c) 
+    int amountOfScrewsLaths(Carport c) 
     {
         double amount = amountOfLaths(c) * 10;
         return (int) Math.ceil(amount / 100);
@@ -103,7 +101,7 @@ class BOMRoofPackage {
      * @param c the carport
      * @return amount of alths needed
      */
-    public int amountOfLaths(Carport c) 
+    int amountOfLaths(Carport c) 
     {
 //        /*firstly, the roof is divided into 2 right-angled triangles,
 //        and the hypotenuse is calculated*/
@@ -120,7 +118,7 @@ class BOMRoofPackage {
      * @param c the carport
      * @return the amount of soffits (vindskeder)
      */ 
-    private int amountOfSoffits(Carport c) 
+    int amountOfSoffits(Carport c) 
     {
         int triangleWidth = c.getWidth() / 2; // width of each triangle.
         double inclination = Math.toRadians(c.getInclination()); //Math.cos expects radians
@@ -188,11 +186,11 @@ class BOMRoofPackage {
      * @param c the carport
      * @return amount of lath holders (holder for lægte)
      */
-    private int amountOfLathHolders(Carport c) 
+    int amountOfLathHolders(Carport c) 
     {
         /*amount of lath-holders is the same as rafters; 1 lath-holder for each rafter*/
         BOMFundament f = new BOMFundament();
-        return f.calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 90);
+        return f.calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 100);
     }
      
      /**
@@ -200,7 +198,7 @@ class BOMRoofPackage {
      * @param c the carport
      * @return the amount of roof tiles (tagsten)
      */
-    private int amountOfRoofTiles(Carport c) 
+    int amountOfRoofTiles(Carport c) 
     {
       /* the following lines calculate the square meter measurements for a single tile,
          based on the given example */
@@ -242,13 +240,13 @@ class BOMRoofPackage {
      * @param carportLength
      * @return (rygsten)
      */
-    private int amountOfRidgeTiles(Carport c) 
+     int amountOfRidgeTiles(Carport c) 
     {
         /*
         since the width of the roof and amount of ridge tiles needed is known (21), 
         the width of a single tile can be calculated.
          */
-        int tileWidth = 37;
+        int tileWidth = 34;
         return c.getLength() / tileWidth;
     }
     
@@ -257,7 +255,7 @@ class BOMRoofPackage {
      * @param carportLength - length of carport
      * @return amount of ridge tile brackets (rygstensbeslag)
      */
-    private int amountOfRidgeTileBrackets(Carport c) 
+     int amountOfRidgeTileBrackets(Carport c) 
     {
         //same amount as ridge tiles.
         return amountOfRidgeTiles(c);

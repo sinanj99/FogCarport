@@ -6,20 +6,9 @@
 package Presentation.Controller;
 
 import Presentation.Commands.Command;
-import Presentation.Exceptions.DuplicateException;
-import Logic.Logic.LogicFacade;
-import Presentation.Exceptions.NoSuchMaterialException;
-import Presentation.Exceptions.NoSuchRequestException;
-import Presentation.Exceptions.UserNotFoundException;
-import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.ClientException;
-import Presentation.Exceptions.InvalidInputException;
-import Presentation.Exceptions.NoSuchShedException;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

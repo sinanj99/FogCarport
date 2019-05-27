@@ -17,13 +17,10 @@ import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchRequestException;
 import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.NoSuchShedException;
-import java.io.IOException;
-import java.sql.SQLException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * 
  * @author Obaydah Mohamad
  */
 public class CreateResponseCommand implements Command {

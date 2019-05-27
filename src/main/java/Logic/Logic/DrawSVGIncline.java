@@ -14,7 +14,12 @@ import Data.Entity.Shed;
  * @author sinanjasar
  */
 class DrawSVGIncline {
-
+    /**
+     * Draws the top of a carport with inclined roof
+     * @param c the carport
+     * @return A string representation of svg drawing 
+     * of the top of a carport with inclined roof
+     */
     public String drawTopIncline(Carport c) {
         String drawing = "";
         int length = c.getLength();
@@ -85,118 +90,118 @@ class DrawSVGIncline {
         //STOLPER 
         for (int i = 0; i < quantityOfStolper; i++) {
             if (shed != null && shed.getLength() != 0) {
-                //Top left stolpe
+                //Top left pole
                 if (i == 0) {
                     //yCordinate changed to make place it under remmen
                     xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR / 2;
                     yCordinate -= 3.6f;
                 }
-                //Top right stolpe
+                //Top right pole
                 if (i == 1) {
                     //xCordinate changed to place it at the second last spær
                     xCordinate = startingPointFirstSpærX + length - 9.7f;
                 }
-                //Botton right stolpe
+                //Botton right pole
                 if (i == 2) {
                     //yCordinate changed to place it at the at the other rem 
                     yCordinate = startingPointFirstSpærY + (int) hypotenuse * 2 - 93;
                 }
-                //Bottom left stolpe
+                //Bottom left pole
                 if (i == 3) {
-                    //xCordinato changed to place it at the same xCordinate at the top left stolpe
+                    //xCordinato changed to place it at the same xCordinate at the top left pole
                     xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR / 2;
                 }
-                //The bottom front stolpe of the shed
+                //The bottom front pole of the shed
                 if (i == 4) {
-                    //xCprdinate changed to place it the length of the shed away from the bottom right stolpe
+                    //xCprdinate changed to place it the length of the shed away from the bottom right pole
                     //yCordinate = (int)hypotenuse*2-(((int)hypotenuse*2-swidth)/2);
                     xCordinate = (startingPointFirstSpærX + length) - slength;
                 }
-                //The top front stolpe of the shed
+                //The top front pole of the shed
                 if (i == 5) {
                     //Changed yCordinate to place it the width of the shed away
                     yCordinate -= swidth - 2.4;
                 }
-                //the front middle stolpe of the shed
+                //the front middle pole of the shed
                 if (i == 6) {
-                    //yCordinate changed to place it between the front bottom and top stolpe of the shed
+                    //yCordinate changed to place it between the front bottom and top pole of the shed
                     yCordinate = ((startingPointFirstSpærY + (int) hypotenuse * 2 - 93) + yCordinate) / 2;
                     //((int)hypotenuse);
                 }
-                //the back middle stolpe of the shed
+                //the back middle pole of the shed
                 if (i == 7) {
-                    //xCordinate changed to place it at the same xCordinate as the rigth top/bottom stolpe
+                    //xCordinate changed to place it at the same xCordinate as the rigth top/bottom pole
                     xCordinate = startingPointFirstSpærX + length - 9.7f;
                 }
-                //Stolpe between the top left stolpe and top front stolpe of the shed
+                //Stolpe between the top left pole and top front pole of the shed
                 if (i == 8) {
 
-                    //function as top right corner stolpe for the shed
+                    //function as top right corner pole for the shed
                     if (quantityOfStolper == 9) {
-                        //yCordiante changed so it is placed at the botton right corner stolpe
+                        //yCordiante changed so it is placed at the botton right corner pole
                         yCordinate = startingPointFirstSpærY + (int) hypotenuse * 2 - 93;
                         //yCordinate changed so is placed shedwidth away
                         yCordinate -= swidth - 2.4;
 
                     } else {
-                        //yCordinate changed to place it at same yCordinate at top left stolpe
+                        //yCordinate changed to place it at same yCordinate at top left pole
                         yCordinate = startingPointFirstSpærX - 3.6f;
-                        //xCordinate changed to place it in the center of the top left stolpe and top front stolpe of the shed
+                        //xCordinate changed to place it in the center of the top left pole and top front pole of the shed
                         xCordinate = (xCordinate - slength + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
                     }
 
                 }
-                //stolpe between the bottom left stolpe and the bottom front stolpe of the shed
+                //pole between the bottom left pole and the bottom front pole of the shed
                 if (i == 9) {
-                    //yCordinate changed to place it at the same yCordinate as the front bottom stolpe
+                    //yCordinate changed to place it at the same yCordinate as the front bottom pole
                     yCordinate = startingPointFirstSpærY + width - 36;
                 }
-                //stolpe for the top right corner of the shed, if the top right corner stolpe of the carport cant be used.
+                //pole for the top right corner of the shed, if the top right corner pole of the carport cant be used.
                 if (i == 10) {
                     //yCordiante changed so it is placed at the carportwidth
                     yCordinate -= swidth - 2.4;
-                    //xCordinate changed so it is placed at the same xCordinate at the top right corner stolpe for the carport
+                    //xCordinate changed so it is placed at the same xCordinate at the top right corner pole for the carport
                     xCordinate = startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f;
                 }
             }
             if (slength == 0) {
-                //Top left stolpe
+                //Top left pole
                 if (i == 0) {
                     //yCordinate changed to make place it under remmen
                     xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR / 2;
                     yCordinate -= 3.6f;
                 }
-                //Top right stolpe
+                //Top right pole
                 if (i == 1) {
                     //xCordinate changed to place it at the second last spær
                     xCordinate = startingPointFirstSpærX + length - 9.7f;
                 }
-                //Botton right stolpe
+                //Botton right pole
                 if (i == 2) {
                     //yCordinate changed to place it at the at the other rem 
                     yCordinate = startingPointFirstSpærY + (int) hypotenuse * 2 - 93;
                 }
-                //Bottom left stolpe
+                //Bottom left pole
                 if (i == 3) {
-                    //xCordinato changed to place it at the same xCordinate at the top left stolpe
+                    //xCordinato changed to place it at the same xCordinate at the top left pole
                     xCordinate = startingPointFirstSpærX + spaceBetweenSpærVAR / 2;
                 }
-                // one of middle bottom stolpe
+                // one of middle bottom pole
                 if (i == 4) {
                     if (quantityOfStolper == 8) {
-                        //xCordinate changed to place it so that this middle stolpe and the other middle stolpe is as far from other stolpe as possible
-                        //Take the position of the bottem right stolpe and add the position of bottom left, then divide by 1.5f
+                        //xCordinate changed to place it so that this middle pole and the other middle pole is as far from other pole as possible
+                        //Take the position of the bottem right pole and add the position of bottom left, then divide by 1.5f
                         xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 1.5f;
                     } else {
-                        //xCordinate changed to place it in the center of bottom left and bottom right stolpe
-                        //Take the position of the bottem right stolpe and add the position of bottom left, then divide by 2
+                        //xCordinate changed to place it in the center of bottom left and bottom right pole
+                        //Take the position of the bottem right pole and add the position of bottom left, then divide by 2
                         xCordinate = (startingPointFirstSpærX + length - spaceBetweenSpærVAR - 9.7f + startingPointFirstSpærX + spaceBetweenSpærVAR) / 2;
                     }
 
                 }
-                //one of the middle top stolpe
+                //one of the middle top pole
                 if (i == 5) {
-                    //yCordinate changed to place it at the same yCordination as the other top stolper
+                    //yCordinate changed to place it at the same yCordination as the other top poler
                     yCordinate = startingPointFirstSpærY - 3.6f;
                 }
                 if (i == 6) {
@@ -234,7 +239,12 @@ class DrawSVGIncline {
         drawing += "</svg>";
         return drawing;
     }
-
+    /**
+     * Draws the side of a carport with inclined roof
+     * @param c the carport
+     * @return a string representation of svg drawing of the side of a carport
+     * with inclined roof
+     */
     public String drawFrontIncline(Carport c) {
         String drawing = "";
         int length = c.getLength();
@@ -266,36 +276,36 @@ class DrawSVGIncline {
         return drawing;
     }
 
-    public String drawSideIncline(Carport c) {
-        String drawing = "";
-        int height = 250;
-        height *= 2;
-        int length = c.getLength();
-        int width = c.getWidth();
-        Shed shed = c.getShed();
-        if (shed != null) {
-            int slength = shed.getLength();
-            int swidth = shed.getWidth();
-        }
-
-        BOMFundament f = new BOMFundament();
-        BOMRoofPackage ic = new BOMRoofPackage();
-        double inclination = Math.toRadians(c.getInclination());
-        double hypotenuse = (width / 2) / Math.cos(inclination);
-        double roofHeight = Math.sin(inclination) * hypotenuse;
-        roofHeight *= 2;
-        width *= 2;
-        System.out.println("ROOFHEIGHT : " + roofHeight);
-
-        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + width + 20 + " " + length + 20 + "' >";
-        drawing += "<rect x='0' y='0' height='" + (height + roofHeight) + "' width='" + width + "' fill='lightgray' stroke='black' stroke-width='3'/>";
-        drawing += "<text x='" + (width / 2 - 50) + "' y='" + (roofHeight + 50) + "' fill='black'>Bredde: " + width + " cm</text>";
-        drawing += "<text x='" + (width / 2 + 10) + "' y='" + (roofHeight / 2) + "' fill='black'>Højde: " + (int) roofHeight + " cm</text>";
-        drawing += "<text x='" + (width - 80) + "' y='" + (roofHeight - 50) + "' fill='black'>Hældning: " + (int) c.getInclination() + " cm</text>";
-        drawing += "<line x1='" + width / 2 + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke-dasharray='5,5' stroke='black' stroke-width='3'/>";
-        drawing += "<line x1='" + width + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke='black' stroke-width='3'/>";
-        drawing += "<line x1='" + 0 + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke='black' stroke-width='3'/>";
-        drawing += "</svg>";
-        return drawing;
-    }
+//    public String drawSideIncline(Carport c) {
+//        String drawing = "";
+//        int height = 250;
+//        height *= 2;
+//        int length = c.getLength();
+//        int width = c.getWidth();
+//        Shed shed = c.getShed();
+//        if (shed != null) {
+//            int slength = shed.getLength();
+//            int swidth = shed.getWidth();
+//        }
+//
+//        BOMFundament f = new BOMFundament();
+//        BOMRoofPackage ic = new BOMRoofPackage();
+//        double inclination = Math.toRadians(c.getInclination());
+//        double hypotenuse = (width / 2) / Math.cos(inclination);
+//        double roofHeight = Math.sin(inclination) * hypotenuse;
+//        roofHeight *= 2;
+//        width *= 2;
+//        System.out.println("ROOFHEIGHT : " + roofHeight);
+//
+//        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + width + 20 + " " + length + 20 + "' >";
+//        drawing += "<rect x='0' y='0' height='" + (height + roofHeight) + "' width='" + width + "' fill='lightgray' stroke='black' stroke-width='3'/>";
+//        drawing += "<text x='" + (width / 2 - 50) + "' y='" + (roofHeight + 50) + "' fill='black'>Bredde: " + width + " cm</text>";
+//        drawing += "<text x='" + (width / 2 + 10) + "' y='" + (roofHeight / 2) + "' fill='black'>Højde: " + (int) roofHeight + " cm</text>";
+//        drawing += "<text x='" + (width - 80) + "' y='" + (roofHeight - 50) + "' fill='black'>Hældning: " + (int) c.getInclination() + " cm</text>";
+//        drawing += "<line x1='" + width / 2 + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke-dasharray='5,5' stroke='black' stroke-width='3'/>";
+//        drawing += "<line x1='" + width + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke='black' stroke-width='3'/>";
+//        drawing += "<line x1='" + 0 + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke='black' stroke-width='3'/>";
+//        drawing += "</svg>";
+//        return drawing;
+//    }
 }

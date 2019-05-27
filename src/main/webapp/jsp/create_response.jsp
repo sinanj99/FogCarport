@@ -33,7 +33,6 @@
     String date_ = new SimpleDateFormat("d-MM-y").format(date);
     
     int reqId = r.getRequestId();
-    int sellerId = user.getId();
     int carportId = r.getCarport().getCarportId();
     int shedId = 0;
     if(r.getCarport().getShed() != null) shedId = r.getCarport().getShed().getShedId();
@@ -176,8 +175,7 @@
                             <div class="col-6">
                                 <form action="FrontController" method="GET" class="w-100">
                                     <input type="hidden" name="command" value="insertresponse"> 
-                                    <input type="hidden" name="requestID" value="<%= reqId %>">
-                                    <input type="hidden" name="sellerID" value="<%= sellerId %>">                                   
+                                    <input type="hidden" name="requestID" value="<%= reqId %>">                                  
                                     <input type="hidden" name="sellprice" value="<%= sellPrice %> ">
                                     <input type="submit" class="btn btn-primary w-100" style="border-radius: 2px;" value="Send tilbud">
                                 </form>

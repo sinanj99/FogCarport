@@ -38,7 +38,7 @@ public class ShowPricesCommand implements Command {
         request.setAttribute("materials", materials);
         request.setAttribute("roofs", roofs);
         System.out.println(roofs.get(0).getPrice());
-        return "jsp/change_price.jsp";
+        return "jsp/changeprice.jsp";
     }
 
 }

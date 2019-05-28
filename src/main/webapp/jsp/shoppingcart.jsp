@@ -38,7 +38,7 @@
                 %>
                 <div class="cart-row">
                     <div class="cart-image cart-column">
-                        <img class="cart-item-image" src=<%= p.getImgPpath()%> width="100" height="100">
+                        <img class="cart-item-image" src="<%= p.getImgPpath()%>" width="100" height="100">
                     </div>
 
                     <div class="cart-carportLength cart-column" >

@@ -2,7 +2,7 @@
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
     <body class="background1">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
-    <%String message = (String) request.getAttribute("message"); %>
+    <%String message = (String) request.getAttribute("message");%>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -15,5 +15,7 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <jsp:include page='/include/sitefoot.jsp'></jsp:include>
+    <jsp:include page='/include/sitefoot.jsp'></jsp:include>

@@ -94,7 +94,7 @@ public class CreateOfferCommand implements Command {
         request.setAttribute("svg2", svg2);
 //        request.setAttribute("bandSvg", bandSvg);
 
-        return "jsp/create_offer.jsp";
+        return "jsp/createoffer.jsp";
     }
 
 }

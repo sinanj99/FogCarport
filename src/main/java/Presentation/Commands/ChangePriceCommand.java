@@ -36,18 +36,18 @@ public class ChangePriceCommand implements Command {
         try {
             price = Integer.parseInt(request.getParameter("price"));
         } catch (NumberFormatException e) {
-            throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst et tal!");
+            throw new InvalidInputException("FrontController?command=showprices", "Indtast venligst et tal!");
         }
         if (price == 0) {
-            throw new InvalidInputException("FrontController?command=show_prices", "Ingen gratis materialer!");
+            throw new InvalidInputException("FrontController?command=showprices", "Ingen gratis materialer!");
         } else if (!Pattern.matches("[0-9]{1,4}", String.valueOf(price))) {
-            throw new InvalidInputException("FrontController?command=show_prices", "Ugyldig pris!");
+            throw new InvalidInputException("FrontController?command=showprices", "Ugyldig pris!");
         }
         try{
         id = Integer.parseInt(request.getParameter("id"));
         } catch(NumberFormatException e) {
             System.out.println(e.getMessage());
-            throw new InvalidInputException("FrontController?command=show_prices", "Indtast venligst et tal!");
+            throw new InvalidInputException("FrontController?command=showprices", "Indtast venligst et tal!");
         }
         try {
             LinkedHashMap<Integer, Integer> prices;
@@ -69,9 +69,9 @@ public class ChangePriceCommand implements Command {
         }
         } catch(NoSuchMaterialException e) {
             System.out.println(e.getMessage());
-            throw new NoSuchMaterialException("FrontController?command=show_prices", e.getId());
+            throw new NoSuchMaterialException("FrontController?command=showprices", e.getId());
         }
-        return "FrontController?command=show_prices";
+        return "FrontController?command=showprices";
     }
 
 }

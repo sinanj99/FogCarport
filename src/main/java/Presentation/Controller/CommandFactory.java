@@ -49,7 +49,7 @@ public class CommandFactory {
         commands.put("request", new GenerateReqCommand());
         commands.put("deleterequest", new DeleteRequestCommand());
         commands.put("showrequests", new ShowRequestsCommand());
-        commands.put("createOffer", new CreateOfferCommand());
+        commands.put("createoffer", new CreateOfferCommand());
         commands.put("changeprice", new ChangePriceCommand());
         commands.put("showprices", new ShowPricesCommand());
         commands.put("prebuiltcarport", new PrebuiltCarportCommand());

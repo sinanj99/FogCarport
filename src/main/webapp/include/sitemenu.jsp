@@ -17,7 +17,7 @@
     <% } else if (user != null && user.isAdmin()) { %>
     <a class="left" href="/project/jsp/adminfrontpage.jsp">FORSIDE</a>
     <a class="right d-none d-md-block" href="/project/FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
-    <a class="right d-none d-md-block" href="/project/FrontController?command=show_prices"> <i class="fas fa-clipboard-list"></i>    Opdater priser</a>
+    <a class="right d-none d-md-block" href="/project/FrontController?command=showprices"> <i class="fas fa-clipboard-list"></i>    Opdater priser</a>
     <% } else {%>
     <a class="left" href="/project/jsp/frontpage.jsp">FOG CARPORT</a>
     <a class="right d-none d-md-block" href="/project/FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
@@ -47,7 +47,7 @@
         <a href="/project/FrontController?command=showrequests"> <i class="fas fa-clipboard-list"></i>    Vis forespørgsler</a>
         <% } else if (user != null && user.isAdmin()) { %>
         <a href="/project/FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
-        <a href="/project/FrontController?command=show_prices"> <i class="fas fa-clipboard-list"></i>    Opdater priser</a>
+        <a href="/project/FrontController?command=showprices"> <i class="fas fa-clipboard-list"></i>    Opdater priser</a>
         <% } else {%>
         <a href="/project/FrontController?command=logout"> <i class="fas fa-sign-out-alt"></i>    Log ud</a>
         <a href="/project/FrontController?command=showresponses"> <i class="fas fa-clipboard-list"></i>    Vis tilbud</a>

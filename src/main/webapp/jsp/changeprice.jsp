@@ -41,7 +41,7 @@
                             <input style="width:100%" class="ml-0 inputbig" id="price" name="price" placeholder="Indtast pris..." type="number" max="9999" required>
                         </div>
                         <input style="width: 30%" class="notmemberbtn"type="submit" value="Opdater pris">
-                        <input type="hidden" name="command" value="change_price">
+                        <input type="hidden" name="command" value="changeprice">
                         <input type="hidden" name="manual" value="true">
                     </div>
                 </form>
@@ -86,7 +86,7 @@
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 60%;" value="Opdater pris">
-                            <input type="hidden" name="command" value="change_price">
+                            <input type="hidden" name="command" value="changeprice">
                             <input type="hidden" name="where" value="length">
                         </div>
                     </form>
@@ -130,7 +130,7 @@
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 60%;" value="Opdater pris">
-                            <input type="hidden" name="command" value="change_price">
+                            <input type="hidden" name="command" value="changeprice">
                             <input type="hidden" name="where" value="nolength">
                         </div>
                     </form>
@@ -181,7 +181,7 @@
                             </div>
 
                             <input type="submit" class="notmemberbtn" style="width: 30%;" value="Opdater pris">
-                            <input type="hidden" name="command" value="change_price">
+                            <input type="hidden" name="command" value="changeprice">
                             <input type="hidden" name="where" value="roof">
                         </div>
                     </form>

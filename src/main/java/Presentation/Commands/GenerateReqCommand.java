@@ -34,7 +34,6 @@ public class GenerateReqCommand implements Command {
         String cmd = "flatroof";
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) return "jsp/login.jsp";
-        if(!user.isSeller()) return "FrontController?command=frontpageredirect";
         
         String inclined = request.getParameter("inclined");
         int inclination = 0;
@@ -98,8 +97,6 @@ public class GenerateReqCommand implements Command {
         String datePlaced = String.valueOf(date.format(dateFormat));
 
         Request req = new Request(sAddress, user_id, datePlaced, cp);
-        System.out.println(req.getCarport().getInclination());
-
         PresentationFacade.getInstance().insertRequest(req);
         request.setAttribute("redirect", "true");
         return "jsp/reqsent.jsp";

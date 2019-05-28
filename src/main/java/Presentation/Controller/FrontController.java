@@ -24,11 +24,11 @@ public class FrontController extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String redirect = (String) request.getAttribute("redirect");
         String key = request.getParameter("command");
         Command command = CommandFactory.from(key);
         try {
             String target = command.execute(request);
+            String redirect = (String) request.getAttribute("redirect");
             if(redirect != null && redirect.equals("true")) {
                 response.sendRedirect(target);
             } else {

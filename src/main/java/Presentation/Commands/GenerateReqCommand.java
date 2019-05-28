@@ -32,10 +32,10 @@ public class GenerateReqCommand implements Command {
 
     public String execute(HttpServletRequest request) throws UserNotFoundException, NoSuchRoofException, SystemErrorException, InvalidInputException{
         String cmd = "flatroof";
-
-        if (request.getSession().getAttribute("user") == null) {
-            return "jsp/login.jsp";
-        }
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) return "jsp/login.jsp";
+        if(!user.isSeller()) return "FrontController?command=frontpageredirect";
+        
         String inclined = request.getParameter("inclined");
         int inclination = 0;
         if (inclined.equals("true")) {
@@ -90,8 +90,6 @@ public class GenerateReqCommand implements Command {
         if(!Pattern.matches("[A-Za-zÆØÅæøåÜÖöü \\.\\-,]{1,20}", city)) throw new InvalidInputException("FrontController?command=" + cmd, "By må kun indeholde bogstaver!");
         if(!Pattern.matches("[0-9]{4}", String.valueOf(zip))) throw new InvalidInputException("FrontController?command=" + cmd, "Postnummeret skal være et 4 tegn langt tal!");
         
-
-        User user = (User) request.getSession().getAttribute("user");
         int user_id = user.getId();
         ShippingAddress sAddress = new ShippingAddress(fname, lname, address, zip, city);
 

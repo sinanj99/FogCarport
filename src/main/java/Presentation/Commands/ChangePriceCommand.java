@@ -5,6 +5,7 @@
  */
 package Presentation.Commands;
 
+import Data.Entity.User;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.SystemErrorException;
@@ -25,6 +26,11 @@ public class ChangePriceCommand implements Command {
     public String execute(HttpServletRequest request) throws
             UserNotFoundException, NoSuchRoofException, InvalidInputException, SystemErrorException,
             NumberFormatException, NoSuchMaterialException {
+        
+        User user = (User) request.getSession().getAttribute("user");
+        if(user == null) return "jsp/frontpage.jsp";
+        if(!user.isAdmin()) return "FrontController?Command=frontpageredirect";
+        
         int id, price = 0;
         String choice = request.getParameter("where");
         try {

@@ -9,6 +9,7 @@ import Data.Entity.BOM;
 import Data.Entity.LineItem;
 import Data.Entity.Request;
 import Data.Entity.Type;
+import Data.Entity.User;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.NoSuchRequestException;
@@ -30,6 +31,10 @@ public class CreateOfferCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, NoSuchRequestException,
     NoSuchShedException {
+        
+        User user = (User) request.getSession().getAttribute("user");
+        if(user == null) return "jsp/frontpage.jsp";
+        if(!user.isSeller()) return "FrontController?Command=frontpageredirect";
         
         //calculations
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));

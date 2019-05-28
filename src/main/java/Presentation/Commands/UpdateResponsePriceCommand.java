@@ -20,7 +20,7 @@ public class UpdateResponsePriceCommand implements Command{
     public String execute(HttpServletRequest request) throws UserNotFoundException, InvalidInputException{
         User user = (User) request.getSession().getAttribute("user");
         if(user == null) return "jsp/frontpage.jsp";
-        if(user.isSeller() != true) return "jsp/frontpage.jsp";
+        if(!user.isSeller()) return "FrontController?command=frontpageredirect";
         
         int id = 0;
         int newPrice = 0;

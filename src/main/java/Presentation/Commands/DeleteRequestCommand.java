@@ -5,6 +5,7 @@
  */
 package Presentation.Commands;
 
+import Data.Entity.User;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.InvalidInputException;
@@ -24,6 +25,9 @@ public class DeleteRequestCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException, NoSuchShedException {
         int id = 0;
+        User user = (User) request.getSession().getAttribute("user");
+        if(user == null) return "jsp/frontpage.jsp"; 
+        if(!user.isSeller()) return "FrontController?Command=frontpageredirect";
         
         try{
             id = Integer.parseInt(request.getParameter("requestID"));

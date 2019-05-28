@@ -27,7 +27,7 @@ public class ShowResponseCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException, NoSuchRequestException, NoSuchShedException {
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null) throw new ClientException("jsp/frontpage.jsp", "Du skal være logget ind for at se tilbud!");
+        if (user == null) return "jsp/login.jsp";
         
         int requestId = 0;
         try{

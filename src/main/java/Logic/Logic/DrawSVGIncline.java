@@ -35,7 +35,6 @@ class DrawSVGIncline {
         double inclination = c.getInclination();
         int triangleWidth = width / 2; // width of each triangle.
         inclination = Math.toRadians(inclination); //Math.cos expects radians
-        System.out.println("INCLINATION: " + inclination);
         double hypotenuse_ = triangleWidth / (double) Math.cos(inclination);
         int hypotenuse = (int) hypotenuse_;
 
@@ -62,7 +61,6 @@ class DrawSVGIncline {
 
         float frontSpærPlacementX = startingPointFirstSpærX;
         float frontSpærPlacementY = startingPointFirstSpærY - 15;
-        System.out.println("ANTAL SPÆR = " + quantityOfRaftersPlusTheBackRafter);
         for (int i = 0; i < quantityOfRaftersPlusTheBackRafter; i++) {
             drawing += "<rect x='" + frontSpærPlacementX + "' y='" + frontSpærPlacementY + "' height='" + (hypotenuse * 2 - 60) + "' width='10' fill='none' stroke='black' stroke-width='3px'/>";
             frontSpærPlacementX += f.spaceBetweenRafter(length, 90) + 3f;
@@ -261,7 +259,6 @@ class DrawSVGIncline {
         double roofHeight = Math.sin(inclination) * hypotenuse;
         roofHeight *= 2;
         width *= 2;
-        System.out.println("ROOFHEIGHT : " + roofHeight);
 
         drawing += "<svg height='100%' width='100%' viewbox='-300 -600 " + 1300 + " " + 1300 + "' >";
         drawing += "<rect x='0' y='" + roofHeight + "' height='20' width='" + width + "' fill='lightgray' stroke='black' stroke-width='3'/>";
@@ -274,37 +271,4 @@ class DrawSVGIncline {
         drawing += "</svg>";
         return drawing;
     }
-
-//    public String drawSideIncline(Carport c) {
-//        String drawing = "";
-//        int height = 250;
-//        height *= 2;
-//        int length = c.getLength();
-//        int width = c.getWidth();
-//        Shed shed = c.getShed();
-//        if (shed != null) {
-//            int slength = shed.getLength();
-//            int swidth = shed.getWidth();
-//        }
-//
-//        BOMFundament f = new BOMFundament();
-//        BOMRoofPackage ic = new BOMRoofPackage();
-//        double inclination = Math.toRadians(c.getInclination());
-//        double hypotenuse = (width / 2) / Math.cos(inclination);
-//        double roofHeight = Math.sin(inclination) * hypotenuse;
-//        roofHeight *= 2;
-//        width *= 2;
-//        System.out.println("ROOFHEIGHT : " + roofHeight);
-//
-//        drawing += "<svg height='80%' width='80%' viewbox='0 0 " + width + 20 + " " + length + 20 + "' >";
-//        drawing += "<rect x='0' y='0' height='" + (height + roofHeight) + "' width='" + width + "' fill='lightgray' stroke='black' stroke-width='3'/>";
-//        drawing += "<text x='" + (width / 2 - 50) + "' y='" + (roofHeight + 50) + "' fill='black'>Bredde: " + width + " cm</text>";
-//        drawing += "<text x='" + (width / 2 + 10) + "' y='" + (roofHeight / 2) + "' fill='black'>Højde: " + (int) roofHeight + " cm</text>";
-//        drawing += "<text x='" + (width - 80) + "' y='" + (roofHeight - 50) + "' fill='black'>Hældning: " + (int) c.getInclination() + " cm</text>";
-//        drawing += "<line x1='" + width / 2 + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke-dasharray='5,5' stroke='black' stroke-width='3'/>";
-//        drawing += "<line x1='" + width + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke='black' stroke-width='3'/>";
-//        drawing += "<line x1='" + 0 + "' x2='" + width / 2 + "' y1='" + roofHeight + "' y2='" + 0 + "' stroke='black' stroke-width='3'/>";
-//        drawing += "</svg>";
-//        return drawing;
-//    }
 }

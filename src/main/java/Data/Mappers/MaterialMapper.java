@@ -112,7 +112,6 @@ class MaterialMapper extends IMaterialMapper {
                 ResultSet rs = pstmt.executeQuery();
                 if (rs.next()) {
                     stock = rs.getInt("stock");
-                    System.out.println(stock);
                 } else {
                     throw new NoSuchMaterialException(id);
                 }
@@ -141,7 +140,6 @@ class MaterialMapper extends IMaterialMapper {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 stock = rs.getInt("stock");
-                System.out.println("stock = " + stock);
             } else {
                 throw new NoSuchMaterialException(id);
             }
@@ -151,6 +149,7 @@ class MaterialMapper extends IMaterialMapper {
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             throw new SystemErrorException(ex.getMessage());
         }
     }
@@ -177,6 +176,7 @@ class MaterialMapper extends IMaterialMapper {
                 pstmt.executeUpdate();
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new SystemErrorException(e.getMessage());
         }
 
@@ -195,6 +195,7 @@ class MaterialMapper extends IMaterialMapper {
             pstmt.executeUpdate();
 
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             throw new SystemErrorException(ex.getMessage());
         }
     }
@@ -214,6 +215,7 @@ class MaterialMapper extends IMaterialMapper {
                 prices.put(rs.getInt("length"), rs.getInt("price"));
             }          
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             throw new SystemErrorException(ex.getMessage());
         }
         return prices;

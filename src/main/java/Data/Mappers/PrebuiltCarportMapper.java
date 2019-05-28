@@ -76,9 +76,6 @@ public class PrebuiltCarportMapper extends IPrebuiltCarportMapper {
         } catch (SQLException ex) {
             throw new SystemErrorException(ex.getMessage());
         }
-        for (PrebuiltCarport c : prebuiltCarports) {
-            System.out.println(c);
-        }
         return prebuiltCarports;
     }
 }

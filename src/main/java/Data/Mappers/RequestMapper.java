@@ -399,7 +399,6 @@ class RequestMapper extends IRequestMapper {
                 if (inclined_ == 1) {
                     inclined = true;
                 }
-                System.out.println(new Roof(roof_id, name, price, inclined, length));
                 
             }
         } catch (SQLException e) {

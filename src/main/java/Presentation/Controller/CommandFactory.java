@@ -9,7 +9,7 @@ import Presentation.Commands.ChangePriceCommand;
 import Presentation.Commands.GenerateReqCommand;
 import Presentation.Commands.LoginCommand;
 import Presentation.Commands.Command;
-import Presentation.Commands.CreateOfferCommand;
+import Presentation.Commands.ShowRequestCommand;
 import Presentation.Commands.CreateResponseCommand;
 import Presentation.Commands.DeleteRequestCommand;
 import Presentation.Commands.DeleteResponseCommand;
@@ -49,7 +49,7 @@ public class CommandFactory {
         commands.put("request", new GenerateReqCommand());
         commands.put("deleterequest", new DeleteRequestCommand());
         commands.put("showrequests", new ShowRequestsCommand());
-        commands.put("createoffer", new CreateOfferCommand());
+        commands.put("showrequest", new ShowRequestCommand());
         commands.put("changeprice", new ChangePriceCommand());
         commands.put("showprices", new ShowPricesCommand());
         commands.put("prebuiltcarport", new PrebuiltCarportCommand());

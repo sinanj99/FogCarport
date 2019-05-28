@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  * show request.
  * @author sinanjasar
  */
-public class CreateOfferCommand implements Command {
+public class ShowRequestCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, NoSuchRequestException,
@@ -101,7 +101,7 @@ public class CreateOfferCommand implements Command {
 //        request.setAttribute("bandSvg", bandSvg);
    
         request.setAttribute("access", "true");
-        return "jsp/createoffer.jsp";
+        return "jsp/showrequest.jsp";
 
     }
 

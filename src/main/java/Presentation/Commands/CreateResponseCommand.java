@@ -22,7 +22,8 @@ import Presentation.Exceptions.NoSuchShedException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 
+ * Command which handles the creation of a response.
+ * Used when a seller gives an offer on a carport.
  * @author Obaydah Mohamad
  */
 public class CreateResponseCommand implements Command {
@@ -30,8 +31,8 @@ public class CreateResponseCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, NoSuchResponseException, SystemErrorException, NoSuchRequestException, NoSuchShedException, ClientException {
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null) throw new ClientException("jsp/frontpage.jsp", "Log venligst ind for at tilgå denne side!"); 
-        if(!user.isSeller()) throw new ClientException("jsp/frontpage.jsp", "Du har ikke adgang til denne funktion!"); 
+        if(user == null) return "jsp/frontpage.jsp"; 
+        if(!user.isSeller()) return "FrontController?Command=frontpageredirect";
         
         Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         ShippingAddress s = PresentationFacade.getInstance().getRequestShippingAddress(r.getRequestId());

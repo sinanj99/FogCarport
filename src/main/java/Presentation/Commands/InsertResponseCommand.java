@@ -22,7 +22,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command which handles the creation of a response.
+ * Used when a seller gives an offer on a request.
  * @author Obaydah Mohamad
  */
 public class InsertResponseCommand implements Command{
@@ -30,8 +31,8 @@ public class InsertResponseCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException, ClientException{
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null) throw new ClientException("jsp/frontpage.jsp", "Log venligst ind for at tilgå denne side!"); 
-        if(!user.isSeller()) throw new ClientException("jsp/frontpage.jsp", "Du har ikke adgang til denne funktion!"); 
+        if (user == null) return "jsp/login.jsp";
+        if(!user.isSeller()) return "FrontController?command=frontpageredirect";
         int sellerId = user.getId();
         
         int requestId = 0;

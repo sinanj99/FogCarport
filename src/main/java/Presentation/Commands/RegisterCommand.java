@@ -28,6 +28,9 @@ public class RegisterCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws SystemErrorException, NoMatchException, DuplicateException, InvalidInputException {
+        User user = (User) request.getSession().getAttribute("user");
+        if(user != null) return "FrontController?command=frontpageredirect";
+        
         String nameRegex = "^[a-zA-Zå\\øæÜÖüö][a-zA-Z\\. å\\øæÜÖüö-]{1,20}$";
         String addressRegex = "[A-Za-zÆØÅæøåÜÖüö 0-9'\\.\\-,#]{1,100}";
         String zipRegex = "[0-9]{4}";

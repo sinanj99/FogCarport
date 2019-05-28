@@ -14,7 +14,7 @@ import Presentation.Exceptions.SystemErrorException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command which retrieves all of the responses associated with a specifc user.
  * @author Obaydah Mohamad
  */
 public class ShowResponsesCommand implements Command{
@@ -23,6 +23,7 @@ public class ShowResponsesCommand implements Command{
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException{
         User user = (User) request.getSession().getAttribute("user");
         if(user == null) return "jsp/frontpage.jsp";
+        if(user.isAdmin() || user.isSeller()) return "FrontController?command=frontpageredirect";
         request.setAttribute("responses", PresentationFacade.getInstance().getResponses(user.getId()));
         return "jsp/showresponses.jsp";
     }

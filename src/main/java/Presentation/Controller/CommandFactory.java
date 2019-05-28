@@ -22,7 +22,7 @@ import Presentation.Commands.PrebuiltCarportCommand;
 import Presentation.Commands.ShopCommand;
 import Presentation.Commands.ShowPricesCommand;
 import Presentation.Commands.InsertResponseCommand;
-import Presentation.Commands.ShowRequestCommand;
+import Presentation.Commands.ShowRequestsCommand;
 import Presentation.Commands.ShowResponseCommand;
 import Presentation.Commands.ShowResponsesCommand;
 import Presentation.Commands.UpdateResponsePriceCommand;
@@ -48,7 +48,7 @@ public class CommandFactory {
         commands.put("logout", new LogoutCommand());
         commands.put("request", new GenerateReqCommand());
         commands.put("deleterequest", new DeleteRequestCommand());
-        commands.put("showrequests", new ShowRequestCommand());
+        commands.put("showrequests", new ShowRequestsCommand());
         commands.put("createOffer", new CreateOfferCommand());
         commands.put("changeprice", new ChangePriceCommand());
         commands.put("showprices", new ShowPricesCommand());

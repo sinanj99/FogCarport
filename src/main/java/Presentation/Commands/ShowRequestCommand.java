@@ -89,7 +89,6 @@ public class ShowRequestCommand implements Command {
 
         if (r.getCarport().getInclination() == 0) {
             svg1 = PresentationFacade.getInstance().drawFlat(r.getCarport());
-            System.out.println(svg1);
         } else {
             svg1 = PresentationFacade.getInstance().drawTopIncline(r.getCarport());
             svg2 = PresentationFacade.getInstance().drawFrontIncline(r.getCarport());

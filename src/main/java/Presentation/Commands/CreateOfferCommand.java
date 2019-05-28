@@ -17,6 +17,7 @@ import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +37,13 @@ public class CreateOfferCommand implements Command {
         if(user == null) return "jsp/frontpage.jsp";
         if(!user.isSeller()) return "FrontController?Command=frontpageredirect";
         
+        Request r = null;
+        try{
+            r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
+        }catch(NoSuchRequestException | NumberFormatException e){
+            throw new NoSuchRequestException(Integer.parseInt(request.getParameter("requestID")));
+        }        
         //calculations
-        Request r = PresentationFacade.getInstance().getRequest(Integer.parseInt(request.getParameter("requestID")));
         BOM bom;
         try {
             if (r.getCarport().getInclination() != 0) {

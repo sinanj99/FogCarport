@@ -4,7 +4,7 @@
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
 <%
-    if(request.getAttribute("access") == null)  response.sendRedirect("FrontController?command=inclinedroof");
+    if(request.getAttribute("access") == null) request.getRequestDispatcher("/FrontController?command=inclinedroof").forward(request, response);
     List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
     User user = (User) session.getAttribute("user");
     if(user == null) {

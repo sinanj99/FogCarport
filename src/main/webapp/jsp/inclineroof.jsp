@@ -4,12 +4,14 @@
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
 <%
-    if(request.getAttribute("access") == null) request.getRequestDispatcher("/FrontController?command=inclinedroof").forward(request, response);
+    if (request.getAttribute("access") == null) {
+        request.getRequestDispatcher("/FrontController?command=inclinedroof").forward(request, response);
+    }
     List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
     User user = (User) session.getAttribute("user");
-    if(user == null) {
+    if (user == null) {
         response.sendRedirect("jsp/login.jsp");
-    }else if(user != null && (user.isAdmin() || user.isSeller())){
+    } else if (user != null && (user.isAdmin() || user.isSeller())) {
         request.getRequestDispatcher("/FrontController?command=frontpageredirect").forward(request, response);
     }
 
@@ -59,7 +61,7 @@
                     </select>
                     <% for (Roof r : roofs) {%>
                     <p name="pics" id="<%=r.getName() + "text"%>" class="p-0 d-none" style="width: 65%;">Udseende: </p>
-                    <img name="pics" id="<%=r.getName()%>" class="pics d-none col-xs-12" style="margin-bottom: 10px; margin-top: 10px; border: 1px solid black; height:auto; width: 65%; max-width: 500px;" src="/project/images/<%=r.getName()%>.jpg" alt="<%=r.getName()%>" > 
+                    <img name="pics" id="<%=r.getName()%>" class="pics d-none col-xs-12" style="width: 65%; max-width: 500px" src="/project/images/<%=r.getName()%>.jpg" alt="<%=r.getName()%>" > 
                     <% } %>
                 </div>
             </div>

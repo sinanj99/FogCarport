@@ -5,9 +5,9 @@ function visualizeRoof() {
         elements[i].classList.add("d-none");
     }
     var element = document.getElementById("rchoice");
-    var text = element.options[element.selectedIndex].text;
-    document.getElementById(text).classList.remove("d-none");
-    document.getElementById(text + "text").classList.remove("d-none");
+    var id = element.options[element.selectedIndex].value;
+    document.getElementById(id).classList.remove("d-none");
+    document.getElementById(id + "text").classList.remove("d-none");
 }
 
 

@@ -22,33 +22,19 @@ public class ClientException extends Exception {
      */
     private String detail;
     
-    /**
-     * Constructs a ClientException with user-specified target, message & detail. 
-     * Used in presentation package, where target, message & detail is known.
-     * @param target where to send the client
-     * @param message a short description of the error
-     * @param detail a detailed description of the error
-     */
+    
     public ClientException(String target, String message, String detail) {
         super(message);
         this.target = target;
         this.detail = detail;
     }
 
-    /**
-     * Constructs a ClientException with user-specified target & message. 
-     * Used in presentation package, where target & message is known.
-     * @param target where to send the client
-     * @param message a short description of the error
-     */
+    
     public ClientException(String target, String message) {
         super(message);
         this.target = target;
     }
-    /**
-     * Constructs a ClientException with no specified message or target.
-     * Used outside of presentation package, where target & message is unknown
-     */
+    
     public ClientException() {
 
     }

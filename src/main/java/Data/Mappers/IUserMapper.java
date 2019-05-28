@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  *
  * @author sinanjasar
  */
- abstract class IUserMapper {
+  abstract class IUserMapper {
 
     public static IUserMapper instance() {
         return UserMapper.getInstance();

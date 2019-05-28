@@ -16,7 +16,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 /**
- *
+ * Interface for MaterialMapper
  * @author sinanjasar
  */
  abstract class IMaterialMapper {

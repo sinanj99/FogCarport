@@ -14,7 +14,7 @@ import Presentation.Exceptions.SystemErrorException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Command which retrieves all of the responses associated with a specifc user.
+ * Command that retrieves all of the responses associated with a specifc user.
  * @author Obaydah Mohamad
  */
 public class ShowResponsesCommand implements Command{

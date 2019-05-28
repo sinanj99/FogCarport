@@ -15,7 +15,7 @@ import Presentation.Exceptions.UserNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Command that redirects to frontpage
+ * Command that redirects a user to a proper frontpage
  * @author Obaydah Mohamad
  */
 public class FrontpageRedirectCommand implements Command{

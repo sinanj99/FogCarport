@@ -19,7 +19,8 @@ import Presentation.Exceptions.UserNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 
+ * Command which retrieves a specifc response(User)
+ * Used when a user wants to see offer he has received on a carport.
  * @author Obaydah Mohamad
  */
 public class ShowResponseCommand implements Command{

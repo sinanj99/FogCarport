@@ -11,7 +11,7 @@ import Presentation.Exceptions.UserNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command which allows a seller to update the price on a response(offer on a carport).
  * @author Obaydah Mohamad
  */
 public class UpdateResponsePriceCommand implements Command{

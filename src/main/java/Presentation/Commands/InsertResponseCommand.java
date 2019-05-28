@@ -22,7 +22,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command which handles the creation of a response.
+ * Used when a seller gives an offer on a request.
  * @author Obaydah Mohamad
  */
 public class InsertResponseCommand implements Command{

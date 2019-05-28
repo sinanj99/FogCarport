@@ -6,17 +6,10 @@
 package Data.Entity;
 
 /**
- *
+ * Mirrors response table in database.
+ * Is used in data mappers where a response is inserted/fetched. Is also used in presentation layer
+ * where a response is created based on user-input or a response is fetched and displayed in jsp-file.
  * @author Obaydah Mohamad
- * 
- * CREATE TABLE responses (
-	request_id INT NOT NULL UNIQUE,
-        seller_id INT NOT NULL,
-	dateplaced DATETIME NOT NULL,
-	sell_price INT NOT NULL,
-        status INT(1) DEFAULT 0,
-	CONSTRAINT responses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id)
-);
  */
 public class Response {
     private Request request;

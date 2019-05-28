@@ -12,7 +12,7 @@ import Presentation.Exceptions.SystemErrorException;
 import java.util.List;
 
 /**
- *
+ * Inserts data into database material and roof tables in database
  * @author sinanjasar
  */
 public class DataInsertion {

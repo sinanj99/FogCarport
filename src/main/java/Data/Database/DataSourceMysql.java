@@ -9,7 +9,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.SQLException;
 
 /**
- *
+ * Constructs a datasource
  * @author sinanjasar
  */
 public class DataSourceMysql {
@@ -17,7 +17,7 @@ public class DataSourceMysql {
     private MysqlDataSource ds = new MysqlDataSource();
 
     /**
-     * Constructs datasource that works with remote dB
+     * Constructs datasource that works with remote database
      */
     public DataSourceMysql() {
         

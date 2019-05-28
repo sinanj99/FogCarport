@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 /**
- *
+ * Makes connection to the datasource
  * @author sinanjasar
  */
 public class DBConnector {

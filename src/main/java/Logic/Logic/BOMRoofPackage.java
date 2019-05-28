@@ -141,6 +141,27 @@ class BOMRoofPackage {
     //--------------------------------------- methods for retuning item in category tree ------------------------------------------------------------
     
     /**
+     *
+     * @param c
+     * @return LineItem of rafters (spær)
+     * @throws NoSuchMaterialException
+     * @throws Presentation.Exceptions.SystemErrorException
+     */
+    public LineItem rafter(Carport c) throws NoSuchMaterialException, SystemErrorException {
+        LineItem l = null;
+        Material m;
+
+        String desc = "Spær, monteres på rem";
+
+        for (int i = 240; i <= 750; i += 30) {
+            if (c.getLength() == i) {
+                m = LogicFacade.getInstance().getWoodMaterial(1, i);
+                l = new LineItem(m, fc.calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 90), desc, m.getPrice() * fc.calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 90), Type.LENGTH);
+            }
+        }
+        return l;
+    }
+    /**
      * Returns a LineItem object of laths
      * @param c the carport
      * @return a LineItem object of laths

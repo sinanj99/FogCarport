@@ -108,7 +108,7 @@ class BOMCalculator {
             listOfLineItems.add(f.leftBracketInteries(c));
             listOfLineItems.add(f.outerBoardForFront(c));
             listOfLineItems.add(f.outerBoardForSides(c));
-            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(calc.rafter(c));
             listOfLineItems.add(f.RafterForStrap(c));
             listOfLineItems.add(f.post(c));
             listOfLineItems.add(f.underneathBoardForSides(c));
@@ -151,7 +151,7 @@ class BOMCalculator {
             listOfLineItems.add(f.leftBracketInteries(c));
             listOfLineItems.add(f.outerBoardForFront(c));
             listOfLineItems.add(f.outerBoardForSides(c));
-            listOfLineItems.add(f.rafter(c));
+            listOfLineItems.add(calc.rafter(c));
             listOfLineItems.add(f.RafterForStrap(c));
             listOfLineItems.add(f.post(c));
             listOfLineItems.add(f.underneathBoardForSides(c));

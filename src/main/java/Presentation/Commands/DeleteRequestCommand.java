@@ -28,7 +28,7 @@ public class DeleteRequestCommand implements Command{
         int id = 0;
         User user = (User) request.getSession().getAttribute("user");
         if(user == null) return "jsp/frontpage.jsp"; 
-        if(!user.isSeller()) return "FrontController?Command=frontpageredirect";
+        if(!user.isSeller()) return "FrontController?command=frontpageredirect";
         
         try{
             id = Integer.parseInt(request.getParameter("requestID"));

@@ -27,9 +27,7 @@
                 <div class="row">
                     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
                         <p>Ellers er du naturligvis velkommen til at kigge på vores udvalg af pre-byggede carporte:</p>
-                        <a href="/project/FrontController?command=prebuiltCarport"><button style="color: black;" class="btn nicebtn">Se prebyggede</button></a>
-                        
-                        
+                        <a href="/project/FrontController?command=prebuiltcarport"><button style="color: black;" class="btn nicebtn">Se prebyggede</button></a>
                     </div>
                 </div>
             </div>

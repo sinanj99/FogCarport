@@ -15,20 +15,16 @@ public class PrebuiltCarport
     private String imgPath;
     private int carportWidth;
     private int carportLength;
-    private boolean shed;
-    private int shedWidth;
-    private int shedLength;
+    Shed shed;
     private int price;
 
-    public PrebuiltCarport(int id, String imgPpath, int carportWidth, int carportLength, boolean shed, int shedWidth, int shedLength, int price)
+    public PrebuiltCarport(int id, String imgPpath, int carportWidth, int carportLength, Shed shed, int price)
     {
         this.id = id;
         this.imgPath = imgPpath;
         this.carportWidth = carportWidth;
         this.carportLength = carportLength;
         this.shed = shed;
-        this.shedWidth = shedWidth;
-        this.shedLength = shedLength;
         this.price = price;
     }
 
@@ -52,30 +48,21 @@ public class PrebuiltCarport
         return carportLength;
     }
 
-    public boolean isShed()
-    {
-        return shed;
-    }
-    
-    public int getShedWidth()
-    {
-        return shedWidth;
-    }
-
-    public int getShedLength()
-    {
-        return shedLength;
-    }
-
     public int getPrice()
     {
         return price;
     }
-    
-     @Override
-    public String toString() {
-        return "PrebuiltCarport{" + "id=" + id + ", imgPath=" + imgPath + ", carportWidth=" + carportWidth + ", carportLength=" + carportLength
-                + ", shed=" + shed + ", shedWidth=" + shedWidth + ", shedLength=" + shedLength + ", price=" + price + '}';
+
+    public Shed getShed() {
+        return shed;
     }
+    
+    @Override
+    public String toString() {
+        return "PrebuiltCarport{" + "id=" + id + ", imgPath=" + imgPath + ", carportWidth=" + carportWidth + ", carportLength=" + carportLength + ", shed=" + shed + ", price=" + price + '}';
+    }
+
+    
+    
     
 }

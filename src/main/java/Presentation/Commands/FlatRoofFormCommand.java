@@ -11,7 +11,7 @@ import Presentation.Exceptions.SystemErrorException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command for loading flat roof form jsp including a list of available roofs
  * @author sinanjasar
  */
 public class FlatRoofFormCommand implements Command {

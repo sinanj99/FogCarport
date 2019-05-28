@@ -27,13 +27,14 @@ public class PrebuiltCarportCommand implements Command
     @Override
     public String execute(HttpServletRequest request) throws NoSuchMaterialException, UserNotFoundException, NoSuchRoofException, SystemErrorException
     {
+        System.out.println("test1");
         ArrayList<PrebuiltCarport> prebuiltCarports = new ArrayList();
-        
         try
         {
+            System.out.println("test2");
             prebuiltCarports = (ArrayList) PresentationFacade.getInstance().getAllPrebuiltCarports();
             System.out.println(prebuiltCarports);
-            request.setAttribute("prebuiltCarport", prebuiltCarports);
+            request.setAttribute("prebuiltcarport", prebuiltCarports);
         }
         catch (NoSuchPrebuiltCarportException ex)
         {
@@ -42,7 +43,10 @@ public class PrebuiltCarportCommand implements Command
             request.setAttribute("Error", "Something went wrong");
             return "jsp/error.jsp";
         }
-        return "jsp/prebuiltCarport.jsp";
+                    
+
+        request.setAttribute("access", "true");
+        return "jsp/prebuiltcarport.jsp";
     }
     
 }

@@ -6,12 +6,8 @@
 package Logic.Logic;
 
 import Data.Entity.Carport;
-import Data.Entity.LineItem;
 import Data.Entity.Roof;
 import Data.Entity.Shed;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;

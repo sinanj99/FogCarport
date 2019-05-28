@@ -32,7 +32,6 @@ public class ShopCommand implements Command
     {
         if(request.getSession().getAttribute("shoppingcart") == null) 
         {
-            System.out.println("test er vi her?");
             request.getSession().setAttribute("shoppingcart", new ShoppingCart() );
         }
         
@@ -44,26 +43,21 @@ public class ShopCommand implements Command
         }
         catch (NoSuchPrebuiltCarportException ex)
         {
-            Logger.getLogger(ShopCommand.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("Error", "Something went wrong");
             return "jsp/error.jsp";
         }
         
         for(int i = 1; i <= prebuiltCarports.size(); i++)
         {
-            System.out.println(i);
             if(request.getParameter(Integer.toString(i)) != null)
             {
-                System.out.println(prebuiltCarports.get(i-1));
                 ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("shoppingcart");
-                System.out.println(cart.getPrebuiltCarports().size());
                 cart.getPrebuiltCarports().add(prebuiltCarports.get(i-1));
-                System.out.println(cart.getPrebuiltCarports());
                 break;
             }
         }
         
-        return "jsp/shoppingCart.jsp";
+        return "jsp/shoppingcart.jsp";
     }
     
 }

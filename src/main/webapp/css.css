@@ -297,7 +297,6 @@ p
 .last-tr {
     border-bottom: 1px solid #dee2e6;	
 }
-
 .neworder-tr{
     border-left: 1px solid #dee2e6;
     border-right: 1px solid #dee2e6;
@@ -340,7 +339,6 @@ th {
 .errordiv p {
     color: white;
 }
-
 .inputerror {
     box-shadow: 0 0 10px 5px aqua;
 }

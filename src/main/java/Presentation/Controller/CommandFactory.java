@@ -50,9 +50,9 @@ public class CommandFactory {
         commands.put("deleterequest", new DeleteRequestCommand());
         commands.put("showrequests", new ShowRequestCommand());
         commands.put("createOffer", new CreateOfferCommand());
-        commands.put("change_price", new ChangePriceCommand());
-        commands.put("show_prices", new ShowPricesCommand());
-        commands.put("prebuiltCarport", new PrebuiltCarportCommand());
+        commands.put("changeprice", new ChangePriceCommand());
+        commands.put("showprices", new ShowPricesCommand());
+        commands.put("prebuiltcarport", new PrebuiltCarportCommand());
         commands.put("shop", new ShopCommand());
         commands.put("createresponse", new CreateResponseCommand());
         commands.put("updateresponseprice", new UpdateResponsePriceCommand());

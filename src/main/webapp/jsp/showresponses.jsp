@@ -2,6 +2,7 @@
 <%@page import="Data.Entity.Response"%>
 <%@page import="java.util.List"%>
 <%
+    if(request.getAttribute("access") == null)  response.sendRedirect("FrontController?command=showresponses");
     User user = (User) session.getAttribute("user");
     if(user == null) {
         response.sendRedirect("jsp/login.jsp");

@@ -8,6 +8,7 @@
 <%@page import="Data.Entity.LineItem"%>
 <%@page import="Data.Entity.BOM"%>
 <%
+    if(request.getAttribute("access") == null)  response.sendRedirect("FrontController?command=createoffer");
     User user = (User) session.getAttribute("user");
     if (user == null) {
         response.sendRedirect("jsp/login.jsp");

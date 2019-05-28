@@ -71,6 +71,8 @@ public class ChangePriceCommand implements Command {
             System.out.println(e.getMessage());
             throw new NoSuchMaterialException("FrontController?command=show_prices", e.getId());
         }
+        
+        request.setAttribute("access", "true");
         return "FrontController?command=show_prices";
     }
 

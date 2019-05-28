@@ -5,6 +5,7 @@
 <%@page import="java.util.Date"%>
 <%@page import="Data.Entity.Request"%>
 <%
+    if(request.getAttribute("access") == null)  response.sendRedirect("FrontController?command=createresponse");
     User user = (User) request.getSession().getAttribute("user");
     if (user == null) {
         response.sendRedirect("jsp/login.jsp");

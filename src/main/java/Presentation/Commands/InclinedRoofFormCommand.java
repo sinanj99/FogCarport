@@ -27,7 +27,8 @@ public class InclinedRoofFormCommand implements Command {
             request.getSession().setAttribute("target", "inclined");
             return "jsp/login.jsp";
         }
-        request.setAttribute("roofs", PresentationFacade.getInstance().getRoofs(1)); // 0 for flat roofs 
+        request.setAttribute("roofs", PresentationFacade.getInstance().getRoofs(1)); // 0 for flat roofs
+        request.setAttribute("access", "true");
         return "jsp/inclineroof.jsp";
     }
     

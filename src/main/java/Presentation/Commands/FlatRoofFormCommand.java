@@ -26,6 +26,7 @@ public class FlatRoofFormCommand implements Command {
             return "jsp/login.jsp";
         }
         request.setAttribute("roofs", PresentationFacade.getInstance().getRoofs(0)); // 0 for flat roofs 
+        request.setAttribute("access", "true");
         return "jsp/flatroof.jsp";
     }
 

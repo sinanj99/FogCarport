@@ -6,6 +6,7 @@
     <body class="background2">
     <jsp:include page='/include/sitemenu.jsp'></jsp:include>
     <%
+        if(request.getAttribute("access") == null) request.getRequestDispatcher("/FrontController?command=changeprice").forward(request, response);
         User user = (User) session.getAttribute("user");
         if (user == null) {
             response.sendRedirect("jsp/login.jsp");

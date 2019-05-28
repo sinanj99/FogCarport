@@ -42,6 +42,7 @@ public class ShowResponseCommand implements Command{
         if(r.getRequest().getUserId() != user.getId()) throw new InvalidInputException("FrontController?command=showresponses", "Dette tilbud tilhører ikke dig!");
         
         request.setAttribute("response", r);
+        request.setAttribute("access", "true");
         return "jsp/showresponse.jsp";
     }
     

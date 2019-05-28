@@ -25,6 +25,7 @@ public class ShowResponsesCommand implements Command{
         if(user == null) return "jsp/frontpage.jsp";
         if(user.isAdmin() || user.isSeller()) return "FrontController?command=frontpageredirect";
         request.setAttribute("responses", PresentationFacade.getInstance().getResponses(user.getId()));
+        request.setAttribute("access", "true");
         return "jsp/showresponses.jsp";
     }
     

@@ -4,7 +4,9 @@
 <%@page import="java.util.List"%>
 <jsp:include page='/include/sitehead.jsp'></jsp:include>
 <jsp:include page='/include/sitemenu.jsp'></jsp:include>
-<%List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
+<%
+    if(request.getAttribute("access") == null) request.getRequestDispatcher("/FrontController?command=flatroof").forward(request, response);
+    List<Roof> roofs = (List<Roof>) request.getAttribute("roofs");
     User user = (User) session.getAttribute("user");
     if(user == null) {
         response.sendRedirect("jsp/login.jsp");

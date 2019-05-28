@@ -59,7 +59,10 @@ public class CreateResponseCommand implements Command {
             request.setAttribute("status", "offersend");
             request.setAttribute("response", PresentationFacade.getInstance().getResponse(r.getRequestId()));
         }
+
+        request.setAttribute("access", "true");
         return "jsp/createresponse.jsp";
+
     }
 
 }

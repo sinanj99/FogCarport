@@ -3,8 +3,8 @@
 <%@page import="Data.Entity.Request"%>
 <%@page import="Data.Entity.Response"%>
 <%
+    if(request.getAttribute("access") == null) request.getRequestDispatcher("/FrontController?command=showresponses").forward(request, response);
     Response r = (Response) request.getAttribute("response");
-    
     User user = (User) session.getAttribute("user");
     if(user == null) {
         response.sendRedirect("jsp/login.jsp");

@@ -25,7 +25,7 @@ public class ShowRequestsCommand implements Command {
         if (user == null) return "jsp/login.jsp";
         if(!user.isSeller()) return "FrontController?command=frontpageredirect";
         request.setAttribute("requests", PresentationFacade.getInstance().getRequests());
-        System.out.println(request.getAttribute("requests"));
+        request.setAttribute("access", "true");
         return "jsp/showrequests.jsp";
     }
 

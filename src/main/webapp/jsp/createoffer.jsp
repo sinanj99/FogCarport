@@ -8,6 +8,7 @@
 <%@page import="Data.Entity.LineItem"%>
 <%@page import="Data.Entity.BOM"%>
 <%
+    if(request.getAttribute("access") == null) request.getRequestDispatcher("/FrontController?command=showrequests").forward(request, response);
     User user = (User) session.getAttribute("user");
     if (user == null) {
         response.sendRedirect("jsp/login.jsp");

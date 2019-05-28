@@ -5,10 +5,7 @@
  */
 package Data.Database;
 
-import Presentation.Exceptions.NoSuchMaterialException;
-import Presentation.Exceptions.SystemErrorException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.sql.DataSource;

@@ -14,11 +14,8 @@ import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.ClientException;
 import Presentation.Exceptions.InvalidInputException;
 import Presentation.Exceptions.SystemErrorException;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**

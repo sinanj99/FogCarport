@@ -13,7 +13,6 @@ import Data.Entity.Shed;
 import Data.Entity.ShippingAddress;
 import Presentation.Exceptions.NoSuchCarportException;
 import Presentation.Exceptions.NoSuchRequestException;
-import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.NoSuchRoofException;
 import Presentation.Exceptions.NoSuchShedException;
 import Presentation.Exceptions.SystemErrorException;
@@ -24,8 +23,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 /**

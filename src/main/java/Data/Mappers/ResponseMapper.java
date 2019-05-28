@@ -6,7 +6,6 @@
 package Data.Mappers;
 
 import Data.Database.DBConnector;
-import Data.Database.DataSourceMysql;
 import Data.Entity.Response;
 import Presentation.Exceptions.NoSuchResponseException;
 import Presentation.Exceptions.SystemErrorException;
@@ -14,11 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 /**

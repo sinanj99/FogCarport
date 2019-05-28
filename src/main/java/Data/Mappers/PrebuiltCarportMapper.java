@@ -8,7 +8,6 @@ package Data.Mappers;
 import Data.Database.DBConnector;
 import Data.Entity.PrebuiltCarport;
 import Data.Entity.Shed;
-import Presentation.Exceptions.NoSuchPrebuiltCarportException;
 import Presentation.Exceptions.SystemErrorException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

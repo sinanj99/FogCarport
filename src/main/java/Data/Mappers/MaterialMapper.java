@@ -6,7 +6,6 @@
 package Data.Mappers;
 
 import Data.Database.DBConnector;
-import Data.Database.DataSourceMysql;
 import Data.Entity.Material;
 import Data.Entity.Roof;
 import Presentation.Exceptions.NoSuchMaterialException;
@@ -19,12 +18,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 /**

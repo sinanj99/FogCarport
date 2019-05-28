@@ -6,7 +6,6 @@
 package Data.Mappers;
 
 import Data.Entity.PrebuiltCarport;
-import Presentation.Exceptions.NoSuchPrebuiltCarportException;
 import Presentation.Exceptions.SystemErrorException;
 import java.util.List;
 import javax.sql.DataSource;

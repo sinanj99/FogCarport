@@ -9,7 +9,6 @@ import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Exceptions.NoMatchException;
 import Data.Entity.User;
 import Presentation.Exceptions.SystemErrorException;
-import java.sql.SQLException;
 
 /**
  * Handles login-related validation

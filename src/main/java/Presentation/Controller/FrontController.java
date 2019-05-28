@@ -37,7 +37,7 @@ public class FrontController extends HttpServlet {
         } catch (SystemErrorException e) {
             String message = e.getMessage();
             request.setAttribute("message", message);
-            System.out.println(message);
+            System.out.println("message: " + message);
             request.getRequestDispatcher(e.getTarget()).forward(request, response);
         } catch (ClientException e) {
             String message = e.getMessage();

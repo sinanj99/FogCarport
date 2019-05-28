@@ -5,13 +5,10 @@
  */
 package Data.Mappers;
 
-import Data.Mappers.UserMapper;
 import Data.Entity.User;
 import Presentation.Exceptions.DuplicateException;
 import Presentation.Exceptions.SystemErrorException;
 import Presentation.Exceptions.UserNotFoundException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import javax.sql.DataSource;
 
 /**

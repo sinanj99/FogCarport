@@ -6,8 +6,8 @@
 package Data.Entity;
 
 /**
- * Mirrors roof-tables in database.
- * Is used in datamappers where it is fetched / inserted. Is also used in presentation layer
+ * Mirrors roof-tables in database,
+ * is used in datamappers where it is fetched / inserted, and in presentation layer
  * where the different rooftypes are displayed in jsp's, and roofs are instantiated in connection
  * with requests.
  * @author Obaydah Mohamad

@@ -6,7 +6,7 @@
 package Data.Entity;
 
 /**
- *
+ * 
  * @author Obaydah Mohamad
  * 
  * CREATE TABLE responses (

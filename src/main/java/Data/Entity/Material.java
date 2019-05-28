@@ -6,8 +6,8 @@
 package Data.Entity;
 
 /**
- * Mirrors material-tables in database.
- * Is used in data mappers where materials are fetched, and are then forwarded to 
+ * Mirrors material-tables in database,
+ * is used in data mappers where materials are fetched, and are then forwarded to 
  * logic layer, where it is added to a line item.
  * @author sinanjasar
  */

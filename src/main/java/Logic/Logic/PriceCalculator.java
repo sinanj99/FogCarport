@@ -44,8 +44,6 @@ public class PriceCalculator {
      *
      * @param price the new price of a material.
      * @param id of the roof/material
-     * @param prices a linkedHashMap including all lengths as keys and its price
-     * as the value.
      * @param type roof or material with/without length
      * @throws Presentation.Exceptions.InvalidInputException if there is no
      * difference between the new and old price.

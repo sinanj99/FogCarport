@@ -443,7 +443,7 @@ class BOMFundament {
      */
     public LineItem outerBoardForFront(Carport c) throws NoSuchMaterialException, SystemErrorException {
         Material m = LogicFacade.getInstance().getWoodMaterial(6, 360);
-        return new LineItem(m, calculateQuantityOfOuterBoardForFront(c), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOuterBoardForFront(c), Type.LENGTH);
+        return new LineItem(m, calculateQuantityOfOuterBoardForFront(c), "oversternbrædder for front", m.getPrice() * calculateQuantityOfOuterBoardForFront(c), Type.LENGTH);
     }
 
     /**
@@ -455,6 +455,7 @@ class BOMFundament {
      */
     public LineItem outerBoardForSides(Carport c) throws NoSuchMaterialException, SystemErrorException {
         Material m = LogicFacade.getInstance().getWoodMaterial(6, 540);
+        System.out.println("length : " + m.getLength());
         return new LineItem(m, calculateQuantityOfOuterBoardForSides(c), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOuterBoardForSides(c), Type.LENGTH);
     }
 

@@ -530,9 +530,9 @@ class BOMFundament {
 
     //-------------------------------- calculation methods for other things -----------------------------
     /**
-     * Calcs amount of bands needed by dividing length of a single band (10m)
-     * with the square root of length^2 + width^2 (hypotenuse) and multiplying
-     * this with 2 as 2 bands are needed.
+     * Calcs amount of bands needed by calculating square root of length^2 + width^2 (hypotenuse),
+     * multiplying this by 2, since 2 bands are needed, and lastly, dividing the result by 10
+     * since the length of a single band is 10m.
      *
      * @param c
      * @return the amount of peforated bands needed for the carport.
@@ -550,7 +550,7 @@ class BOMFundament {
         double widthM = c.getWidth() / 100;
         //Math.ceil = round up to nearest integer
         //Math.sqrt = square root
-        return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2) / 10);
+        return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM))));
     }
 
     //------------------------------------ methods for retuning items of -------------------------------------------------------------

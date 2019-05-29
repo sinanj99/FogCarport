@@ -97,5 +97,5 @@
                 </div>
             </form>
         </div>
-        <script src="/project/include/javascript_validation.js" async></script>
+        <script src="/project/include/javascriptvalidation.js" async></script>
     <jsp:include page='/include/sitefoot.jsp'></jsp:include>

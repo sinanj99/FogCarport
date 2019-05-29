@@ -26,7 +26,7 @@ public class DataSourceMysql {
         
         ds.setServerName("157.230.97.70");
         ds.setPort(3306);
-        ds.setDatabaseName("FogCarportDB");
+        ds.setDatabaseName("FogCarport");
         ds.setUser("root");
         ds.setPassword("prespa01");
         try {

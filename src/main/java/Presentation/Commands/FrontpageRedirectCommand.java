@@ -25,12 +25,12 @@ public class FrontpageRedirectCommand implements Command{
         User user = null;
         user = (User) request.getSession().getAttribute("user");
         
-        if(user == null) return "jsp/login";
-        if(user.isAdmin()) return "jsp/adminfrontpage.jsp";
-        if(user.isSeller()) return "jsp/sellerfrontpage.jsp";
+        if(user == null) return "/project/jsp/login";
+        if(user.isAdmin()) return "/project/jsp/adminfrontpage.jsp";
+        if(user.isSeller()) return "/project/jsp/sellerfrontpage.jsp";
         
         
-        return "jsp/frontpage.jsp";
+        return "/project/jsp/frontpage.jsp";
     }
     
 }

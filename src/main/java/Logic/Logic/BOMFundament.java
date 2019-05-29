@@ -13,8 +13,9 @@ import Presentation.Exceptions.NoSuchMaterialException;
 import Presentation.Exceptions.SystemErrorException;
 
 /**
- * Calculations regarding the fundament of a carport. Calculates the amount of 
+ * Calculations regarding the fundament of a carport. Calculates the amount of
  * materials needed and returns a lineitem for the specific material.
+ *
  * @author Kasper Jeppesen
  */
 class BOMFundament {
@@ -179,7 +180,7 @@ class BOMFundament {
      * @return
      */
     private float calculateSpaceBetweenRafter(int length, int quantityOfRafter) {
-       
+
         float widthOfRafter = 4.5f;
 
         float spaceOfAllRafter = quantityOfRafter * widthOfRafter;
@@ -199,7 +200,7 @@ class BOMFundament {
      * @return amount of rafter (spær) minus the back rafter (bagspæret)
      */
     public int calculateQuantityOFRafterExcluedBackRafter(int length, int limit) {
-        
+
         //Amount of rafter (spær) needed - Integer cut of any decimal, therefor if the division eqauls example 7,5, then the interger hold 7
         int quantity = length / limit;
 
@@ -289,16 +290,13 @@ class BOMFundament {
     public int calculateQuantityOfUnderneathBoardForFrontAndBack(Carport c) {
         int quantity = 0;
 
-        if (c.getWidth() < 250) {
+        if (c.getWidth() < 360) {
             // 1 is enough for each side
             quantity = 2;
-        }
-        if (c.getWidth() >= 250 && c.getWidth() <= 500) {
+        } else if (c.getWidth() >= 360 && c.getWidth() <= 720) {
             // 2 is needed for each side
             quantity = 4;
-        }
-        if (c.getWidth() > 500 && c.getWidth() < 750) {
-            //3 is needed for each side
+        } else {
             quantity = 6;
         }
         return quantity;
@@ -313,19 +311,15 @@ class BOMFundament {
      * sides, needed for the carport
      */
     public int calculateQuantityOfUnderneathBoardForSides(Carport c) {
-        int quantity = 0;
+        int quantity;
 
-        if (c.getLength() < 250) {
+        if (c.getLength() < 540) {
             // 1 is enough for each side
             quantity = 2;
         }
-        if (c.getLength() >= 250 && c.getLength() <= 500) {
+        else {
             // 2 is needed for each side
             quantity = 4;
-        }
-        if (c.getLength() > 500 && c.getLength() < 750) {
-            // 3 is needed for each side
-            quantity = 6;
         }
         return quantity;
     }
@@ -424,7 +418,7 @@ class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem underneathBoardForFrontAndBack(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getWoodMaterial(4, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(4, 360);
         return new LineItem(m, calculateQuantityOfUnderneathBoardForFrontAndBack(c), "understernbrædder til forende og bagende", m.getPrice() * calculateQuantityOfUnderneathBoardForFrontAndBack(c), Type.LENGTH);
     }
 
@@ -436,7 +430,7 @@ class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem underneathBoardForSides(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getWoodMaterial(4, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(4, 540);
         return new LineItem(m, calculateQuantityOfUnderneathBoardForSides(c), "understernbrædder til siderne", m.getPrice() * calculateQuantityOfUnderneathBoardForSides(c), Type.LENGTH);
     }
 
@@ -448,7 +442,7 @@ class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem outerBoardForFront(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getWoodMaterial(6, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(6, 360);
         return new LineItem(m, calculateQuantityOfOuterBoardForFront(c), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOuterBoardForFront(c), Type.LENGTH);
     }
 
@@ -460,7 +454,7 @@ class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem outerBoardForSides(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getWoodMaterial(6, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(6, 540);
         return new LineItem(m, calculateQuantityOfOuterBoardForSides(c), "oversternbrædder for siderne", m.getPrice() * calculateQuantityOfOuterBoardForSides(c), Type.LENGTH);
     }
 
@@ -472,7 +466,7 @@ class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem waterBoardForFront(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getWoodMaterial(7, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(7, 360);
         return new LineItem(m, calculateQuantityOfWaterBoardForFront(c), "vandbrædt på stern i forenden", m.getPrice() * calculateQuantityOfWaterBoardForFront(c), Type.LENGTH);
     }
 
@@ -484,7 +478,7 @@ class BOMFundament {
      * @throws Presentation.Exceptions.SystemErrorException
      */
     public LineItem waterBoardForSides(Carport c) throws NoSuchMaterialException, SystemErrorException {
-        Material m = LogicFacade.getInstance().getWoodMaterial(7, 250);
+        Material m = LogicFacade.getInstance().getWoodMaterial(7, 540);
         return new LineItem(m, calculateQuantityOfWaterBoardForSides(c), "vandbrædt på stern i siderne", m.getPrice() * calculateQuantityOfWaterBoardForSides(c), Type.LENGTH);
     }
 
@@ -530,9 +524,10 @@ class BOMFundament {
 
     //-------------------------------- calculation methods for other things -----------------------------
     /**
-     * Calcs amount of bands needed by calculating square root of length^2 + width^2 (hypotenuse),
-     * multiplying this by 2, since 2 bands are needed, and lastly, dividing the result by 10
-     * since the length of a single band is 10m.
+     * Calcs amount of bands needed by calculating square root of length^2 +
+     * width^2 (hypotenuse), multiplying this by 2, since 2 bands are needed,
+     * and lastly, dividing the result by 10 since the length of a single band
+     * is 10m.
      *
      * @param c
      * @return the amount of peforated bands needed for the carport.
@@ -550,7 +545,7 @@ class BOMFundament {
         double widthM = c.getWidth() / 100;
         //Math.ceil = round up to nearest integer
         //Math.sqrt = square root
-        return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2)/10);
+        return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2) / 10);
     }
 
     //------------------------------------ methods for retuning items of -------------------------------------------------------------

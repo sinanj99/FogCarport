@@ -33,11 +33,14 @@ public class DataInsertion {
         }
         
         d.insertMaterialDim(3, 300, 50, 300);
-        d.insertMaterialDim(4, 250, 15, 300);
+        d.insertMaterialDim(4, 360, 15, 300);
+        d.insertMaterialDim(4, 540, 25, 300);
         d.insertMaterialDim(5, 540, 32, 300);
-        d.insertMaterialDim(6, 250, 22, 300);
+        d.insertMaterialDim(6, 360, 22, 300);
+        d.insertMaterialDim(6, 540, 38, 300);
         d.insertMaterialDim(7, 210, 17, 300);
-        d.insertMaterialDim(7, 250, 22, 300);
+        d.insertMaterialDim(7, 360, 22, 300);
+        d.insertMaterialDim(7, 540, 22, 300);
         d.insertMaterialDim(8, 420, 29, 300);
         
         price2 = 15;

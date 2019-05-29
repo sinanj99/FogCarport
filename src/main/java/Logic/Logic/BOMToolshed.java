@@ -26,7 +26,7 @@ public class BOMToolshed
      * @param c
      * @return the amount of planks needed for shed clothing (beklædning) of the first layer of the shed
      */
-    private int calculateQuantityForShedClothing1(Carport c)
+    protected int calculateQuantityForShedClothing1(Carport c)
     {
         //Width of a plank 
         int widthOfPlank = 10;
@@ -45,7 +45,7 @@ public class BOMToolshed
      * @param c
      * @return the amount of planks needed for shed clothing (beklædning) of the second layer of the shed
      */
-    private int calculateQuantityForShedClothing2(Carport c)
+    protected int calculateQuantityForShedClothing2(Carport c)
     {
         //width of a plank
         int widthOfPlank = 10;
@@ -72,7 +72,7 @@ public class BOMToolshed
      * @param c
      * @return the total amount of planks needed for the shed clothing (beklædning)
      */
-    private int calculateQuantityForShedClothing(Carport c)
+    protected int calculateQuantityForShedClothing(Carport c)
     {
         return calculateQuantityForShedClothing1(c) + calculateQuantityForShedClothing2(c);
     }

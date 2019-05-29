@@ -26,7 +26,7 @@ public class BOMFundament {
      * @return the amount of packages of bracket screws (beslag skruer) needed
      * for the carport.
      */
-    private int calculateQuantityOfBracketScrews(Carport c) {
+    protected int calculateQuantityOfBracketScrews(Carport c) {
         //At minimun one package is needed
         int packsNeeded = 1;
         int quantity = 0;
@@ -60,7 +60,7 @@ public class BOMFundament {
      * @param c
      * @return the amount of boards bolts (brædderbolte) needed for the carport
      */
-    private int calculateQuantityOfBordsBolts(Carport c) {
+    protected int calculateQuantityOfBordsBolts(Carport c) {
         //two boards bolts (brædderbolte) for each post (stolpe)
         return calculateQuantityOfPost(c) * 2;
     }
@@ -70,7 +70,7 @@ public class BOMFundament {
      * @param c
      * @return the amount of sqaure disc (firkant skiver) needed for the carport
      */
-    private int CalculateQuantityOfSqaureDisc(Carport c) {
+    protected int CalculateQuantityOfSqaureDisc(Carport c) {
         //One sqaure disc (firkant skive) for each board bolt (brææder bolt)
         return calculateQuantityOfBordsBolts(c);
     }
@@ -81,7 +81,7 @@ public class BOMFundament {
      * @return the amount of right bracket interties (højre beslag) needed for
      * the carport
      */
-    private int calculateQuantityOfRightBracketInteries(Carport c) {
+    protected int calculateQuantityOfRightBracketInteries(Carport c) {
         //one right bracket interties (højre beslag) per rafter (spær)
         return calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 60);
     }
@@ -92,7 +92,7 @@ public class BOMFundament {
      * @return the amount of left bracket interties (venstre beslag) needed for
      * the carport
      */
-    private int calculateQuantityOfLeftBracketInterties(Carport c) {
+    protected int calculateQuantityOfLeftBracketInterties(Carport c) {
         //one left bracket interties (venstre beslag) per rafter (spær)
         return calculateQuantityOfRafterIncludedBackRafter(c.getLength(), 60);
     }
@@ -179,7 +179,7 @@ public class BOMFundament {
      * @param quantityOfSpær
      * @return
      */
-    private float calculateSpaceBetweenRafter(int length, int quantityOfRafter) {
+    protected float calculateSpaceBetweenRafter(int length, int quantityOfRafter) {
 
         float widthOfRafter = 4.5f;
 
@@ -287,7 +287,7 @@ public class BOMFundament {
      * @return the amount of underneath board (understern brædder) for the
      * front, is needed for the carport
      */
-    private int calculateQuantityOfUnderneathBoardForFrontAndBack(Carport c) {
+    protected int calculateQuantityOfUnderneathBoardForFrontAndBack(Carport c) {
         int quantity = 0;
 
         if (c.getWidth() < 360) {
@@ -310,7 +310,7 @@ public class BOMFundament {
      * @return the amount of underneath boards (understern brædder) for the
      * sides, needed for the carport
      */
-    private int calculateQuantityOfUnderneathBoardForSides(Carport c) {
+    protected int calculateQuantityOfUnderneathBoardForSides(Carport c) {
         int quantity;
 
         if (c.getLength() < 540) {
@@ -330,7 +330,7 @@ public class BOMFundament {
      * @return the amount of outer boards (overstern brædder) for the front,
      * needed for the carport
      */
-    private int calculateQuantityOfOuterBoardForFront(Carport c) {
+    protected int calculateQuantityOfOuterBoardForFront(Carport c) {
         /*
         The amount of outer board (overstern brædder) for the front is equal to the amount of underneath board (understern brædder) for the front and back, 
         divided by 2 because outer board is only for the front
@@ -344,7 +344,7 @@ public class BOMFundament {
      * @return the amount of outer boards (overstern brædder) for the sides,
      * needed for the carport
      */
-    private int calculateQuantityOfOuterBoardForSides(Carport c) {
+    protected int calculateQuantityOfOuterBoardForSides(Carport c) {
         //the amount of outer boards (overstern brædder) is eqaul to the amount of underneath boards (undertern brædder)
         return calculateQuantityOfUnderneathBoardForSides(c);
     }
@@ -355,7 +355,7 @@ public class BOMFundament {
      * @return the amount of water boards (vandbræt) for the front. needed for
      * the carport
      */
-    private int calculateQuantityOfWaterBoardForFront(Carport c) {
+    protected int calculateQuantityOfWaterBoardForFront(Carport c) {
         /*
         The amount of water boards (vandbræt) for the front is equal to the amount of underneath board (understern brædder) for the front and back, 
         divided by 2 because water board (vandbræt) is only for the front
@@ -369,7 +369,7 @@ public class BOMFundament {
      * @return the amount of water boards (vandbræt) for the sides, needed for
      * the carport
      */
-    private int calculateQuantityOfWaterBoardForSides(Carport c) {
+    protected int calculateQuantityOfWaterBoardForSides(Carport c) {
         //amount of water boards (vandbræt) is eqaul to the amount of underneath boards (understernbrædder)
         return calculateQuantityOfUnderneathBoardForSides(c);
     }
@@ -533,7 +533,7 @@ public class BOMFundament {
      * @param c
      * @return the amount of peforated bands needed for the carport.
      */
-    private double calculateQuantityOfPerforatedBands(Carport c) {
+    protected double calculateQuantityOfPerforatedBands(Carport c) {
         double lengthM;
         // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
         if (c.getShed() != null) {

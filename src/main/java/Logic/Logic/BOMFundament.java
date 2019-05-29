@@ -550,7 +550,7 @@ class BOMFundament {
         double widthM = c.getWidth() / 100;
         //Math.ceil = round up to nearest integer
         //Math.sqrt = square root
-        return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM))));
+        return Math.ceil((Math.sqrt((lengthM * lengthM) + (widthM * widthM)) * 2));
     }
 
     //------------------------------------ methods for retuning items of -------------------------------------------------------------

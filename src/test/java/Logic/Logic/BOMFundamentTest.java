@@ -21,13 +21,10 @@ public class BOMFundamentTest {
     private static BOMFundament bom;
     private static Carport carport;
     
-    public BOMFundamentTest() {
-        bom = new BOMFundament();
-        carport = new Carport(new Roof(1,"roof",false),0,300,660,new Shed(240, 210));
-    }
-    
     @BeforeClass
     public static void setUpClass() {
+        bom = new BOMFundament();
+        carport = new Carport(new Roof(1,"roof",false),0,600,780,new Shed(530, 210));
     }
 
     @Test
@@ -42,18 +39,25 @@ public class BOMFundamentTest {
         int expected = 22;
         int result = bom.calculateQuantityOfBordsBolts(carport);
         assertEquals(expected, result);
+    } 
+    @Test
+    public void calculateQuantityOfRafters(){
+        int expected = 14;
+        /*the result deviates by one digit, 
+        since the limit is 0.5 greater that the one in the pdf-example*/
+        int result = bom.calculateQuantityOfRafterIncludedBackRafter(carport.getLength(), 60);
+        assertEquals(expected, result);
     }
-    
     @Test
     public void calculateQuantityOfRightBracketInteries(){
-        int expected = 12;
+        int expected = 14;
         int result = bom.calculateQuantityOfRightBracketInteries(carport);
         assertEquals(expected, result);
     }
     
     @Test
     public void calculateQuantityOfLeftBracketInteries(){
-        int expected = 12;
+        int expected = 14;
         int result = bom.calculateQuantityOfRightBracketInteries(carport);
         assertEquals(expected, result);
     }
@@ -74,7 +78,7 @@ public class BOMFundamentTest {
     
     @Test
     public void calculateQuantityOfUnderneathBoardForSides(){
-        int expected = 6;
+        int expected = 4;
         int result = bom.calculateQuantityOfUnderneathBoardForSides(carport);
         assertEquals(expected, result);
     }
@@ -88,8 +92,8 @@ public class BOMFundamentTest {
     
     @Test
     public void calculateQuantityOfOuterBoardForSides(){
-        int expected = 2;
-        int result = bom.calculateQuantityOfOuterBoardForFront(carport);
+        int expected = 4;
+        int result = bom.calculateQuantityOfOuterBoardForSides(carport);
         assertEquals(expected, result);
     }
     
@@ -102,15 +106,15 @@ public class BOMFundamentTest {
     
     @Test
     public void calculateQuantityOfWaterBoardForSides(){
-        int expected = 6;
+        int expected = 4;
         int result = bom.calculateQuantityOfWaterBoardForSides(carport);
         assertEquals(expected, result);
     }
     
     @Test
     public void calculateQuantityOfPerforatedBands(){
-        double expected = 90;
+        double expected = 2; // 2 rolls consisting of 10m bands each
         double result = bom.calculateQuantityOfPerforatedBands(carport);
-        assertEquals(expected, result, 0.0);
+        assertEquals(expected, result, 0);
     }
 }

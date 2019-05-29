@@ -67,7 +67,7 @@ public class LogicFacade {
     public void updatePricesRoof(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
         DataFacade.getInstance().updatePricesRoof(prices, id);
     }
-    public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
+    public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException {
         return DataFacade.getInstance().getRoofLengthPrices(id);
     }
     public void updatePriceWithLength(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException {

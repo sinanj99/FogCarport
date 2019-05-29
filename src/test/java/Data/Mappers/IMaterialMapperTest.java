@@ -190,7 +190,7 @@ public class IMaterialMapperTest {
     }
 
     @Test
-    public void testUpdatePriceRoof() throws SystemErrorException, NoSuchRoofException, InvalidInputException {
+    public void testUpdatePriceRoof() throws SystemErrorException, NoSuchRoofException, InvalidInputException, NoSuchMaterialException {
         System.out.println("updatePriceRoof");
         int price = 990;
         int id = 1;

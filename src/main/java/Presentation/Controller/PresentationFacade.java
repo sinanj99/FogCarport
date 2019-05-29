@@ -59,7 +59,7 @@ public class PresentationFacade {
         return LogicFacade.getInstance().getPricesWithLength(id);
     }
 
-    public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
+    public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException {
         return LogicFacade.getInstance().getRoofLengthPrices(id);
     }
 

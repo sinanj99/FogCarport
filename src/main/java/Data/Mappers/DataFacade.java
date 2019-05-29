@@ -77,7 +77,7 @@ public class DataFacade {
         return m.getMaterialLengthPrices(id);
     }
 
-    public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
+    public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException {
         return m.getRoofLengthPrices(id);
     }
 

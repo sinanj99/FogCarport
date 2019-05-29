@@ -19,8 +19,6 @@ import Presentation.Exceptions.SystemErrorException;
  */
 class BOMFundament {
 
-    private BOMRoofPackage ir = new BOMRoofPackage();
-
     //------------------------------- calculate methods for fittings and screws ------------------------------------------------------------------------
     /**
      * @param c
@@ -533,7 +531,7 @@ class BOMFundament {
     //-------------------------------- calculation methods for other things -----------------------------
     /**
      * Calcs amount of bands needed by dividing length of a single band (10m)
-     * with the square root of length^2 + width^2 (hypothesis) and multiplying
+     * with the square root of length^2 + width^2 (hypotenuse) and multiplying
      * this with 2 as 2 bands are needed.
      *
      * @param c
@@ -543,7 +541,7 @@ class BOMFundament {
         double lengthM;
         // if there is a toolshed, the length of the toolshed must be subtracted from the carport length. 
         if (c.getShed() != null) {
-            lengthM = c.getLength() - c.getShed().getLength() - spaceBetweenRafter(c.getLength(), 60) / 100;
+            lengthM = (c.getLength() - c.getShed().getLength() - spaceBetweenRafter(c.getLength(), 60)) / 100;
         } else {
             //length in meters
             lengthM = (c.getLength() - spaceBetweenRafter(c.getLength(), 60)) / 100;

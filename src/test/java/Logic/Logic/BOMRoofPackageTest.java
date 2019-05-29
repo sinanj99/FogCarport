@@ -13,7 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * The expected results and carport object in this class is based on the extradited 
+ * The expected results and carport object in this class are based on the extradited 
  * example of a bill of materials on an inclined roof carport.
  * @author sinanjasar
  */

@@ -13,8 +13,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Obaydah Mohamad
+ * The expected results and carport object in this class are based on the extradited 
+ * example of a bill of materials on an inclined roof carport.
+ * @author sinanjasar
  */
 public class BOMFundamentTest {
     private static BOMFundament bom;

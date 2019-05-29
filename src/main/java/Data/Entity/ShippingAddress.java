@@ -6,8 +6,8 @@
 package Data.Entity;
 
 /**
- * Mirrors shipping_address table in database. 
- * Is associated with a user, and therefore,
+ * Mirrors shipping_address table in database, 
+ * is associated with a user, and therefore,
  * is used in data mappers when handling users, and in presentation layer, when info
  * about a user is needed.
  * @author sinanjasar

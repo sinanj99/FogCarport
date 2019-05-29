@@ -6,7 +6,9 @@
 package Data.Entity;
 
 /**
- * mirrors prebuilt_carport table in database
+ * Mirrors prebuilt_carport table in database,
+ * is instantiated and used in PrebuiltCarportCommand, where a list of prebuilt carport 
+ * is set on the request attribute and later accessed in jsp-file.
  * @author Kasper Jeppesen
  */
 public class PrebuiltCarport
@@ -15,7 +17,7 @@ public class PrebuiltCarport
     private String imgPath;
     private int carportWidth;
     private int carportLength;
-    Shed shed;
+    private Shed shed;
     private int price;
 
     public PrebuiltCarport(int id, String imgPpath, int carportWidth, int carportLength, Shed shed, int price)

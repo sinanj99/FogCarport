@@ -6,6 +6,7 @@
 package Data.Entity;
 
 /**
+ * 
  * Mirrors response table in database.
  * Is used in data mappers where a response is inserted/fetched. Is also used in presentation layer
  * where a response is created based on user-input or a response is fetched and displayed in jsp-file.

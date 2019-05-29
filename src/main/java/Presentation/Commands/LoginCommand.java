@@ -13,7 +13,7 @@ import Presentation.Exceptions.UserNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command that that validates and logs in user
  * @author sinanjasar
  */
 public class LoginCommand implements Command {

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Recieves request from prebuiltcarport.jsp
+ * Command that receives a request from prebuiltcarport.jsp
  * Created a session containing ShoppingCart entity class
  * Forward to shoppingcart.jsp
  * @author Kasper Jeppesen

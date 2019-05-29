@@ -21,7 +21,7 @@ import javax.sql.DataSource;
  *
  * @author Kasper Jeppesen
  */
-public class PrebuiltCarportMapper extends IPrebuiltCarportMapper {
+ class PrebuiltCarportMapper extends IPrebuiltCarportMapper {
 
     private static PrebuiltCarportMapper instance = null;
     private final DBConnector con = new DBConnector();

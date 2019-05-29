@@ -8,7 +8,8 @@ package Data.Entity;
 import java.util.List;
 
 /**
- * Bill of materials class.
+ * Bill of materials - is instantiated in BOMCalculator and used in ShowRequestCommand
+ * which puts the BOM on request attribute so it can be accessed in jsp-files
  * @author sinanjasar
  */
 public class BOM {

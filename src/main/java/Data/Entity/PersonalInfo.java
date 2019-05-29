@@ -6,8 +6,8 @@
 package Data.Entity;
 
 /**
- * Mirrors users_personalinfo table in database.
- * Is used in data mappers where a user, and thereby, info is inserted / fetched.
+ * Mirrors users_personalinfo table in database,
+ * is used in data mappers where a user, and thereby, info is inserted / fetched.
  * @author sinanjasar
  */
 public class PersonalInfo {

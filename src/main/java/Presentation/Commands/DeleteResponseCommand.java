@@ -16,7 +16,7 @@ import Presentation.Exceptions.UserNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Commands which handles the deletion of a specific response.
+ * Commands that handles the deletion of a specific response.
  * Used when a user declines an offer on a carport.
  * @author Obaydah Mohamad
  */

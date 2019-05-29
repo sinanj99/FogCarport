@@ -22,7 +22,7 @@ import Presentation.Exceptions.NoSuchShedException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Command which handles the creation of a response.
+ * Command that handles the creation of a response.
  * Used when a seller gives an offer on a carport.
  * @author Obaydah Mohamad
  */

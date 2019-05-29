@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Command handling generation of request based on user input
+ * Command that handles generation of request based on user input
  * @author sinanjasar
  */
 public class GenerateReqCommand implements Command {

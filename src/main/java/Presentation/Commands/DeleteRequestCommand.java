@@ -17,7 +17,7 @@ import Presentation.Exceptions.UserNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Command which handles the deletion of a specific request.
+ * Command that handles the deletion of a specific request.
  * Used by a seller.
  * @author Obaydah Mohamad
  */

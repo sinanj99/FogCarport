@@ -13,12 +13,10 @@ import Presentation.Exceptions.UserNotFoundException;
 import Presentation.Controller.PresentationFacade;
 import Presentation.Exceptions.SystemErrorException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Command that creates a list of prebuilt carports to present in jsp file
  * @author Kasper Jeppesen
  */
 public class PrebuiltCarportCommand implements Command

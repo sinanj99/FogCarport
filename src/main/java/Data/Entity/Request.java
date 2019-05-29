@@ -6,8 +6,8 @@
 package Data.Entity;
 
 /**
- * Mirrors requests table in database.
- * Is used in data mappers where a request is inserted/fetched. Is also used in presentation layer
+ * Mirrors requests table in database,
+ * is used in data mappers where a request is inserted/fetched, and in presentation layer
  * where a request is created based on user-input or a request is fetched and displayed in jsp-file.
  * @author Obaydah Mohamad
  */

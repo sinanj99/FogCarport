@@ -6,8 +6,8 @@
 package Data.Entity;
 
 /**
- * Mirrors carport table in database.
- * Is used in data mappers where a carport is returned and forwarded to
+ * Mirrors carport table in database,
+ * is used in data mappers where a carport is returned and forwarded to
  * the presentation layer where it is used in connection with request-handling.
  * 
  * @author Obaydah Mohamad

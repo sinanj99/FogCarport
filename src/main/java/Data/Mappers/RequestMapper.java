@@ -320,30 +320,26 @@ class RequestMapper extends IRequestMapper {
     @Override
     protected List<Roof> getRoofs() throws SystemErrorException{
         List<Roof> roofs = new ArrayList();
-        int roof_id = 0;
+        int roofId = 0;
         String name = "";
         int inclined_ = 0;
-        int price = 0;
-        int length = 0;
         boolean inclined = false;
 
-        String query = "SELECT * FROM roofs LEFT JOIN roof_lengths USING(roof_id)";
+        String query = "SELECT * FROM roofs;";
 
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                roof_id = rs.getInt("roof_id");
+                roofId = rs.getInt("roof_id");
                 name = rs.getString("name");
                 inclined_ = rs.getInt("inclined");
-                price = rs.getInt("price");
-                length = rs.getInt("length");
                 
                 if (inclined_ == 1) {
                     inclined = true;
                 }
-                
+                roofs.add(new Roof(roofId,name,inclined));
             }
         } catch (SQLException e) {
             throw new SystemErrorException(e.getMessage());

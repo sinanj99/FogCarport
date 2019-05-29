@@ -99,6 +99,7 @@ import javax.sql.DataSource;
     
     /**
      * Updates price of all lengths of a material specified by id
+     * @param prices list of all lengths and their respective prices
      * @param id the id of the desired material
      * @throws SystemErrorException 
      * @throws NoSuchMaterialException if there is no material with given id 
@@ -117,7 +118,7 @@ import javax.sql.DataSource;
     
     /**
      * Updates price of all lengths of a specific roof specified by id.
-     * @param price new price of the roof
+     * @param prices
      * @param id the roof
      * @throws SystemErrorException 
      * @throws NoSuchRoofException 
@@ -128,9 +129,10 @@ import javax.sql.DataSource;
      * Fetches all lengths and the price for each length for a material specified by id.
      * @param id of the material whose lengths needs to be fetched
      * @return a hash map with length as key and its respective price as value
-     * @throws SystemErrorException 
+     * @throws SystemErrorException if an sql-exception is thrown
+     * @throws Presentation.Exceptions.NoSuchMaterialException  if material cannot be found
      */
-    protected abstract LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException;
+    protected abstract LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException;
     
     /**
      * Fetches all roofs with shortest length from dB.

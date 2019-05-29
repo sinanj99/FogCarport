@@ -53,9 +53,10 @@ class MaterialMapper extends IMaterialMapper {
         int price = 0;
         int stock = 0;
         try {
-            String sql = "SELECT * FROM `wood_materials` INNER JOIN `material_lengths` USING(material_id)  WHERE material_id = ?;";
+            String sql = "SELECT * FROM `wood_materials` INNER JOIN `material_lengths` USING(material_id)  WHERE material_id = ? AND length = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
+            pstmt.setInt(2, length);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 name = rs.getString("name");

@@ -17,14 +17,14 @@ import javax.sql.DataSource;
  */
  abstract class IUserMapper {
 
-    public static IUserMapper instance() {
+    protected static IUserMapper instance() {
         return UserMapper.getInstance();
     }
     /**
      * Sets datasource
      * @param ds datasource
      */
-    public abstract void setDataSource(DataSource ds);
+    protected abstract void setDataSource(DataSource ds);
 
     /**
      * Inserts user to the database.
@@ -33,7 +33,7 @@ import javax.sql.DataSource;
      * @throws DuplicateException if a user with given name already exists in database
      * @throws SystemErrorException if any other sql-related error occurs
      */
-    public abstract void insertUser(User user) throws DuplicateException, SystemErrorException;
+    protected abstract void insertUser(User user) throws DuplicateException, SystemErrorException;
 
     /**
      * Fetches user from database with specified email.
@@ -43,7 +43,7 @@ import javax.sql.DataSource;
      * @throws UserNotFoundException if there is no user in database with given email
      * @throws SystemErrorException if any other sql-related error occurs
      */
-    public abstract User getUser(String email) throws UserNotFoundException, SystemErrorException;
+    protected abstract User getUser(String email) throws UserNotFoundException, SystemErrorException;
 
     /**
      * Fetches user from database with specified id.
@@ -52,5 +52,5 @@ import javax.sql.DataSource;
      * @throws UserNotFoundException if there is no user in database with given id
      * @throws SystemErrorException if any other sql-related error occurs
      */
-    public abstract User getUser(int id) throws UserNotFoundException, SystemErrorException;
+    protected abstract User getUser(int id) throws UserNotFoundException, SystemErrorException;
 }

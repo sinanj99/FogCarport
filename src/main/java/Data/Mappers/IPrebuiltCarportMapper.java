@@ -16,12 +16,12 @@ import javax.sql.DataSource;
  */
  abstract class IPrebuiltCarportMapper
 {
-    public static IPrebuiltCarportMapper instance()
+    protected static IPrebuiltCarportMapper instance()
     {
         return PrebuiltCarportMapper.getInstance();
     }
     
-    public abstract void setDataSource(DataSource ds);
+    protected abstract void setDataSource(DataSource ds);
     
     /** 
      * returns a list os all prebuilts carport - used to populate prebuiltcarport.jsp 
@@ -29,5 +29,5 @@ import javax.sql.DataSource;
      * @return list of all prebuilts carport in database
      * @throws Presentation.Exceptions.SystemErrorException if an sql-exception is thrown
      */
-    public abstract List<PrebuiltCarport> getAllPrebuiltCarports() throws SystemErrorException;
+    protected abstract List<PrebuiltCarport> getAllPrebuiltCarports() throws SystemErrorException;
 }

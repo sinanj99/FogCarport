@@ -22,14 +22,14 @@ import javax.sql.DataSource;
  abstract class IMaterialMapper {
     
     
-    public static IMaterialMapper instance() {
+    protected static IMaterialMapper instance() {
         return MaterialMapper.getInstance();
     }
     /**
      * Sets datasource of mapper
      * @param ds the datasource
      */
-    public abstract void setDataSource(DataSource ds);
+    protected abstract void setDataSource(DataSource ds);
 
     /**
      * Substracts the qty parameter from material (with length) with specified
@@ -42,7 +42,7 @@ import javax.sql.DataSource;
      * specified id.
      * @throws SystemErrorException if an sql-exception is thrown
      */
-    public abstract void updateStockWithLength(int id, int length, int qty)throws SystemErrorException, IllegalArgumentException, NoSuchMaterialException;
+    protected abstract void updateStockWithLength(int id, int length, int qty)throws SystemErrorException, IllegalArgumentException, NoSuchMaterialException;
     /**
      * Substracts the qty parameter from material (without length) with
      * specified id.
@@ -53,7 +53,7 @@ import javax.sql.DataSource;
      * specified id.
      * @throws SystemErrorException if an sql-exception is thrown.
      */
-    public abstract void updateStockFittings(int id, int qty)throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException;
+    protected abstract void updateStockFittings(int id, int qty)throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException;
     
     /**
      * Fetches material with specified id from wood_materials and material_lengths tables in dB
@@ -63,7 +63,7 @@ import javax.sql.DataSource;
      * @throws NoSuchMaterialException if the material with specified id is not found
      * @throws SystemErrorException if an sql-exception is thrown
      */
-    public abstract Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException;
+    protected abstract Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException;
     /**
      * Fetches material with specified id from material_nolength table in dB
      * @param id of the desired material
@@ -71,7 +71,7 @@ import javax.sql.DataSource;
      * @throws SystemErrorException if an sql-exception is thrown
      * @throws NoSuchMaterialException if the material with specified id is not found
      */
-    public abstract Material getFitting(int id)throws SystemErrorException, NoSuchMaterialException;
+    protected abstract Material getFitting(int id)throws SystemErrorException, NoSuchMaterialException;
     
     /**
      * Inserts material length, price and stock to table 'material_lengths' in database for a material with specified id.
@@ -82,30 +82,29 @@ import javax.sql.DataSource;
      * @param stock stock of the material
      * @throws SystemErrorException if an SQL-related exception occurs
      */
-    public abstract void insertMaterialDim(int id, int length, int price, int stock)throws SystemErrorException;
+    protected abstract void insertMaterialDim(int id, int length, int price, int stock)throws SystemErrorException;
     /**
      * Fetches all materials from materials_with length and material_lengths tables in database.
      * @return a list of all materials in the database.
      * @throws SystemErrorException if an sql-exception occurs
      */
-    public abstract List<Material> getMaterials() throws SystemErrorException;
+    protected abstract List<Material> getMaterials() throws SystemErrorException;
     /**
      * Returns a linked hash map including all lengths and their prices for a specified material
      * @param id of the material
      * @return linked hash map including all lengths and their prices.
      * @throws SystemErrorException if an sql-exception occurs 
      */
-    public abstract LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException;
+    protected abstract LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException;
     
     /**
      * Updates price of all lengths of a material specified by id
-     * @param price the new price of the material (shortest length)
      * @param id the id of the desired material
      * @throws SystemErrorException 
      * @throws NoSuchMaterialException if there is no material with given id 
      */
     
-    public abstract void updatePriceWithLength(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException;
+    protected abstract void updatePriceWithLength(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchMaterialException, InvalidInputException;
     
     /**
      * Updates price of a no-length material specified by id. 
@@ -114,7 +113,7 @@ import javax.sql.DataSource;
      * @throws SystemErrorException 
      * @throws Presentation.Exceptions.NoSuchMaterialException 
      */
-    public abstract void updatePriceFittings(int price, int id) throws SystemErrorException, NoSuchMaterialException;
+    protected abstract void updatePriceFittings(int price, int id) throws SystemErrorException, NoSuchMaterialException;
     
     /**
      * Updates price of all lengths of a specific roof specified by id.
@@ -124,19 +123,19 @@ import javax.sql.DataSource;
      * @throws NoSuchRoofException 
      * @throws InvalidInputException 
      */
-    public abstract void updatePriceRoof(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException;
+    protected abstract void updatePriceRoof(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException;
     /**
      * Fetches all lengths and the price for each length for a material specified by id.
      * @param id of the material whose lengths needs to be fetched
      * @return a hash map with length as key and its respective price as value
      * @throws SystemErrorException 
      */
-    public abstract LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException;
+    protected abstract LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException;
     
     /**
      * Fetches all roofs with shortest length from dB.
      * @return a list of all roofs with shortest length; no id-duplicates.
      * @throws SystemErrorException if an sql-exception is thrown.
      */
-    public abstract List<Roof> getRoofs() throws SystemErrorException;
+    protected abstract List<Roof> getRoofs() throws SystemErrorException;
 }

@@ -8,7 +8,6 @@ CREATE TABLE roofs (
   	inclined INT(1) NOT NULL,
 	PRIMARY KEY (roof_id)
 );
-
 CREATE TABLE roof_lengths(
 	roof_id INT NOT NULL,
     length INT NOT NULL,
@@ -207,14 +206,12 @@ INSERT INTO wood_materials (name, unit) VALUES
 ("38x73mm lægte. ubh.", "stk"),
 ("45x95mm reglar. ub.", "stk"),
 ("38x73mm. taglægte T1", "stk");
-;
-select * from material_lengths where material_id = 7;
+
 INSERT INTO users (`admin`, seller, email,  `password`)
 VALUES 
 (0, 0, "test@fog.dk","test"),
 (1, 0, "admin@fog.dk","admin"),
 (0, 1, "seller@fog.dk","seller");
-
 
 INSERT INTO personal_info (user_id,  firstname, lastname, address, zipcode, city, gender)
 VALUES (1, "Peter","Petersen", "Tagensvej 100", 2200, "KBH", "m");

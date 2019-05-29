@@ -58,7 +58,7 @@ CREATE TABLE material_lengths (
 CREATE TABLE users (
   	user_id INT NOT NULL AUTO_INCREMENT,
   	seller INT(1) NOT NULL DEFAULT 0,
-  	admin INT(1) NOT NULL DEFAULT 0,
+  	`admin` INT(1) NOT NULL DEFAULT 0,
   	email VARCHAR(320) NOT NULL UNIQUE,
   	password VARCHAR(50) NOT NULL,
   	PRIMARY KEY (user_id)

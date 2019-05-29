@@ -39,7 +39,7 @@
                 <input type="hidden" name="command" value="login">
             </div>
         </form>
-        <form class="newform2" action="register.jsp">
+        <form class="newform2" action="/project/jsp/register.jsp">
             <p style="color: #0f0c28; text-align: center;">Ikke allerede medlem?</p>
             <div class="row">
                 <div class="col-sm-12 d-flex justify-content-center">

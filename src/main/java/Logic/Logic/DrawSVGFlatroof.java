@@ -51,7 +51,8 @@ class DrawSVGFlatroof {
         int slength = 0;
         int swidth = 0;
         
-        if(shed!=null) {
+        if(shed!=null) 
+        {
         slength = shed.getLength();
         swidth = shed.getWidth();
         }
@@ -66,58 +67,69 @@ class DrawSVGFlatroof {
         float xCordinate = startingPointFirstRafterX + spaceBetweenRafterVAR;
         float yCordinate = startingPointFirstRafterY;
 
-        int quantityOfStolper = f.calculateQuantityOfPost(c);
+        int quantityOfPost = f.calculateQuantityOfPost(c);
         
         //Set the placement of post
-        for (int i = 0; i < quantityOfStolper; i++) {
+        for (int i = 0; i < quantityOfPost; i++) 
+        {
             
             //If the carport contain a shed
-            if (shed != null && shed.getLength() != 0) {
+            if (shed != null ) 
+            {
                 //Top left stolpe
-                if (i == 0) {
+                if (i == 0) 
+                {
                     //yCordinate changed to make place it under remmen
                     yCordinate -= 3.6f;
                 }
                 //Top right stolpe
-                if (i == 1) {
+                if (i == 1) 
+                {
                     //xCordinate changed to place it at the second last spær
                     xCordinate = startingPointFirstRafterX + length - spaceBetweenRafterVAR - 9.7f;
                 }
                 //Botton right stolpe
-                if (i == 2) {
+                if (i == 2) 
+                {
                     //yCordinate changed to place it at the at the other rem 
                     yCordinate = startingPointFirstRafterY + width - 36;
                 }
                 //Bottom left stolpe
-                if (i == 3) {
+                if (i == 3) 
+                {
                     //xCordinato changed to place it at the same xCordinate at the top left stolpe
                     xCordinate = startingPointFirstRafterX + spaceBetweenRafterVAR;
                 }
                 //The bottom front stolpe of the shed
-                if (i == 4) {
+                if (i == 4) 
+                {
                     //xCprdinate changed to place it the length of the shed away from the bottom right stolpe
                     xCordinate = (startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength;
                 }
                 //The top front stolpe of the shed
-                if (i == 5) {
+                if (i == 5) 
+                {
                     //Changed yCordinate to place it the width of the shed away
                     yCordinate -= swidth - 2.4;
                 }
                 //the front middle stolpe of the shed
-                if (i == 6) {
+                if (i == 6) 
+                {
                     //yCordinate changed to place it between the front bottom and top stolpe of the shed
                     yCordinate = ((startingPointFirstRafterY + width - 36) + yCordinate) / 2;
                 }
                 //the back middle stolpe of the shed
-                if (i == 7) {
+                if (i == 7) 
+                {
                     //xCordinate changed to place it at the same xCordinate as the rigth top/bottom stolpe
                     xCordinate = startingPointFirstRafterX + length - spaceBetweenRafterVAR - 9.7f;
                 }
                 //Stolpe between the top left stolpe and top front stolpe of the shed
-                if (i == 8) {
+                if (i == 8) 
+                {
                     
                     //function as top right corner stolpe for the shed
-                    if(quantityOfStolper == 9)
+                    if(quantityOfPost == 9)
                     {
                         //yCordiante changed so it is placed at the botton left corner stolpe
                         yCordinate = startingPointFirstRafterY + width - 36;
@@ -135,7 +147,8 @@ class DrawSVGFlatroof {
                     
                 }
                 //stolpe between the bottom left stolpe and the bottom front stolpe of the shed
-                if (i == 9) {
+                if (i == 9) 
+                {
                     //yCordinate changed to place it at the same yCordinate as the front bottom stolpe
                     yCordinate = startingPointFirstRafterY + width - 36;
                 }
@@ -149,35 +162,44 @@ class DrawSVGFlatroof {
                 }
             } 
             
+            
             //If the carport contains no shed
-            if(slength == 0) {
+            if(shed == null) 
+            {
                 //Top left stolpe
                 if (i == 0) {
                     //yCordinate changed to make place it under remmen
                     yCordinate -= 3.6f;
                 }
                 //Top right stolpe
-                if (i == 1) {
+                if (i == 1) 
+                {
                     //xCordinate changed to place it at the second last spær
                     xCordinate = startingPointFirstRafterX + length - spaceBetweenRafterVAR - 9.7f;
                 }
                 //Botton right stolpe
-                if (i == 2) {
+                if (i == 2) 
+                {
                     //yCordinate changed to place it at the at the other rem 
                     yCordinate = startingPointFirstRafterY + width - 36;
                 }
                 //Bottom left stolpe
-                if (i == 3) {
+                if (i == 3) 
+                {
                     //xCordinato changed to place it at the same xCordinate at the top left stolpe
                     xCordinate = startingPointFirstRafterX + spaceBetweenRafterVAR;
                 }
                 // one of middle bottom stolpe
-                if (i == 4) {
-                    if (quantityOfStolper == 8) {
+                if (i == 4) 
+                {
+                    if (quantityOfPost == 8) 
+                    {
                         //xCordinate changed to place it so that this middle stolpe and the other middle stolpe is as far from other stolpe as possible
                         //Take the position of the bottem right stolpe and add the position of bottom left, then divide by 1.5f
                         xCordinate = (startingPointFirstRafterX + length - spaceBetweenRafterVAR - 9.7f + startingPointFirstRafterX + spaceBetweenRafterVAR) / 1.5f;
-                    } else {
+                    } 
+                    else 
+                    {
                         //xCordinate changed to place it in the center of bottom left and bottom right stolpe
                         //Take the position of the bottem right stolpe and add the position of bottom left, then divide by 2
                         xCordinate = (startingPointFirstRafterX + length - spaceBetweenRafterVAR - 9.7f + startingPointFirstRafterX + spaceBetweenRafterVAR) / 2;
@@ -185,14 +207,17 @@ class DrawSVGFlatroof {
 
                 }
                 //one of the middle top stolpe
-                if (i == 5) {
+                if (i == 5) 
+                {
                     //yCordinate changed to place it at the same yCordination as the other top stolper
                     yCordinate = startingPointFirstRafterY - 3.6f;
                 }
-                if (i == 6) {
+                if (i == 6) 
+                {
                     xCordinate = (startingPointFirstRafterX + length - spaceBetweenRafterVAR - 9.7f + startingPointFirstRafterX + spaceBetweenRafterVAR) / 2.5f;
                 }
-                if (i == 7) {
+                if (i == 7) 
+                {
                     yCordinate = startingPointFirstRafterY + width - 36;
                 }
             }
@@ -215,10 +240,10 @@ class DrawSVGFlatroof {
         int width = c.getWidth();
         
         float startingPointFirstRafterX = 50;
-        float startingPointFirstSpærY = 50;
+        float startingPointFirstRafterY = 50;
         
-        drawing += "<rect x='"+startingPointFirstRafterX+"' y='"+startingPointFirstSpærY+"' height='4.5' width='"+length+"' fill='none' stroke='black' stroke-width='3px' />";
-        drawing += "<rect x='"+startingPointFirstRafterX+"' y='"+(startingPointFirstSpærY + width - 34)+"' height='4.5' width='"+length+"' fill='none' stroke='black' stroke-width='3px' />";
+        drawing += "<rect x='"+startingPointFirstRafterX+"' y='"+startingPointFirstRafterY+"' height='4.5' width='"+length+"' fill='none' stroke='black' stroke-width='3px' />";
+        drawing += "<rect x='"+startingPointFirstRafterX+"' y='"+(startingPointFirstRafterY + width - 34)+"' height='4.5' width='"+length+"' fill='none' stroke='black' stroke-width='3px' />";
         
         return drawing;
     }
@@ -239,13 +264,14 @@ class DrawSVGFlatroof {
 
         BOMFundament f = new BOMFundament();
         
-        int quantityOfSpærPlusTheBackSpær = f.calculateQuantityOfRafterIncludedBackRafter(length, 60);
+        int quantityOfSpærPlusTheBackRafter = f.calculateQuantityOfRafterIncludedBackRafter(length, 60);
 
+        //set the starting point for rafter ( - 15 ) because ) because rafter have 15 cm space from post on sides
         float frontSpærPlacementX = startingPointFirstRafterX;
         float frontSpærPlacementY = startingPointFirstRafterY - 15;
         
         
-        for (int i = 0; i < quantityOfSpærPlusTheBackSpær; i++) {
+        for (int i = 0; i < quantityOfSpærPlusTheBackRafter; i++) {
             drawing += "<rect x='" + frontSpærPlacementX + "' y='" + frontSpærPlacementY + "' height='" + width + "' width='10' fill='none' stroke='black' stroke-width='3px'/>";
             frontSpærPlacementX += f.spaceBetweenRafter(length, 60) + 3f;
         }
@@ -259,17 +285,18 @@ class DrawSVGFlatroof {
      */
     private String drawShedClothing(Carport c)
     {
+        //If shed is null, no reason do do rest of the code
+        if(c.getShed() == null)
+        {
+            return "";
+        }
+        
         String drawing = "";
         int length = c.getLength();
         int width = c.getWidth();
         Shed shed = c.getShed();
-        int slength = 0;
-        int swidth = 0;
-        
-        if(shed!=null) {
-        slength = shed.getLength();
-        swidth = shed.getWidth();
-        }
+        int slength = shed.getLength();
+        int swidth = shed.getWidth();
         
         float startingPointFirstRafterX = 50;
         float startingPointFirstRafterY = 50;
@@ -278,21 +305,23 @@ class DrawSVGFlatroof {
         
         float spaceBetweenRafterVAR = f.spaceBetweenRafter(length, 60);
         
-        if(shed != null)
-        {
-            drawing += "<line x1='"+(startingPointFirstRafterX + length - spaceBetweenRafterVAR)+"' y1='"+(startingPointFirstRafterY + width - 36 + 10)+
-                "' x2='"+(startingPointFirstRafterX + length - spaceBetweenRafterVAR)+"' y2='"+(startingPointFirstRafterY + width - 36 - swidth)+
+       
+        //From back bottom to back top post
+        drawing += "<line x1='"+(startingPointFirstRafterX + length - spaceBetweenRafterVAR)+"' y1='"+(startingPointFirstRafterY + width - 36 + 10)+
+            "' x2='"+(startingPointFirstRafterX + length - spaceBetweenRafterVAR)+"' y2='"+(startingPointFirstRafterY + width - 36 - swidth)+
+            "' stroke='darkblue' stroke-width='3px' fill='none'  />";
+        //From back top to front top post
+        drawing += "<line x1='"+(startingPointFirstRafterX + length - spaceBetweenRafterVAR)+"' y1='"+(startingPointFirstRafterY + width - 36 - swidth)+
+                "' x2='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y2='"+(startingPointFirstRafterY + width - 36 - swidth)+
+                "' stroke='darkblue' stroke-width='3px' fill='none' />";
+        //From front top to front bottom post
+        drawing += "<line x1='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y1='"+(startingPointFirstRafterY + width - 36 - swidth)+
+                "' x2='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y2='"+(startingPointFirstRafterY + width - 36 + 10)+
+                "' stroke='darkblue' stroke-width='3px' fill='none' />";
+        //From front bottom to back bottom post
+        drawing += "<line x1='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y1='"+(startingPointFirstRafterY + width - 36 + 10)+
+                "' x2='"+(startingPointFirstRafterX + length - spaceBetweenRafterVAR)+"' y2='"+(startingPointFirstRafterY + width - 36 + 10)+
                 "' stroke='darkblue' stroke-width='3px' fill='none'  />";
-            drawing += "<line x1='"+(startingPointFirstRafterX + length - spaceBetweenRafterVAR)+"' y1='"+(startingPointFirstRafterY + width - 36 - swidth)+
-                    "' x2='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y2='"+(startingPointFirstRafterY + width - 36 - swidth)+
-                    "' stroke='darkblue' stroke-width='3px' fill='none' />";
-            drawing += "<line x1='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y1='"+(startingPointFirstRafterY + width - 36 - swidth)+
-                    "' x2='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y2='"+(startingPointFirstRafterY + width - 36 + 10)+
-                    "' stroke='darkblue' stroke-width='3px' fill='none' />";
-            drawing += "<line x1='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y1='"+(startingPointFirstRafterY + width - 36 + 10)+
-                    "' x2='"+(startingPointFirstRafterX + length - spaceBetweenRafterVAR)+"' y2='"+(startingPointFirstRafterY + width - 36 + 10)+
-                    "' stroke='darkblue' stroke-width='3px' fill='none'  />";
-        }
         
         return drawing;
     }
@@ -311,7 +340,8 @@ class DrawSVGFlatroof {
         int slength = 0;
         int swidth = 0;
         
-        if(shed!=null) {
+        if(shed!=null) 
+        {
         slength = shed.getLength();
         swidth = shed.getWidth();
         }
@@ -346,7 +376,8 @@ class DrawSVGFlatroof {
         int slength = 0;
         int swidth = 0;
         
-        if(shed!=null) {
+        if(shed!=null) 
+        {
         slength = shed.getLength();
         swidth = shed.getWidth();
         }
@@ -358,12 +389,14 @@ class DrawSVGFlatroof {
         
         float spaceBetweenRafterVAR = f.spaceBetweenRafter(length, 60);
         
-     drawing += "<line x1='"+20+"' y1='"+35+
+        //Line for carport width
+        drawing += "<line x1='"+20+"' y1='"+35+
             "' x2='"+20+"' y2='"+  (width + 35) +
             "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
         drawing += "<text x='"+(-80)+"' transform='rotate(-90)' y='"+15+"' fill='black'>"
                 +width+" cm</text>";
 
+        //Line for carport length
         drawing += "<line x1='"+50+"' y1='"+20+
             "' x2='"+(length+50)+"' y2='"+  20 +
             "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
@@ -372,20 +405,22 @@ class DrawSVGFlatroof {
 
         if(shed != null)
         {
+            //Line for shed width
              drawing += "<line x1='"+(length+70)+"' y1='"+(width+20)+
             "' x2='"+(length+70)+"' y2='"+  ((startingPointFirstRafterY + width - 36) - (swidth - 2.4)) +
             "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
             drawing += "<text x='"+(-width-20)+"' transform='rotate(-90)' y='"+(length+90)+"' fill='black'>"
                     +swidth+" cm</text>";
 
-
+            //Line for shed length
              drawing += "<line x1='"+(startingPointFirstRafterX + length - spaceBetweenRafterVAR )+"' y1='"+(width+60)+
                 "' x2='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y2='"+ (width+60)  +
                 "' stroke='darkgrey' stroke-width='3px' fill='none'  />";
              drawing += "<text x='"+((startingPointFirstRafterX + length - spaceBetweenRafterVAR) - slength)+"' y='"+(width+80)+ "' fill='black'>"
                     +slength+" cm</text>";
         }
-
+        
+        //Lines for spaces between rafter
         int startPointThis = 60;
         for(int i = 0; i < f.calculateQuantityOFRafterExcluedBackRafter(length, 60); i++)
         {

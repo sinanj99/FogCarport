@@ -141,8 +141,12 @@
                     <svg style="height: 1200px; width: 900px;">
 
                     <%= svg1%>
+                    </svg>
+                    
+                    <svg style="height: 1200px; width: 900px;">
                     <%if (r.getCarport().getInclination() > 0) {%>
                     Tag forfra:
+                    
                     <%= svg2%>
                     <% }%>
                     </svg>

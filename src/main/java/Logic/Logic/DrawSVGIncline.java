@@ -53,7 +53,7 @@ public class DrawSVGIncline {
         
         System.out.println("ROOFHEIGHT : " + roofHeight);
 
-        drawing += "<svg height='100%' width='100%' viewbox='0 -600 " + 800 + " " + 800 + "' >";
+        drawing += "<svg height='100%' width='100%' viewbox='0 0 " + 800 + " " + 800 + "' >";
         drawing += "<rect x='0' y='" + roofHeight + "' height='20' width='" + width + "' fill='lightgray' stroke='black' stroke-width='3'/>";
         drawing += "<text x='" + (width / 2 - 50) + "' y='" + (roofHeight + 50) + "' fill='black'>Bredde: " + width  + " cm</text>";
         drawing += "<text transform='rotate(-90)' x='" + (-roofHeight / 2 - 50) + "' y='" + (width / 2 - 10) + "' fill='black'>Højde: " + (int) roofHeight + " cm</text>";

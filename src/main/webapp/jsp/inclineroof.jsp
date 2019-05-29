@@ -60,8 +60,8 @@
                             } %>
                     </select>
                     <% for (Roof r : roofs) {%>
-                    <p name="pics" id="<%=r.getName() + "text"%>" class="p-0 d-none" style="width: 65%;">Udseende: </p>
-                    <img name="pics" id="<%=r.getName()%>" class="pics d-none col-xs-12" style="width: 65%; max-width: 500px" src="/project/images/<%=r.getName()%>.jpg" alt="<%=r.getName()%>" > 
+                    <p name="pics" id="<%=r.getRoof_id()+ "text"%>" class="p-0 d-none" style="width: 65%;">Udseende: </p>
+                    <img name="pics" id="<%=r.getRoof_id()%>" class="pics d-none col-xs-12" style="width: 65%; max-width: 500px" src="/project/images/<%=r.getName()%>.jpg" alt="<%=r.getName()%>" > 
                     <% } %>
                 </div>
             </div>

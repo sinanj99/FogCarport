@@ -27,7 +27,6 @@
                                 <th class="showorders-th" scope="col">Kunde</th>
                                 <th class="showorders-th" scope="col">Dato</th>
                                 <th class="showorders-th" scope="col">Type</th>
-                                <th class="showorders-th" scope="col">Status</th>
                                 <th class="showorders-th" scope="col"></th>
                             </tr>
                         </thead>
@@ -49,9 +48,6 @@
                                         out.println("Carport uden rejsning");
                                     }
                                 %>
-                                </td>
-                                <td>
-                                    <span class="badge badge-secondary">Tilbud ej sendt</span>
                                 </td>
                                 <td>
                                     <a class="btn btn-primary" href="FrontController?command=showrequest&requestID=<%=r.getRequestId()%>" role="button" style="border-radius: 2px; font-weight: 600; font-size: .8rem; padding: 0px 5px;">SE ORDRE</a>

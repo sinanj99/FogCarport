@@ -17,7 +17,7 @@ import Presentation.Exceptions.SystemErrorException;
  * materials needed and returns a lineitem for the specific material.
  * @author Kasper Jeppesen
  */
-class BOMToolshed
+public class BOMToolshed
 {
     //---------------------------------------------- calculation methods ----------------------------------------------------------------------
     
@@ -89,7 +89,7 @@ class BOMToolshed
      * @throws NoSuchMaterialException 
      * @throws Presentation.Exceptions.SystemErrorException 
      */
-    public LineItem shedClothing(Carport c) throws NoSuchMaterialException, SystemErrorException
+    protected LineItem shedClothing(Carport c) throws NoSuchMaterialException, SystemErrorException
     {
          Material m = LogicFacade.getInstance().getWoodMaterial(7, 210);
          return new LineItem(m, calculateQuantityForShedClothing(c), "Til beklædning af skur 1 på 2", m.getPrice()*calculateQuantityForShedClothing(c), Type.LENGTH);
@@ -102,7 +102,7 @@ class BOMToolshed
      * @throws NoSuchMaterialException 
      * @throws Presentation.Exceptions.SystemErrorException 
      */
-    public LineItem endCapsForGables(Carport c) throws NoSuchMaterialException, SystemErrorException
+    protected LineItem endCapsForGables(Carport c) throws NoSuchMaterialException, SystemErrorException
     {
         LineItem l = null;
         Material m;
@@ -125,7 +125,7 @@ class BOMToolshed
      * @throws NoSuchMaterialException 
      * @throws Presentation.Exceptions.SystemErrorException 
      */
-    public LineItem endCapsForSides(Carport c) throws NoSuchMaterialException, SystemErrorException
+    protected LineItem endCapsForSides(Carport c) throws NoSuchMaterialException, SystemErrorException
     {
         LineItem l = null;
         Material m;
@@ -147,7 +147,7 @@ class BOMToolshed
      * @throws NoSuchMaterialException 
      * @throws Presentation.Exceptions.SystemErrorException 
      */
-    public LineItem bracket() throws NoSuchMaterialException, SystemErrorException
+    protected LineItem bracket() throws NoSuchMaterialException, SystemErrorException
     {
         Material m = LogicFacade.getInstance().getFitting(5);
         return new LineItem(m, 32, "Til montering af løsholter til skur", m.getPrice()*32, Type.NOLENGTH);
@@ -159,7 +159,7 @@ class BOMToolshed
      * @throws NoSuchMaterialException 
      * @throws Presentation.Exceptions.SystemErrorException 
      */
-    public LineItem bracketScrews() throws NoSuchMaterialException, SystemErrorException
+    protected LineItem bracketScrews() throws NoSuchMaterialException, SystemErrorException
     {
         Material m = LogicFacade.getInstance().getFitting(7);
         return new LineItem(m, (32*3), "Til montering af vinkelbeslag til skur", m.getPrice() * (32*3), Type.NOLENGTH);
@@ -171,7 +171,7 @@ class BOMToolshed
      * @throws NoSuchMaterialException 
      * @throws Presentation.Exceptions.SystemErrorException 
      */
-    public LineItem lathForDoor() throws NoSuchMaterialException, SystemErrorException
+    protected LineItem lathForDoor() throws NoSuchMaterialException, SystemErrorException
     {
          Material m = LogicFacade.getInstance().getWoodMaterial(8, 420);
          return new LineItem(m, 1, "Til z på bagside af dør", m.getPrice(), Type.LENGTH);
@@ -182,7 +182,7 @@ class BOMToolshed
      * @throws NoSuchMaterialException 
      * @throws Presentation.Exceptions.SystemErrorException 
      */
-    public LineItem farmgateGrip() throws NoSuchMaterialException, SystemErrorException
+    protected LineItem farmgateGrip() throws NoSuchMaterialException, SystemErrorException
     {
          Material m = LogicFacade.getInstance().getFitting(3);
          return new LineItem(m, 1, "Til løs på dør i skur", m.getPrice(), Type.NOLENGTH);
@@ -194,7 +194,7 @@ class BOMToolshed
      * @throws NoSuchMaterialException 
      * @throws Presentation.Exceptions.SystemErrorException 
      */
-    public LineItem tHinge() throws NoSuchMaterialException, SystemErrorException
+    protected LineItem tHinge() throws NoSuchMaterialException, SystemErrorException
     {
          Material m = LogicFacade.getInstance().getFitting(4);
          return new LineItem(m, 2, "Til dør i skur", m.getPrice()*2, Type.NOLENGTH);

@@ -12,14 +12,14 @@ import Data.Entity.Shed;
  * Draws SVGs for flat roof carport
  * @author Kasper Jeppesen
  */
-class DrawSVGFlatroof {
+public class DrawSVGFlatroof {
  
     /**
      * Draws SVG for flat roof carport from the top
      * @param c the carport
      * @return a string representation of svg
      */
-    public String drawFlat(Carport c) {
+    protected String drawFlat(Carport c) {
         
         String drawingForFlatRoof = "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
         

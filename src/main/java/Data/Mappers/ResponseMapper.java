@@ -29,12 +29,12 @@ class ResponseMapper extends IResponseMapper{
     private Connection conn;
 
     @Override
-    public void setDataSource(DataSource ds) {
+    protected void setDataSource(DataSource ds) {
         con.setDataSource(ds);
         conn = con.getConnection();
     }
     
-    public synchronized static ResponseMapper getInstance() {
+    protected synchronized static ResponseMapper getInstance() {
         if (instance == null) {
             instance = new ResponseMapper();
         }
@@ -43,7 +43,7 @@ class ResponseMapper extends IResponseMapper{
     
     
     @Override
-    public List<Response> getResponses(int userId) throws SystemErrorException{
+    protected List<Response> getResponses(int userId) throws SystemErrorException{
         List<Response> responses = new ArrayList<Response>();
         
         int requestId = 0;
@@ -79,7 +79,7 @@ class ResponseMapper extends IResponseMapper{
     }
     
     @Override
-    public Response getResponse(int requestId) throws NoSuchResponseException, SystemErrorException{
+    protected Response getResponse(int requestId) throws NoSuchResponseException, SystemErrorException{
         Response r = null;
         int sellerId = 0;
         int sellPrice = 0;
@@ -111,7 +111,7 @@ class ResponseMapper extends IResponseMapper{
     }
     
     @Override
-    public void insertResponse(Response res) throws SystemErrorException{
+    protected void insertResponse(Response res) throws SystemErrorException{
        try {
             String query = "INSERT INTO `responses` (request_id, seller_id, dateplaced, sell_price) "
                         + "VALUES (?,?,?,?);";
@@ -127,7 +127,7 @@ class ResponseMapper extends IResponseMapper{
     }
     
     @Override
-    public void deleteResponse(int requestId) throws NoSuchResponseException, SystemErrorException{
+    protected void deleteResponse(int requestId) throws NoSuchResponseException, SystemErrorException{
         String query = "DELETE FROM responses WHERE request_id = ?";
         
         try{

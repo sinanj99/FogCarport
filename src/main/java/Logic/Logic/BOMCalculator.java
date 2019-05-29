@@ -19,9 +19,9 @@ import java.util.List;
  * Adds all line items to a list of line items, and returns it.
  * @author Kasper Jeppesen
  */
-class BOMCalculator {
+public class BOMCalculator {
     
-    public BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException, SystemErrorException {
+    protected BOM generateFlatRoofCarportBOM(Request r) throws NoSuchMaterialException, SystemErrorException {
         BOMFundament f = new BOMFundament();
         ArrayList listOfLineItems = new ArrayList();
         BOMToolshed b = new BOMToolshed();
@@ -84,7 +84,7 @@ class BOMCalculator {
         return new BOM(listOfLineItems);
     }
 
-    public BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException, SystemErrorException 
+    protected BOM inclineRoofBOM(Request r) throws NoSuchMaterialException, NoSuchRoofException, SystemErrorException 
     {
 
         BOMRoofPackage calc = new BOMRoofPackage();

@@ -28,12 +28,12 @@ import javax.sql.DataSource;
     Connection conn;
 
     @Override
-    public void setDataSource(DataSource ds) {
+    protected void setDataSource(DataSource ds) {
         con.setDataSource(ds);
         conn = con.getConnection();
     }
 
-    public synchronized static PrebuiltCarportMapper getInstance() {
+    protected synchronized static PrebuiltCarportMapper getInstance() {
         if (instance == null) {
             instance = new PrebuiltCarportMapper();
         }
@@ -41,7 +41,7 @@ import javax.sql.DataSource;
     }
 
     @Override
-    public List<PrebuiltCarport> getAllPrebuiltCarports() throws SystemErrorException {
+    protected List<PrebuiltCarport> getAllPrebuiltCarports() throws SystemErrorException {
         ArrayList<PrebuiltCarport> prebuiltCarports = new ArrayList();
 
         int id = 0;

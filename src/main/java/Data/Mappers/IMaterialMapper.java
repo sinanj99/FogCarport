@@ -16,10 +16,10 @@ import java.util.List;
 import javax.sql.DataSource;
 
 /**
- * Interface for MaterialMapper
+ * Interface for MaterialMapper. Is public so that its javadoc can be published.
  * @author sinanjasar
  */
- abstract class IMaterialMapper {
+ public abstract class IMaterialMapper {
     
     
     protected static IMaterialMapper instance() {

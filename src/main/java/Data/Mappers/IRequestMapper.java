@@ -17,16 +17,16 @@ import java.util.List;
 import javax.sql.DataSource;
 
 /**
- *
+ * Interface for RequestMapper. Is public so that its javadoc can be published.
  * @author Obaydah Mohamad
  */
- abstract class IRequestMapper {
+ public abstract class IRequestMapper {
 
-    public static IRequestMapper instance() {
+    protected static IRequestMapper instance() {
         return RequestMapper.getInstance();
     }
 
-    public abstract void setDataSource(DataSource ds);
+    protected abstract void setDataSource(DataSource ds);
 
     /**
      * Returns a specific request object with all its sub-tables - used when a
@@ -41,7 +41,7 @@ import javax.sql.DataSource;
      * @throws Presentation.Exceptions.NoSuchShedException if no shed with
      * specified id can be found
      */
-    public abstract Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException;
+    protected abstract Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException;
 
     /**
      * Returns a list of all requests in dB; used to display all requests not
@@ -53,7 +53,7 @@ import javax.sql.DataSource;
      * @throws Presentation.Exceptions.NoSuchShedException if a shed with
      * specified id cannot be found
      */
-    public abstract List<Request> getRequests() throws SystemErrorException, NoSuchShedException;
+    protected abstract List<Request> getRequests() throws SystemErrorException, NoSuchShedException;
 
     /**
      * Inserts a request to db-table 'request' (and all its child tables) with
@@ -63,7 +63,7 @@ import javax.sql.DataSource;
      * @throws Presentation.Exceptions.SystemErrorException if an sql exception
      * is thrown
      */
-    public abstract void insertRequest(Request req) throws SystemErrorException;
+    protected abstract void insertRequest(Request req) throws SystemErrorException;
 
     /**
      * Deletes a specific request from db-table 'request'. Calls
@@ -75,7 +75,7 @@ import javax.sql.DataSource;
      * @throws Presentation.Exceptions.NoSuchRequestException if an sql
      * exception is thrown
      */
-    public abstract void deleteRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchCarportException, NoSuchShedException;
+    protected abstract void deleteRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchCarportException, NoSuchShedException;
 
     /**
      * Is used in data insertion class, where different dimensions of a roof is
@@ -88,7 +88,7 @@ import javax.sql.DataSource;
      * @throws Presentation.Exceptions.SystemErrorException if an sql exception
      * is thrown
      */
-    public abstract void insertDimensions(int id, int length, int price, int stock) throws SystemErrorException;
+    protected abstract void insertDimensions(int id, int length, int price, int stock) throws SystemErrorException;
 
     /**
      * Used in flatRoof calculator to find price of rooftype with specified
@@ -100,7 +100,7 @@ import javax.sql.DataSource;
      * @throws Presentation.Exceptions.SystemErrorException if no roof with
      * specified id & length can be found
      */
-    public abstract int getDimensionPrice(int roof_id, int length) throws SystemErrorException;
+    protected abstract int getDimensionPrice(int roof_id, int length) throws SystemErrorException;
 
     /**
      * Fetches data from rooftype-table in dB and returns a roof object with id,
@@ -111,7 +111,7 @@ import javax.sql.DataSource;
      * @return
      * @throws NoSuchRoofException
      */
-    public abstract Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException;
+    protected abstract Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException;
 
     /**
      * Fetches data from rooftype-table and its child-table, rooflength, where
@@ -124,7 +124,7 @@ import javax.sql.DataSource;
      * @throws Presentation.Exceptions.SystemErrorException if an sql-exception
      * is thrown
      */
-    public abstract Roof getRoof(int id, int length) throws SystemErrorException;
+    protected abstract Roof getRoof(int id, int length) throws SystemErrorException;
 
     /**
      * Returns roofs of all types - used in DataInsertion class which loops
@@ -135,7 +135,7 @@ import javax.sql.DataSource;
      * @throws Presentation.Exceptions.SystemErrorException if an sql exception
      * is thrown
      */
-    public abstract List<Roof> getRoofs() throws SystemErrorException;
+    protected abstract List<Roof> getRoofs() throws SystemErrorException;
 
     /**
      * Returns all roofs with specified rooftype (inclined or flat).
@@ -144,7 +144,7 @@ import javax.sql.DataSource;
      * @return all roofs with specified rooftype
      * @throws NoSuchRoofException
      */
-    public abstract List<Roof> getRoofs(int rooftype) throws SystemErrorException;
+    protected abstract List<Roof> getRoofs(int rooftype) throws SystemErrorException;
 
     /**
      * Returns a ShippingAddress object which contains user and user shipping
@@ -155,5 +155,5 @@ import javax.sql.DataSource;
      * @throws Presentation.Exceptions.SystemErrorException if an sql-exception
      * is thrown
      */
-    public abstract ShippingAddress getRequestShippingAddress(int id) throws SystemErrorException;
+    protected abstract ShippingAddress getRequestShippingAddress(int id) throws SystemErrorException;
 }

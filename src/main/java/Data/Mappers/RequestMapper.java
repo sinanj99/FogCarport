@@ -36,12 +36,12 @@ class RequestMapper extends IRequestMapper {
     private Connection conn;
 
     @Override
-    public void setDataSource(DataSource ds) {
+    protected void setDataSource(DataSource ds) {
         con.setDataSource(ds);
         conn = con.getConnection();
     }
 
-    public synchronized static RequestMapper getInstance() {
+    protected synchronized static RequestMapper getInstance() {
         if (instance == null) {
             instance = new RequestMapper();
         }
@@ -49,7 +49,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException {
+    protected Request getRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchShedException {
         Request r = null;
         int reqId = 0;
         int userId = 0;
@@ -152,7 +152,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public ShippingAddress getRequestShippingAddress(int id) throws SystemErrorException {
+    protected ShippingAddress getRequestShippingAddress(int id) throws SystemErrorException {
         String firstname = "";
         String lastname = "";
         String address = "";
@@ -180,7 +180,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public void insertRequest(Request req) throws SystemErrorException {
+    protected void insertRequest(Request req) throws SystemErrorException {
         Carport cp = req.getCarport();
         Roof roof = cp.getRoof();
         Shed shed = cp.getShed();
@@ -277,7 +277,7 @@ class RequestMapper extends IRequestMapper {
     }
     
     @Override
-    public void deleteRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchCarportException, NoSuchShedException {
+    protected void deleteRequest(int id) throws SystemErrorException, NoSuchRequestException, NoSuchCarportException, NoSuchShedException {
         String query = "DELETE FROM requests WHERE request_id = ?";
         try{
             PreparedStatement p = conn.prepareStatement(query);
@@ -290,7 +290,7 @@ class RequestMapper extends IRequestMapper {
     }
     
     @Override
-    public Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException {
+    protected Roof getRoof(int id) throws NoSuchRoofException, SystemErrorException {
         int roof_id = 0;
         String name_ = "";
         boolean inclined = false;
@@ -318,7 +318,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public List<Roof> getRoofs() throws SystemErrorException{
+    protected List<Roof> getRoofs() throws SystemErrorException{
         List<Roof> roofs = new ArrayList();
         int roof_id = 0;
         String name = "";
@@ -353,7 +353,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public List<Roof> getRoofs(int rooftype) throws SystemErrorException {
+    protected List<Roof> getRoofs(int rooftype) throws SystemErrorException {
         List<Roof> roofs = new ArrayList();
         int roof_id = 0;
         String name = "";
@@ -385,7 +385,7 @@ class RequestMapper extends IRequestMapper {
         return roofs;
     }
 
-    public void insertRoof(PreparedStatement pstmt, String query, ResultSet rs, Roof roof) {
+    protected void insertRoof(PreparedStatement pstmt, String query, ResultSet rs, Roof roof) {
         int inclined_ = 0;
         if (roof.isInclined()) {
             inclined_ = 1;
@@ -402,7 +402,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public void insertDimensions(int id, int length, int price, int stock) throws SystemErrorException{
+    protected void insertDimensions(int id, int length, int price, int stock) throws SystemErrorException{
         try {
             String query = "INSERT INTO roof_lengths (roof_id, length, price, stock) VALUES (?, ?, ?, ?);";
             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -444,7 +444,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public int getDimensionPrice(int roof_id, int length) throws SystemErrorException{
+    protected int getDimensionPrice(int roof_id, int length) throws SystemErrorException{
         int price = 0;
         try {
             String query = "SELECT * FROM roof_lengths WHERE roof_id = ? AND length = ?";
@@ -462,7 +462,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public List<Request> getRequests() throws SystemErrorException, NoSuchShedException{
+    protected List<Request> getRequests() throws SystemErrorException, NoSuchShedException{
         int user_id, req_id;
         String datePlaced;
         ShippingAddress address;
@@ -488,7 +488,7 @@ class RequestMapper extends IRequestMapper {
     }
 
     @Override
-    public Roof getRoof(int id, int length) throws SystemErrorException {
+    protected Roof getRoof(int id, int length) throws SystemErrorException {
         int roof_id = 0;
         String name_ = "";
         int price = 0;

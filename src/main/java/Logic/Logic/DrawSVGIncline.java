@@ -9,17 +9,17 @@ import Data.Entity.Carport;
 import Data.Entity.Shed;
 
 /**
- *
+ * Draws SVGs for incline roof carports
  * @author sinanjasar
  */
-class DrawSVGIncline {
+public class DrawSVGIncline {
     /**
      * Draws the top of a carport with inclined roof
      * @param c the carport
      * @return A string representation of svg drawing 
      * of the top of a carport with inclined roof
      */
-    public String drawTopIncline(Carport c) {
+    protected String drawTopIncline(Carport c) {
         
         String drawingForInclineRoof = "<svg height='80%' width='80%' viewbox='0 0 " + 900 + " " + 900 + "' >";
         
@@ -41,7 +41,7 @@ class DrawSVGIncline {
      * @return a string representation of svg drawing of the side of a carport
      * with inclined roof
      */
-    public String drawFrontIncline(Carport c) {
+    protected String drawFrontIncline(Carport c) {
         String drawing = "";
         
         int width = c.getWidth();

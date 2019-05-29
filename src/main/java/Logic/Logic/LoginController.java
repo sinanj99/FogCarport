@@ -14,7 +14,7 @@ import Presentation.Exceptions.SystemErrorException;
  * Handles login-related validation
  * @author sinanjasar
  */
-class LoginController {
+public class LoginController {
 
     /**
      * Checks if inserted password matches password for the user with the
@@ -27,7 +27,7 @@ class LoginController {
      * @throws Presentation.Exceptions.SystemErrorException
      * @throws Presentation.Exceptions.NoMatchException
      */
-    public static void doesMatch(String email, String password, User user) throws UserNotFoundException, SystemErrorException, NoMatchException {
+    protected static void doesMatch(String email, String password, User user) throws UserNotFoundException, SystemErrorException, NoMatchException {
         if (!password.equals(user.getPassword())) {
             throw new NoMatchException();
         }

@@ -34,12 +34,12 @@ class MaterialMapper extends IMaterialMapper {
     Connection conn;
 
     @Override
-    public void setDataSource(DataSource ds) {
+    protected void setDataSource(DataSource ds) {
         con.setDataSource(ds);
         conn = con.getConnection();
     }
 
-    public synchronized static MaterialMapper getInstance() {
+    protected synchronized static MaterialMapper getInstance() {
         if (instance == null) {
             instance = new MaterialMapper();
         }
@@ -47,7 +47,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException {
+    protected Material getWoodMaterial(int id, int length) throws NoSuchMaterialException, SystemErrorException {
         String name = "";
         String unit = "";
         int price = 0;
@@ -73,7 +73,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public Material getFitting(int id) throws SystemErrorException, NoSuchMaterialException {
+    protected Material getFitting(int id) throws SystemErrorException, NoSuchMaterialException {
         String name = "";
         String unit = "";
         int length = 0;
@@ -99,7 +99,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updateStockWithLength(int id, int length, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
+    protected void updateStockWithLength(int id, int length, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
         if (qty <= 0) {
             throw new IllegalArgumentException("Quantity must be positive");
         } else {
@@ -128,7 +128,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updateStockFittings(int id, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
+    protected void updateStockFittings(int id, int qty) throws SystemErrorException, NoSuchMaterialException, IllegalArgumentException {
         if (qty <= 0) {
             throw new IllegalArgumentException("Quantity must be positive");
         }
@@ -154,7 +154,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceWithLength(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException,
+    protected void updatePriceWithLength(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException,
             NoSuchMaterialException {
         try {
             String sql = "SELECT * FROM material_lengths WHERE material_id = ?";
@@ -181,7 +181,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void insertMaterialDim(int id, int length, int price, int stock) throws SystemErrorException {
+    protected void insertMaterialDim(int id, int length, int price, int stock) throws SystemErrorException {
         try {
             String sql = "INSERT INTO `material_lengths`(material_id, length, price, stock) "
                     + "VALUES(?, ?, ?, ?);";
@@ -199,7 +199,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException {
+    protected LinkedHashMap<Integer, Integer> getMaterialLengthPrices(int id) throws SystemErrorException, NoSuchMaterialException {
 
         LinkedHashMap<Integer, Integer> prices = new LinkedHashMap();
         String sql = "SELECT * FROM material_lengths WHERE material_id = ?";
@@ -220,7 +220,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
+    protected LinkedHashMap<Integer, Integer> getRoofLengthPrices(int id) throws SystemErrorException {
 
         LinkedHashMap<Integer, Integer> prices = new LinkedHashMap();
         String sql = "SELECT * FROM roof_lengths WHERE roof_id = ?";
@@ -238,7 +238,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceFittings(int price, int id) throws SystemErrorException, NoSuchMaterialException {
+    protected void updatePriceFittings(int price, int id) throws SystemErrorException, NoSuchMaterialException {
         String sql = "SELECT * FROM fittings_and_screws WHERE fitting_id = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -260,7 +260,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public void updatePriceRoof(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
+    protected void updatePriceRoof(LinkedHashMap<Integer, Integer> prices, int id) throws SystemErrorException, NoSuchRoofException, InvalidInputException {
           try {
             int length;
             int price;
@@ -280,7 +280,7 @@ class MaterialMapper extends IMaterialMapper {
 
     }
     @Override
-    public List<Material> getMaterials() throws SystemErrorException {
+    protected List<Material> getMaterials() throws SystemErrorException {
         List<Material> materials = new ArrayList();
         int id, length, price, stock;
         String name, unit;
@@ -319,7 +319,7 @@ class MaterialMapper extends IMaterialMapper {
     }
 
     @Override
-    public List<Roof> getRoofs() throws SystemErrorException {
+    protected List<Roof> getRoofs() throws SystemErrorException {
         List<Roof> roofs = new ArrayList();
         int id, price, inclined, length;
         String name;

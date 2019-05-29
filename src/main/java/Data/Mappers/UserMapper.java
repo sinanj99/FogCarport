@@ -28,12 +28,12 @@ class UserMapper extends IUserMapper {
     Connection conn;
 
     @Override
-    public void setDataSource(DataSource ds) {
+    protected void setDataSource(DataSource ds) {
         con.setDataSource(ds);
         conn = con.getConnection();
     }
 
-    public static UserMapper getInstance() {
+    protected static UserMapper getInstance() {
         if (instance == null) {
             instance = new UserMapper();
         }
@@ -41,7 +41,7 @@ class UserMapper extends IUserMapper {
     }
 
     @Override
-    public void insertUser(User user) throws DuplicateException, SystemErrorException {
+    protected void insertUser(User user) throws DuplicateException, SystemErrorException {
         try {
             conn.setAutoCommit(false);
 
@@ -85,7 +85,7 @@ class UserMapper extends IUserMapper {
     }
 
 @Override
-        public User getUser(String email) throws UserNotFoundException, SystemErrorException {
+        protected User getUser(String email) throws UserNotFoundException, SystemErrorException {
         int user_id = 0, zip = 0, seller = 0, admin = 0;
         String password = "", fname = "", lname = "", address = "", city = "", gender = "";
         boolean seller_ = false, admin_ = false;
@@ -121,7 +121,7 @@ class UserMapper extends IUserMapper {
     }
 
     @Override
-        public User getUser(int id) throws UserNotFoundException, SystemErrorException {
+        protected User getUser(int id) throws UserNotFoundException, SystemErrorException {
 
         int zip = 0;
         String email_ = "";

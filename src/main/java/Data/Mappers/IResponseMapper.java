@@ -12,10 +12,10 @@ import java.util.List;
 import javax.sql.DataSource;
 
 /**
- *
+ * Interface for ResponseMappers. Is public so that its javadoc can be published.
  * @author Obaydah Mohamad
  */
-abstract class IResponseMapper {
+public abstract class IResponseMapper {
      protected static IResponseMapper instance() {
         return ResponseMapper.getInstance();
     }

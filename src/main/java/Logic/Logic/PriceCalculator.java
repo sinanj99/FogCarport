@@ -17,13 +17,13 @@ import java.util.Map;
  * Contains methods that calculate things related to prices.
  * @author sinanjasar
  */
-class PriceCalculator {
+public class PriceCalculator {
     /**
      * Calculates buy price of a carport
      * @param bom bill of materials of carport
      * @return the buy price of the carport
      */
-    public static int buyPrice(BOM bom) {
+    protected static int buyPrice(BOM bom) {
         int fullPrice = 0;
         for (LineItem l : bom.getLineitems()) {
             fullPrice += l.getPrice();
@@ -35,7 +35,7 @@ class PriceCalculator {
      * @param bom bill of materials of carport
      * @return the sell price of the carport
      */
-    public static int sellPrice(BOM bom, int profit) {
+    protected static int sellPrice(BOM bom, int profit) {
         return buyPrice(bom) * profit;
     }
 
@@ -52,7 +52,7 @@ class PriceCalculator {
      * @throws Presentation.Exceptions.SystemErrorException if an sql exception is thrown 
      * @throws Presentation.Exceptions.NoSuchMaterialException if there's no materials with given id
      */
-    public void updatePrices(int price, int id, String type) throws InvalidInputException, SystemErrorException, NoSuchMaterialException {
+    protected void updatePrices(int price, int id, String type) throws InvalidInputException, SystemErrorException, NoSuchMaterialException {
         LinkedHashMap<Integer, Integer> prices;
         if (type.equals("length")) {
             prices = LogicFacade.getInstance().getPricesWithLength(id);

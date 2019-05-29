@@ -12,10 +12,10 @@ import Presentation.Exceptions.UserNotFoundException;
 import javax.sql.DataSource;
 
 /**
- *
+ * Interface for user mappers. Is public so that its javadoc can be published.
  * @author sinanjasar
  */
-  abstract class IUserMapper {
+  public abstract class IUserMapper {
 
     protected static IUserMapper instance() {
         return UserMapper.getInstance();

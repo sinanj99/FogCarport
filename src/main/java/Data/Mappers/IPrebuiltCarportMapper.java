@@ -11,10 +11,10 @@ import java.util.List;
 import javax.sql.DataSource;
 
 /**
- *
+ * Interface for PrebuiltCarportMapper. Is public so that its javadoc can be published.
  * @author Kasper Jeppesen
  */
- abstract class IPrebuiltCarportMapper
+ public abstract class IPrebuiltCarportMapper
 {
     protected static IPrebuiltCarportMapper instance()
     {

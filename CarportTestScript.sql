@@ -124,30 +124,43 @@ CREATE TABLE responses (
   	CONSTRAINT responses_ibfk_1 FOREIGN KEY (request_id) REFERENCES requests(request_id)
 );
 
-CREATE TABLE prebuilt_carport (
-  id INT(50) NOT NULL AUTO_INCREMENT,
-  img_path VARCHAR(1000) NOT NULL,
-  carport_width INT(10)NOT NULL,
-  carport_length int(10)  NOT NULL,
-  shed BOOLEAN,
-  shed_width INT(10) NOT NULL,
-  shed_length INT(10) NOT NULL,
+CREATE TABLE prebuilt_carports (
+  prebuilt_carport_id INT NOT NULL AUTO_INCREMENT,
+  img_path VARCHAR(500) NOT NULL,
+  carport_width INT(4)NOT NULL,
+  carport_length INT(4)  NOT NULL,
   price INT(10) NOT NULL,
-  PRIMARY KEY (id));
+  PRIMARY KEY (prebuilt_carport_id)
+  );
+  CREATE TABLE prebuilt_sheds (
+  prebuilt_carport_id INT NOT NULL,
+  shed_width INT(3)NOT NULL,
+  shed_length int(3)  NOT NULL,
+  CONSTRAINT prebuilt_sheds_ibfk1 FOREIGN KEY (prebuilt_carport_id) REFERENCES prebuilt_carports(prebuilt_carport_id)
+  ON DELETE CASCADE
+  );
   
-  INSERT INTO prebuilt_carport(img_path, carport_width, carport_length, shed, shed_width, shed_length, price)
-  VALUES ("/project/images/abc.png",450,750,true,420,180,17779),
-  ("/project/images/carport2.png",360,540,false,0,0,13998),
-  ("/project/images/carport3.png",360,720,true,330,220,21498),
-  ("/project/images/carport4.png",390,750,true,240,330,23498),
-  ("/project/images/carport5.png",300,480,false,0,0,3998),
-  ("/project/images/carport6.png",600,750,true,210,510,31998),
-  ("/project/images/carport7.png",600,540,true,270,240,13798),
-  ("/project/images/carport8.png",600,480,false,0,0,10498),
-  ("/project/images/carport9.jpg",630,540,true,570,150,15798),
-  ("/project/images/carport10.jpg",420,480,false,0,0,5798),
-  ("/project/images/carport10.jpg",420,480,false,0,0,5798);
+  INSERT INTO prebuilt_carports(img_path, carport_width, carport_length, price)
+  VALUES ("/project/images/abc.png",450,750,17779),
+  ("/project/images/carport2.png",360,540,13998),
+  ("/project/images/carport3.png",360,720,21498),
+  ("/project/images/carport4.png",390,750,23498),
+  ("/project/images/carport5.png",300,480,3998),
+  ("/project/images/carport6.png",600,750,31998),
+  ("/project/images/carport7.png",600,540,13798),
+  ("/project/images/carport8.png",600,480,10498),
+  ("/project/images/carport9.jpg",630,540,15798),
+  ("/project/images/carport10.jpg",420,480,5798),
+  ("/project/images/carport10.jpg",420,480,5798);
+  
 
+ INSERT INTO prebuilt_sheds(prebuilt_carport_id,shed_width, shed_length)
+  VALUES (1,420,180),
+  (3,330,220),
+  (4,240,330),
+  (6,210,510),
+  (7,270,240),
+  (9,570,150);
 
 INSERT INTO roofs (`name`, inclined) VALUES 
 ("Plasttrapezplader - Blåtonet", 0),

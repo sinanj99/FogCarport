@@ -24,25 +24,27 @@ public class FrontController extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String key = request.getParameter("command");
         Command command = CommandFactory.from(key);
         try {
             String target = command.execute(request);
             String redirect = (String) request.getAttribute("redirect");
-            if(redirect != null && redirect.equals("true")) {
+            if (redirect != null && redirect.equals("true")) {
                 response.sendRedirect(target);
             } else {
-            request.getRequestDispatcher(target).forward(request, response);
+                request.getRequestDispatcher(target).forward(request, response);
             }
         } catch (SystemErrorException e) {
+            String detail = e.getDetail();
             String message = e.getMessage();
             request.setAttribute("message", message);
-            System.out.println("message: " + message);
+            System.out.println("detail: " + detail);
             request.getRequestDispatcher(e.getTarget()).forward(request, response);
         } catch (ClientException e) {
             String message = e.getMessage();
             String target = e.getTarget();
-            if(target == null || target.isEmpty()) {
+            if (target == null || target.isEmpty()) {
                 target = "jsp/error.jsp";
             } else if (message == null) {
                 message = "Der opstod en fejl!";

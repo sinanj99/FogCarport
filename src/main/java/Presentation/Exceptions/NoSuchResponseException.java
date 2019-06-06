@@ -13,7 +13,7 @@ public class NoSuchResponseException extends ClientException{
 
     public NoSuchResponseException(){}
     
-    public NoSuchResponseException (String target, String message) {
-        super(target, message);
+    public NoSuchResponseException (String target, String detail) {
+        super(target, detail);
     }
 }

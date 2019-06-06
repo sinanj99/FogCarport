@@ -12,23 +12,37 @@ package Presentation.Exceptions;
  */
 public class SystemErrorException extends Exception {
 
-    private final String target = "jsp/error.jsp";
-    
     /**
-     * Constructs a SystemErrorException with no description of the error.
+     * Where to send the user
      */
-    public SystemErrorException() {
-    }
-    
+    private final String target = "jsp/error.jsp";
+    /**
+     * Message to be displayed to user
+     */
+    private final String message = "Der opstod en fejl!";
+    /**
+     * Detailed message of what went wrong
+     */
+    private String detail = "";
+     
     /**
      * Constructs a SystemErrorException with a specified message
-     * @param message a despriction of what went wrong
+     * @param detail a detailed despriction of what went wrong
      */
-    public SystemErrorException(String message) {
-        super(message);
+    public SystemErrorException(String detail) {
+        super(detail);
     }
 
     public String getTarget() {
         return target;
     }   
+
+    public String getDetail() {
+        return detail;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }  
 }
